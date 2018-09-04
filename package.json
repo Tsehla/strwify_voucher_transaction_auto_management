@@ -1,0 +1,14 @@
+{
+  "name": "Streetwifiy_transact",
+  "version": "1.0.0",
+  "description": "backend to streetwifiy, to allow secure automated transaction and access cards production ",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "keystone": "^4.0.0",
+    "node-sass": "^4.9.3",
+    "node-sass-middleware": "^0.11.0",
+    "nunjucks": "^3.1.3",
+    "scss": "^0.2.4"
+  }
+}

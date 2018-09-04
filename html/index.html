@@ -1,0 +1,456 @@
+<html>
+
+  <head>
+      <title>
+        StrWifiy Transact
+      </title>
+      <meta name='viewport' content="width=device-width, initial-scale=1">
+      
+      <style>
+              { border:1px solid brown;}
+          body{
+                padding:0px;
+                margin:0px;
+                width:100vw;
+                height:auto;
+                font-size:13px;
+               } 
+               #first_page{
+               display : block;
+               }
+               #second_page{
+                  display : none;
+               }
+               #third_page{
+               display : none;
+               }
+               #fourth_page{
+               display : none;
+               }
+               #firth_page{
+               display : none;
+               }
+               #sixth_page{
+               display : none;
+               }
+               #seventh_page{
+               display : none;
+               }
+               #eigth_page{
+               display : none;
+               }
+               
+               
+      </style>
+      
+      <!-- during dev -->
+      <link rel="stylesheet" href="../static/bootstrap.min.css">
+      <link rel="stylesheet" href="../static/index.css">
+      <!-- when system running 
+      <link type="text/css" href="index.css">
+      <link rel="stylesheet" href="bootstrap.min.css">
+      -->
+      
+   </head>
+
+   <body>
+   
+<div id="first_page" style="width:100vw; height: auto"><!-- first page Start -->
+
+   <!-- landing choose action --->
+   
+        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn"  onclick='buy_voucher()'>
+        <img src="../static/images/buyer.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+        <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+
+buy data voucher
+        </p>
+        </div>
+        
+        </div>
+        <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='sell_voucher()'>
+         <img src="../static/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+         
+         Sell voucher
+         </p>
+         </div>
+         
+
+
+        </div>
+         
+        <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+            StreetWiFiy
+        </p>
+        
+        
+   
+ </div><!-- first page End -->
+ 
+ 
+ <!-- -------------------selection redirects Start-------------- -->
+       
+       
+       
+       
+     <!--buyer menu -->
+       
+       
+<!-- second page Start -->
+       
+ <div id="second_page" style="width:100vw; height: auto">
+<div id="buyer_menu_wrapper">
+<div id='buyer_container' class='btn' style="margin:10vh 2vw 1vh 2vw; padding:0px;width:95vw; height:80vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+
+    <div id='seller_code_screen' style="width 80vw; height:20vh; margin:4vh; padding:0px; border:1px double blue">
+      <p id='second_page_user_auto_code' style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+       Loading code...
+    </p>
+    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    Ticket status : <span id="second_page_ticket_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:13px">Loading...</span>
+    </p>
+    
+    </div>
+    
+    
+    <button class='btn btn-primary' style="width: 80vw; height:10vh; margin: 4vh; padding:0px" onclick="manual_voucher_init()">
+            Get Ticket
+    </button>
+    <div style="width:95vw; height: auto; margin:2px; padding 0px; display:flex;">
+     <button class='btn btn-danger' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px" onclick="buy_page_on_init()">
+     Get New code
+     </button>
+     <button class='btn btn-warning' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px" onclick="alert(`1) Give code to seller\n2) When ticket ready click 'Get ticket' button\n3) Connect to StreetWifiy\n4) Goto : streetwifiy.co.za\n5) Enter voucher code as shown on ticket\n6) Please pay attention to expeiry days and use your data before then\n\nNB\nDo not leave page/app or change code until you have downloaded your voucher card\n\n***\nENJOY\n***`)">
+     Help
+     </button><!-- turn alert to modal -->
+
+     </div>
+    
+</div>
+          <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+          StreetWiFiy
+          </p>
+     </div>
+</div>
+<!-- seller/dist menu -->
+
+<div id="third_page" style="width:100vw; height: auto"><!-- third page Start -->
+
+   <!-- landing choose action --->
+   
+        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='distributor_login()'>
+        <img src="../static/images/distributor.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+        <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+
+distributor login
+        </p>
+        </div>
+        
+        </div>
+        <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='seller_login()'>
+         <img src="../static/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+         
+         Seller login
+         </p>
+         </div>
+         
+
+
+        </div>
+         
+        <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+            StreetWiFiy
+        </p>
+        
+        
+   
+ </div><!-- first page End -->
+
+
+ 
+ <!-- section redirects end -->
+ 
+ <!-- --------login-------- -->
+ <!-- seller -->
+ <div id="fourth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="buyer_menu_wrapper">
+ <div id='buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b>
+    access account
+  </b>
+</p>
+
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary">Log In</button>
+    
+</div><!--login wrapper end -->
+
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:39vh;background-color:white;box-shadow:3px 3px 2px darkorange, -1px -1px 2px darkorange">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b> 
+   show password hint
+  </b>
+</p>
+
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+  <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control">
+  <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
+   <p  id="password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
+       Hint : scroll >>>
+   </p>
+</div>
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning">Show</button>
+    
+</div><!--login wrapper end -->
+
+
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b>
+     change password
+  </b>
+</p>
+
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger">Log In</button>
+    
+</div><!--login wrapper end -->
+
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
+  <b> 
+   forgot password
+  </b>
+</p>
+<p style="width:95vw; height:auto; margin:0px; padding:0px;">
+   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> support@streetwifiy.co.za
+</p>
+
+  
+    
+</div><!--login wrapper end -->
+
+</div>
+   
+
+    <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+    StreetWiFiy
+    </p>
+</div>
+</div>
+
+ <!-- voucher sell -->
+ <div id="firth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="buyer_menu_wrapper">
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+<p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <b>
+    sell menu
+ </b>
+</p>
+
+<div id='seller_code_screen' style="width 80vw; height:20vh; margin:4vh; padding:0px; border:1px double blue">
+      <p style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+       Credit : R <span id="seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
+    </p>
+    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    Total tickets sold : <span id="ticket_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:13px">Loading...</span>
+    </p>
+    
+    </div>
+
+
+<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control">
+<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control">
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success">Sell Ticket</button>
+<br />
+
+<button style="width:100%; height:7vh; margin 30px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick='alert(`1) Enter amount of data to sell.\n\t\tExample :\n\t\t\tFor R5.00 Enter 5\n\t\t\tFor R10.00, Enter 10\n\t\t\tFor R100.00, Enter 100\n\n2) Get the Temporary code from the buyer\n3) Enter the temporary code to the second input box\n5) Press sell ticket button\n4) Wait few second and ask buyer to press get ticket button in their cellphone\n\nNB\nMake sure buyer does not close the app or change the code until transaction is complete`)'>Help</button>
+
+
+
+</div>
+    
+ <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+    StreetWiFiy
+    </p>
+ 
+ </div>
+ </div>
+ 
+ <!-- ---------distributor------------- --->
+ <!-- login --->
+ <div id="sixth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id='buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
+ 
+ <!-- login wrapper Start -->
+ <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+ <b>
+ access account
+ </b>
+ </p>
+ 
+ <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+ <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary">Log In</button>
+ 
+ </div><!--login wrapper end -->
+ 
+ 
+ <!-- login wrapper Start -->
+ <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:39vh;background-color:white;box-shadow:3px 3px 2px darkorange, -1px -1px 2px darkorange">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+ <b> 
+ show password hint
+ </b>
+ </p>
+ 
+ <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+ <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control">
+ <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
+ <p  id="password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
+ Hint : scroll >>>
+ </p>
+ </div>
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning">Show</button>
+ 
+ </div><!--login wrapper end -->
+ 
+ 
+ 
+ <!-- login wrapper Start -->
+ <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+ <b>
+ change password
+ </b>
+ </p>
+ 
+ <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+ <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger">Log In</button>
+ 
+ </div><!--login wrapper end -->
+ 
+ 
+ <!-- login wrapper Start -->
+ <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
+ <b> 
+ forgot password
+ </b>
+ </p>
+ <p style="width:95vw; height:auto; margin:0px; padding:0px;">
+ Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> support@streetwifiy.co.za
+ </p>
+ 
+ 
+ 
+ </div><!--login wrapper end -->
+ 
+ </div>
+ 
+ 
+ <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+ StreetWiFiy
+ </p>
+ </div>
+ 
+ 
+ <!-- transact menu --->
+ <div id="seventh_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="buyer_menu_wrapper">
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <b>
+ recharge menu
+ </b>
+ </p>
+  
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
+  <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control">
+ 
+ <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Recharge amount' class="form-control">
+ 
+ <button class='btn btn-primary' style="width: 80vw; height:10vh; margin: 4vh; padding:0px">
+ Send Recharge
+ </button>
+ <div style="width:95vw; height: auto; margin:2px; padding 0px; display:flex;">
+ <button class='btn btn-danger' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px">
+ Add new Seller <br />ACCOUNT
+ </button>
+ <button class='btn btn-warning' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px" onclick="alert(`1) Enter ID number of the seller you want to recharge\n2) Enter name and surname of seller you want to Recharge\n\t\t\tExample : John Doe\n\n3) Enter Amount in Rands to Recharge the seller with\n\t\t\tExample : \n\t\t\t\tfor R5.00 Enter 5\n\t\t\t\tfor R10.00 Enter 10\n\t\t\t\tfor R100.00 Enter 100\n\nNB\nAllways make sure the details are for the person you want to recharge`)">
+ Help
+ </button><!-- turn alert to modal -->
+ 
+ </div>
+ 
+ </div>
+ 
+ <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+ StreetWiFiy
+ </p>
+ 
+ </div>
+ </div>
+ 
+ <!-- register seller account -->
+  <div id="eigth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="buyer_menu_wrapper">
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <b>
+ register new seller
+ </b>
+ </p>
+ 
+ 
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Seller ID number' class="form-control">
+ <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Seller Name' class="form-control">
+ <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Seller Surname' class="form-control">
+ <div  style="width:100%; height:12vh; margin:13px 0px 13px 0px; display:block; "  class="form-control">
+    <p style='width:100%; height: 3vh; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
+          Temporary password for New Seller :
+     </p>
+      <p style='width:93vw%; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px'>
+             happy customers lead to rich life
+     </p>
+
+
+</div>
+ 
+ <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger">Create Account</button>
+ <br />
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nhappy customers lead to rich life\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
+ 
+ 
+ 
+ 
+ </div>
+<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+ StreetWiFiy
+ </p>
+   </div>
+   </div>
+    <script type='text/JavaScript' src='../static/jquery-3.3.1.min.js' ></script>   
+   <script type='text/JavaScript' src='../static/index.js' ></script>
+  
+
+   
+   </body>
+</html>
