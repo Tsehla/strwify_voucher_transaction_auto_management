@@ -15,17 +15,52 @@ keystone.get('routes', function(app){
     });
 
     
-    //seller or distributor login
+    
+    
+    
+    
+    
+/*======================================================
+
+    seller or distributor login
+
+=======================================================*/
+    
+    
     //use variable var user=seller or user = distributor
+    
     app.get('/login', function(req, res){
+        
+        //'http://127.0.0.1:4100/login?usertype=seller&id_number='+id_number;
+      
+        
         //if error --- return alert error back
+        var user_type = req.query.usertype;
+        var user_id = req.query.id_number;
         
-        
+        /* seller login */
+        if(user_type == 'seller'){
+            
         //if sucess login
+            keystone.list('seller distributor').model.findOne({idnumber:user_id, usertype:'Seller'})
+            .exec(
+            function (error, response){
+                
+            if(response == null){
+                res.jsonp('User Not found')
+            }
+            else{
+              res.jsonp(response); 
+            }   
+                
+                
+            } );
+            
+            
         //if user is seller--- show seller porpulated options
+        }
         
-        
-        
+        /* distributor login 8*/
         //if sucess login
         //if user is distributor--- show distributor porpulated action
         
@@ -47,7 +82,18 @@ keystone.get('routes', function(app){
         
     });
     
-    //user get acess code
+    
+    
+    
+    
+    
+    
+ /*============================================
+    
+        user get acess code
+    
+ ==============================================*/
+    
     app.use('/api/buy', function(req, res){
         
         
@@ -83,7 +129,15 @@ keystone.get('routes', function(app){
         }        
         
         
-       //search for record with unique code,
+        
+        
+        
+/*============================================
+       
+   search for record with unique code,
+            
+=============================================*/
+        
         if(req.query.code == 'get_voucher'){
          
         //http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code=xyz;//api query link
@@ -129,10 +183,16 @@ keystone.get('routes', function(app){
         
     });
     
+    
+    
+    
+    
 /*========================================
 
     Routing all links to webpage
+    
 ========================================*/
+    
     app.get('/', function(req, res){
        //give home page
         //im think use api, method to serve, nunjuck changes will be anoying

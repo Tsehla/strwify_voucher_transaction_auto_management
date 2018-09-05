@@ -39,7 +39,7 @@ seller_distributor_model.add({
     province :{type :String, initial:true, required:true, label :'Province' },
     password : {type: String, required:true, initial:true, label :'Password'},
     email : {type : types.Email, label :'Email (optional)'},
-    credits : {type : Number, initial:false, required:true, default:0, label :'Credit Amount'},
+    credits : {type : Number, initial:true, required:true, default:0, label :'Credit Amount'},
     usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
     
     
