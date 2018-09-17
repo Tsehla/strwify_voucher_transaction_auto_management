@@ -84,15 +84,16 @@ function sell_voucher(){
  window.open('/sell_voucher', '_self');
 }
 
-function seller_login(){
-    
+function third_page_seller_login(){
+  
  window.open('/seller_login', '_self');
 }
 
-function distributor_login(){
+function third_page_distributor_login(){
     
  window.open('/distributor_login', '_self');
 }
+
 /*=======================================
     repeated functions
 ========================================*/
@@ -158,14 +159,14 @@ function buy_page_on_init(){
 /* making unique code global*/
 var unique_code = null;
     
-    function auto_voucher_check(uniqueCode){
+function auto_voucher_check(uniqueCode){
         unique_code = uniqueCode;
         var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '127.0.0.1:4100' to live domain
         
-        //-----------------------
+     //-----------------------
         var response = uniqueCode;
 
-      var auto_voucher_loader = setInterval(function check_voucher(){
+        var auto_voucher_loader = setInterval(function check_voucher(){
             //alert(response);                       
             $.get(url, function(response, status){
            
@@ -193,7 +194,7 @@ var unique_code = null;
     
 //console.log(unique_code);
         /* stop timer */
-        function stop_auto_voucher_check(){
+function stop_auto_voucher_check(){
             clearInterval(auto_voucher_loader);
         }
        
@@ -325,7 +326,7 @@ function fourth_page_seller_login(){
            
         else{
             
-             dom_innerHtml('fourth_page_login_menu_header', 'error when trying to login code'); 
+             dom_innerHtml('fourth_page_login_menu_header', 'error when trying to login'); 
                
            }
            
