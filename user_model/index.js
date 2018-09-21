@@ -22,9 +22,9 @@ server_admin_model.add({
 server_admin_model.schema.virtual('canAccessKeystone').get(function(){return true});
 
 server_admin_model.register();
-
+//===================================================
 //seller model//distributor model
-
+//==================================================
 var seller_distributor = 'seller distributor';
 
 var seller_distributor_model = new keystone.List(seller_distributor);
