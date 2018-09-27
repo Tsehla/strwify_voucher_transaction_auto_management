@@ -118,13 +118,21 @@ function dom_innerHtml(div, value){
         
     }
 
-
+/*++++++++++++++++++++++++++++++++++++++++
+    global vars
+    seller login
+    
++++++++++++++++++++++++++++++++++++++++++*/
+var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
 
 /*========================================
     buy data page
 =========================================/
 /* generate unique random code */
+
+
+
 
 /*conncet & check ticket staus */
 
@@ -240,13 +248,48 @@ function voucher_print(){
     alert('voucher print fn');
 }
 
+//------------------------------------
+// sell ticket 
 
+function sell_ticket(){
+    
+    //voucher code
+    var seller_code_input = document.getElementById('seller_ticket_unique_code');
+    
+    //voucher amount
+    var seller_voucher_amount_input = document.getElementById('seller_ticket_amount');
+    
+    
+        
+        var url= 'http://127.0.0.1:4100/api/buy?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '127.0.0.1:4100' to live domain
+    
+    
+       $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+
+               return dom_innerHtml('firth_page_sell_menu_header', response);
+               
+           }
+           
+           else{
+             return dom_innerHtml('firth_page_sell_menu_header', 'error producing ticket code'); 
+           }
+       });  
+        
+        
+    
+    
+}
 
 
 
 /*========================================
     buy data page
-=========================================/
+=========================================*/
 
 /*++++++++++++++++++++++++++++++++++++++++
 

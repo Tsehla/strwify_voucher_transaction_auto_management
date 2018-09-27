@@ -74,7 +74,7 @@ exports.create={
         {
         name : 'dist_1_name',
         surname : 'dist_1_lastname',
-        idnumber : '1234567891234',
+        idnumber : '1111111111111',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _1',
         city : 'jhb_1',
@@ -88,7 +88,7 @@ exports.create={
         {
         name : 'dist_2_name',
         surname : 'dist_2_lastname',
-        idnumber : '1234567891234',
+        idnumber : '2222222222222',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _1',
         city : 'jhb_2',
@@ -101,7 +101,7 @@ exports.create={
         },        {
         name : 'dist_3_name',
         surname : 'dist_3_lastname',
-        idnumber : '1234567891234',
+        idnumber : '3333333333333',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _3',
         city : 'jhb_3',
@@ -114,7 +114,7 @@ exports.create={
         },        {
         name : 'dist_4_name',
         surname : 'dist_4_lastname',
-        idnumber : '1234567891234',
+        idnumber : '4444444444444',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _4',
         city : 'jhb_4',
@@ -127,7 +127,7 @@ exports.create={
         },       {
         name : 'dist_5_name',
         surname : 'dist_5_lastname',
-        idnumber : '1234567891234',
+        idnumber : '5555555555555',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _5',
         city : 'jhb_5',
@@ -141,7 +141,7 @@ exports.create={
         {
         name : 'seller_1_name',
         surname : 'seller_1_lastname',
-        idnumber : '1234567891234',
+        idnumber : '1111111111111',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _1',
         city : 'jhb_1',
@@ -155,7 +155,7 @@ exports.create={
                     {
         name : 'seller_2_name',
         surname : 'seller_2_lastname',
-        idnumber : '1234567891234',
+        idnumber : '2222222222222',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _2',
         city : 'jhb_2',
@@ -169,7 +169,7 @@ exports.create={
                     {
         name : 'seller_3_name',
         surname : 'seller_3_lastname',
-        idnumber : '1234567891234',
+        idnumber : '3333333333333',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _3',
         city : 'jhb_3',
@@ -183,7 +183,7 @@ exports.create={
                     {
         name : 'seller_4_name',
         surname : 'seller_4_lastname',
-        idnumber : '1234567891234',
+        idnumber : '4444444444444',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _4',
         city : 'jhb_4',
@@ -197,7 +197,7 @@ exports.create={
                     {
         name : 'seller_5_name',
         surname : 'seller_5_lastname',
-        idnumber : '1234567891234',
+        idnumber : '5555555555555',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _5',
         city : 'jhb_5',
