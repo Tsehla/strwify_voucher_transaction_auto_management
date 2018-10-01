@@ -159,26 +159,27 @@ keystone.get('routes', function(app){
         var hour_minutes_milliseconds = req.query.unique_code; 
        
               
-        console.log('-----------------------');
-        console.log(req.query);
-        console.log('-----------------------');   
+//        console.log('-----------------------');
+//        console.log(req.query);
+//        console.log('-----------------------');   
             
         //var seller = req.query.seller;//add seller in db making---use as stats
         //var amount = req.query.amount--use as stats;
             
        // var seach_code=year[year.length-2]+year[year.length-1]+month+day+hour+minutes+milliseconds;
             
-        var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds;
+        var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds.toString().replace(/ /g, '');
+       
 //            
-//        console.log('-----------------------');
-//        console.log(seach_code_);
-//        console.log('-----------------------'); 
-//    
+        console.log('-----------------------');
+        console.log(seach_code_);
+        console.log('-----------------------'); 
+    
             
             
         /* find doc contains [seach_code=] */
         keystone.list('Voucher Codes').model.findOne()
-            .where({soldto : seach_code_, voucherstate : 'used'})
+            .where({soldto : Number(seach_code_), voucherstate : 'used'})
             .exec( function(error, response){
             if(error){
                 res.jsonp('Problem finding Voucher');
@@ -200,16 +201,25 @@ keystone.get('routes', function(app){
         
         }
         
-        //==============================================================
-         // sell voucher to user
-        //==============================================================
+        
+    });
+    
+    
+
+//==============================================================
+// sell voucher to user
+//==============================================================    
+    
+  app.get('/api/sell', function(req, res){
+      
         
         if(req.query.code = 'sell_voucher'){
             
-            
-            
+
              
-        //http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code=xyz;//api query link
+        //http://127.0.0.1:4100/api/sell?code=get_voucher&unique_code=xyz;//api query link
+            
+        //'http://127.0.0.1:4100/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;
            
             
         var date = new Date();
@@ -220,13 +230,13 @@ keystone.get('routes', function(app){
         
         
         //get from seller to user
-        var hour_minutes_milliseconds = req.query.unique_code; 
+        var hour_minutes_milliseconds = req.query.unique_code.toString().replace(/' '/g, '').trim(); 
         //amount for voucher    
-        var seller_voucher_amount_ =req.query.voucher_amount;
+        var seller_voucher_amount_ =req.query.voucher_amount.toString().replace(/' '/g, '').trim();
               
-        console.log('-----------------------');
-        console.log(req.query);
-        console.log('-----------------------');   
+//        console.log('-----------------------');
+//        console.log(req.query);
+//        console.log('-----------------------');   
             
         //var seller = req.query.seller;//add seller in db making---use as stats
         //var amount = req.query.amount--use as stats;
@@ -235,13 +245,33 @@ keystone.get('routes', function(app){
             
         var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds;
 //            
-//        console.log('-----------------------');
-//        console.log(seach_code_);
-//        console.log('-----------------------'); 
-//    
+        console.log('-----------------------');
+        console.log(seach_code_);
+        console.log('-----------------------'); 
+    
+            
+            
+        /* serach to make sure the unique code is not used already */
+        keystone.list('Voucher Codes').model.findOne()
+            //.where({voucheramount : seller_voucher_amount_, soldto : seach_code_, voucherstate : 'used'})//when needing to expand query uniqeness//give user ability to select amount//add this to unique code
+            .where({soldto : seach_code_, voucherstate : 'used'})
+            .exec( function(error, response){
+            if(error){
+                   return res.jsonp('sorry Please try again, later');
+            }
+             if(response == null){
+                 
+                 return write_sell_toDB()
+               
+            }
+                consoe.log(response);
+                return res.jsonp('this code is used, Try a new code..');
+        });
+            
             
             
         /* find doc contains [seach_code=] */
+        function write_sell_toDB(){
         keystone.list('Voucher Codes').model.findOne()
             .where({voucheramount : seller_voucher_amount_, voucherstate : 'new'})
             .exec( function(error, response){
@@ -269,14 +299,11 @@ keystone.get('routes', function(app){
         //on sucess, create voucher on the front
              
             
-            
-
-            
+            }
         }
-        
-    });
-    
-    
+      
+      
+  });  
     
     
     

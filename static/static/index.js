@@ -1,17 +1,17 @@
-/*=====================================
+/*_____________________________________________________________________________________________________________________________________________________
 
 app routes
 
-========================================*/
+_______________________________________________________________________________________________________________________________________________________*/
 
-/*+++++++++++++++++++++++++++++++++++++++
+/*=====================================================================================================================================================
  external URL link to internal routing
-++++++++++++++++++++++++++++++++++++++++*/
+=====================================================================================================================================================*/
 
-// get url and route
+// ++++++++++++++++++++++++++++++++++++++++++++++++  get url and route ++++++++++++++++++++++++++++++++++++++++
 var current_url= window.location.pathname;
 
-/* hide or show other pages div */
+/*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
 function dom_hide_show(showORhide, div){
     
     if(showORhide == 'hide'){
@@ -22,6 +22,8 @@ function dom_hide_show(showORhide, div){
     }
     
 }
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++ home auto run function ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 (function(){
  
@@ -55,11 +57,11 @@ if(current_url == '/distributor_login'){
     
  })();
 
-    /*++++++++++++++++++++++++++++++++
+/*===================================================================================================================================================
     
         when success login//same url diffrenet content
         
-    +++++++++++++++++++++++++++++++++*/
+====================================================================================================================================================*/
 function seller_sell_menu(){
        dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('show','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); 
     
@@ -68,9 +70,9 @@ function seller_sell_menu(){
 
 
 
-/*++++++++++++++++++++++++++++++++++++++++
+/*=====================================================================================================================================================
     Internal navigation
-++++++++++++++++++++++++++++++++++++++++*/
+=====================================================================================================================================================*/
 var current_domain = window.location.hostname;
 
 /* voucher buy link */
@@ -94,9 +96,9 @@ function third_page_distributor_login(){
  window.open('/distributor_login', '_self');
 }
 
-/*=======================================
+/*=====================================================================================================================================================
     repeated functions
-========================================*/
+======================================================================================================================================================*/
 
 /* change dom [innerHTML] */
 
@@ -107,9 +109,9 @@ function dom_innerHtml(div, value){
 
 
 
-/*=======================================
+/*=====================================================================================================================================================
     functions/process to destroy when user leaves a page
-========================================*/
+=======================================================================================================================================================*/
 
     function process_destroyer(){
         
@@ -118,40 +120,48 @@ function dom_innerHtml(div, value){
         
     }
 
-/*++++++++++++++++++++++++++++++++++++++++
-    global vars
-    seller login
+/*=====================================================================================================================================================
+   
+   global vars
+   seller login
     
-+++++++++++++++++++++++++++++++++++++++++*/
+=====================================================================================================================================================*/
+/*seller & ||  user login details collcetor */
 var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
 
-/*========================================
-    buy data page
-=========================================/
-/* generate unique random code */
+/* auto generated code from the user */
+var unique_code = null;
 
 
+/*_____________________________________________________________________________________________________________________________________________________
 
+buy data page
+_______________________________________________________________________________________________________________________________________________________*/
+
+
+/*===================================================================================================================================================== 
+
+generate unique random code 
+
+=====================================================================================================================================================*/
 
 /*conncet & check ticket staus */
+//buy page first start fn 
 
-
-
-function buy_page_on_init(){
+function buy_page_on_init(){ 
    
     var url= 'http://127.0.0.1:4100/api/buy?code=unique_code';//change '127.0.0.1:4100' to live domain
     
     
-       $.get(url, function(response, status){
+       $.get(url, function(response, status){//response contain unique code
            
-           auto_voucher_check(response);
-            
-           
-           if(status == 'success'){
-              
 
-               return dom_innerHtml('second_page_user_auto_code', response);
+           if(status == 'success'){
+             
+                auto_voucher_check(response);
+               
+                return dom_innerHtml('second_page_user_auto_code', response);
                
            }
            
@@ -163,15 +173,15 @@ function buy_page_on_init(){
 }
 
 
- //start timer for auto voucher download
-/* making unique code global*/
-var unique_code = null;
+/*===================================================================================================================================================== 
+start timer for auto voucher download
+=====================================================================================================================================================*/
+
     
 function auto_voucher_check(uniqueCode){
         unique_code = uniqueCode;
         var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '127.0.0.1:4100' to live domain
         
-     //-----------------------
         var response = uniqueCode;
 
         var auto_voucher_loader = setInterval(function check_voucher(){
@@ -182,7 +192,7 @@ function auto_voucher_check(uniqueCode){
                dom_innerHtml('second_page_ticket_status', response);
                if(response != 'Voucher Not found'){
                 dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
-               var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+response+"</span></p>";
+               var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+JSON.stringify(response.vouchercode)+"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
                 stop_auto_voucher_check();//timer stop
                 voucher_print();//print voucher
@@ -201,14 +211,23 @@ function auto_voucher_check(uniqueCode){
                    
     
 //console.log(unique_code);
-        /* stop timer */
+    
+    
+/*=====================================================================================================================================================
+stop timer for auto donloader
+=====================================================================================================================================================*/
 function stop_auto_voucher_check(){
             clearInterval(auto_voucher_loader);
         }
        
 
 }
-//manual voucher check/download
+
+/*======================================================================================================================================================
+
+manual voucher check/download
+
+========================================================================================================================================================*/
 function manual_voucher_init(){
         
         var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+ unique_code;
@@ -242,14 +261,22 @@ function manual_voucher_init(){
            });
     
        } 
-/* voucher printing */
+/*=======================================================================================================================================================
+
+voucher printing 
+
+=========================================================================================================================================================*/
 
 function voucher_print(){
     alert('voucher print fn');
 }
 
-//------------------------------------
-// sell ticket 
+
+/*=====================================================================================================================================================
+
+sell ticket, seller menu
+
+=====================================================================================================================================================*/
 
 function sell_ticket(){
     
@@ -261,8 +288,9 @@ function sell_ticket(){
     
     
         
-        var url= 'http://127.0.0.1:4100/api/buy?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '127.0.0.1:4100' to live domain
+        var url= 'http://127.0.0.1:4100/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '127.0.0.1:4100' to live domain
     
+    console.log(url);
     
        $.get(url, function(response, status){
            
@@ -287,14 +315,15 @@ function sell_ticket(){
 
 
 
-/*========================================
-    buy data page
-=========================================*/
+/*______________________________________________________________________________________________________________________________________________________
+  
+  Login Seller & || buyer
+_______________________________________________________________________________________________________________________________________________________*/
 
-/*++++++++++++++++++++++++++++++++++++++++
+/*=====================================================================================================================================================
 
     Distributor login
-+++++++++++++++++++++++++++++++++++++++++*/
+=====================================================================================================================================================*/
 
 
 
@@ -303,14 +332,15 @@ function sell_ticket(){
 
 
 
-/*++++++++++++++++++++++++++++++++++++++++
+/*=====================================================================================================================================================
 
     seller login
     
-+++++++++++++++++++++++++++++++++++++++++*/
+=====================================================================================================================================================*/
+
 var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
-/* account login */
+/*++++++++++++++++++++++++++++++++++++++++++++++++++ account login +++++++++++++++++++++++++++++++++++++++++++++*/
 function fourth_page_seller_login(){
     
 
@@ -322,11 +352,13 @@ function fourth_page_seller_login(){
 
     
         
-    /* check input filled */
+/*++++++++++++++++++++++++++++++++ check input filled ++++++++++++++++++++++++++++++++++++++*/
+    
         if(seller_id.value != '' && seller_password.value != ''){
            
-        /* check id number lenth */
-        /*should be 13 numbers in sout africa */
+/*++++++++++++++++++++++++++++++++++ check id number lenth ++++++++++++++++++++++++++++++*/
+/*++++++++++++++++++++++++++++++++++ should be 13 numbers in sout africa +++++++++++++++++++++++++++++++++*/
+            
         if(seller_id.value.length !== 13){
           return dom_innerHtml('fourth_page_login_menu_header', '<p style="color:red; margin:0px;padding:0px">Incorrect ID number</p>'); 
     }
@@ -343,9 +375,11 @@ function fourth_page_seller_login(){
                   return  dom_innerHtml('fourth_page_login_menu_header', '<p style="color:red; margin:0px;padding:0px">Incorrect Login Details</p>'); 
                }
                
-               else{//check password
-                   if(response.password == seller_password.value){      
-                       /* porpulate vars used for creating field when voucher is sold*/
+               else{//+++++++++++++++++++++++++++check password+++++++++++++++++++++++++++
+                   
+                   if(response.password == seller_password.value){   
+                       
+/*++++++++++++++++++++++++ porpulate vars used for creating field when voucher is sold +++++++++++++++++++++++*/
                        
                        seller_login.logged_in = true;
                        seller_login.seller_id = seller_id.value;
@@ -376,7 +410,7 @@ function fourth_page_seller_login(){
                
            });
 }
-    /* if input not filled or partially filled */
+/*+++++++++++++++++++++++++++++++++++++++++++ if input not filled or partially filled +++++++++++++++++++++++++++++++++++++++*/
   else{ 
       
     
@@ -394,7 +428,8 @@ function fourth_page_seller_login(){
 }
 
 
-/* Show password */
+/*+++++++++++++++++++++++++++++++++++++++++++++ Show password +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 function fourth_page_seller_show_password_hint(){
     alert('seller password hint');  
  
@@ -433,7 +468,8 @@ function fourth_page_seller_show_password_hint(){
     
 }
 
-/* Change password */
+/*+++++++++++++++++++++++++++++++++++++++++++++++++++++ Change password +++++++++++++++++++++++++++++++++++++++++++++++++++*/
+
 
 function fourth_page_seller_change_password(){
     
@@ -468,7 +504,7 @@ function fourth_page_seller_change_password(){
            }
            
                
-           });
+   });
     
 }
 
