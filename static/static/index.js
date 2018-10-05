@@ -292,6 +292,8 @@ function sell_ticket(){
     
     console.log(url);
     
+    if(seller_login.credit >= seller_voucher_amount_input.value){//check if credit amount is enought to sell ticket
+    
        $.get(url, function(response, status){
            
             
@@ -307,9 +309,10 @@ function sell_ticket(){
              return dom_innerHtml('firth_page_sell_menu_header', 'error producing ticket code'); 
            }
        });  
-        
-        
+               
+}
     
+    dom_innerHtml('firth_page_sell_menu_header', 'Please recharge your account'); 
     
 }
 
@@ -385,7 +388,6 @@ function fourth_page_seller_login(){
                        seller_login.seller_id = seller_id.value;
                        seller_login.usertype = response.usertype;
                        seller_login.credit = response.credits;
-                       
                        dom_innerHtml('firth_page_seller_amount', response.credits); 
                        
                        

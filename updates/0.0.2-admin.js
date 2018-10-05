@@ -11,10 +11,12 @@ exports.create={
     
     'Voucher Codes' : [
         {
+        voucheramount : 1,
         vouchercode :'123asdf' ,
         voucherstate : 'new',
         },
         {
+        voucheramount : 1,
         vouchercode : '456asdf',
         voucherstate : 'new',
         },
@@ -23,50 +25,62 @@ exports.create={
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode :'101asdf' ,
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '121asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '141asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '151asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '161asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '171asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '181asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '191asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '122asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '132asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '142asdf',
         voucherstate : 'new',
         }, 
         {
+        voucheramount : 1,
         vouchercode : '152asdf',
         voucherstate : 'new',
         } ],
@@ -81,7 +95,7 @@ exports.create={
         province : 'gauteng_1',
         password : 'password1',
         email : 'dist_1@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Distributor'
         
         },        
@@ -95,7 +109,7 @@ exports.create={
         province : 'gauteng_2',
         password : 'password1',
         email : 'dist_2@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Distributor'
         
         },        {
@@ -108,7 +122,7 @@ exports.create={
         province : 'gauteng_3',
         password : 'password3',
         email : 'dist_3@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Distributor'
         
         },        {
@@ -121,7 +135,7 @@ exports.create={
         province : 'gauteng_4',
         password : 'password4',
         email : 'dist_4@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Distributor'
         
         },       {
@@ -134,7 +148,7 @@ exports.create={
         province : 'gauteng_5',
         password : 'password5',
         email : 'dist_1@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Distributor'
         
         },      
@@ -148,7 +162,7 @@ exports.create={
         province : 'gauteng_1',
         password : 'password1',
         email : 'seller_1@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Seller'
         
         },
@@ -162,7 +176,7 @@ exports.create={
         province : 'gauteng_2',
         password : 'password2',
         email : 'seller_1@streetwifiy.co.za',
-        credit : 10,
+        credits : 10,
         usertype : 'Seller'
         
         },
@@ -176,7 +190,7 @@ exports.create={
         province : 'gauteng_3',
         password : 'password3',
         email : 'seller_3@streetwifiy.co.za',
-        credit : 50,
+        credits : 50,
         usertype : 'Seller'
         
         },
@@ -190,7 +204,7 @@ exports.create={
         province : 'gauteng_4',
         password : 'password4',
         email : 'seller_1@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Seller'
         
         },
@@ -204,7 +218,7 @@ exports.create={
         province : 'gauteng_5',
         password : 'password5',
         email : 'seller_5@streetwifiy.co.za',
-        credit : 100,
+        credits : 100,
         usertype : 'Seller'
         
         } ]

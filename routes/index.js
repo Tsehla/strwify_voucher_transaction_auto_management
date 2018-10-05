@@ -170,10 +170,10 @@ keystone.get('routes', function(app){
             
         var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds.toString().replace(/ /g, '');
        
-//            
-        console.log('-----------------------');
-        console.log(seach_code_);
-        console.log('-----------------------'); 
+////            
+//        console.log('-----------------------');
+//        console.log(seach_code_);
+//        console.log('-----------------------'); 
     
             
             
@@ -245,10 +245,10 @@ keystone.get('routes', function(app){
             
         var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds;
 //            
-        console.log('-----------------------');
-        console.log(seach_code_);
-        console.log('-----------------------'); 
-    
+//        console.log('-----------------------');
+//        console.log(seach_code_);
+//        console.log('-----------------------'); 
+//    
             
             
         /* serach to make sure the unique code is not used already */
@@ -281,7 +281,7 @@ keystone.get('routes', function(app){
             if(response == null){
                return res.jsonp('error Selling voucher');
             }  
-            console.log(response);
+          //  console.log(response);
           
                 
             
@@ -291,7 +291,7 @@ keystone.get('routes', function(app){
                 response.soldby = req.query.seller_id;
                 response.soldto = seach_code_;
                 response.save();
-            
+                        
         });
         //on error throw error
         
@@ -304,7 +304,20 @@ keystone.get('routes', function(app){
       
       
   });  
-    
+/*=======================================
+
+    Seller subtract points function
+
+=======================================*/
+    function voucher_sell_subtract_amount(userId, voucherValue){
+        
+        
+        
+       // keystone.get
+        
+        
+        
+    }
     
     
 /*========================================
