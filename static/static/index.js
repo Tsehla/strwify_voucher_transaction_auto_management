@@ -290,7 +290,16 @@ function sell_ticket(){
         
         var url= 'http://127.0.0.1:4100/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '127.0.0.1:4100' to live domain
     
-    console.log(url);
+    //console.log(url);
+    //check voucher input length
+    if(seller_code_input.value.length < 8 || seller_code_input.value.length > 9){
+    return dom_innerHtml('firth_page_sell_menu_header', 'Please re-check "Code from buyer"'); 
+    }    
+    
+    //check amount input length
+    if(seller_voucher_amount_input.value.length > 4){
+    return dom_innerHtml('firth_page_sell_menu_header', 'Please re-check "Ticket amount"'); 
+    }
     
     if(seller_login.credit >= seller_voucher_amount_input.value){//check if credit amount is enought to sell ticket
     
@@ -300,22 +309,33 @@ function sell_ticket(){
            
            if(status == 'success'){
               
-
-               return dom_innerHtml('firth_page_sell_menu_header', response);
+                // res.jsonp = {status : 'voucher sold for R'+seller_voucher_amount_, new_credit : response.credits}
                
+               //if no error resulted at the back//change front values
+               if(response.new_credit != 'no_value_change'){
+                   
+                seller_login.credit = response.new_credit;
+                dom_innerHtml('firth_page_seller_amount', response.new_credit); 
+                   
+               }
+               
+                dom_innerHtml('firth_page_sell_menu_header', response.status);
+                return null;
+             
            }
            
            else{
              return dom_innerHtml('firth_page_sell_menu_header', 'error producing ticket code'); 
            }
        });  
-               
+           return null;    
 }
+    
+//
     
     dom_innerHtml('firth_page_sell_menu_header', 'Please recharge your account'); 
     
 }
-
 
 
 /*______________________________________________________________________________________________________________________________________________________
@@ -341,7 +361,7 @@ ________________________________________________________________________________
     
 =====================================================================================================================================================*/
 
-var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+//var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++ account login +++++++++++++++++++++++++++++++++++++++++++++*/
 function fourth_page_seller_login(){

@@ -257,15 +257,15 @@ keystone.get('routes', function(app){
             .where({soldto : seach_code_, voucherstate : 'used'})
             .exec( function(error, response){
             if(error){
-                   return res.jsonp('sorry Please try again, later');
+                   return res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
              if(response == null){
                  
                  return write_sell_toDB()
                
             }
-                consoe.log(response);
-                return res.jsonp('this code is used, Try a new code..');
+               // console.log(response);
+                return res.jsonp({status : 'this code is used, Try a new code..', new_credit : 'no_value_change'});
         });
             
             
@@ -276,25 +276,27 @@ keystone.get('routes', function(app){
             .where({voucheramount : seller_voucher_amount_, voucherstate : 'new'})
             .exec( function(error, response){
             if(error){
-               return res.jsonp('sorry Please try again, later');
+               return res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
             if(response == null){
-               return res.jsonp('error Selling voucher');
+               return res.jsonp({status : 'error Selling voucher', new_credit : 'no_value_change'});
             }  
           //  console.log(response);
           
                 
             
-              res.jsonp('voucher sold for R'+seller_voucher_amount_); 
+             // res.jsonp('voucher sold for R'+seller_voucher_amount_); 
               
                 response.voucherstate = 'used';
                 response.soldby = req.query.seller_id;
                 response.soldto = seach_code_;
                 response.save();
-                        
+            
+                var seller_id = req.query.seller_id;
+               // var seller_voucher_amount  = seller_voucher_amount_;
+                voucher_sell_subtract_amount(seller_id, seller_voucher_amount_, res);        
         });
         //on error throw error
-        
         
         //on sucess, create voucher on the front
              
@@ -306,18 +308,39 @@ keystone.get('routes', function(app){
   });  
 /*=======================================
 
-    Seller subtract points function
+    Seller subtract points & update function
 
 =======================================*/
-    function voucher_sell_subtract_amount(userId, voucherValue){
+    function voucher_sell_subtract_amount(userId, voucherValue, res){  
         
+       keystone.list('seller distributor').model.findOne()
+        .where({idnumber : userId, usertype : 'Seller'})
+        .exec(function(err, response){
+            if(err){return res.jsonp({status : 'voucher sell subtract error  : '+error, new_credit : 'no_value_change'})}
+            if(response == null){ return res.jsonp({status : 'voucher sell subtract : null', new_credit : 'no_value_change'})};
+           //subtract creitd and save
+            response.credits = response.credits - voucherValue;
+            response.save( function(err, success){
+            if(err){return res.jsonp({status : 'voucher sold for R'+voucherValue, new_credit : 'no_value_change'})}   
+               
+            if(success != null){
+                // update credit status
+                res.jsonp({status : 'voucher sold for R'+voucherValue, new_credit : success.credits});
+                return null;
+                    
+            }
+             //if the was error updating db, 
+              res.jsonp({status : 'voucher sold for R'+voucherValue, new_credit : 'no_value_change'});  
+                   
+                
+            });
+
+       });
         
-        
-       // keystone.get
-        
-        
-        
+
     }
+    
+    
     
     
 /*========================================
