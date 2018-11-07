@@ -35,17 +35,18 @@ keystone.get('routes', function(app){
       
         
         //if error --- return alert error back
-        var user_type = req.query.usertype;
+        var userType = req.query.usertype;
+        var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
         var user_id = req.query.id_number;
         
-        /* seller login */
-        if(user_type == 'seller'){
+        /* seller login  and distributor login */
+       // if(user_type == 'seller'){
             
         //if sucess login
-            keystone.list('seller distributor').model.findOne({idnumber:user_id, usertype:'Seller'})
+            keystone.list('seller distributor').model.findOne({idnumber:user_id, usertype : user_type })
             .exec(
             function (error, response){
-                
+            if(error){res.jsonp('User Not found');}    
             if(response == null){
                 res.jsonp('User Not found')
             }
@@ -54,11 +55,11 @@ keystone.get('routes', function(app){
             }   
                 
                 
-            } );
+            });
             
             
         //if user is seller--- show seller porpulated options
-        }
+     //   }
         
         /* distributor login 8*/
         //if sucess login
@@ -67,9 +68,75 @@ keystone.get('routes', function(app){
         
     });
     
-    //distributor or seller transact
+/* ======================================================
+    
+//distributor or seller password hint
+    
+======================================================= */
+ 
+    
+    
+    app.get('/password_hint', function(req, res){
+        
+        
+       
+    //'http://127.0.0.1:4100/password_hint?usertype=seller&id_number='+id_number+&user_name='+user_name;
+    
+    var userType = req.query.usertype;
+    var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
+    var user_id = req.query.id_number;
+    var user_name = req.query.user_name;    
+        
+        
+        
+    //if user_type == seller
+   // if(user_type == 'seller'){
+        
+      keystone.list('seller distributor').model.findOne().where({idnumber : user_id, usertype : user_type}).exec(
+      
+      function(error, response){
+        console.log(response.name+response.surname);
+         var name = response.name+response.surname;
+          
+        if(error){ return res.jsonp('User Not found');}
+        if(response ==  null || response == ''){ return res.jsonp('User Not found')};
+        if(name.trim().toLocaleLowerCase() == user_name.trim().toLocaleLowerCase()){ //if name match user provided name too
+            return res.jsonp(response);
+        }
+          res.jsonp('User Not found');
+          
+      })
+        
+        
+   // }
+        
+        
+        
+    //if user type == distributor do 
+    //do only
+        
+        
+        
+    });
+    
+    
+/* ======================================================
+    
+ //distributor or seller password hint
+    
+=======================================================*/
+    
+   
     
     app.get('/transact', function(req, res){
+        
+        
+    //'http://127.0.0.1:4100/password_hint?usertype=seller&id_number='+id_numberr&user_name='+user_name;
+    
+    var user_type = req.query.usertype;
+    var user_id = req.query.id_number;
+        
+        
     //if user_type == seller
     //do only
         
@@ -81,6 +148,11 @@ keystone.get('routes', function(app){
         
         
     });
+    
+    
+    
+    
+    
     
     
     

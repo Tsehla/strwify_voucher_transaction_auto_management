@@ -9,8 +9,8 @@ ________________________________________________________________________________
 =====================================================================================================================================================*/
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++  get url and route ++++++++++++++++++++++++++++++++++++++++
-var current_url= window.location.pathname;
-
+var current_url= window.location.pathname;//content after domain 
+var current_domain = window.location.host;//domain en port//use this on live
 /*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
 function dom_hide_show(showORhide, div){
     
@@ -73,7 +73,7 @@ function seller_sell_menu(){
 /*=====================================================================================================================================================
     Internal navigation
 =====================================================================================================================================================*/
-var current_domain = window.location.hostname;
+
 
 /* voucher buy link */
 function buy_voucher(){
@@ -452,9 +452,78 @@ function fourth_page_seller_login(){
 
 /*+++++++++++++++++++++++++++++++++++++++++++++ Show password +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-function fourth_page_seller_show_password_hint(){
-    alert('seller password hint');  
+function fourth_page_seller_show_password_hint(){ //seller password hint
+    
+    // http://127.0.0.1:4100/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
+    
+  //  alert('seller password hint HERE');  
  
+    var id_number = document.getElementById('fourth_page_seller_password_hint_id').value;
+    var userName = document.getElementById('fourth_page_seller_password_hint_name').value;
+  //  var user_name = userName.replace(/' '/g, '');//combine names// remove space//================= make it global get space char
+    var user_name = userName.trim().replace(' ', '');//combine names// remove space
+    
+    
+    if(user_name == '' || id_number.length != 13 ){
+        document.getElementById('fourth_page_password_hint_header').innerHTML = 'Please verify provided details';
+        return null;
+    }
+    
+    var url = 'http://'+current_domain+'/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
+    
+     $.get(url, function(response, status){
+         console.log(' res : '+response);
+         console.log(' status : '+status);
+          if(status == 'success'){
+              if(response == 'User Not found'){
+                   document.getElementById('fourth_page_seller_password_hint').innerHTML = 'Cant find "HINT" using given details';
+                  return null;
+                  
+              }
+             // document.getElementById('fourth_page_seller_password_hint').innerHTML= response.password;
+              var password = response.password;
+              password_scramble(password);
+              
+              return null;
+          }
+         
+         document.getElementById('fourth_page_seller_password_hint').innerHTML = 'Cant find "HINT" using given details';
+         return null;
+         
+         
+     });
+    
+    function password_scramble(password){
+        
+        var password_to_array = password.split("");
+        var scrambled_password = password_to_array;
+        
+        for(var i = 0; i <= scrambled_password.length; i++){
+            
+          //  scrambled_password.splice(2, 0,'*');
+            if(i % 2 == 0){
+                scrambled_password.splice(i, 1,'*');
+              //  console.log(scrambled_password[i]);
+            }
+            
+            
+            if(i==scrambled_password.length){
+                //console.log(scrambled_password);
+                document.getElementById('fourth_page_seller_password_hint').innerHTML=scrambled_password.toString().replace(/,/g,'');
+                break;
+            }
+            
+            
+            
+        }
+        
+        
+    }
+    
+    
+  /*  
+    
+    
         var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+ unique_code;
     
         $.get(url, function(response, status){
@@ -484,6 +553,22 @@ function fourth_page_seller_show_password_hint(){
            
                
            });
+    
+    
+    
+    
+    
+    
+    */
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
