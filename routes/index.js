@@ -95,11 +95,11 @@ keystone.get('routes', function(app){
       keystone.list('seller distributor').model.findOne().where({idnumber : user_id, usertype : user_type}).exec(
       
       function(error, response){
-        console.log(response.name+response.surname);
-         var name = response.name+response.surname;
-          
+       // console.log(response.name+response.surname);
+    
         if(error){ return res.jsonp('User Not found');}
         if(response ==  null || response == ''){ return res.jsonp('User Not found')};
+        var name = response.name+response.surname;
         if(name.trim().toLocaleLowerCase() == user_name.trim().toLocaleLowerCase()){ //if name match user provided name too
             return res.jsonp(response);
         }
@@ -122,23 +122,62 @@ keystone.get('routes', function(app){
     
 /* ======================================================
     
- //distributor or seller password hint
+ //distributor or seller password change
     
 =======================================================*/
     
    
-    
-    app.get('/transact', function(req, res){
+
+
+        
+    app.get('/password_change', function(req, res){
         
         
-    //'http://127.0.0.1:4100/password_hint?usertype=seller&id_number='+id_numberr&user_name='+user_name;
+       
+   // var url = 'http://'+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
-    var user_type = req.query.usertype;
+    var userType = req.query.usertype;
+    var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
     var user_id = req.query.id_number;
+    var old_password = req.query.old_password.trim();   
+    var new_password = req.query.new_password.trim();  //making all passwords to lowercase
+        
         
         
     //if user_type == seller
-    //do only
+   // if(user_type == 'seller'){
+      keystone.list('seller distributor').model.findOne().where({idnumber : user_id, usertype : user_type, password : old_password}).exec(
+      
+      function(error, response){
+       // console.log(response);
+         
+          
+        if(error){ return res.jsonp('User Not found');}
+        if(response ==  null || response == ''){ return res.jsonp('User Not found')}
+        var password = response.password;
+        if(password.trim().toLocaleLowerCase() == old_password.trim().toLocaleLowerCase()){ //if password match user provided password too
+            
+          response.password = new_password.toLowerCase();
+          response.save(function(err, results){ //change password save
+             // console.warn(results);
+              if(err){
+                  return res.jsonp('Error changing password');
+              }
+              if(results ==  null || results == ''){
+                  return res.jsonp('Error changing password');
+              }
+              
+              return res.jsonp(results);
+          });  
+            
+            return null;
+        }
+        return res.jsonp('User Not found');
+          
+      })
+        
+        
+   // }
         
         
         
@@ -148,8 +187,6 @@ keystone.get('routes', function(app){
         
         
     });
-    
-    
     
     
     

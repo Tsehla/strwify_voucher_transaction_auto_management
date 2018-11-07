@@ -32,15 +32,23 @@ var seller_distributor_model = new keystone.List(seller_distributor);
 seller_distributor_model.add({
     name: {type :String, initial:true, required:true },
     surname : {type :String, initial:true, required:true },
-    idnumber : {type : Number, initial:true, required:true, label :'ID Number'},
-    contact : {type : types.TextArray, initial:true, required:true, label :'Contact Number(s)'},
-    address :{type :types.Textarea, initial:true, required:true, label :'Living address' },
-    city :{type :String, initial:true, required:true, label :'City' },
-    province :{type :String, initial:true, required:true, label :'Province' },
-    password : {type: String, required:true, initial:true, label :'Password'},
+    //idnumber : {type : Number, initial:true, required:true, label :'ID Number'},
+    idnumber : {type : Number, label :'ID Number'},
+   // contact : {type : types.TextArray, initial:true, required:true, label :'Contact Number(s)'},
+    contact : {type : types.TextArray, label :'Contact Number(s)'},
+   // address :{type :types.Textarea, initial:true, required:true, label :'Living address' },
+    address :{type :types.Textarea, label :'Living address' },
+    //city :{type :String, initial:true, required:true, label :'City' },
+    city :{type :String, label :'City' },
+    //province :{type :String, initial:true, required:true, label :'Province' },
+    province :{type :String, label :'Province' },
+    //password : {type: String, required:true, initial:true, label :'Password'},
+    password : {type: String, label :'Password'},
     email : {type : types.Email, label :'Email (optional)'},
-    credits : {type : Number, initial:true, required:true, default:0, label :'Credit Amount'},
-    usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
+    //credits : {type : Number, initial:true, required:true, default:0, label :'Credit Amount'},
+    credits : {type : Number, default:0, label :'Credit Amount'},
+    //usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
+    usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', default :'Seller', label :'Type of User' }
     
     
 });

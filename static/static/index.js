@@ -400,7 +400,7 @@ function fourth_page_seller_login(){
                
                else{//+++++++++++++++++++++++++++check password+++++++++++++++++++++++++++
                    
-                   if(response.password == seller_password.value){   
+                   if(response.password == seller_password.value.toLowerCase()){ //changed passwaord case//passwaord is saved as small case also  
                        
 /*++++++++++++++++++++++++ porpulate vars used for creating field when voucher is sold +++++++++++++++++++++++*/
                        
@@ -499,20 +499,23 @@ function fourth_page_seller_show_password_hint(){ //seller password hint
         var scrambled_password = password_to_array;
         
         for(var i = 0; i <= scrambled_password.length; i++){
-            
-          //  scrambled_password.splice(2, 0,'*');
-            if(i % 2 == 0){
+//            
+//          //  scrambled_password.splice(2, 0,'*');
+//            if(scrambled_password[i] == '^'){// ERRor this is not formatted correctly [ hello there my name is tsehla ]
+//               scrambled_password.splice(i, 1,'&nbsp');
+//                return null;
+//            }//
+            if(i % 2 == 0 ){
                 scrambled_password.splice(i, 1,'*');
               //  console.log(scrambled_password[i]);
             }
             
             
-            if(i==scrambled_password.length){
+            if(i==scrambled_password.length -1 ){
                 //console.log(scrambled_password);
-                document.getElementById('fourth_page_seller_password_hint').innerHTML=scrambled_password.toString().replace(/,/g,'');
+                document.getElementById('fourth_page_seller_password_hint').innerHTML=scrambled_password.toString().replace(/,/g,'&nbsp;');
                 break;
             }
-            
             
             
         }
@@ -580,6 +583,67 @@ function fourth_page_seller_show_password_hint(){ //seller password hint
 
 function fourth_page_seller_change_password(){
     
+    
+    
+    
+    
+      // http://127.0.0.1:4100/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+    
+ 
+    var id_number = document.getElementById('fourth_page_seller_change_password_id').value;
+    var old_password = document.getElementById('fourth_page_seller_change_password_old_password').value;
+    var new_password = document.getElementById('fourth_page_seller_change_password_new_password').value;
+
+   
+    
+    
+    if(old_password == '' || new_password == '' || id_number.length != 13 ){
+        document.getElementById('fourth_page_seller_change_password_header').innerHTML = 'Please verify provided details';
+        return null;
+    }
+    
+    var url = 'http://'+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+    
+     $.get(url, function(response, status){
+         console.log(' res : '+response);
+         console.log(' status : '+status);
+          if(status == 'success'){
+              if(response == 'User Not found'){
+                   document.getElementById('fourth_page_seller_change_password_header').innerHTML = 'Cant "Change Password" using given details';
+                  return null;
+                  
+              }
+              if(response == 'Error changing password'){
+                   document.getElementById('fourth_page_seller_change_password_header').innerHTML = 'Error changing password';
+                  return null;
+                  
+              }
+             
+              document.getElementById('fourth_page_seller_change_password_header').innerHTML= "Password Changed";
+              
+              return null;
+          }
+         
+         document.getElementById('fourth_page_seller_change_password_header').innerHTML = 'Cant "Change Password" using given details';
+         return null;
+         
+         
+     });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
+    
     alert('seller change password');
     
     
@@ -612,6 +676,8 @@ function fourth_page_seller_change_password(){
            
                
    });
+    
+    */
     
 }
 

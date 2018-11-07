@@ -229,30 +229,36 @@ distributor login
   </b>
 </p>
 
-  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id = "fourth_page_seller_password_hint_id">
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id = "fourth_page_seller_password_hint_id" onclick='alert("Please make sure your Password Hint is not easy to gues, if so change your password to change password Hint")'>
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control" id ="fourth_page_seller_password_hint_name" >
   <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
    <p  id="fourth_page_seller_password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
        Hint : scroll >>>
    </p>
 </div>
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="fourth_page_seller_show_password_hint()">Show</button>
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="fourth_page_seller_show_password_hint()">Show Hint</button>
     
 </div><!--login wrapper end -->
 
 
 
+     
+     
+
+     
+     
 <!-- login wrapper Start -->
-<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
-  <b>
+  <b id="fourth_page_seller_change_password_header">
      change password
   </b>
 </p>
 
-  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" >
-  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="fourth_page_seller_change_password()">Log In</button>
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id="fourth_page_seller_change_password_id">
+  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter old Sentence Password' class="form-control" id="fourth_page_seller_change_password_old_password">
+  <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter new Sentence Password' class="form-control" id="fourth_page_seller_change_password_new_password" onclick="alert('Please test your password Hint, or change password again to get a new Hint\n\nA password can be a sentence\nExample :\nhello streetWiFiy')">
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="fourth_page_seller_change_password()">Change Password</button>
     
 </div><!--login wrapper end -->
 
