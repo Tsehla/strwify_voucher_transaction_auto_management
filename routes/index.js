@@ -191,8 +191,34 @@ keystone.get('routes', function(app){
     
     
     
+ /*============================================    
+    
+seller or distributor console, credt auto_voucher_check
+
+ ==============================================*/
+
+
     
     
+    app.get("/api/console_amount_activity", function(req, res){
+        
+    //    var url =  "http://127.0.0.1:4100/api/console_amount_activity?user_type=seller&idnumber="+seller_login.seller_id;
+        
+   var user_type = req.query.user_type;
+   var userType = user_type.replace(user_type[0], user_type[0].toUpperCase());
+        
+        keystone.list('seller distributor')
+        .model.findOne({idnumber : req.query.idnumber, usertype : userType })
+        .exec(function(err, response){
+            if(err){ return res.jsonp("no data");}
+            if(response == null || response == '' || response == undefined){
+                return res.jsonp("no data");
+            }
+            
+            return res.jsonp(response);
+        });
+        
+    })
     
     
     

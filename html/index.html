@@ -300,13 +300,15 @@ distributor login
         
     </div>
     <div id = "seller_activity_console_header_current_balance" style="width: Calc(93vw/3); color: white; font-size: 13px; height: 9vh; text-align: center; vertical-align: middle;line-height: 10vh; margin: 0px; padding: 0px; border-right: 1px solid white; display: inline-block">
-    CURRENT BALANCE : <b>0.00</b>
+    CURRENT BALANCE : <b id='seller_console_new_balance_amount'>0.00</b>
         
     </div>
-    <div id = "seller_activity_console_header_current_balance" style="width: Calc(93vw/3); color: white; font-size: 13px; height: 9vh; text-align: center; vertical-align: middle;line-height: 10vh; margin: 0px; padding: 0px; display: inline-block">
-    <button style="width: Calc(93vw/3); height: 100%;" class="btn btn-primary" onclick='seller_activity_console_close()'>EXIT</button>
+    <div id = "seller_activity_console_header_current_balance" style="width: Calc(93%/3); color: white; font-size: 13px; height: 9vh; text-align: center; vertical-align: middle;line-height: 10vh; margin: 0px; padding: 0px; display: inline-block">
+    <button style="width: 100%; height: 100%;" class="btn btn-primary" onclick='seller_activity_console_close()'>EXIT</button>
         
     </div>
+    
+
     
 <script>
     function seller_activity_console_open (){//seller activity console
@@ -318,15 +320,20 @@ distributor login
     function seller_activity_console_close (){
         
         document.getElementById('seller_activity_console_wrapper').style.display = 'none';
+        seller_activity_console_stop_interval();//not working +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         
     }
     
 </script>
-    
 
-    
-    
+ 
 </div>
+    
+    <div id='seller_activity_console_body' style="width : auto; height: 100%; margin: 0px; padding: 0px; color : whitesmoke">
+    
+    
+    
+    </div>
     
     
     

@@ -345,18 +345,103 @@ ________________________________________________________________________________
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var seller_activity_console_current_credit = seller_login.credit;//keep track changing account credits
+var seller_activity_console_first_run = true;//console first open loger
+
+
 function seller_activity_console_fn (){//seller console function
-    
+ 
     document.getElementById('seller_console_old_balance_amount').innerHTML = seller_login.credit;//set credit captured when console open
     
+var seller_activity_console_periodic_timer = setInterval(seller_activity_console_fn_extended_1, 2000);
+    
+    
+    function seller_activity_console_fn_extended_1 (){
+    
+    //var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+
+    var url =  "http://127.0.0.1:4100/api/console_amount_activity?user_type=seller&idnumber="+seller_login.seller_id;
+    
+    if(seller_login.logged_in == true){//if user is logged in
+        
+        $.get(url, function(response, status){//check/get seller account current credit
+           
+            
+           if(status == 'success'){
+               
+               if(response == "no data"){ return document.getElementById('firth_page_sell_menu_header').innerHTML= "<b style='color:red'>Error getting amount, Try again later</b>"; }
+               
+                              
+               if(Number(response.credits) != Number(seller_activity_console_current_credit)){//if current credit is not equal previous credits
+                   
+                   if(seller_activity_console_first_run == true){//first run on console open
+                       seller_activity_console_current_credit = Number(response.credits);
+                       document.getElementById("seller_activity_console_body").innerHTML = "<p style='width : auto; display : block; font-size : 13px; color : green'>Waiting for activity in your account</p>";                       
+                       seller_activity_console_first_run = false;
+                       return null;
+                   }
+                   
+               
+               if(Number(response.credits) < Number(seller_activity_console_current_credit)){
+                  // alert(1)
+                   $("#seller_activity_console_body").append("<p style='width : auto; display : block; font-size : 13px; color : red;'>Money used : R"+(Number(seller_activity_console_current_credit) - Number(response.credits))+"</p>")
+                   
+                   
+               }
+               if(Number(response.credits) > Number(seller_activity_console_current_credit)){
+                  // alert(2)
+                   $("#seller_activity_console_body").append("<p style='width : auto; display : block; font-size : 13px; color : red;'>Money added : R"+(Number(response.credits) - Number(seller_activity_console_current_credit))+"</p>");
+                 
+                   
+               }
+               
+               
+               seller_activity_console_current_credit = Number(response.credits);
+               document.getElementById("seller_console_new_balance_amount").innerHTML = response.credits;
+               
+           }
+               return null;
+               
+           }
+            
+            document.getElementById('firth_page_sell_menu_header').innerHTML= "<b style='color:red'>Error getting amount, Try again later</b>";
+            return null;
+                 
+             });
+        
+              }
+    else{
+        document.getElementById('firth_page_sell_menu_header').innerHTML= "<b style='color:red'>Authentication error</b>";
+    }
+    
     
 }
-function seller_activity_console_fn_extended_1 (){
-    
 
 }
 
-
+function seller_activity_console_stop_interval(){//stop interval timer
+    
+        clearInterval(seller_activity_console_periodic_timer);
+}
+        
 /*______________________________________________________________________________________________________________________________________________________
   
   Login Seller & || buyer
