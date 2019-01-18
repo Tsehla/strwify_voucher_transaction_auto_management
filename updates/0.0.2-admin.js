@@ -12,47 +12,64 @@ exports.create={
     'Voucher Codes' : [
         {
         voucheramount : 1,
-        vouchercode :'123asdf' ,
+        vouchercode :'123asdf',
         voucherstate : 'new',
+	
         },
         {
         voucheramount : 1,
         vouchercode : '456asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         },
         {
         vouchercode : '789asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode :'101asdf' ,
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode : '121asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode : '141asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode : '151asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode : '161asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode : '171asdf',
         voucherstate : 'new',
+		voucherprofile : '150 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,

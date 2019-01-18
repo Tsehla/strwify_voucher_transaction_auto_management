@@ -195,7 +195,7 @@ function auto_voucher_check(uniqueCode){
                var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+JSON.stringify(response.vouchercode)+"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
                 stop_auto_voucher_check();//timer stop
-                voucher_print();//print voucher
+                voucher_print(response);//print voucher
                }
            }
            
@@ -228,6 +228,8 @@ function stop_auto_voucher_check(){
 manual voucher check/download
 
 ========================================================================================================================================================*/
+
+
 function manual_voucher_init(){
         
         var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+ unique_code;
@@ -244,10 +246,11 @@ function manual_voucher_init(){
                }
                
                if(response != 'Voucher Not found'){
-                dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
+
+				dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
                var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+response+"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
-               voucher_print();//print voucher
+               voucher_print(response);//print voucher
                }
            }
            
@@ -267,8 +270,47 @@ voucher printing
 
 =========================================================================================================================================================*/
 
-function voucher_print(){
-    alert('voucher print fn');
+function voucher_print(response){
+   // alert('voucher print fn');
+	
+				var voucher_pin = response.vouchercode;
+				var voucher_profile = response.voucherprofile;
+				var voucher_expiry_days = response.voucherexpiry;
+				var voucher_amount_cost = response.voucheramount;
+
+				var ticket_canvas = document.getElementById('ticket_canvas');
+				var canvas_type = ticket_canvas.getContext('2d');
+				var ticket_outline = document.getElementById('ticket_outline');
+				canvas_type.drawImage(ticket_outline, 0, 0);
+				canvas_type.font= '16px Arial';
+				canvas_type.fillText(voucher_pin, 90, 37);
+				canvas_type.font= '18px Arial';
+				canvas_type.fillText(':', 80, 37);
+				canvas_type.font= '13px Arial';
+				canvas_type.fillText(voucher_profile, 55, 50);
+				canvas_type.font= '13px Arial';
+				canvas_type.fillText(voucher_expiry_days, 65, 65);
+				canvas_type.font= '40px Arial';
+				canvas_type.fillText('R' + voucher_amount_cost, 25, 105);
+			
+
+		
+			
+			
+				
+				var ticket_canvas = document.getElementById('ticket_canvas');
+				document.location.href= ticket_canvas.toDataURL('image/jpg').replace('img/jpg', 'image/octet-stream');
+				
+				//picture storing
+				
+				var download_link = document.createElement('a');
+				download_link.download = 'Ticket _ '+ voucher_profile +' _  ' + voucher_pin + ' _ ' + 'R' + voucher_amount_cost + ' _';
+				download_link.href = ticket_canvas.toDataURL('image/jpg').replace('image/jpg', 'image/octed-stream');
+				download_link.click()
+				//download_link.clicked();
+	
+	
+	
 }
 
 
