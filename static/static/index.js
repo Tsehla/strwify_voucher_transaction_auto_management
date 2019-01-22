@@ -151,7 +151,7 @@ generate unique random code
 
 function buy_page_on_init(){ 
    
-    var url= 'http://127.0.0.1:4100/api/buy?code=unique_code';//change '127.0.0.1:4100' to live domain
+    var url= 'https://' + current_domain + '/api/buy?code=unique_code';//change '' + current_domain + '' to live domain
     
     
        $.get(url, function(response, status){//response contain unique code
@@ -180,7 +180,7 @@ start timer for auto voucher download
     
 function auto_voucher_check(uniqueCode){
         unique_code = uniqueCode;
-        var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '127.0.0.1:4100' to live domain
+        var url= 'https://' + current_domain + '/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '' + current_domain + '' to live domain
         
         var response = uniqueCode;
 
@@ -232,7 +232,7 @@ manual voucher check/download
 
 function manual_voucher_init(){
         
-        var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+ unique_code;
+        var url= 'https://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
     
         $.get(url, function(response, status){
            
@@ -330,7 +330,7 @@ function sell_ticket(){
     
     
         
-        var url= 'http://127.0.0.1:4100/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '127.0.0.1:4100' to live domain
+        var url= 'https://' + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -420,7 +420,7 @@ var seller_activity_console_periodic_timer = setInterval(seller_activity_console
     
     //var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
-    var url =  "http://127.0.0.1:4100/api/console_amount_activity?user_type=seller&idnumber="+seller_login.seller_id;
+    var url =  'https://' + current_domain + '/api/console_amount_activity?user_type=seller&idnumber='+seller_login.seller_id;
     
     if(seller_login.logged_in == true){//if user is logged in
         
@@ -533,8 +533,8 @@ function fourth_page_seller_login(){
     }
             
             
-        //change [http://127.0.0.1:4100] url to live server url
-        var url= 'http://127.0.0.1:4100/login?usertype=seller&id_number='+seller_id.value;
+        //change [https://' + current_domain + '] url to live server url
+        var url= 'https://' + current_domain + '/login?usertype=seller&id_number='+seller_id.value;
     
         $.get(url, function(response, status){
            
@@ -600,7 +600,7 @@ function fourth_page_seller_login(){
 
 function fourth_page_seller_show_password_hint(){ //seller password hint
     
-    // http://127.0.0.1:4100/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
+    // https://' + current_domain + '/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
     
   //  alert('seller password hint HERE');  
  
@@ -615,7 +615,7 @@ function fourth_page_seller_show_password_hint(){ //seller password hint
         return null;
     }
     
-    var url = 'http://'+current_domain+'/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
+    var url = 'https://' + current_domain + '/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -673,7 +673,7 @@ function fourth_page_seller_show_password_hint(){ //seller password hint
   /*  
     
     
-        var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+ unique_code;
+        var url= 'https://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
     
         $.get(url, function(response, status){
            
@@ -733,7 +733,7 @@ function fourth_page_seller_change_password(){
     
     
     
-      // http://127.0.0.1:4100/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+      // https://' + current_domain + '/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
  
     var id_number = document.getElementById('fourth_page_seller_change_password_id').value;
@@ -748,7 +748,7 @@ function fourth_page_seller_change_password(){
         return null;
     }
     
-    var url = 'http://'+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+    var url = 'https://'+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -793,7 +793,7 @@ function fourth_page_seller_change_password(){
     alert('seller change password');
     
     
-        var url= 'http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code='+ unique_code;
+        var url= 'https://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
     
         $.get(url, function(response, status){
            

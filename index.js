@@ -1,6 +1,9 @@
-var keyst = require('keystone');
+//ENV VARIABLES
 require('dotenv').config();
+
+var keyst = require('keystone');
 var port = process.env.PORT || 4100;//for local and heroku compartible
+
 keyst.init({
     'cookie secret' : 'gshdjhbdhdjsdhckwndioenw8739n873bd782wdhxbn7ydh7283hd7',
     'auth' : true,
