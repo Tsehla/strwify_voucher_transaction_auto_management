@@ -33,6 +33,9 @@
                #sixth_page{
                display : none;
                }
+		  		#sixth_page_distributor_works{
+               display : none;
+               }
                #seventh_page{
                display : none;
                }
@@ -346,19 +349,6 @@ distributor login
     
      </div>
      
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
 
 </div>
     
@@ -368,86 +358,126 @@ distributor login
  
  </div>
  </div>
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
  
  <!-- ---------distributor------------- --->
  <!-- login --->
  <div id="sixth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="buyer_menu_wrapper">
  <div id='buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b><span style='width:auto; height: auto; padding:0px; margin: 0px' id='sixth_page_login_menu_header'>
+    access account
+      </span>
+  </b>
+</p>
+
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='sixth_page_id_input'>
+  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='sixth_page_password_input'>
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="sixth_page_distributor_login()">Log In</button>
+    
+</div><!--login wrapper end -->
+
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:39vh;background-color:white;box-shadow:3px 3px 2px darkorange, -1px -1px 2px darkorange">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b id ='fourth_page_password_hint_header'> 
+   show password hint
+  </b>
+</p>
+
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id = "sixth_page_seller_password_hint_id" onclick='alert("Please make sure your Password Hint is not easy to gues, if so change your password to change password Hint")'>
+  <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control" id ="sixth_page_seller_password_hint_name" >
+  <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
+   <p  id="sixth_page_seller_password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
+       Hint : scroll >>>
+   </p>
+</div>
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="sixth_page_seller_show_password_hint()">Show Hint</button>
+    
+</div><!--login wrapper end -->  
+     
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b id="sixth_page_seller_change_password_header">
+     change password
+  </b>
+</p>
+
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id="sixth_page_seller_change_password_id">
+  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter old Sentence Password' class="form-control" id="sixth_page_seller_change_password_old_password">
+  <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter new Sentence Password' class="form-control" id="sixth_page_seller_change_password_new_password" onclick="alert('Please test your password Hint, or change password again to get a new Hint\n\nA password can be a sentence\nExample :\nhello streetWiFiy')">
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="sixth_page_seller_change_password()">Change Password</button>
+    
+</div><!--login wrapper end -->
+
+
+<!-- login wrapper Start -->
+<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
+  <b> 
+   forgot password
+  </b>
+</p>
+<p style="width:95vw; height:auto; margin:0px; padding:0px;">
+   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> support@streetwifiy.co.za
+</p>
+
+  
+    
+</div><!--login wrapper end -->
+
+</div>
+   
+
+    <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+    StreetWiFiy
+    </p>
+</div>
+</div>
  
- <!-- login wrapper Start -->
- <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
- <b>
- access account
- </b>
- </p>
- 
- <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
- <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary">Log In</button>
- 
- </div><!--login wrapper end -->
- 
- 
- <!-- login wrapper Start -->
- <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:39vh;background-color:white;box-shadow:3px 3px 2px darkorange, -1px -1px 2px darkorange">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
- <b> 
- show password hint
- </b>
- </p>
- 
- <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
- <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control">
- <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
- <p  id="password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
- Hint : scroll >>>
- </p>
- </div>
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning">Show</button>
- 
- </div><!--login wrapper end -->
- 
- 
- 
- <!-- login wrapper Start -->
- <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
- <b>
- change password
- </b>
- </p>
- 
- <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
- <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control">
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger">Log In</button>
- 
- </div><!--login wrapper end -->
- 
- 
- <!-- login wrapper Start -->
- <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
- <b> 
- forgot password
- </b>
- </p>
- <p style="width:95vw; height:auto; margin:0px; padding:0px;">
- Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> support@streetwifiy.co.za
- </p>
- 
- 
- 
- </div><!--login wrapper end -->
- 
- </div>
- 
- 
- <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
- StreetWiFiy
- </p>
- </div>
- 
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
  
  <!-- transact menu --->
  <div id="seventh_page" style="width:100vw; height: auto"><!-- first page Start -->
@@ -458,24 +488,95 @@ distributor login
  recharge menu
  </b>
  </p>
+	 
+	 
+	 
+<div id='seller_code_screen' style="width 80vw; height:10vh; margin:1vh; padding:0px; border:1px double blue">
+      <p style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
+       Credit : R <span id="firth_page_seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
+    </p>
+    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    Total tickets sold : <span id="ticket_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:13px">Loading...</span>
+    </p>
+    
+</div>
+
   
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control">
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control">
  
  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Recharge amount' class="form-control">
  
- <button class='btn btn-primary' style="width: 80vw; height:10vh; margin: 4vh; padding:0px">
+ <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 2vh; padding:0px">
  Send Recharge
  </button>
  <div style="width:95vw; height: auto; margin:2px; padding 0px; display:flex;">
- <button class='btn btn-danger' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px">
+ <button class='btn btn-danger' style="width: 40vw; height:15h; margin: 2vh 4vw 2vh 4vw; padding:0px" onclick="distributor_works_menu_add_user()">
  Add new Seller <br />ACCOUNT
  </button>
- <button class='btn btn-warning' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px" onclick="alert(`1) Enter ID number of the seller you want to recharge\n2) Enter name and surname of seller you want to Recharge\n\t\t\tExample : John Doe\n\n3) Enter Amount in Rands to Recharge the seller with\n\t\t\tExample : \n\t\t\t\tfor R5.00 Enter 5\n\t\t\t\tfor R10.00 Enter 10\n\t\t\t\tfor R100.00 Enter 100\n\nNB\nAllways make sure the details are for the person you want to recharge`)">
+ <button class='btn btn-warning' style="width: 40vw; height:15vh; margin: 2vh 4vw 2vh 4vw; padding:0px" onclick="alert(`1) Enter ID number of the seller you want to recharge\n2) Enter name and surname of seller you want to Recharge\n\t\t\tExample : John Doe\n\n3) Enter Amount in Rands to Recharge the seller with\n\t\t\tExample : \n\t\t\t\tfor R5.00 Enter 5\n\t\t\t\tfor R10.00 Enter 10\n\t\t\t\tfor R100.00 Enter 100\n\nNB\nAllways make sure the details are for the person you want to recharge`)">
  Help
  </button><!-- turn alert to modal -->
  
  </div>
+	 <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 2vh; padding:0px" onclick='distributor_activity_console_open()'>
+	 	Account Activity
+	 </button>
+ 
+	 <!-----distributor activity console -->
+     
+<div id="distributor_activity_console_wrapper" style="margin:0px 0px 13px 0px; padding:0px; width : 93.9vw; height : 80vh; background-color : black; box-shadow : 3px 3px 2px orange, -1px -1px 2px orange; position : absolute; left : 2.5vw; top :10vh; display : none;">
+
+	<div id="seller_activity_console_header_container" style="width : 93.9vw; height : 10vh; display : block; margin : 30px 0px 10px 0px; padding:0px; border: 2px; border-style: dashed; border-color: whitesmoke; overflow: auto">
+
+		<div id = "seller_activity_console_header_old_balance" style="width: Calc(93vw/3); color: white; font-size: 13px; height: 9vh; text-align: center; vertical-align: middle;line-height: 10vh; margin: 0px; padding: 0px; border-right: 1px solid white; display: inline-block">
+		OLD BALANCE : <b>R </b><b id='seller_console_old_balance_amount'>0.00</b>
+
+		</div>
+		<div id = "seller_activity_console_header_current_balance" style="width: Calc(93vw/3); color: white; font-size: 13px; height: 9vh; text-align: center; vertical-align: middle;line-height: 10vh; margin: 0px; padding: 0px; border-right: 1px solid white; display: inline-block">
+		CURRENT BALANCE : <b id='seller_console_new_balance_amount'>0.00</b>
+
+		</div>
+		<div id = "seller_activity_console_header_current_balance" style="width: Calc(93%/3); color: white; font-size: 13px; height: 9vh; text-align: center; vertical-align: middle;line-height: 10vh; margin: 0px; padding: 0px; display: inline-block">
+		<button style="width: 100%; height: 100%;" class="btn btn-primary" onclick='distributor_activity_console_close()'>EXIT</button>
+
+		</div>
+
+
+
+	<script>
+		function distributor_activity_console_open(){//seller activity console
+
+			document.getElementById('distributor_activity_console_wrapper').style.display = 'block';
+			seller_activity_console_fn (); //init activity console funtion from static script
+
+		} 
+		function distributor_activity_console_close (){
+
+			document.getElementById('distributor_activity_console_wrapper').style.display = 'none';
+			seller_activity_console_stop_interval();//not working +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+		}
+
+	</script>
+
+
+	</div>
+    
+    <div id='seller_activity_console_body' style="width : auto; height: 100%; margin: 0px; padding: 0px; color : whitesmoke">
+    
+    
+    
+    </div>
+    
+    
+    
+     </div>
+	 
+	 
+	 
+	 
+	 
  
  </div>
  
@@ -485,15 +586,18 @@ distributor login
  
  </div>
  </div>
+	   
+	    
  
  <!-- register seller account -->
   <div id="eigth_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
- <b>
- register new seller
- </b>
+	 <b style='width: 70%; display: inline-block'>
+		 register new seller
+	 </b>
+	 <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="distributor_works_menu()"> CLOSE</button>
  </p>
  
  
@@ -504,7 +608,7 @@ distributor login
     <p style='width:100%; height: 3vh; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
           Temporary password for New Seller :
      </p>
-      <p style='width:93vw%; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px'>
+      <p style='width:93vw%; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px' id='seller_new_account_default_password'>
              happy customers lead to rich life
      </p>
 

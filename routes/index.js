@@ -27,7 +27,7 @@ keystone.get('routes', function(app){
 =======================================================*/
     
     
-    //use variable var user=seller or user = distributor
+    //use variable var user=seller or user = distributorD
     
     app.get('/login', function(req, res){
         
