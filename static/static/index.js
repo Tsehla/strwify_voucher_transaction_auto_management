@@ -74,6 +74,7 @@ function distributor_works_menu(){
 
 function distributor_works_menu_add_user(){
        dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('show','eigth_page'); 
+	    
     
 }
 
@@ -149,7 +150,7 @@ var unique_code = null;
     
 =====================================================================================================================================================*/
 
-var distributor_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:''};
 
 
 /*_____________________________________________________________________________________________________________________________________________________
@@ -348,7 +349,7 @@ function sell_ticket(){
     
     
         
-        var url= '://' + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '' + current_domain + '' to live domain
+        var url= 'http://' + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -360,6 +361,12 @@ function sell_ticket(){
     if(seller_voucher_amount_input.value.length > 4){
     return dom_innerHtml('firth_page_sell_menu_header', 'Please re-check "Ticket amount"'); 
     }
+	
+	var seller_voucher_sell_confirm = confirm('Are you sure this Number :'+seller_code_input.value+' is correct for recharge, with R'+seller_voucher_amount_input.value +' ?');
+	
+	if(seller_voucher_sell_confirm == false){
+		return;
+	}
     
     if(seller_login.credit >= seller_voucher_amount_input.value){//check if credit amount is enought to sell ticket
     
@@ -374,12 +381,15 @@ function sell_ticket(){
                //if no error resulted at the back//change front values
                if(response.new_credit != 'no_value_change'){
                    
-                seller_login.credit = response.new_credit;
-                dom_innerHtml('firth_page_seller_amount', response.new_credit); 
-                   
+                	seller_login.credit = response.new_credit;
+                	dom_innerHtml('firth_page_seller_amount', response.new_credit);
+				   	dom_innerHtml('firth_page_sell_menu_header', response.status);
+				   	dom_innerHtml('seller_recharge_status','<span style="color:darkgreen;">Success, Voucher sold to ticket number : '+seller_code_input.value+', for amount : R'+seller_voucher_amount_input.value+'</span>');
+                   return;
                }
                
                 dom_innerHtml('firth_page_sell_menu_header', response.status);
+			   	dom_innerHtml('seller_recharge_status','<span style="color:red">Failure, Voucher not sold for ticket no :'+seller_code_input.value+'</span>');
                 return null;
              
            }
@@ -403,17 +413,17 @@ function sell_ticket(){
   activity console seller && distributor
 _______________________________________________________________________________________________________________________________________________________*/
 
-
+//+++++++++++++++++ seller console
 
 var seller_activity_console_current_credit = seller_login.credit;//keep track changing account credits
 var seller_activity_console_first_run = true;//console first open loger
-
+var seller_activity_console_periodic_timer;
 
 function seller_activity_console_fn (){//seller console function
  
     document.getElementById('seller_console_old_balance_amount').innerHTML = seller_login.credit;//set credit captured when console open
     
-var seller_activity_console_periodic_timer = setInterval(seller_activity_console_fn_extended_1, 2000);
+ seller_activity_console_periodic_timer = setInterval(seller_activity_console_fn_extended_1, 2000);
     
     
     function seller_activity_console_fn_extended_1 (){
@@ -450,7 +460,7 @@ var seller_activity_console_periodic_timer = setInterval(seller_activity_console
                }
                if(Number(response.credits) > Number(seller_activity_console_current_credit)){
                   // alert(2)
-                   $("#seller_activity_console_body").append("<p style='width : auto; display : block; font-size : 13px; color : red;'>Money added : R"+(Number(response.credits) - Number(seller_activity_console_current_credit))+"</p>");
+                   $("#seller_activity_console_body").append("<p style='width : auto; display : block; font-size : 13px; color : blue;'>Money added : R"+(Number(response.credits) - Number(seller_activity_console_current_credit))+"</p>");
                  
                    
                }
@@ -458,6 +468,7 @@ var seller_activity_console_periodic_timer = setInterval(seller_activity_console
                
                seller_activity_console_current_credit = Number(response.credits);
                document.getElementById("seller_console_new_balance_amount").innerHTML = response.credits;
+               document.getElementById("firth_page_seller_amount").innerHTML = response.credits;
                
            }
                return null;
@@ -483,6 +494,102 @@ function seller_activity_console_stop_interval(){//stop interval timer
     
         clearInterval(seller_activity_console_periodic_timer);
 }
+
+
+//+++++++++++++++++++++++++++++ distributeor console
+
+
+var distributor_activity_console_current_credit = distributor_login.credit;//keep track changing account credits
+var distributor_activity_console_first_run = true;//console first open loger
+var distributor_activity_console_periodic_timer;
+
+function distributor_activity_console_fn(){//seller console function
+	
+ 
+    document.getElementById('distributor_console_old_balance_amount').innerHTML = distributor_login.credit;//set credit captured when console open
+    
+	distributor_activity_console_periodic_timer = setInterval(distributor_activity_console_fn_extended_1, 2000);
+    
+    
+    function distributor_activity_console_fn_extended_1 (){
+    
+    //var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+
+    var url =  'http://' + current_domain + '/api/console_amount_activity?user_type=distributor&idnumber='+distributor_login.distributor_id;
+		
+	//console.log(distributor_login.distributor_id);
+	//console.log(distributor_login);
+    
+    if(distributor_login.logged_in == true){//if user is logged in
+        
+        $.get(url, function(response, status){//check/get seller account current credit
+           
+            
+           if(status == 'success'){
+               
+               if(response == "no data"){ return document.getElementById('sixth_page_distributor_menu_header').innerHTML= "<b style='color:red'>Error getting amount, Try again later</b>"; }
+               
+                              
+               if(Number(response.credits) != Number(distributor_activity_console_current_credit)){//if current credit is not equal previous credits
+                   
+                   if(distributor_activity_console_first_run == true){//first run on console open
+                       distributor_activity_console_current_credit = Number(response.credits);
+                       document.getElementById("distributor_activity_console_body").innerHTML = "<p style='width : auto; display : block; font-size : 13px; color : green'>Waiting for activity in your account</p>";                       
+                       distributor_activity_console_first_run = false;
+                       return null;
+                   }
+                   
+               
+               if(Number(response.credits) < Number(distributor_activity_console_current_credit)){
+                  // alert(1)
+                   $("#distributor_activity_console_body").append("<p style='width : auto; display : block; font-size : 13px; color : red;'>Money used : R"+(Number(distributor_activity_console_current_credit) - Number(response.credits))+"</p>")
+                   
+                   
+               }
+               if(Number(response.credits) > Number(distributor_activity_console_current_credit)){
+                  // alert(2)
+                   $("#distributor_activity_console_body").append("<p style='width : auto; display : block; font-size : 13px; color : blue;'>Money added : R"+(Number(response.credits) - Number(distributor_activity_console_current_credit))+"</p>");
+                 
+                   
+               }
+               
+               
+               distributor_activity_console_current_credit = Number(response.credits);
+               document.getElementById("distributor_console_new_balance_amount").innerHTML = response.credits;
+               document.getElementById("seventh_page_distributor_amount").innerHTML = response.credits;
+               
+           }
+               return null;
+               
+           }
+            
+            document.getElementById('sixth_page_distributor_menu_header').innerHTML= "<b style='color:red'>Error getting amount, Try again later</b>";
+            return null;
+                 
+             });
+        
+              }
+    else{
+        document.getElementById('sixth_page_distributor_menu_header').innerHTML= "<b style='color:red'>Authentication error</b>";
+    }
+    
+    
+}
+
+}
+
+function distributor_activity_console_stop_interval(){//stop interval timer
+    
+        clearInterval(distributor_activity_console_periodic_timer);
+}
+
+
+
+
+
+
+
+
         
 /*______________________________________________________________________________________________________________________________________________________
   
@@ -502,9 +609,9 @@ ________________________________________________________________________________
 
 
 
-//var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+//distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:''};
 
-var distributor_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+//var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:''};
 
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++ account login +++++++++++++++++++++++++++++++++++++++++++++*/
@@ -549,7 +656,7 @@ function sixth_page_distributor_login(){
 /*++++++++++++++++++++++++ porpulate vars used for creating field when voucher is sold +++++++++++++++++++++++*/
                        
                        distributor_login.logged_in = true;
-                       distributor_login.seller_id = distributor_id.value;
+                       distributor_login.distributor_id = distributor_id.value;
                        distributor_login.usertype = response.usertype;
                        distributor_login.credit = response.credits;
                       // dom_innerHtml('sixth_page_seller_amount', response.credits); //**************************
@@ -560,6 +667,7 @@ function sixth_page_distributor_login(){
 						  	alert('For Security : \n\rPlease Change default Password.');
 						  }
 					   
+					   dom_innerHtml('seventh_page_distributor_amount', distributor_login.credit);//add credit on login
                        distributor_works_menu();
 					   
 					   
@@ -1187,10 +1295,106 @@ function fourth_page_seller_change_password(){
 
 
 
+/*=====================================================================================================================================================
+
+   account recharge distributor
+    
+=====================================================================================================================================================*/
 
 
+function distributor_seller_sell_amount(){
+    
+    //voucher code
+    var distributor_seller_id_input = document.getElementById('distributor_seller_id_input');
+	
+	//name and surname
+    var distributor_seller_name_surname_input = document.getElementById('distributor_seller_name_surname_input');
+    
+    //recharge amount
+    var distributor_seller_recharge_amount_input = document.getElementById('distributor_seller_recharge_amount_input');
+      
+	
+    //check id number length
+    if(distributor_seller_id_input.value.length < 13 || distributor_seller_id_input.value.length > 13){
+		dom_innerHtml('sixth_page_distributor_menu_header', 'Please re-check "Seller ID number"'); 
+		document.getElementById('sixth_page_distributor_menu_header').style.borderColor ='red';
+		return;
+    }    
+    
+    //check amount input length
+    if(distributor_seller_recharge_amount_input.value.length > 5){
+	distributor_seller_recharge_amount_input.style.borderColor ='red';
+    return dom_innerHtml('sixth_page_distributor_menu_header', 'Please re-check "Recharge amount"'); 
+    }   
+	
+	//check name input
+    if(distributor_seller_name_surname_input.value == '' || distributor_seller_name_surname_input.value == null || distributor_seller_name_surname_input.value == 'undefined'){
+	distributor_seller_name_surname_input.style.borderColor ='red';
+    return dom_innerHtml('sixth_page_distributor_menu_header', 'Please re-check "Name and Surname"'); 
+    }
+    
+   	//quick value sufficiency check 
+	if(distributor_login.credit < distributor_seller_recharge_amount_input.value){
+		distributor_seller_recharge_amount_input.style.borderColor ='red';
+	   	return dom_innerHtml('sixth_page_distributor_menu_header', 'Insufficient amount in your account, Please recharge.'); 
+	 }
+	
+
+	        
+     var url= 'http://' + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+distributor_seller_recharge_amount_input.value.trim()+'&seller_id='+distributor_seller_id_input.value.trim()+'&seller_name_surname='+distributor_seller_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+distributor_login.distributor_id.trim();
+	
+	
+	
+   // console.log(url);
+		
+	
+    
+       $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'Server or Conection error'){
+                   
+                
+                dom_innerHtml('sixth_page_distributor_menu_header', 'Server or Conection error, Please try again later'); 
+				   return;
+                   
+               }              
+			   
+			   if(response == 'Error finding seller'){
+                   
+                
+                dom_innerHtml('sixth_page_distributor_menu_header', 'Error, Please check user details'); 
+				   return;
+                   
+               }
+               
+                dom_innerHtml('sixth_page_distributor_menu_header', 'Account Succesfully Recharged.');//secess message
+			    distributor_login.credit = distributor_login.credit - Number.parseInt(distributor_seller_recharge_amount_input.value);//calculate and set new value
+			    dom_innerHtml('seventh_page_distributor_amount', distributor_login.credit);//set new value for view
+			    dom_innerHtml('distributor_seller_recharge_status','<b>Success : '+response.name+' '+response.lastname+', ID no:'+response.id+', account Recharged by R'+response.amount+'</b>');//reacherge sucess status
+                return null;
+             
+           }
+           
+           else{
+             return dom_innerHtml('sixth_page_distributor_menu_header', 'System/Connection error, please try again later.'); 
+           }
+       });  
+          
+
+    
+}
 
 
+/*=====================================================================================================================================================
+
+  seller account add by distributor
+    
+=====================================================================================================================================================*/
 
 
 

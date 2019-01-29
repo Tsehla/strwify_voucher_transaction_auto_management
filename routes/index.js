@@ -348,7 +348,7 @@ seller or distributor console, credt auto_voucher_check
   app.get('/api/sell', function(req, res){
       
         
-        if(req.query.code = 'sell_voucher'){
+        if(req.query.code == 'sell_voucher'){
             
 
              
@@ -414,7 +414,7 @@ seller or distributor console, credt auto_voucher_check
                return res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
             if(response == null){
-               return res.jsonp({status : 'error Selling voucher', new_credit : 'no_value_change'});
+               return res.jsonp({status : 'error Selling voucher, Please try different amount, or try again later', new_credit : 'no_value_change'});
             }  
           //  console.log(response);
           
@@ -438,7 +438,135 @@ seller or distributor console, credt auto_voucher_check
             
             }
         }
-      
+	  
+	if(req.query.code == 'sell_recharge'){//distributor rechage seller
+		  
+		  
+		  
+		  
+
+		//   http://127.0.0.1:4100/api/sell?code=sell_recharge&voucher_recharge_amount=1&seller_id=2222222222222&seller_name_surname=Tsehla*Nkhi&distributor_id=1111111111111
+
+//			var userType_se = 'seller';
+//			var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
+			var seller_id = req.query.seller_id;
+			var distributor_id = req.query.distributor_id;
+			var recharge_amount = req.query.voucher_recharge_amount; 
+			
+			var seller_fullname = req.query.seller_name_surname.split('*');
+			var seller_name = seller_fullname[0] ;  
+			var seller_last_name = seller_fullname[1];  
+ 
+//			console.log(user_type)
+//			console.log(seller_id)
+//			console.log(distributor_id)
+//			console.log(recharge_amount)
+//			console.log(seller_name)
+//			console.log(seller_last_name)
+
+
+			//if user_type == seller
+		   // if(user_type == 'seller'){
+		
+		
+		
+		
+		
+				keystone.list('seller distributor').model.findOne().where({idnumber : distributor_id, usertype : 'Distributor'}).exec(
+				  
+				function(error, response){
+					
+					if(error){
+						console.log('distributor recharge seller: server error');
+						res.jsonp('Server or Conection error');
+						return;
+					}
+					
+					if(response == '' || response == null || response == undefined){
+						console.log('distributor recharge seller : user Not Exist');
+						res.jsonp('Error finding seller');
+						return;
+					}
+			 
+
+					//check distributor credit
+					//console.log(response);
+					
+					if(Number(response.credit) < Number(recharge_amount)){//if amount is not enough
+					   	console.log('amount less; to recharge seller');
+						res.jsonp();
+						return;
+					   }
+					 //  console.log('amount enough');
+					 
+					
+					
+						//recharge seller account
+					
+								keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : 'Seller', name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
+				  
+								function(error, response){
+
+									if(error){ 
+										console.log('distributor recharge seller: server error');
+										res.jsonp('Server or Conection error');
+										return;
+									}
+
+									if(response == '' || response == null || response == undefined){
+										console.log('distributor recharge seller : user Not Exist');
+										res.jsonp('Error finding seller');
+										return;
+									}
+									
+									//add recharge to account
+ 									
+									response.credits =  Number(response.credits) + Number(recharge_amount);
+									
+									response.save(function(err, response){
+									if(err){
+										console.log('Connection/server error, please try gain later seller:acoount Recharge save()');
+										res.jsonp('Server or Conection error');
+										return;
+									};
+									if(response == '' || response == undefined || response == null){
+										console.log('Error user not found : seller Account Recharg');
+										res.jsonp('Server or Conection error');
+										return;
+									}
+									res.jsonp({name : seller_name, lastname  : seller_last_name, id : seller_id, amount : recharge_amount});
+								});
+
+
+								});
+
+					
+					
+					
+						//subtract amount from distributr acc
+						response.credits = Number(response.credits) - Number(recharge_amount);
+						///response.save();
+						response.save(function(err, response){
+							if(err){console.log(err)};
+							if(response == '' || response == undefined || response == null){
+								console.log('Error removing recharge amount from seller');
+							}
+						});
+					
+					
+					
+					
+					
+					   
+					
+
+				});
+
+		
+
+
+			 }
+     
       
   });  
 /*=======================================

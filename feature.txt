@@ -1,0 +1,6 @@
+add ticket download shower for seller : to allow cash redeem in case of wrong code input, allow couple weeks to enable reversal make it auto{ add field that show if code has been downloaded ]
+
+give seller auto notification on their account rechage, allow statement download for user rechages max [100] entries and allow statement download for account rechages [max 50 ] entries
+
+
+give super admin second ability
