@@ -48,7 +48,7 @@ seller_distributor_model.add({
     //credits : {type : Number, initial:true, required:true, default:0, label :'Credit Amount'},
     credits : {type : Number, default:0, label :'Credit Amount'},
     //usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
-    usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', default :'Seller', label :'Type of User' }
+    usertype : {type :types.Select, options :'Seller, Distributor, Server Admin, Buyer', default :'Seller', label :'Type of User' }
     
     
 });
@@ -67,12 +67,13 @@ voucher_model.add(
     
     {
     vouchercode : {type:String, unique:true, initial:true, required:true, default:'xxxxxx', label :'Voucher Code'},
-    voucheramount : {type:Number, initial:true, required:true, default:1, label :'Voucher Cost'},
+    voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
 	voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
 	voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
     voucherstate : {type : types.Select, options: "used, new", default:'new', label :'Voucher State'},
     soldby : {type : String, label :'Sold By'},
-    soldto : {type: String, deafault:'', label :'Sold To'},
+    soldto : {type: String, default:'', label :'Sold To'},
+    loadedby : {type: String, default:'', label :'Added by'},
     
        
 }

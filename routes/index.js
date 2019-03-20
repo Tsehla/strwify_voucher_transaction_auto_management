@@ -33,11 +33,14 @@ keystone.get('routes', function(app){
         
         //'http://127.0.0.1:4100/login?usertype=seller&id_number='+id_number;
       
-        
+       
         //if error --- return alert error back
-        var userType = req.query.usertype;
+        var userType = req.query.usertype.replace('%20', ' ');
         var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
         var user_id = req.query.id_number;
+		
+	//	console.log(userType);
+	//	console.log(user_type);
         
         /* seller login  and distributor login */
        // if(user_type == 'seller'){
@@ -46,6 +49,8 @@ keystone.get('routes', function(app){
             keystone.list('seller distributor').model.findOne({idnumber:user_id, usertype : user_type })
             .exec(
             function (error, response){
+				//console.log('--------');
+				//console.log(error, response);
             if(error){res.jsonp('User Not found');}    
             if(response == null){
                 res.jsonp('User Not found')
@@ -82,7 +87,7 @@ keystone.get('routes', function(app){
        
     //'http://127.0.0.1:4100/password_hint?usertype=seller&id_number='+id_number+&user_name='+user_name;
     
-    var userType = req.query.usertype;
+    var userType = req.query.usertype.replace('%20', ' ');
     var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
     var user_id = req.query.id_number;
     var user_name = req.query.user_name;    
@@ -136,7 +141,8 @@ keystone.get('routes', function(app){
        
    // var url = 'http://'+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
-    var userType = req.query.usertype;
+    var userType = req.query.usertype.replace('%20', ' ');
+		
     var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
     var user_id = req.query.id_number;
     var old_password = req.query.old_password.trim();   
@@ -204,7 +210,7 @@ seller or distributor console, credt auto_voucher_check
         
     //    var url =  "http://127.0.0.1:4100/api/console_amount_activity?user_type=seller&idnumber="+seller_login.seller_id;
         
-   var user_type = req.query.user_type;
+   var user_type = req.query.user_type.replace('%20', ' ');
    var userType = user_type.replace(user_type[0], user_type[0].toUpperCase());
         
         keystone.list('seller distributor')
@@ -445,10 +451,12 @@ seller or distributor console, credt auto_voucher_check
 		  
 		  
 
-		//   http://127.0.0.1:4100/api/sell?code=sell_recharge&voucher_recharge_amount=1&seller_id=2222222222222&seller_name_surname=Tsehla*Nkhi&distributor_id=1111111111111
+		//   http://127.0.0.1:4100/api/sell?code=sell_recharge&voucher_recharge_amount=1&seller_id=2222222222222&seller_name_surname=Tsehla*Nkhi&distributor_id=1111111111111 //&userType_to_recharge=Distributor
 
-//			var userType_se = 'seller';
-//			var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
+			var userType = req.query.userType;
+			//var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
+			var user_type = userType;
+			var user_to_recharge = req.query.userType_to_recharge;
 			var seller_id = req.query.seller_id;
 			var distributor_id = req.query.distributor_id;
 			var recharge_amount = req.query.voucher_recharge_amount; 
@@ -463,6 +471,7 @@ seller or distributor console, credt auto_voucher_check
 //			console.log(recharge_amount)
 //			console.log(seller_name)
 //			console.log(seller_last_name)
+//			console.log(user_to_recharge)
 
 
 			//if user_type == seller
@@ -472,7 +481,7 @@ seller or distributor console, credt auto_voucher_check
 		
 		
 		
-				keystone.list('seller distributor').model.findOne().where({idnumber : distributor_id, usertype : 'Distributor'}).exec(
+				keystone.list('seller distributor').model.findOne().where({idnumber : distributor_id, usertype :  user_type}).exec(
 				  
 				function(error, response){
 					
@@ -503,7 +512,7 @@ seller or distributor console, credt auto_voucher_check
 					
 						//recharge seller account
 					
-								keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : 'Seller', name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
+								keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : user_to_recharge, name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
 				  
 								function(error, response){
 
@@ -602,9 +611,192 @@ seller or distributor console, credt auto_voucher_check
         
 
     }
+	
+	
     
+/*========================================
+
+   Add new users
     
+========================================*/
     
+ app.get('/api/add_user', function(req, res){
+	
+	
+  // http://127.0.0.1:4100/api/add_user?user_type=seller&name=Petrus&surname=Nkhi&password=happy%20customers%20lead%20to%20rich%20life&id=8888888888888 
+	 var userType = req.query.user_type;
+	 var user_type = userType.replace(userType[0], userType[0].toUpperCase());//capitalize first letter
+	 
+	// console.log(req.query.name,req.query.surname,req.query.id,req.query.password.trim().replace(/%20/g, ' '),user_type);
+	
+	keystone.list('seller distributor').model.findOne()
+	.where({idnumber : req.query.id, usertype : user_type})
+	.exec(function(err, response){
+		
+		if(err){
+			console.log('error adding user : '+user_type);
+			res.jsonp('Server or Conection error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+			
+			keystone.createItems({//add items to db//user details
+				
+				'seller distributor' : [
+					{name: req.query.name.toLowerCase() ,surname : req.query.surname.toLowerCase() ,idnumber : req.query.id ,password : req.query.password.trim().replace(/%20/g, ' ').toLowerCase() ,usertype : user_type}
+					
+					
+				]
+				
+				
+			}, function(err, results){
+				if(err){
+					console.log('Error creating user to db : '+user_type);
+					res.jsonp('Server or Conection error');
+					return;
+				}
+				
+				res.jsonp('Account succesfully created');
+			});
+			
+			return;
+			
+		}
+		
+		res.jsonp('Error seller registered');//seller already exists
+		return;
+		
+	});
+	
+	
+	
+	
+	
+	
+	 });
+	
+
+/*========================================
+
+    Voucher codes loading
+    
+========================================*/
+	
+    app.get('/api/add_vouchers', function(req, res){
+        
+        //var url= 'http://' + current_domain + '/api/add_vouchers?voucher_codes='+JSON.stringify(mob)&added_by='tsehla';
+      
+       	//response[0] == 'Server or Conection error'
+		//response[0] == 'available
+		//response[0] == 'saved'
+		
+		//----- get codes from link
+		var voucher_codes = JSON.parse(req.query.voucher_codes);
+		//console.log(voucher_codes );
+		
+		var codes_already_on_system = []; //if codes are on the system
+		var codes_not_on_system = []; //if codes is not on the system
+		
+		
+		//----- check if codes is on system or not ----
+		
+		var voucher_counter = 0;
+		
+		(function voucher_vailabilty_serach(){
+			
+			
+			
+			if(voucher_counter  == voucher_codes.length ){//end function if counter is above voucher array length
+				//console.log(voucher_codes.length,voucher_counter);
+				store_vouchers_to_db();// save content to db
+				
+				return;
+			} 
+			//console.log(voucher_codes[voucher_counter].password);
+			
+		keystone.list('Voucher Codes').model.findOne()
+			.where({vouchercode : voucher_codes[voucher_counter].password})
+			.exec(function(err, response){
+
+						if(err){
+							console.log('error checking for Voucher');
+							res.jsonp(['Server or Conection error',[]]);
+							return;
+						}
+
+						if(response == null || response == undefined || response == ''){//user not found on system//add to [ codes_not_on_system ]
+
+							codes_not_on_system.push({vouchercode:voucher_codes[voucher_counter].password ,voucheramount:voucher_codes[voucher_counter].cost ,voucherprofile:voucher_codes[voucher_counter].profile ,voucherexpiry:voucher_codes[voucher_counter].expiery ,voucherstate:'new' ,loadedby:req.query.added_by });//add to list to be added to system
+							
+							voucher_counter = voucher_counter +1; //increment counter
+							voucher_vailabilty_serach();//call the function again
+							return;
+						}
+
+						//voucher found on system // add to [ codes_already_on_system ]
+							
+							codes_already_on_system.push(voucher_codes[voucher_counter]);//add to list to be NOT added to system
+							voucher_counter = voucher_counter +1; //increment counter
+							voucher_vailabilty_serach();//call the function again
+							return;
+
+			});
+			
+		})();
+		
+		
+		function store_vouchers_to_db(){//save vouchers to db
+			
+			
+//		console.log(codes_already_on_system);
+//		console.log('---------------');
+//		console.log(codes_not_on_system);
+//			
+			
+			
+			if(codes_not_on_system.length == 0){//if no items to be added to db
+			   
+			   
+					res.jsonp(['available',codes_already_on_system]);
+					return;
+			   }
+		
+			
+			//----- add codes not on the system to the database --
+			keystone.createItems({//add items to db//user details
+				
+				'Voucher Codes' : codes_not_on_system,
+				
+				
+			}, function(err, results){
+				if(err){
+					console.log('Error saving vouchers to db ');
+					res.jsonp(['Server or Conection error',[]]);
+					return;
+				}
+				
+				console.log('Success, codes saved to db');
+				res.jsonp(['saved',codes_already_on_system]);
+				
+				return;
+			});
+			
+			
+			
+			
+			
+			
+		}
+		
+
+	
+		
+		
+	});
+	
+	
+
     
 /*========================================
 
@@ -634,6 +826,10 @@ seller or distributor console, credt auto_voucher_check
     });    
     
     app.get('/distributor_login', function(req, res){
+        res.sendFile(path.resolve('./html/index.html'));
+        
+    });
+	app.get('/admin_login', function(req, res){
         res.sendFile(path.resolve('./html/index.html'));
         
     });

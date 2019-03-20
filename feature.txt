@@ -3,4 +3,9 @@ add ticket download shower for seller : to allow cash redeem in case of wrong co
 give seller auto notification on their account rechage, allow statement download for user rechages max [100] entries and allow statement download for account rechages [max 50 ] entries
 
 
+-seller dist= allow recharge to and recharge from stement downloads
+
 give super admin second ability
+
+----
+router monitoring up/down status via node js link: custom api

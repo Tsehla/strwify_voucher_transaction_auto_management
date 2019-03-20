@@ -196,6 +196,19 @@ exports.create={
         credits : 10,
         usertype : 'Seller'
         
+        },			{
+        name : 'seller_2_name',
+        surname : 'seller_2_lastname',
+        idnumber : '2222222222222',
+        contact : ['071000000', '081000000', '091111111'],
+        address : '7184 ext 4 JHB _2',
+        city : 'jhb_2',
+        province : 'gauteng_2',
+        password : 'password2',
+        email : 'seller_1@streetwifiy.co.za',
+        credits : 10,
+        usertype : 'Server Admin'
+        
         },
                     {
         name : 'seller_3_name',
