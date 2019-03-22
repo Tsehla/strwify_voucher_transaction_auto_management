@@ -57,6 +57,9 @@
 		  	   #example_voucher_format{
                display : block;/* hide */
                }
+               #router_page{
+               display : none;/* hide */
+               }
                
                
       </style>
@@ -657,7 +660,23 @@ distributor login
  <div id="admin_fourth_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
  <div id='admin_buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
+	 
+	 
+<!-- router monitor -->
+<div id="" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:20vh;background-color:white;box-shadow:3px 3px 2px #f0ad4e, -1px -1px 2px #f0ad4e">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <b><span style='width:auto; height: auto; padding:0px; margin: 0px' id=''>
+    	Routers satus monitor
+      </span>
+  </b>
+</p>
 
+<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="router_page_works_menu_open()">View status</button>
+    
+</div>
+	 
+	 
+	 
 <!-- login wrapper Start -->
 <div id="admin_login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
@@ -719,7 +738,7 @@ distributor login
 	   
  <div id="super_admin_works_menu" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="super_admin_menu_wrapper">
- <div id="super_admin_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+ <div id="super_admin_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
  <b id= 'super_admin_menu_header'>
 	 Dash board
@@ -762,7 +781,9 @@ distributor login
 	 <button class='btn btn-success' style="width: 38vw; height:8vh; margin: 2vh; padding:0px" onclick='recharge_codes_container_works_menu_open()'>
 	 	Add recharge vouchers
 	 </button>
- 
+	 
+	<!-- router status button --> 
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="router_page_works_menu_open(true), alert('1) Use unique names when naming each router.\n2) Changes capital names on the link below, to have your router appear on the status menu and be monitored if its working or not.\n\n ---- EXAMPLE ---- \n\nhttp://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS\n\n----TO----\n\nhttp://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router\n\n4) Make router contact this link every 20 minutes not more that 30 minutes (setup a router schedule to do this) on your mikrotik router.' )">View Routers  status</button>
 	 <!-----admin activity console -->
      
 <div id="super_admin_activity_console_wrapper" style="margin:0px 0px 13px 0px; padding:0px; width : 93.9vw; height : 80vh; background-color : black; box-shadow : 3px 3px 2px orange, -1px -1px 2px orange; position : absolute; left : 2.5vw; top :10vh; display : none;">
@@ -994,6 +1015,56 @@ distributor login
 	   	  	   
 	   
 	   
+	   
+	   
+	   
+	   
+<!-- router menu/viewer -->
+	   
+  <div id="router_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="router_menu_wrapper">
+ <div id="router_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+	 <b style='width: 70%; display: inline-block' id="router_menu_header">
+		 Roter Status Monitor
+	 </b>
+	 <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="window.open('http://'+window.location.host)"> CLOSE</button>
+ </p>
+
+<!--
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Distributor ID number' class="form-control" id='admin_distributor_add_id_input'>
+-->	 
+ 
+<!-- router log viewwer -->
+
+
+		<button class='btn' style='display: inline-block; width: 40vw;height: 45px;border-bottom: 2px solid red;' id='router_active_view' onclick="router_log_view_control ('active')">Active</button>
+		<button class='btn ' style='display: inline-block; width: 40vw;height: 45px' id='router_mute_view' onclick="router_log_view_control ('muted')">Muted</button>
+
+
+
+<div id='router_log_viewer' style="width:100%; height:auto; margin:13px 0px 13px 0px; display:block; "></div>
+	 
+
+
+<!--
+ 
+ <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="admin_distributor_new_account_creation()">Create Account</button>
+-->
+ <br />
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Router "Last Contact" should be within last 30 minutes, if over 30 minute please contact us. **ONLY for ACTIVE routers **\n\n--- ADMIN MENU ---\n2) "Mute/Un-Mute" Stops/Enable system to send alerts when router has not contacted server for over thirty minutes.\n\n PLease log in as Admin to see more details....`)'>Help</button>
+ 
+ 
+ 
+ 
+ </div>
+<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+ StreetWiFiy
+ </p>
+   </div>
+   </div>
+	   
+
 	   
 	   
 	   

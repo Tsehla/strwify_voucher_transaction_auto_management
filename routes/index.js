@@ -796,7 +796,168 @@ seller or distributor console, credt auto_voucher_check
 	});
 	
 	
+/*========================================
 
+    Router up/down status record
+    
+========================================*/
+	
+	
+	
+	//+++++++++++++++++++++++++++++++ get router data ++++++++++++++++++++++++++++++++++
+	
+	//var url= 'http://' + current_domain + '/api/router_checkin_data_get;
+	
+	 app.get('/api/router_checkin_data_get', function(req, res){
+		 
+		 
+		 	keystone.list('Router Monitoring').model.find()
+			.exec(function(err, response){
+
+						if(err){//if error db related
+						
+							res.jsonp('Server or Conection error');
+							return;
+						}
+
+						if(response == null || response == undefined || response == ''){//error no data found
+
+							res.jsonp('No router data found');
+							return;
+						}
+
+						
+							res.jsonp(response);
+							return;
+			});
+			
+		 
+		 
+		 
+		 
+	 });
+	
+	
+	
+	
+	
+	//+++++++++++++++++++++++++++++++ edit save router data ++++++++++++++++++++++++++++++++++
+	
+	//var url= 'http://' + current_domain + '/api/router_checkin_data_save?status_id=''&router_todo=''&user_id='';
+	
+	 app.get('/api/router_checkin_data_save', function(req, res){
+		 
+		 
+		 	keystone.list('Router Monitoring').model.findOne()
+		 	.where({_id: req.query.status_id})
+			.exec(function(err, response){
+
+						if(err){//if error db related
+						
+							res.jsonp('Server or Conection error');
+							return;
+						}
+
+						if(response == null || response == undefined || response == ''){//error no data found
+
+							res.jsonp('No data found');
+							return;
+						}
+
+						
+							//res.jsonp(response);
+							//return;
+				
+							response.routermute_by = req.query.user_id ;
+							response.routermute = req.query.router_todo;
+							response.save(function(err, response){
+
+									if(err){//if error db related
+
+										res.jsonp('Server or Conection error');
+										return;
+									}
+
+									if(response == null || response == undefined || response == ''){//error no data found
+
+										res.jsonp('Save error');
+										return;
+									}
+								res.jsonp('Sucess data saved');
+								return;
+							}
+										
+					);
+			
+		 
+			});
+		 
+		 
+	 });
+	
+	
+	
+	
+	
+	//+++++++++++++++++++++++++++++++ store router data ++++++++++++++++++++++++++++++++++
+	
+	
+	//mock link for db, update status from router// http://127.0.0.1:4100/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
+	
+	//http://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
+	//http://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router
+	
+
+	app.get('/api/router_checkin', function(req, res){
+		 
+		 
+		 	keystone.list('Router Monitoring').model.findOne()
+		 	.where({routername: req.query.router_name})//give router unique name
+			.exec(function(err, response){
+
+						if(err){//if error db related
+						
+							res.jsonp('Server or Conection error');
+							console.log('Router Checkin : Server or Conection error');
+							return;
+						}
+
+						if(response == null || response == undefined || response == ''){//router not found add new router
+
+							res.jsonp('No data found');
+							console.log('Router Checkin :No data found');
+							return;
+						}
+						
+				
+					//router exists update time
+				
+					
+			})
+		
+		
+		
+		
+		
+		
+		
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     
 /*========================================
 

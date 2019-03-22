@@ -81,5 +81,44 @@ voucher_model.add(
 );
 
 voucher_model.register();
+//---------------------------------------------------------
+    
+//Router monitoring
+
+//----------------------------------------------------------
+
+var router_monitoring = 'Router Monitoring';
+var router_model = new keystone.List(router_monitoring);
+
+router_model.add(
+    
+    {
+		routername: {type :String ,label :'Router name'},
+		routerlocation: {type :types.Textarea, label :'Router location' },
+		routerdetails: {type :types.Textarea, label :'Router details' },
+		routermute: {type :types.Boolean, default:false, label :'Router mute' },
+		routermute_by: {type :String, label :'Router muted by' },
+		
+		//used to log details to be used for up/down conclusion
+		// hour will be subtracted from stored by last contact current from current node schedule function and it should retun zero;
+		//stored minutes as above will be deducted from from schedule function current minutes and it should return 30 min or less;
+		//from twelve mignight to one morning there wont be checks//kinda resset time thingy
+		
+		//if issuer alert will sent to all user with [super-admin] status
+		
+		router_last_contact_hour :{type : Number, label :'Last contact hour'}, 
+		router_last_contact_minute :{type : Number, label :'Last contact minute'}, 
+		router_last_contact_day :{type : Number, label :'Last contact day'}, 
+		
+		router_last_contact_date_time_history :{type : types.TextArray, label :'Router contact history'}, //add date as array for 30 addings//lol
+    
+       
+});
+
+
+
+
+
+router_model.register();
 
 

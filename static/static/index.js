@@ -70,49 +70,56 @@ if(current_url == '/admin_login'){
         
 ====================================================================================================================================================*/
 function seller_sell_menu(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('show','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');
-    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('show','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');
+    	process_destroyer();
 }
 
 function distributor_works_menu(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('show','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');
-    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('show','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');
+    	process_destroyer();
 }
 
 function distributor_works_menu_add_user(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('show','eigth_page'); dom_hide_show('hide','admin_fourth_page');dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');
-	    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('show','eigth_page'); dom_hide_show('hide','admin_fourth_page');dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');
+	    process_destroyer();
     
 }
 function admin_fourth_page_menu(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');
-	    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');
+	    process_destroyer();
     
 }
 
 function super_admin_works_menu_add_user(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('show','admin_eigth_page');dom_hide_show('hide','recharge_codes_container'); 
-	    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('show','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page'); 
+	    process_destroyer();
     
 }
 
 
 function admin_distributor_works_menu(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');
-	    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');
+	    process_destroyer();
     
 }
 
 function recharge_codes_container_works_menu(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');
-	    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');
+	    process_destroyer();
     
 }
 
 function recharge_codes_container_works_menu_open(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('show','recharge_codes_container');
-	    
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('show','recharge_codes_container');dom_hide_show('hide','router_page');
+	    process_destroyer();
     
+}
+
+function router_page_works_menu_open(input){
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('show','router_page');
+	    process_destroyer();
+    	show_router_workd_extra_menu(input);
+		
 }
 
 
@@ -125,25 +132,30 @@ function recharge_codes_container_works_menu_open(){
 function buy_voucher(){
     
  window.open('/buy_voucher', '_self');
+	process_destroyer();
 }
 /* voucher sell link */
 function sell_voucher(){
     
  window.open('/sell_voucher', '_self');
+	process_destroyer();
 }
 
 function third_page_seller_login(){
   
  window.open('/seller_login', '_self');
+	process_destroyer();
 }
 
 function third_page_distributor_login(){
     
  window.open('/distributor_login', '_self');
+	process_destroyer();
 }
 function admin_fourth_page_login(){
     
  window.open('/admin_login', '_self');
+	process_destroyer();
 }
 /*=====================================================================================================================================================
     repeated functions
@@ -164,7 +176,7 @@ function dom_innerHtml(div, value){
 
     function process_destroyer(){
         
-        
+        clearInterval(router_auto_loader);
         
         
     }
@@ -2267,6 +2279,233 @@ function admin_voucher_upload(){//send voucher to db
 	
 	
 }
+
+/*=====================================================================================================================================================
+
+   router up/down status user side view
+    
+=====================================================================================================================================================*/
+
+//mock link for db, update status from router// http://127.0.0.1:4100/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
+
+//retrive status from db
+//var url= 'http://' + current_domain + '/api/router_checkin_data_get;
+
+//add status to db
+//var url= 'http://' + current_domain + '/api/add_vouchers?voucher_codes='
+
+
+var router_menu_input;//used to dertemine if function called in or out of admin acc
+
+function show_router_workd_extra_menu(input){//show admin config menu
+	
+	router_menu_input = input;
+	
+	var router_extramenu_show_hide = 'none';//hide some menu if function called without login
+	//var router_extramenu_show_hide = 'block';//hide some menu if function called without login
+	
+	if(input){//logging from within admin menu//show extra stuff
+		
+		router_extramenu_show_hide = 'block';//show if function called within admin-logged in account
+	}
+	
+	var url= 'http://' + current_domain + '/api/router_checkin_data_get';
+	
+	
+	
+	  $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'Server or Conection error'){
+                   
+                
+                dom_innerHtml('router_menu_header', 'Server or Conection error, Please try again later'); 
+				   return;
+                   
+               }              
+			   
+			   if(response == 'No router data found'){
+                   
+                
+                dom_innerHtml('router_menu_header', 'No data found'); 
+				   return;
+                   
+               }
+               
+               // dom_innerHtml('router_menu_header', 'Sata found.');//secess message
+			   
+			   console.log(response);
+			   document.getElementById('router_log_viewer').innerHTML='';//clear dom for future content reload
+			   
+			   response.forEach(function(data, index){
+				   
+				     var week_day =['Holiday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];//weekday
+				     var is_muted = (data.routermute? 'muted' : 'not_muted');
+				   
+				     var muted_button = (data.routermute? "<button class='btn btn-primary' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"unmute\")'>un-Mute Router Router</button>" : "<button class='btn btn-primary w3-block' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"mute\")'>Mute</button>");
+			   
+					   $("#router_log_viewer").append(`
+
+								 <div  style="width:100%; height:auto; margin:13px 0px 13px 0px; display:block; "  class="form-control router_log `+ is_muted +`">
+									<p style='width:100%; height: auto; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
+										 Router Name :<br />`+ data.routername +`<br />Last Contact :<br />Hour : `+ data.router_last_contact_hour +`, Minute : `+ data.router_last_contact_minute +`, Day :`+ week_day[ data.router_last_contact_day ] +`
+									 </p>
+									  <p style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted green; line-height:auto; vertical-align: middle; font-size:15px; display:`+ router_extramenu_show_hide +`' id=''>
+										
+										Router Location : <br />`+ data.routerlocation +`<br />
+										Router Extra details : <br />` + data.routerdetails + `<br />
+										
+									 </p>
+									
+									<div style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; line-height:auto; vertical-align: middle; font-size:15px; display:`+ router_extramenu_show_hide +`' id=''>`+ muted_button +`</div>
+	
+								</div>
+
+						`);
+				  });
+			   
+			   router_log_view_control ('active');
+			   router_content_autoloader_fn();//start auto updater
+			   return;
+             
+           }
+           
+           else{
+             return dom_innerHtml('router_menu_header', 'System/Connection error, please try again later.'); 
+           }
+       });  
+          
+	
+	
+}
+
+
+//router status load contents control
+
+function router_log_view_control (show){//show or hide muted
+	var router_log_class_content = document.getElementsByClassName('router_log');
+	
+	if(show == 'active'){ //show active
+		
+		
+		document.getElementById('router_active_view').style.borderBottom='2px solid red'
+		document.getElementById('router_mute_view').style.borderBottom='0px'
+		
+		for(var i =0; i <=router_log_class_content.length -1; i++){//hide all
+	
+			router_log_class_content[i].style.display='none';
+
+		}
+		
+		for(var i =0; i <=document.getElementsByClassName('not_muted').length -1; i++){//show selected
+
+			document.getElementsByClassName('not_muted')[i].style.display='block';
+		}
+	}
+	
+	if(show == 'muted'){ //show muted
+		
+				
+		document.getElementById('router_active_view').style.borderBottom='0px'
+		document.getElementById('router_mute_view').style.borderBottom='2px solid red'
+		
+		for(var i =0; i <=router_log_class_content.length -1; i++){//hide all
+
+			router_log_class_content[i].style.display='none';
+		}
+		
+		for(var i =0; i <=document.getElementsByClassName('muted').length -1; i++){//show selected
+
+			document.getElementsByClassName('muted')[i].style.display='block';
+		}
+		
+	
+	}
+	
+}
+
+//router mute or un-mute
+
+function router_mute_control(id,todo){
+	
+	//console.log(id,todo);
+	
+	var todo_request = todo =='mute'?true:false;
+	
+	var url= 'http://' + current_domain + '/api/router_checkin_data_save?status_id='+id+'&router_todo='+todo_request+'&user_id='+admin_login.admin_id;
+	
+	//console.log(url);
+		
+	  $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'Server or Conection error'){
+                   
+                
+                dom_innerHtml('router_menu_header', 'Server or Conection error, Please try again later'); 
+				   return;
+                   
+               }              
+			   
+			   if(response == 'No data found'){
+                   
+                
+                dom_innerHtml('router_menu_header', 'Error, No data found'); 
+				   return;
+                   
+               }
+			   if(response == 'Save error'){
+                   
+                
+                dom_innerHtml('router_menu_header', 'Error, Saving changes, please try again later or contact administrator'); 
+				   return;
+                   
+               }
+			   
+			   dom_innerHtml('router_menu_header', 'Succes Changes made'); 
+			   
+			   show_router_workd_extra_menu(router_menu_input);//reload router log view contents
+				return;
+                   
+			   
+			                   
+
+		   }
+	
+	
+	  });
+	
+	
+}
+
+
+
+
+//router content auto re-load
+
+var router_auto_loader;
+function router_content_autoloader_fn(){
+	
+	router_auto_loader = setInterval(function(){
+		show_router_workd_extra_menu(router_menu_input);//start function and pass parameter//every 15 minutes
+		
+	}, (1000*60*15));
+//	}, (3000));
+	
+}
+
+
+
+
+
 
 
 
