@@ -907,10 +907,43 @@ seller or distributor console, credt auto_voucher_check
 	//http://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
 	//http://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router
 	
-
+	
 	app.get('/api/router_checkin', function(req, res){
 		 
-		 
+			var router_name = req.query.router_name;
+			var router_location = req.query.router_location;
+			var router_details = req.query.router_details;
+		
+			//time and date
+		
+			var date = new Date();
+			
+			var day_array=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+			var month_array = ['January', 'February','March','April','May','June','July','August','September','October','November','December']
+
+		
+			var router_last_contact_hour = date.getHours();
+			var router_last_contact_minute = date.getMinutes();
+		
+			var router_last_contact_day = date.getDay();
+			var router_last_contact_day_text =day_array[ date.getDay() ] ;
+			
+			var router_last_contact_month = date.getMonth();
+			var router_last_contact_month_text = month_array[ date.getMonth() ];
+			
+			var router_last_contact_year = date.getFullYear();
+		
+			var router_last_contact_date_time_history = router_last_contact_hour + ':' + date.getMinutes() +' '+router_last_contact_day_text+', '+date.getDate()+'/'+router_last_contact_month_text+'/'+router_last_contact_year;
+			
+			
+			if(router_name =='' || router_name == null || router_name == undefined){//reject if no name given
+					res.jsonp('No router name given');
+					console.log('No router name given');
+					return;
+			}
+		
+			//console.log(router_name,router_location,router_details);
+		
 		 	keystone.list('Router Monitoring').model.findOne()
 		 	.where({routername: req.query.router_name})//give router unique name
 			.exec(function(err, response){
@@ -924,21 +957,85 @@ seller or distributor console, credt auto_voucher_check
 
 						if(response == null || response == undefined || response == ''){//router not found add new router
 
-							res.jsonp('No data found');
+							//res.jsonp('No data found');
 							console.log('Router Checkin :No data found');
-							return;
+							console.log('Adding router to db');
+							
+								keystone.createItems({//add items to db//user details
+
+								'Router Monitoring' : [{
+									routername :router_name ,routerlocation :router_location ,routerdetails :router_details ,router_last_contact_hour : router_last_contact_hour ,router_last_contact_minute : router_last_contact_minute,router_last_contact_day : router_last_contact_day,router_last_contact_date_time_history: router_last_contact_date_time_history,
+								}],
+
+
+								}, function(err, results){
+									if(err){
+										console.log('Error saving router name to db ');
+										res.jsonp('Error saving router name to db');
+										return;
+									}
+
+									console.log('Success, router name added to db');
+									res.jsonp('Success, router name added to db');
+
+									return;
+								}
+								);
+
+							
+							
 						}
 						
+//				
+//					//router exists update time
+//					//router_last_contact_date_time_history
+//					var date_time_history_record = response.router_last_contact_date_time_history;
+//				 	//console.log(date_time_history_record);
+//					date_time_history_record = date_time_history_record.push(router_last_contact_date_time_history);
+//				
+//					if(date_time_history_record.length > 3){
+//					   date_time_history_record = date_time_history_record.shift();
+//						
+//					   }
+							
+					//time and date
+					//console.log(response);
+
+					var date = new Date();
 				
-					//router exists update time
+					response.router_last_contact_hour = date.getHours();
+					response.router_last_contact_minute = date.getMinutes();
+					response.router_last_contact_day = date.getDay();
 				
+					var history_array = response.router_last_contact_date_time_history;
+					history_array.push(router_last_contact_date_time_history);
 					
+					if( history_array.length > 1000){history_array.shift()};//if lenght is over that//remove first element
+			
+					response.router_last_contact_date_time_history = history_array;
+				
+					response.save(function(err, response){
+						if(err){
+							console.log('Erro, updating value for router name : '+router_name);
+							res.jsonp('Erro, updating value for router name : '+router_name);
+							return;
+						}
+						if(response == null || response == undefined || response == ''){//saving db /server error
+							console.log('saving db/server error');
+							res.jsonp('saving db/server error');
+							return;
+							
+						}
+						
+						res.jsonp('Sucess, updating value for router name : '+router_name);
+						return;
+					});
+		
 			})
 		
+
 		
-		
-		
-		
+		return;
 		
 		
 	});

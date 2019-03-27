@@ -94,8 +94,8 @@ router_model.add(
     
     {
 		routername: {type :String ,label :'Router name'},
-		routerlocation: {type :types.Textarea, label :'Router location' },
-		routerdetails: {type :types.Textarea, label :'Router details' },
+		routerlocation: {type :types.Textarea, label :'Router location',default:'N/A' },
+		routerdetails: {type :types.Textarea, label :'Router details',default:'N/A' },
 		routermute: {type :types.Boolean, default:false, label :'Router mute' },
 		routermute_by: {type :String, label :'Router muted by' },
 		
@@ -106,9 +106,9 @@ router_model.add(
 		
 		//if issuer alert will sent to all user with [super-admin] status
 		
-		router_last_contact_hour :{type : Number, label :'Last contact hour'}, 
-		router_last_contact_minute :{type : Number, label :'Last contact minute'}, 
-		router_last_contact_day :{type : Number, label :'Last contact day'}, 
+		router_last_contact_hour :{type : types.Number, label :'Last contact hour'}, 
+		router_last_contact_minute :{type : types.Number, label :'Last contact minute'}, 
+		router_last_contact_day :{type : types.Number, label :'Last contact day'}, 
 		
 		router_last_contact_date_time_history :{type : types.TextArray, label :'Router contact history'}, //add date as array for 30 addings//lol
     
