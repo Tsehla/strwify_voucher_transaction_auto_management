@@ -2338,7 +2338,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
                
                // dom_innerHtml('router_menu_header', 'Sata found.');//secess message
 			   
-			   console.log(response);
+			   //console.log(response);
 			   document.getElementById('router_log_viewer').innerHTML='';//clear dom for future content reload
 			   
 			   response.forEach(function(data, index){

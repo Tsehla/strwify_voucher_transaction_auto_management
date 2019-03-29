@@ -205,7 +205,7 @@ exports.create={
         city : 'jhb_2',
         province : 'gauteng_2',
         password : 'password2',
-        email : 'seller_1@streetwifiy.co.za',
+        email : 'dietsahalo@gmail.com',
         credits : 10,
         usertype : 'Server Admin'
         
