@@ -6,7 +6,15 @@ var path = require ('path');//to solve sendFile forbidden error
 keystone.get('routes', function(app){
    // app.use(express.static('./static/'));
     
-    
+   //enable cors 
+	app.use(function(req, res, next) { //allow cross origin requests
+          res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+          res.header("Access-Control-Allow-Origin", "*");
+          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+          next();
+        });
+
+   
     //super admin login
     app.get('/admin', function(req, res){
         
@@ -905,6 +913,9 @@ seller or distributor console, credt auto_voucher_check
 	//mock link for db, update status from router// http://127.0.0.1:4100/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
 	
 	//http://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
+	
+	//https://street-wify-transcat.herokuapp.com/api/router_checkin?router_name=Mikrotik Home&router_location=Home:My room&router_details=My Home Router, Small red and orange one
+	
 	//http://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router
 	
 	

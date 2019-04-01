@@ -14,6 +14,9 @@ keyst.init({
 
 keyst.import('./routes');
 keyst.import('./user_model');
+
+keyst.set('cors allow origin', true);
+
 keyst.set('port', port);
 
 keyst.start();
@@ -71,10 +74,38 @@ keyst.start();
 
 
 
+
+
+
+
+/*
+
+
+
+		I believe this is issue with google account security. - Google blocked your sign in to use the mailing features due to unknown device (location).
+
+		A few step to verify this:
+
+		Start your server locally and sends the email.
+
+		Check your account alerts for unknown sign in.
+
+		This can be temporally resolved by: https://accounts.google.com/DisplayUnlockCaptcha
+
+		More permanent resolution would be to change your password to a stronger level:
+
+		upper case letter + lower case letter + special symbols + numbers
+
+
+
+*/
+
+
+
 var schedule = require('node-schedule');
  
 
-var j = schedule.scheduleJob('58 * * * *', function(){//router status checking timer
+var j = schedule.scheduleJob('15 * * * *', function(){//router status checking timer
  // console.log('Starting routing Router checkins');
   //console.log('The answer to life, the universe, and everything!');
 	checkin_checking_routing ();
@@ -192,8 +223,8 @@ function checkin_checking_routing (){
 							var transporter = nodemailer.createTransport({
 							  service: 'gmail',
 							  auth: {
-								user: 'YouEnmail@gmail.com',
-								pass: 'YourPassword'
+								user: process.env.GMAIL_EMAIL,
+								pass: process.env.GMAIL_PASSWORD,
 							  }, tls: {
 										rejectUnauthorized: false
 									}

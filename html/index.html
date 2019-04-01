@@ -6,6 +6,9 @@
       </title>
       <meta name='viewport' content="width=device-width, initial-scale=1">
       
+      <!-- allow http links to be made https --
+      <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+     --> 
       <style>
              { border:1px solid brown;}
           body{
@@ -124,7 +127,7 @@ buy data voucher
 
 	<!-- voucher code image -->
 	<!-- ticket canvas -->
-	<img src="../static/images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display: none" alt="ticket img" />
+	<img src="../static/images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
 	<canvas style="width: 280px; height: 270px; display: none" id='ticket_canvas'> Ticket </canvas>
 	
 	
