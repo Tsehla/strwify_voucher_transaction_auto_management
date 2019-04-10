@@ -338,6 +338,17 @@ seller or distributor console, credt auto_voucher_check
                 }
             else{
                 res.jsonp(response); 
+				//++++++++++++++++++++save voucher as printed+++++++++++++++++
+				
+				response.voucherprinted = true;
+				response.voucherproducedday = day;//day of month voucher was printed, to be used as to calculate amount of time before point cant be recouped by the seller
+				response.save(function(err, success){
+					if(err){
+							console.log('Error, updating voucher as printed : '+error);
+						   	return;
+						   }
+				});
+				
             }
            
             
@@ -443,7 +454,8 @@ seller or distributor console, credt auto_voucher_check
             
                 var seller_id = req.query.seller_id;
                // var seller_voucher_amount  = seller_voucher_amount_;
-                voucher_sell_subtract_amount(seller_id, seller_voucher_amount_, res);        
+                voucher_sell_subtract_amount(seller_id, seller_voucher_amount_, res);
+				
         });
         //on error throw error
         
@@ -551,6 +563,11 @@ seller or distributor console, credt auto_voucher_check
 										res.jsonp('Server or Conection error');
 										return;
 									}
+									
+									//write sale to db
+									var transaction_cost =	voucherValue+'+';
+									transactions_history('Account Recharged', recharge_amount, seller_id, user_to_recharge);
+										
 									res.jsonp({name : seller_name, lastname  : seller_last_name, id : seller_id, amount : recharge_amount});
 								});
 
@@ -568,6 +585,10 @@ seller or distributor console, credt auto_voucher_check
 							if(response == '' || response == undefined || response == null){
 								console.log('Error removing recharge amount from seller');
 							}
+							//write sale to db
+							var transaction_cost =	voucherValue+'-';
+							var seller_recharged_id ='Fund transfered to ID no : ' + seller_id;
+							transactions_history(seller_recharged_id, recharge_amount, distributor_id, user_type);
 						});
 					
 					
@@ -606,6 +627,9 @@ seller or distributor console, credt auto_voucher_check
             if(success != null){
                 // update credit status
                 res.jsonp({status : 'voucher sold for R'+voucherValue, new_credit : success.credits});
+				//write sale to db
+				var transaction_cost =	voucherValue+'-';
+				transactions_history('voucher sold', transaction_cost, userId, 'Seller');
                 return null;
                     
             }
@@ -914,7 +938,7 @@ seller or distributor console, credt auto_voucher_check
 	
 	//http://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
 	
-	//https://street-wify-transcat.herokuapp.com/api/router_checkin?router_name=Mikrotik Home&router_location=Home:My room&router_details=My Home Router, Small red and orange one
+	//https://*********.herokuapp.com/api/router_checkin?router_name=Mikrotik Home&router_location=Home:My room&router_details=My Home Router, Small red and orange one
 	
 	//http://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router
 	
@@ -1019,9 +1043,10 @@ seller or distributor console, credt auto_voucher_check
 					response.router_last_contact_day = date.getDay();
 				
 					var history_array = response.router_last_contact_date_time_history;
-					history_array.push(router_last_contact_date_time_history);
+					//history_array.push(router_last_contact_date_time_history);
+					history_array.unshift(router_last_contact_date_time_history);
 					
-					if( history_array.length > 1000){history_array.shift()};//if lenght is over that//remove first element
+					if( history_array.length > 1000){history_array.pop()};//if lenght is over that//remove first element
 			
 					response.router_last_contact_date_time_history = history_array;
 				
@@ -1052,9 +1077,65 @@ seller or distributor console, credt auto_voucher_check
 	});
 	
 
+/*========================================
+
+    user transactions log/history
+    
+========================================*/	
+	
+
+ function transactions_history(transaction_name, transaction_cost, user_id, user_type){
 	
 	
+	var date = new Date();
+				
+	var hour = date.getHours();
+	var minutes = date.getMinutes();
+	var day = date.getDay();
+	var month = date.getMonth();
+	var year = date.getFullYear();
 	
+
+			
+	
+	 //find seller/user and edit their profile
+	 
+	 keystone.list('seller distributor').model.findOne()
+	.where({idnumber : user_id, usertype : user_type})
+	.exec(function(err, response){
+		
+		if(err){
+			console.log('error finding user to add transaction log : Id Number : '+user_id+', User type : '+ user_type);
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+
+			console.log('error finding user to add transaction log : Id Number : '+user_id+', User type : '+ user_type);
+			return;
+		}
+		  
+		
+		 //add transaction
+		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+transaction_name+' R'+transaction_cost+' New balance : R'+response.credits;
+
+
+		var new_transactions_array = response.transactionhistory;
+
+			new_transactions_array.unshift(new_transaction_record);
+
+		if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+		 
+		response.transactionhistory = new_transactions_array;
+			 response.save(function(err, results){
+			 if(err){
+				 console.log('error saving  user/seller transaction log/record : Id Number : '+user_id+', User type : '+ user_type);
+				return;
+			 }
+		 });					
+	});
+	 return;
+}
 	
 	
 	

@@ -289,7 +289,16 @@ function auto_voucher_check(uniqueCode){
     
 //console.log(unique_code);
     
-    
+/*======================================================================================================================================================
+Not used tickets/printed tickets refunding 
+
+========================================================================================================================================================*/    
+//if wrong code was used when selling the ticket, the seller can do a refund: after thirty days
+	
+	
+	
+	
+	
 /*=====================================================================================================================================================
 stop timer for auto donloader
 =====================================================================================================================================================*/
@@ -643,17 +652,6 @@ function distributor_activity_console_stop_interval(){//stop interval timer
 
 
 //+++++++++++++++++++++++++++++ superadmin console
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1645,10 +1643,41 @@ function admin_password_change_fn(){
     
 }
 
+/*=====================================================================================================================================================
+
+password alert
+    
+=====================================================================================================================================================*/
 
 
+//change password
+var password_change_ini_run = false;
+function password_change_alert(){//check if alert was clicked//end dont show again in this session
+	
+	if(password_change_ini_run){
+	   
+	   	return;
+	   }//alert was shown before in this session
+	
+		alert('Please test your password Hint, or change password again to get a new Hint\n\nA password can be a sentence\nExample :\nhello streetWiFiy');
+	password_change_ini_run = true;
+	return;
+}
 
 
+//password hint
+var password_hint_ini_run = false;
+function password_hint_alert(){//check if alert was clicked//end dont show again in this session
+	
+	if(password_hint_ini_run){
+	   
+	   	return;
+	   }//alert was shown before in this session
+	
+		alert("Please make sure your Password Hint is not easy to gues, if so change your password to change password Hint");
+	password_hint_ini_run = true;
+	return;
+}
 
 
 /*=====================================================================================================================================================
@@ -2341,18 +2370,33 @@ function show_router_workd_extra_menu(input){//show admin config menu
 			   //console.log(response);
 			   document.getElementById('router_log_viewer').innerHTML='';//clear dom for future content reload
 			   
+			   var router_contact_history = '';//router time history
+			   
 			   response.forEach(function(data, index){
+				   	
+				   	if(data.router_last_contact_date_time_history){//created rooter history formated for alert
+						data.router_last_contact_date_time_history.forEach(function(data){
+							router_contact_history=router_contact_history + data + '\\r-------\\r';
+							//console.log(data);
+						});
+						
+					}
 				   
-				     var week_day =['Holiday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];//weekday
+				   //last contact hour AM/PM
+				   
+				   var am_pm = data.router_last_contact_hour < 12?' AM':' PM';
+				   
+				   
+				     var week_day =['Holiday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];//weekday
 				     var is_muted = (data.routermute? 'muted' : 'not_muted');
 				   
-				     var muted_button = (data.routermute? "<button class='btn btn-primary' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"unmute\")'>un-Mute Router Router</button>" : "<button class='btn btn-primary w3-block' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"mute\")'>Mute</button>");
+				     var muted_button = (data.routermute? "<button class='btn btn-success' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"unmute\")'>un-Mute Router Router</button>" : "<button class='btn btn-danger w3-block' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"mute\")'>Mute</button>");
 			   
 					   $("#router_log_viewer").append(`
 
 								 <div  style="width:100%; height:auto; margin:13px 0px 13px 0px; display:block; "  class="form-control router_log `+ is_muted +`">
 									<p style='width:100%; height: auto; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
-										 Router Name :<br />`+ data.routername +`<br />Last Contact :<br />Hour : `+ data.router_last_contact_hour +`, Minute : `+ data.router_last_contact_minute +`, Day :`+ week_day[ data.router_last_contact_day ] +`
+										 Router Name :<br />`+ data.routername +`<br />Last Contact :<br />Time : `+ data.router_last_contact_hour + ':' + data.router_last_contact_minute + am_pm +`, Day :`+ week_day[ data.router_last_contact_day ] +`
 									 </p>
 									  <p style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted green; line-height:auto; vertical-align: middle; font-size:15px; display:`+ router_extramenu_show_hide +`' id=''>
 										
@@ -2360,12 +2404,17 @@ function show_router_workd_extra_menu(input){//show admin config menu
 										Router Extra details : <br />` + data.routerdetails + `<br />
 										
 									 </p>
-									
+									<div style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; line-height:auto; vertical-align: middle; font-size:15px;display:block;' id='' >
+											<button class='btn btn-primary w3-block' style='width:100%' onclick='alert("` + router_contact_history + `")'>Contact history</button>
+									</div>
+
 									<div style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; line-height:auto; vertical-align: middle; font-size:15px; display:`+ router_extramenu_show_hide +`' id=''>`+ muted_button +`</div>
 	
 								</div>
 
 						`);
+				   	router_contact_history='';
+				    console.log(router_contact_history);
 				  });
 			   
 			   router_log_view_control ('active');
@@ -2489,7 +2538,7 @@ function router_mute_control(id,todo){
 
 
 
-//router content auto re-load
+//router content auto re-load//for when clicking mute/un-mute button
 
 var router_auto_loader;
 function router_content_autoloader_fn(){

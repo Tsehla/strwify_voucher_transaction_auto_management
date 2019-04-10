@@ -48,7 +48,8 @@ seller_distributor_model.add({
     //credits : {type : Number, initial:true, required:true, default:0, label :'Credit Amount'},
     credits : {type : Number, default:0, label :'Credit Amount'},
     //usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
-    usertype : {type :types.Select, options :'Seller, Distributor, Server Admin, Buyer', default :'Seller', label :'Type of User' }
+    usertype : {type :types.Select, options :'Seller, Distributor, Server Admin, Buyer', default :'Seller', label :'Type of User' },
+	transactionhistory : {type : types.TextArray, label :'Transactions'},//keep record of all transactions on account
     
     
 });
@@ -74,6 +75,8 @@ voucher_model.add(
     soldby : {type : String, label :'Sold By'},
     soldto : {type: String, default:'', label :'Sold To'},
     loadedby : {type: String, default:'', label :'Added by'},
+    voucherprinted : {type : types.Boolean, default:false, label :'Voucher Printed'},
+	voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'},
     
        
 }
