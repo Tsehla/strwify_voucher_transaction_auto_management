@@ -297,8 +297,8 @@ seller or distributor console, credt auto_voucher_check
         //http://127.0.0.1:4100/api/buy?code=get_voucher&unique_code=xyz;//api query link
            
             
-        var date = new Date();
-        //slow changing    
+
+        //slow changing values
         var year = date.getFullYear().toString();
         var month = date.getMonth().toString();
         var day = date.getDate().toString();
@@ -340,8 +340,7 @@ seller or distributor console, credt auto_voucher_check
                 res.jsonp(response); 
 				//++++++++++++++++++++save voucher as printed+++++++++++++++++
 				
-				response.voucherprinted = true;
-				response.voucherproducedday = day;//day of month voucher was printed, to be used as to calculate amount of time before point cant be recouped by the seller
+				response.voucherprinted = true;//set voucher as printed (yes)
 				response.save(function(err, success){
 					if(err){
 							console.log('Error, updating voucher as printed : '+error);
@@ -386,7 +385,10 @@ seller or distributor console, credt auto_voucher_check
         //slow changing    
         var year = date.getFullYear().toString();
         var month = date.getMonth().toString();
+			
         var day = date.getDate().toString();
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
         
         
         //get from seller to user
@@ -446,10 +448,11 @@ seller or distributor console, credt auto_voucher_check
                 
             
              // res.jsonp('voucher sold for R'+seller_voucher_amount_); 
-              
+			
                 response.voucherstate = 'used';
                 response.soldby = req.query.seller_id;
                 response.soldto = seach_code_;
+				response.voucherproducedday = day;//day of month voucher was printed, to be used as to calculate amount of time before point cant be recouped by the seller
                 response.save();
             
                 var seller_id = req.query.seller_id;
@@ -532,6 +535,14 @@ seller or distributor console, credt auto_voucher_check
 					
 						//recharge seller account
 					
+					
+					
+					
+					
+					
+					
+					
+					
 								keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : user_to_recharge, name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
 				  
 								function(error, response){
@@ -549,7 +560,30 @@ seller or distributor console, credt auto_voucher_check
 									}
 									
 									//add recharge to account
- 									
+									
+									
+											
+									 //add transaction
+										var date = new Date();
+				
+									var hour = date.getHours();
+									var minutes = date.getMinutes();
+									var day = date.getDay();
+									var month = date.getMonth();
+									var year = date.getFullYear();
+									
+									var new_balance = Number(response.credits) + Number(recharge_amount);
+									var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+'Account Recharged'+' R'+recharge_amount+'+ New balance : R'+new_balance;
+
+
+									var new_transactions_array = response.transactionhistory;
+
+										new_transactions_array.unshift(new_transaction_record);
+
+									if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+
+									response.transactionhistory = new_transactions_array;
+ 									//adjust credits
 									response.credits =  Number(response.credits) + Number(recharge_amount);
 									
 									response.save(function(err, response){
@@ -564,19 +598,35 @@ seller or distributor console, credt auto_voucher_check
 										return;
 									}
 									
-									//write sale to db
-									var transaction_cost =	voucherValue+'+';
-									transactions_history('Account Recharged', recharge_amount, seller_id, user_to_recharge);
 										
 									res.jsonp({name : seller_name, lastname  : seller_last_name, id : seller_id, amount : recharge_amount});
 								});
 
 
 								});
+						//add transaction to db as record 
+					
+						var date = new Date();
+						var hour = date.getHours();
+						var minutes = date.getMinutes();
+						var day = date.getDay();
+						var month = date.getMonth();
+						var year = date.getFullYear();
+						
+						var new_balance = Number(response.credits) - Number(recharge_amount);
+						var seller_recharged_id ='Fund transfered to ID no : ' + seller_id;
+						var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+seller_recharged_id+' R'+recharge_amount+'+ New balance : R'+new_balance;
 
-					
-					
-					
+
+						var new_transactions_array = response.transactionhistory;
+
+								new_transactions_array.unshift(new_transaction_record);
+
+						if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+
+						response.transactionhistory = new_transactions_array;
+ 						//adjust credits
+
 						//subtract amount from distributr acc
 						response.credits = Number(response.credits) - Number(recharge_amount);
 						///response.save();
@@ -585,10 +635,7 @@ seller or distributor console, credt auto_voucher_check
 							if(response == '' || response == undefined || response == null){
 								console.log('Error removing recharge amount from seller');
 							}
-							//write sale to db
-							var transaction_cost =	voucherValue+'-';
-							var seller_recharged_id ='Fund transfered to ID no : ' + seller_id;
-							transactions_history(seller_recharged_id, recharge_amount, distributor_id, user_type);
+
 						});
 					
 					
@@ -1119,7 +1166,7 @@ seller or distributor console, credt auto_voucher_check
 		 //add transaction
 		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+transaction_name+' R'+transaction_cost+' New balance : R'+response.credits;
 
-
+var hour = date.getHours();
 		var new_transactions_array = response.transactionhistory;
 
 			new_transactions_array.unshift(new_transaction_record);
