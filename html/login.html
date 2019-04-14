@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>StreetWifiy > login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"/>
+<link rel="stylesheet" href="bootstrap.min.css">
+<link rel="stylesheet" href="fa-regular.min.css">
+<style type="text/css">
+body {color: #737373; font-size: 10px; font-family: verdana;min-height: 500px}
+
+textarea,input,select {
+background-color: #FDFBFB;
+border: 1px solid #BBBBBB;
+padding: 2px;
+margin: 1px;
+font-size: 14px;
+color: #808080;
+}
+
+a, a:link, a:visited, a:active { color: #AAAAAA; text-decoration: none; font-size: 10px; }
+a:hover { border-bottom: 1px dotted #c1c1c1; color: #AAAAAA; }
+img {border: none;}
+    input{
+        font-size: 1.5em;
+        text-align: center;
+    }
+*::-webkit-input-placeholder {
+    color: blue;
+  
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: blue;
+    
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: blue;
+    
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: blue;
+   
+}
+    
+    
+@media only screen and (max-device-width: 480px) {
+    /* STYLES HERE */
+    
+}    
+    
+    
+</style>
+
+</head>
+<!-- original form -->
+<body>
+    
+
+	
+
+	
+
+<div style="width: 60vw;height: 80vh; position: absolute; display: none; background-color: antiquewhite; margin-top: 0%;margin-left:20vw;background-image: url(../static/images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
+	
+    <!-- close button --><button onclick="login_hide()" style="width: 40px; height: 40px; font-size: 1.5em; position: absolute;right: 1%; border: 0px" class="btn btn-info">&times;</button>
+
+		<div style="border: 3px double #cccccc; padding: 0px;background-image: url(../static/images/black-wood.jpg); width: 100%;height: 100%">
+
+		<!-- input content -->
+
+				<p style='color: white;font-size: 15px;font-weight: 500;margin-top: 30px'>Enter</p><br/>		
+				<input style="height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Voucher code" id='input_voucher_code'/>
+				<br/>	
+				<p style='color: white;font-size: 12px;font-weight: 500;margin-top: 30px'>OR</p>
+				<input style="height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Username" id='input_user_name'/>
+			
+				 <input style="height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="password" type="password" placeholder="Password" id='input_password'/>
+
+				
+		<button style="height: 15%; width: 100%; margin-top:2%;margin-bottom:2%" class="btn btn-primary" onclick='form_sender_decider()'>Log in</button>
+			
+              <a href="" target="_blank" style="border: none;"><img src="../static/images/logo.png" alt="StreetWifiY" style="width: 100%;height: 20%;margin-top: 150px"/></a>                   
+		
+              </div>
+        
+        <div style="color: #c1c1c1; font-size: 9px">Sponsored by Ncorp</div>
+       
+	
+
+    </div>
+
+   <br /><div style="color: #FF8080; font-size: 1.5em; width: 100%; height: 2em;text-align: center; background-color: dimgrey;border: 2px solid red;display:none" id='error_div'></div>
+
+
+<!-- app menu -->
+    
+    
+<!-- iframe --><!-- used to add promotions and click remotely by styling html page attached to mikrotik login as iframe -->
+<iframe style="width:100vw; height: 80vh; overflow-x: auto; overflow-y: scroll; border: 0px" src="https://tsehla.github.io/strwify/index.html" seamless></iframe>
+	
+	
+	
+	
+    
+<div id="bottom_bar" style="width:100%; height: 10vh; background-color: #3498db; position: absolute; bottom: 5%">
+<button onclick="login_display()" class="btn btn-success" style="width: 95px; height:45px; position: absolute; right:5%; margin-top: 1%">Connect</button>
+
+
+</div>
+
+	
+
+<script type="text/javascript" src="../static/md5.js"></script>
+<!-- +++++++ get variable from router encoded on link  +++++++ -->
+<script type="text/javascript" src="../static/qs.js"></script>
+<script type="text/javascript">
+	
+//login show
+    function login_display(){//show login form
+        document.getElementById("form_container").style.display="block";
+    }
+        function login_hide(){//hide login form
+        document.getElementById("form_container").style.display="none";
+    }
+
+	
+//form processing
+
+//get varibles from router on link
+var router_variables_array = qs.get();
+console.log(router_variables_array);
+
+	
+// Error div 	
+if(router_variables_array.error){//if error from router
+	
+	document.getElementById('error_div').style.display='block';
+	document.getElementById('error_div').innerHTML = router_variables_array.error.replace(/%20/g,' ');
+	
+}
+	
+//form sender
+	function form_sender_decider() {
+		
+		var user_name_input_voucher_code = document.getElementById('input_voucher_code').value;
+		var user_name_input_user_name = document.getElementById('input_user_name').value;
+		var user_name_input_user_password = document.getElementById('input_password').value;
+		
+		
+		
+		//if chap used for login
+		
+		if(router_variables_array["chap-id"]){
+			
+				//http-chap//voucher only login
+				if(user_name_input_voucher_code.length > 0){//something in voucher input
+				     var hashed_password = hexMD5(router_variables_array["chap-id"] + user_name_input_voucher_code + router_variables_array["chap-challenge"]);
+			
+					var form_to_url = router_variables_array["link-login-only"] + '?username=' + user_name_input_voucher_code + '&password=' + hashed_password + '&dst=' + router_variables_array["link-orig"] + '&popup=true';
+					
+					//alert(form_to_url);
+					
+					window.open(form_to_url, '_self');
+				
+				return;
+			}
+			
+			//http-chap//name + password login
+			if(user_name_input_voucher_code.length == 0){//nothing in voucher input
+        			var hashed_password = hexMD5(router_variables_array["chap-id"] + user_name_input_user_password + router_variables_array["chap-challenge"]);
+			
+					var form_to_url = router_variables_array["link-login-only"] + '?username=' + user_name_input_user_name + '&password=' + hashed_password + '&dst=' + router_variables_array["link-orig"] + '&popup=true';
+					//
+					alert(form_to_url);
+				
+					window.open(form_to_url, '_self');
+			
+				return;
+			}
+				
+				alert('Please fill only one login Method');
+				
+				document.getElementById('input_voucher_code').value='';
+				document.getElementById('input_user_name').value='';
+				document.getElementById('input_password').value='';
+				
+				return;
+		}
+		
+		
+		
+		//none chap login
+
+			
+			//voucher only login
+			if(user_name_input_voucher_code.length > 0){//somethng in voucher input
+			
+					var form_to_url = router_variables_array["link-login-only"] + '?username=' + user_name_input_voucher_code + '&password=' + user_name_input_voucher_code + '&dst=' + router_variables_array["link-orig"] + '&popup=true';
+					//alert(form_to_url)
+					window.open(form_to_url, '_self');
+				
+				return;
+			}
+			
+			//name + password login
+			if(user_name_input_voucher_code.length == 0){//nothing in voucher input
+			
+					var form_to_url = router_variables_array["link-login-only"] + '?username=' + user_name_input_user_name + '&password=' + user_name_input_user_password + '&dst=' + router_variables_array["link-orig"] + '&popup=true';
+				
+					//alert(form_to_url)
+					window.open(form_to_url, '_self');
+			
+				return;
+			}
+				
+				alert('Please fill only one login Method');
+				
+				document.getElementById('input_voucher_code').value='';
+				document.getElementById('input_user_name').value='';
+				document.getElementById('input_password').value='';
+				
+				return;
+				
+		
+			
+		
+		
+	 }
+	
+	
+	
+	
+	
+</script>
+	
+</body>
+</html>

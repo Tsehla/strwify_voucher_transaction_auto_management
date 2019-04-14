@@ -1224,9 +1224,33 @@ var hour = date.getHours();
         res.sendFile(path.resolve('./html/index.html'));
         
     });
+
     
+/*========================================
+
+    hotspot page //shown on mikrotik as login
     
-    
+========================================*/
+	
+	app.get('/hotspot', function(req, res){
+        res.sendFile(path.resolve('./html/login.html'));
+        
+    });
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     
     
     
