@@ -66,6 +66,9 @@
 		  	   #outer_menu_open_overlay{
                display : none;/* hide */
                }
+      	  	   #transactions_and_voucher_page{
+               display : none;/* hide */
+               }
                
                
       </style>
@@ -88,8 +91,8 @@
 <div id='outer_menu_open_overlay' onclick='document.getElementById("side_menu_container").style.right="140px"' style='height: 100vh; width: 5vw; position: fixed;right:0px;'>
  <div id='side_menu_container' style="height: auto;width: 100px;position: relative;right: 2px;background: auto" onfocusout='document.getElementById("side_menu_container").style.right="2px"'>
 	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:10px" >CLOSE</button>
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" >Transactions</button>
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px">Vouchers</button>
+	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('past_transactions')">Transactions</button>
+	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('to_reddem_voucher')">Vouchers</button>
 	 <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px">Admin</button>
 	
 </div>
@@ -914,31 +917,11 @@ distributor login
  StreetWiFiy
  </p>
    </div>
-   </div>
-	   
-
-	   	   
-	 
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
+   </div>  
 	   
  <!-- add vouchers codes from csv from  account -->
 	   
-	   
-	   
-	   
-	   
+   
 	   
   <div id="recharge_codes_container" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
@@ -1086,6 +1069,46 @@ distributor login
 	   
 
 	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+<!-- transaction fill up -->
+
+  <div id="transactions_and_voucher_page" style="width:100vw; height: auto; position: absolute;top: 0px;left: 0px;"><!-- first page Start -->
+ <div id="transactions_and_voucher_wrapper">
+ <div id="transactions_and_voucher_menu" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+	 <b style='width: 70%; display: inline-block' id="transactions_and_voucher_header">
+		 N/A
+	 </b>
+	 <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="document.getElementById('transactions_and_voucher_page').style.display='none'"> CLOSE</button>
+ </p>
+
+
+ 
+<!--transactions and voucher viewwer -->
+
+<div id='transactions_and_voucher_viewer' style="width:95vw;text-align: left;overflow:break-word  "></div>
+	 
+
+
+ <br />
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Router "Last Contact" should be within last 30 minutes, if over 30 minute please contact us. **ONLY for ACTIVE routers **\n\n--- ADMIN MENU ---\n2) "Mute/Un-Mute" Stops/Enable system to send alerts when router has not contacted server for over thirty minutes.\n\n PLease log in as Admin to see more details....`)'>Help</button>
+ 
+ 
+ 
+ 
+ </div>
+<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+ StreetWiFiy
+ </p>
+   </div>
+   </div>
 	   
 	   
 	   

@@ -1238,8 +1238,103 @@ var hour = date.getHours();
     });
 	
 	
+
+/*========================================
+
+    transaction menu
+    
+========================================*/
+	
+// http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+distributor_login.distributor_id+'&usertype='+distributor_login.usertype	
+
+	
+app.get('/api/transations', function(req, res){
+	
+//http://127.0.0.1:4100/api/transations?type=to_reddem_voucher&user_id=8905135852087&usertype=Seller	
+//http://127.0.0.1:4100/api/transations?type=past_transactions&user_id=8905135852087&usertype=Seller
+	
+console.log(req.query.user_id,req.query.usertype,req.query.type );	
+	
+if(req.query.type == 'past_transactions'){	
 	
 	
+	
+	
+	 keystone.list('seller distributor').model.find()
+	.where({idnumber : req.query.user_id, usertype : req.query.usertype})
+	.exec(function(err, response){
+		
+		if(err){
+			console.log('error: finding transactions for user ID : '+req.query.user_id);
+			return_fn('error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+			console.log('error: No transactions found for user ID : '+req.query.user_id);
+			return_fn('error : no transations history stored');
+			return;
+		}
+		 
+		 
+		return_fn(response[0].transactionhistory); 
+		  return;
+							
+	});	
+	
+}
+	
+	
+if(req.query.type == 'to_reddem_voucher'){	
+	
+	 keystone.list('Voucher Codes').model.find()
+	.where({soldby : req.query.user_id})
+	.exec(function(err, response){
+		
+		 var respone_ =[];//filter and send response
+		 
+		if(err){
+			console.log('error: finding voucher history for user ID : '+req.query.user_id);
+			return_fn('error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+			console.log('error: No vouchers found for user ID : '+req.query.user_id);
+			return_fn('error : no vouchers to claim');
+			return;
+		}
+		 
+		
+		 
+		 response.forEach(function(data, index){
+			 var date = new Date();
+			 if(data.voucherprinted != true && data.voucherstate != 'new'){
+					respone_.push({voucher_id:data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
+				}
+			 
+		 });
+		 
+		 if(respone_.length < 1){//if no data match request
+			 
+			 respone_ = 'error : no vouchers to claim';
+		 }
+		return_fn(respone_); 
+		 
+		return;  
+							
+	})
+	
+}	
+	
+	function return_fn(data){//send response back
+		
+		res.jsonp(data);
+		return;
+	}
+
+});
+
 
 	
 	
@@ -1251,9 +1346,20 @@ var hour = date.getHours();
 	
 	
 	
-    
-    
-    
-    
-    
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 });

@@ -222,6 +222,7 @@ buy data page
 _______________________________________________________________________________________________________________________________________________________*/
 
 
+
 /*===================================================================================================================================================== 
 
 generate unique random code 
@@ -2595,13 +2596,160 @@ function menu_button_sever(typeOfUser){
 }
 
 
+//++++++++++++++++++++ extra menu content ++++++++++++++++++++
 
 
 
+function extra_menu(transaction_type){ //extra menu initiator
+	
+//show menu window
+	
+document.getElementById('transactions_and_voucher_page').style.display='block';	
+	
+if(admin_login.admin_id){//if admin logged in
+	
+	var url= 'http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+admin_login.admin_id+'&usertype='+admin_login.usertype;
+}
+	
+if(seller_login.seller_id){// if seller logged in
+	
+	var url= 'http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+seller_login.seller_id+'&usertype='+seller_login.usertype;
+}
+
+if(distributor_login.distributor_id){// if distributor logged in
+	
+	var url= 'http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+distributor_login.distributor_id+'&usertype='+distributor_login.usertype
+}
+	
+	
+	
+console.log(url);
+		
+if(transaction_type == 'past_transactions'){
+	
+	  $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'error'){
+                   
+                
+                dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+				   return;
+                   
+               }              
+			   
+			   if(response == 'error : no transations history stored'){
+                   
+                
+                dom_innerHtml('transactions_and_voucher_header', 'Error, no Transations found'); 
+				   return;
+                   
+               }
+
+			   //console.log(response);
+			   
+			   
+			   //clear div current contents
+			  document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+			  document.getElementById('transactions_and_voucher_header').innerHTML='Transactions History';
+		
+			   response.forEach(function(data, index){//add contents
+				   	
+
+				   
+				   $('#transactions_and_voucher_viewer').append('<div id="" class="w3-border w3-margin">'+data+'</div><hr>');
+				
+		
+				   
+			   });
+			   
+			   
+				return;
+
+		   }
+	
+		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+		 return;
+	  });
+	
+}
+	
+if(transaction_type == 'to_reddem_voucher'){
+	
+	  $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'error'){
+                   
+                
+                dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+				   return;
+                   
+               }              
+			   
+			   if(response == 'error : no vouchers to claim'){
+                   
+                
+                dom_innerHtml('transactions_and_voucher_header', 'Error, No Voucher to claim found'); 
+				   return;
+                   
+               }
+
+			  // console.log(response);
+			   
+			   //clear div current contents
+			  document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+			  document.getElementById('transactions_and_voucher_header').innerHTML='Voucher never sold';
+		
+			   response.forEach(function(data, index){//add contents
+				   	
+				 var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data._id+','+ data.voucher_amount+"')\">Redeem Voucher Cash</button>";//show redeem button
+				   
+				   if(Number(data.voucherproducedday) == Number(data.server_day)){//if ticket was produced in same day// dont allow download: //wannet to have voucher claimed after 30 days, well implementing that is annoying//so will use next day
+					   claim_button = "<b style='color:red'>You can only get money back for this ticket next day</b> ";
+				   }
+				   
+				   
+				   var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border'><p>Voucher Not used/created by Mistake, Ticket ID : "+data.voucher_id+", Voucher amount : R"+data.voucher_amount+", Produced on the "+data.voucherproducedday+", "+claim_button+"</p></div><br ><hr><br>";
+				   
+				   
+				   $('#transactions_and_voucher_viewer').append(content_div);
+					return;
+		
+				   
+			   });
+			   
+				return;
+
+		   }
+	
+		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+		 return;
+	  });
+	
+}
+	
+	
+
+	
+}
 
 
+// ++++++++++++++++++++ voucher redeem +++++++++++++++++
 
-
+ function voucher_redeem (voucher_id, voucher_amount){
+	 
+	 alert(voucher_id, voucher_amount);
+	 
+ }
 
 
 
