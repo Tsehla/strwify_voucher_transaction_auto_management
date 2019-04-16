@@ -298,7 +298,8 @@ seller or distributor console, credt auto_voucher_check
            
             
 
-        //slow changing values
+		//slow changing values
+		var date = new Date();
         var year = date.getFullYear().toString();
         var month = date.getMonth().toString();
         var day = date.getDate().toString();
@@ -319,10 +320,10 @@ seller or distributor console, credt auto_voucher_check
             
         var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds.toString().replace(/ /g, '');
        
-////            
-//        console.log('-----------------------');
-//        console.log(seach_code_);
-//        console.log('-----------------------'); 
+//            
+       console.log('-----------------------');
+       console.log(seach_code_);
+       console.log('-----------------------'); 
     
             
             

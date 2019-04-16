@@ -1,11 +1,16 @@
-add ticket download shower for seller : to allow cash redeem in case of wrong code input, allow couple weeks to enable reversal make it auto{ add field that show if code has been downloaded ]
+give seller auto notification on their account rechage, 
 
-give seller auto notification on their account rechage, allow statement download for user rechages max [100] entries and allow statement download for account rechages [max 50 ] entries
+------
+allow distributor to manage router login page contents like wallpers ect if they are allocated manage router action calling with location x. super admin manage all
+
+distributor (can own many router[ router can be owned by one distributor a time]): router contains id of owner distributor : distributor account only shows is its own a router or not
+
+distributor can preview router page before saving ( call function that fill data for router page outside ajax call function router_hotspot_login_page(response, is_preview){
+
+	if(preview){ }//open router in new page 
+	
+	})
+
+--------
 
 
--seller dist= allow recharge to and recharge from stement downloads
-
-give super admin second ability
-
-----
-router monitoring up/down status via node js link: custom api

@@ -131,10 +131,27 @@ img {border: none;}
 
 	
 //form processing
-
+var hotspot_url ='http://streetwifiy.co.za';//GET it form db//url router hotspot server
+var hotspot_transaction_server_url = 'http://streetwifiy.herokuapp.com/';//GET form db server where voucher app runs from
+	
 //get varibles from router on link
 var router_variables_array = qs.get();
-console.log(router_variables_array);
+//console.log(router_variables_array);
+//	
+//if(router_variables_array < 1){//not working
+//	
+//	alert();
+//	
+//	var go_to_home_page = confirm('Please enter this page by conneting to hotspot and Enter : '+url+'in your browser to be able to enter voucher codes.\r\rDo you want to go to home page?');
+//	
+//	if(go_to_home_page){//open home page/transaction app
+//		if(hotspot_transaction_server_ur){//if transact app link given
+//			window.open(hotspot_transaction_server_url, '_self');
+//			return;
+//		}
+//	}
+//	
+//}	
 
 	
 // Error div 	

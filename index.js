@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 var keyst = require('keystone');
-var port = process.env.PORT || 4100;//for local and heroku compartible
+var port = process.env.PORT || 3100;//for local and heroku compartible
 
 keyst.init({
     'cookie secret' : 'gshdjhbdhdjsdhckwndioenw8739n873bd782wdhxbn7ydh7283hd7',
@@ -20,7 +20,6 @@ keyst.set('cors allow origin', true);
 keyst.set('port', port);
 
 keyst.start();
-
 
 
 	//----------------  router auto status checker ----------------

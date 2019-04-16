@@ -50,6 +50,7 @@ seller_distributor_model.add({
     //usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
     usertype : {type :types.Select, options :'Seller, Distributor, Server Admin, Buyer', default :'Seller', label :'Type of User' },
 	transactionhistory : {type : types.TextArray, label :'Transactions'},//keep record of all transactions on account
+	manage_router : {type : types.Boolean, default:false, label :'Manage Router?'},
     
     
 });
@@ -123,5 +124,40 @@ router_model.add(
 
 
 router_model.register();
+
+//---------------------------------------------------------
+    
+//Router hotspot page contents
+
+//----------------------------------------------------------
+
+var router_hotspot_page = 'Router hotspot page';
+var router_hotspot_page_model = new keystone.List(router_hotspot_page);
+
+router_hotspot_page_model .add({
+	router_location : {type :String, initial:true, required:true, default:'default', label : 'Router location' },
+	hotspot_wallpaper : {type : types.TextArray, initial:true,required:true, default:['{image_link :"static/default_slide_images/1.jpg" , image_status_text : "Image 1", image_status_link: "static/default_slide_images/1.jpg"}','{image_link :"static/default_slide_images/2.jpg" , image_status_text : "Image 2", image_status_link: "static/default_slide_images/2.jpg"}','{image_link :"static/default_slide_images/3.jpg" , image_status_text : "Image 3", image_status_link: "static/default_slide_images/3.jpg"}','{image_link :"static/default_slide_images/4.jpg" , image_status_text : "Image 4", image_status_link: "static/default_slide_images/4.jpg"}','{image_link :"static/default_slide_images/5.jpg" , image_status_text : "Image 5", image_status_link: "static/default_slide_images/5.jpg"}','{image_link :"static/default_slide_images/6.jpg" , image_status_text : "Image 6", image_status_link: "static/default_slide_images/6.jpg"}','{image_link :"static/default_slide_images/7.jpg" , image_status_text : "Image 7", image_status_link: "static/default_slide_images/7.jpg"}','{image_link :"static/default_slide_images/8.jpg" , image_status_text : "Image 8", image_status_link: "static/default_slide_images/8.jpg"}','{image_link :"static/default_slide_images/9.jpg" , image_status_text : "Image 9", image_status_link: "static/default_slide_images/9.jpg"}','{image_link :"static/default_slide_images/10.jpg" , image_status_text : "Image 10", image_status_link: "static/default_slide_images/10.jpg"}'], label :'Wallpaper data' },
+        
+	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{link:"https://scholar.google.co.za/", text:"Google scholar"}','{link:"https://www.google.com",text:"Search on google"}'],initial:true,required:true,},
+	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{link:"https://www.google.com",text:"Search on google"}'],initial:true,required:true,},
+	hotspot_announcements : {type : types.TextArray, label :'Hotspot Announcements', default: ['Dare to be diffrents','Dare to write your destiny'],initial:true,required:true,},
+	hotspot_logo : {type : String, label :'Hotspot Logo', default: 'static/images/logo.png',initial:true,required:true,},
+	hotspot_manager : {type : types.TextArray, label :'hotspot Managers'},
+});
+
+router_hotspot_page_model.register();
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
