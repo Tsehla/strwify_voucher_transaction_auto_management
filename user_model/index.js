@@ -141,6 +141,12 @@ router_hotspot_page_model .add({
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{link:"https://scholar.google.co.za/", text:"Google scholar"}','{link:"https://www.google.com",text:"Search on google"}'],initial:true,required:true,},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{link:"https://www.google.com",text:"Search on google"}'],initial:true,required:true,},
 	hotspot_announcements : {type : types.TextArray, label :'Hotspot Announcements', default: ['Dare to be diffrents','Dare to write your destiny'],initial:true,required:true,},
+	
+	hotspot_how_to_bottom_text : {type : String, label :'Hotspot Howto bottom text', default: 'Help yourself, To be helped',initial:true,required:true,},
+	hotspot_free_sites_bottom_text : {type : String, label :'Hotspot Free sites bottom text', default: 'Pass it on, unconditionally help a stranger, a friend, a family member',initial:true,required:true,},
+	notification_bottom_text : {type : String, label :'Hotspot notification bottom text', default: 'If it was easy, no one would care. If it was impossible, no one would dare',initial:true,required:true,},
+	
+	
 	hotspot_logo : {type : String, label :'Hotspot Logo', default: 'static/images/logo.png',initial:true,required:true,},
 	hotspot_manager : {type : types.TextArray, label :'hotspot Managers'},
 });
