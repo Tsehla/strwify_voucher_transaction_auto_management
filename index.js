@@ -126,7 +126,7 @@ function checkin_checking_routing (){
 	
 	//exist funtion btween 11pm and 2am
 	
-	if(router_last_contact_hour == 23 || router_last_contact_hour == 24 || router_last_contact_hour == 1 || router_last_contact_hour == 2 ){return;}
+	if(router_last_contact_hour == 23 || router_last_contact_hour == 24 || router_last_contact_hour == 0 || router_last_contact_hour == 1 || router_last_contact_hour == 2 ){return;}
 	
 	
 	keystone.list('Router Monitoring').model.find()

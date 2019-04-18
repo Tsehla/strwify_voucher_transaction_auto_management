@@ -671,13 +671,7 @@
                 position: static;
           
            }
-           /*body*/
-           body {
-           background-image: url('slide_images/1.jpg');
-           background-size: 100% 100%;
-           background-repeat : no-repeat;
-           background-position : center;
-           }
+
         </style>
 		
 		
@@ -808,20 +802,36 @@
 						return;
 
 		}
+		//++++++++++++++++++ connect to db ++++++++++++++
+		var hotspot_transaction_server_url = 'http://' + window.location.host;//GET form db server where voucher app runs from	 = window.location.host;
+		var hot_spot_db_url = hotspot_transaction_server_url + '/api/hotspot_data?location='+ router_variables_array.location;
+			
+		console.log(hot_spot_db_url) ;	
+			
+		 $.get(hot_spot_db_url, function(response, status){
+			 
+			   if(status == 'success'){
+				   //console.log(JSON.stringify(response));
+				   fill_data_from_db(response);//start with data from db function
+				   return;
+			   }
 
+			   else{
+					console.log('Error retrieving data from db for hotspot') ;
+				   	fill_data_from_db();//start with no data from db function
+				   	return;
+			   }         
+           });
 
 		//+++++++++++++++++ db pulled data ++++++++++++++++++++++
 
-		var hotspot_url;//GET it form db//url router hotspot server
-		var hotspot_transaction_server_url;//GET form db server where voucher app runs from	
+		var hotspot_url = router_variables_array["link-login-only"];//GET it form mikrotik [this] hotspot inititated link
 		var wall_link_description; //Get wallpaper links data from db
 
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
-
-			//enviroment variables 
-			hotspot_url ='http://streetwifiy.co.za';
-			hotspot_transaction_server_url = 'http://streetwifiy.herokuapp.com/';
+			
+			//++++++++++++++if network issue, use belo copy of default variable
 			var logo_image_url = '../static/images/logo.png';//logo image
 			var how_to_bottom_text = 'Help yourself, To be helped;'//text shown on help menu as marquee
 			var education_free_links =[
@@ -849,15 +859,51 @@
 
 			
 			//override provided data by using data from db; not necessary but fine
-			
 			if(data_from_db){
+				//console.log(data_from_db);
 				
+				if(data_from_db[0].hotspot_logo){
+					logo_image_url = data_from_db[0].hotspot_logo;
+					//console.log('1'+logo_image_url);
+				   }
+				
+				if(data_from_db[0].hotspot_how_to_bottom_text){
+					how_to_bottom_text = data_from_db[0].hotspot_how_to_bottom_text;
+					//console.log('2'+how_to_bottom_text);
+					 }
+				
+				if(data_from_db[0].free_education_sites){
+					education_free_links = data_from_db[0].free_education_sites;
+					//console.log('3'+education_free_links);
+					}
+				
+				if(data_from_db[0].free_jobs_sites){
+					jobs_free_links = data_from_db[0].free_jobs_sites;
+					//console.log('4'+jobs_free_links);
+					 }
+				
+				if(data_from_db[0].hotspot_free_sites_bottom_text){	 
+					free_sites_bottom_text = data_from_db[0].hotspot_free_sites_bottom_text;
+					//console.log('5'+free_sites_bottom_text);
+					 }
+				
+				if(data_from_db[0].hotspot_announcements){	  
+					notifications_from_db = data_from_db[0].hotspot_announcements;
+					//console.log('6'+notifications_from_db);
+					 }
+				
+				if(data_from_db[0].notification_bottom_text){	 
+					notification_bottom_text = data_from_db[0].notification_bottom_text;
+					//console.log('7'+notification_bottom_text);
+					 }
+//				
+//				if(data_from_db[0].hotspot_wallpaper){	  //ISSUE DB ISSUE OR SOMETHING
+//					wall_link_description = data_from_db[0].hotspot_wallpaper;
+//					console.log('8'+wall_link_description);
+//				 }
 			}
-			
-			
-			
-			
 
+			
 			//logo image adding
 			if(logo_image_url){
 					document.getElementById('logo_container').style.backgroundImage='url('+logo_image_url+')';
@@ -930,12 +976,8 @@
 			}
 					
 			
-			
-			
-                
-			
 		}
-		fill_data_from_db();//start function	
+//		fill_data_from_db();//start function	
 
 			
 
@@ -970,11 +1012,13 @@
         //wallpaper description
  			
         var current_image_content_tracker = 0;//image tracker
-        
-		//add wallpaper and link on page load	
-        document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
-        document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
-		
+  
+		//add wallpaper and link on page load	//ISSUE DB ISSUE OR SOMETHING
+//		document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
+//		document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
+//		
+	
+			
 		//wallpaper size	
         document.getElementById('page_body').style.backgroundSize = '100vw 100vh';
         

@@ -1337,11 +1337,97 @@ if(req.query.type == 'to_reddem_voucher'){
 });
 
 
+
+/*========================================
+
+    hotspot data
+    
+========================================*/	
+	
+app.get('/api/hotspot_data', function(req, res){	
+	
+	//http://127.0.0.1:4100/api/hotspot_data?location=Orange farm;
+	
+	var location_of_router = req.query.location;
+	
+	if(location_of_router == null || location_of_router == undefined || location_of_router == '' || location_of_router == 'undefined'){ 
+		
+		location_of_router = 'default';	
+	}
+		
+	//find router hostpot data
+	function find_router_hotspsot_data(){ 
+		 keystone.list('Router hotspot page').model.find()
+		.where({router_location : location_of_router.toLowerCase()})
+		.exec(function(err, response){
+
+
+			if(err){
+				console.log('Error finding router with location');
+				send_router_hotspot_data ('');//send nothing back
+				return;
+			}
+
+			if(response == null || response == undefined || response == ''){//user not found//add user
+				console.log('No router with location found');//
+				create_new_named_hotspot_data();//create new named hotspot
+				return;
+			}
+			
+			send_router_hotspot_data (response); //send named hotspot data back
+			return;
+
+		 });
+	};
+	find_router_hotspsot_data();//start function 
+	
+	//create model for the location
+	function create_new_named_hotspot_data(){
+		
+		keystone.createItems({
+			'Router hotspot page' : [{
+				router_location : location_of_router.toLowerCase(),
+				hotspot_wallpaper: ['{image_link :"static/default_slide_images/1.jpg" , image_status_text : "Image 1", image_status_link: "static/default_slide_images/1.jpg"}','{image_link :"static/default_slide_images/2.jpg" , image_status_text : "Image 2", image_status_link: "static/default_slide_images/2.jpg"}','{image_link :"static/default_slide_images/3.jpg" , image_status_text : "Image 3", image_status_link: "static/default_slide_images/3.jpg"}','{image_link :"static/default_slide_images/4.jpg" , image_status_text : "Image 4", image_status_link: "static/default_slide_images/4.jpg"}','{image_link :"static/default_slide_images/5.jpg" , image_status_text : "Image 5", image_status_link: "static/default_slide_images/5.jpg"}','{image_link :"static/default_slide_images/6.jpg" , image_status_text : "Image 6", image_status_link: "static/default_slide_images/6.jpg"}','{image_link :"static/default_slide_images/7.jpg" , image_status_text : "Image 7", image_status_link: "static/default_slide_images/7.jpg"}','{image_link :"static/default_slide_images/8.jpg" , image_status_text : "Image 8", image_status_link: "static/default_slide_images/8.jpg"}','{image_link :"static/default_slide_images/9.jpg" , image_status_text : "Image 9", image_status_link: "static/default_slide_images/9.jpg"}','{image_link :"static/default_slide_images/10.jpg" , image_status_text : "Image 10", image_status_link: "static/default_slide_images/10.jpg"}'],
+				free_education_sites : ['{link:"https://scholar.google.co.za/", text:"Google scholar"}','{link:"https://www.google.com",text:"Search on google"}'],
+				free_jobs_sites : ['{link:"https://www.google.com",text:"Search on google"}'],
+				hotspot_announcements : ['Dare to be diffrents','Dare to write your destiny'],
+				hotspot_how_to_bottom_text : 'Help yourself, To be helped',
+				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member',
+				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare',
+				hotspot_logo : 'static/images/logo.png',
+				
+			}]
+			
+		}, function(err, success){
+			if(err){
+				
+				console.log('Error, when attempt creating new router location');
+				send_router_hotspot_data ('');//send nothing back
+				return;	
+				
+			}
+			if(success == null || success == undefined || success == ''){
+				console.log('No response given after attempt creating new router location');
+				send_router_hotspot_data ('');//send nothing back
+				return;
+			}
+			
+			find_router_hotspsot_data();//restart search
+			return;
+		});
+		
+	}
+	
+	//responder function	
+	function send_router_hotspot_data (data){
+		res.jsonp(data);
+		return;
+	}
 	
 	
+});
 	
-	
-	
+
 	
 	
 	
