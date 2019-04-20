@@ -290,7 +290,7 @@
     	<!-- wallpaper links -->
         
         <div id='walp_links_container' role='button' class='btn btn-primary'>
-            <p id='walp_links' >no data yet</p>
+            <p id='walp_links' >Welcome</p>
         </div>		
 		
         <style>
@@ -701,6 +701,12 @@
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
 		<script type="text/javascript" src="../static/qs.js"></script>
 		<script type="text/javascript">
+			
+			
+			
+			//login link from router [ non http-chap ]
+			
+			//http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://streetwifiy.co.za/login&link-orig=&chap-id=&chap-challenge=&link-orig-esc=&mac-esc=90%3A2E%3A1C%3A69%3AB3%3ABA&username=&location=orangefarm
 
 		//++++++++++++++++++login show
 			function login_display(){//show login form
@@ -806,7 +812,7 @@
 		var hotspot_transaction_server_url = 'http://' + window.location.host;//GET form db server where voucher app runs from	 = window.location.host;
 		var hot_spot_db_url = hotspot_transaction_server_url + '/api/hotspot_data?location='+ router_variables_array.location;
 			
-		console.log(hot_spot_db_url) ;	
+		//console.log(hot_spot_db_url) ;	
 			
 		 $.get(hot_spot_db_url, function(response, status){
 			 
@@ -862,45 +868,68 @@
 			if(data_from_db){
 				//console.log(data_from_db);
 				
-				if(data_from_db[0].hotspot_logo){
-					logo_image_url = data_from_db[0].hotspot_logo;
+				if(data_from_db.hotspot_logo){
+					logo_image_url = data_from_db.hotspot_logo;
 					//console.log('1'+logo_image_url);
 				   }
 				
-				if(data_from_db[0].hotspot_how_to_bottom_text){
-					how_to_bottom_text = data_from_db[0].hotspot_how_to_bottom_text;
+				if(data_from_db.hotspot_how_to_bottom_text){
+					how_to_bottom_text = data_from_db.hotspot_how_to_bottom_text;
 					//console.log('2'+how_to_bottom_text);
 					 }
 				
-				if(data_from_db[0].free_education_sites){
-					education_free_links = data_from_db[0].free_education_sites;
+				if(data_from_db.free_education_sites){
+					education_free_links = data_from_db.free_education_sites;
 					//console.log('3'+education_free_links);
 					}
 				
-				if(data_from_db[0].free_jobs_sites){
-					jobs_free_links = data_from_db[0].free_jobs_sites;
+				if(data_from_db.free_jobs_sites){
+					jobs_free_links = data_from_db.free_jobs_sites;
 					//console.log('4'+jobs_free_links);
 					 }
 				
-				if(data_from_db[0].hotspot_free_sites_bottom_text){	 
-					free_sites_bottom_text = data_from_db[0].hotspot_free_sites_bottom_text;
+				if(data_from_db.hotspot_free_sites_bottom_text){	 
+					free_sites_bottom_text = data_from_db.hotspot_free_sites_bottom_text;
 					//console.log('5'+free_sites_bottom_text);
 					 }
 				
-				if(data_from_db[0].hotspot_announcements){	  
-					notifications_from_db = data_from_db[0].hotspot_announcements;
+				if(data_from_db.hotspot_announcements){	  
+					notifications_from_db = data_from_db.hotspot_announcements;
 					//console.log('6'+notifications_from_db);
 					 }
 				
-				if(data_from_db[0].notification_bottom_text){	 
-					notification_bottom_text = data_from_db[0].notification_bottom_text;
+				if(data_from_db.notification_bottom_text){	 
+					notification_bottom_text = data_from_db.notification_bottom_text;
 					//console.log('7'+notification_bottom_text);
 					 }
-//				
-//				if(data_from_db[0].hotspot_wallpaper){	  //ISSUE DB ISSUE OR SOMETHING
-//					wall_link_description = data_from_db[0].hotspot_wallpaper;
-//					console.log('8'+wall_link_description);
-//				 }
+				
+				if(data_from_db.hotspot_wallpaper){	//wallpaperdata
+					
+					//console.log(data_from_db);
+					
+					wall_link_description = []// empty array
+					
+					data_from_db.hotspot_wallpaper.forEach(function(data){
+						//console.log(data)
+						//console.log(JSON.parse(data))
+						wall_link_description.push(JSON.parse(data));//add contents as objects
+					
+					});
+					
+					//console.log(wall_link_description.length)
+					if(wall_link_description.length == 0){//if wallapers from db
+						
+						wall_link_description.push({"image_link" :"" , "image_status_text" : "Welcome", "image_status_link": ""});
+						wall_link_description.push({"image_link" :"" , "image_status_text" : "O amo hetswe", "image_status_link": ""});
+						
+					}
+					
+					if(wall_link_description.length > 0){			
+						//add wallpaper and link on page load
+						document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
+						document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
+					}
+				 }
 			}
 
 			
@@ -941,6 +970,7 @@
 			//education
 			if(education_free_links){
 			   	education_free_links.forEach(function(data){
+					var data=JSON.parse(data);
 					$('#education_free_links').append('<a href="'+data.link+'">'+data.text+'</a>');
 				});
 			   }
@@ -948,7 +978,9 @@
 			//jobs
 			//jobs_free_links
 			if(jobs_free_links){
+								
 			   	jobs_free_links.forEach(function(data){
+					var data=JSON.parse(data);
 					$('#jobs_free_links').append('<a href="'+data.link+'">'+data.text+'</a>');
 				});
 			 }
@@ -971,7 +1003,7 @@
 					}
 					
 					
-					$('#notification').append('<h2>ANNOUNCE' + (index + 1).toString()  + '</h2><br/><a href="#" onclick=\'this.innerHTML ="'+data+'"\'>' + notification_preview + '</a>');
+					$('#notification').append('<h2>ANNOUNCE ' + (index + 1).toString()  + '</h2><br/><a href="#" onclick=\'this.innerHTML ="'+data+'"\'>' + notification_preview + '</a>');
 				});
 			}
 					
@@ -986,7 +1018,7 @@
 
 		//++++++++++++++if page accessed from not router redirect
 
-		if(router_variables_array){//not working
+		if(!router_variables_array.login){//if login:true missing from url link//when not accesssed via hotspot running on router
 
 		var go_to_home_page = confirm('Please enter this page by conneting to hotspot and Enter : '+hotspot_url+' in your browser to be able to enter voucher codes.\r\rDo you want to go to home page?');
 
@@ -1012,11 +1044,13 @@
         //wallpaper description
  			
         var current_image_content_tracker = 0;//image tracker
-  
-		//add wallpaper and link on page load	//ISSUE DB ISSUE OR SOMETHING
+  		
+		
+//			
+//		//add wallpaper and link on page load	//ISSUE DB ISSUE OR SOMETHING
 //		document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
 //		document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
-//		
+		
 	
 			
 		//wallpaper size	

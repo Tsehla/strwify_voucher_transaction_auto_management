@@ -1357,7 +1357,7 @@ app.get('/api/hotspot_data', function(req, res){
 		
 	//find router hostpot data
 	function find_router_hotspsot_data(){ 
-		 keystone.list('Router hotspot page').model.find()
+		 keystone.list('Router hotspot page').model.findOne()
 		.where({router_location : location_of_router.toLowerCase()})
 		.exec(function(err, response){
 
@@ -1387,13 +1387,13 @@ app.get('/api/hotspot_data', function(req, res){
 		keystone.createItems({
 			'Router hotspot page' : [{
 				router_location : location_of_router.toLowerCase(),
-				hotspot_wallpaper: ['{image_link :"static/default_slide_images/1.jpg" , image_status_text : "Image 1", image_status_link: "static/default_slide_images/1.jpg"}','{image_link :"static/default_slide_images/2.jpg" , image_status_text : "Image 2", image_status_link: "static/default_slide_images/2.jpg"}','{image_link :"static/default_slide_images/3.jpg" , image_status_text : "Image 3", image_status_link: "static/default_slide_images/3.jpg"}','{image_link :"static/default_slide_images/4.jpg" , image_status_text : "Image 4", image_status_link: "static/default_slide_images/4.jpg"}','{image_link :"static/default_slide_images/5.jpg" , image_status_text : "Image 5", image_status_link: "static/default_slide_images/5.jpg"}','{image_link :"static/default_slide_images/6.jpg" , image_status_text : "Image 6", image_status_link: "static/default_slide_images/6.jpg"}','{image_link :"static/default_slide_images/7.jpg" , image_status_text : "Image 7", image_status_link: "static/default_slide_images/7.jpg"}','{image_link :"static/default_slide_images/8.jpg" , image_status_text : "Image 8", image_status_link: "static/default_slide_images/8.jpg"}','{image_link :"static/default_slide_images/9.jpg" , image_status_text : "Image 9", image_status_link: "static/default_slide_images/9.jpg"}','{image_link :"static/default_slide_images/10.jpg" , image_status_text : "Image 10", image_status_link: "static/default_slide_images/10.jpg"}'],
-				free_education_sites : ['{link:"https://scholar.google.co.za/", text:"Google scholar"}','{link:"https://www.google.com",text:"Search on google"}'],
-				free_jobs_sites : ['{link:"https://www.google.com",text:"Search on google"}'],
-				hotspot_announcements : ['Dare to be diffrents','Dare to write your destiny'],
-				hotspot_how_to_bottom_text : 'Help yourself, To be helped',
-				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member',
-				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare',
+				hotspot_wallpaper: ['{"image_link" :"static/default_slide_images/1.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "static/default_slide_images/1.jpg"}','{"image_link" :"static/default_slide_images/2.jpg" , "image_status_text" : "We are One", "image_status_link": "static/default_slide_images/2.jpg"}','{"image_link" :"static/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "static/default_slide_images/3.jpg"}','{"image_link" :"static/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "static/default_slide_images/4.jpg"}','{"image_link" :"static/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "static/default_slide_images/5.jpg"}','{"image_link" :"static/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "static/default_slide_images/6.jpg"}','{"image_link" :"static/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "static/default_slide_images/7.jpg"}','{"image_link" :"static/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "static/default_slide_images/8.jpg"}','{"image_link" :"static/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "static/default_slide_images/9.jpg"}','{"image_link" :"static/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "static/default_slide_images/10.jpg"}'],
+				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
+				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
+				hotspot_announcements : ['Dare to be different','Dare to write your destiny.'],
+				hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
+				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
+				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare.',
 				hotspot_logo : 'static/images/logo.png',
 				
 			}]
