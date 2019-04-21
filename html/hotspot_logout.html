@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>mikrotik hotspot > logout</title>
+<link rel="stylesheet" href="bootstrap.min.css">
+
+</head>
+
+<body>
+
+	
+	<br/>
+	<hr>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px"><span  style="color:blue;padding-left: 5px;font-weight: 400">you have just logged out</span></p></div>
+	<hr>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">User name :<span id='user_name' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<hr>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">IP address :<span id='ip_address' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<hr>
+	
+	
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">MAC address :<span id='mac_address' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<hr>
+	
+
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Data available :<span id='data_available' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div> 
+	<hr>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Data uploaded / downloaded :<span id='bytes_up_down' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<hr>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<hr>
+	<button class='btn btn-primary' onclick="window.open(router_variables_array.login_link,'_self')" style="width: 44vw;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block">Log in</button>
+	<button class='btn btn-primary' onclick="window.open('http://'+window.location.host,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block">Buy</button>
+	<br/>
+	
+	<!-- +++++++ get variable from router encoded on link  +++++++ -->
+	<script type="text/javascript" src="../static/qs.js"></script>
+	<script>
+		
+		//http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=http://streetwifiy.co.za/login&user_name=8905135852087@meshdesk&ip_address=10.5.50.251&mac_address=90:2E:1C:69:B3:BA&uptime=13s&time_left=28d1h27m24s&data_uploaded=13.3%20KiB&data_downloaded=43.2%20KiB&data_left=unlimited
+		
+		//get varibles from router on link
+		var router_variables_array = qs.get();
+		
+		console.log(router_variables_array);
+		
+		
+		//fill with data from router
+		
+
+		document.getElementById('user_name').innerHTML= router_variables_array.user_name;
+	
+		document.getElementById('ip_address').innerHTML= router_variables_array.ip_address;
+		
+		document.getElementById('mac_address').innerHTML= router_variables_array.mac_address ;
+		
+		document.getElementById('bytes_up_down').innerHTML= router_variables_array.data_uploaded.replace(/%20/g,' ') +' / ' + router_variables_array.data_downloaded.replace(/%20/g,' ');
+		document.getElementById('connection_time').innerHTML= router_variables_array.uptime +' / ' + router_variables_array.time_left;
+		//document.getElementById('to_before_refresh').innerHTML= router_variables_array.refresh_time;
+		document.getElementById('data_available').innerHTML= router_variables_array.data_left;
+	
+		
+		 
+	console.log(router_variables_array.refresh_timeout_seconds)
+		
+		//refresh window
+		
+		setInterval(function(){
+			window.open(router_variables_array.logout_link.replace('logout','status'),'_self');
+			
+		}, ((router_variables_array.refresh_timeout_seconds * 60)*60))
+		
+	
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+</body>
+</html>

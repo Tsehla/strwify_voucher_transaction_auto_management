@@ -1234,7 +1234,16 @@ var hour = date.getHours();
 ========================================*/
 	
 	app.get('/hotspot', function(req, res){
-        res.sendFile(path.resolve('./html/login.html'));
+        res.sendFile(path.resolve('./html/hotspot_login.html'));
+        
+    });
+	
+	app.get('/hotspot_logout', function(req, res){
+        res.sendFile(path.resolve('./html/hotspot_logout.html'));
+        
+    });
+	app.get('/hotspot_status', function(req, res){
+        res.sendFile(path.resolve('./html/hotspot_status.html'));
         
     });
 	
