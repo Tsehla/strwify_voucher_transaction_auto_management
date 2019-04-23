@@ -412,7 +412,7 @@ sell ticket, seller menu
 
 =====================================================================================================================================================*/
 
-function sell_ticket(){
+function sell_ticket(button_id){
     
     //voucher code
     var seller_code_input = document.getElementById('seller_ticket_unique_code');
@@ -442,6 +442,10 @@ function sell_ticket(){
 	}
     
     if(seller_login.credit >= seller_voucher_amount_input.value){//check if credit amount is enought to sell ticket
+		
+		document.getElementById(button_id).disabled=true;//disabled sell button for now
+		
+		
     
        $.get(url, function(response, status){
            
@@ -458,20 +462,26 @@ function sell_ticket(){
                 	dom_innerHtml('firth_page_seller_amount', response.new_credit);
 				   	dom_innerHtml('firth_page_sell_menu_header', response.status);
 				   	dom_innerHtml('seller_recharge_status','<span style="color:darkgreen;">Success, Voucher sold to ticket number : '+seller_code_input.value+', for amount : R'+seller_voucher_amount_input.value+'</span>');
+				   document.getElementById(button_id).disabled=false;//enable sell button
                    return;
                }
                
                 dom_innerHtml('firth_page_sell_menu_header', response.status);
 			   	dom_innerHtml('seller_recharge_status','<span style="color:red">Failure, Voucher not sold for ticket no :'+seller_code_input.value+'</span>');
+			   	document.getElementById(button_id).disabled=false;//enable sell button
                 return null;
              
            }
            
            else{
-             return dom_innerHtml('firth_page_sell_menu_header', 'error producing ticket code'); 
+			
+             	dom_innerHtml('firth_page_sell_menu_header', 'error producing ticket code'); 
+			    document.getElementById(button_id).disabled=false;//enable sell button
+			   return;
            }
        });  
-           return null;    
+           return null; 
+		   document.getElementById(button_id).disabled=false;//enable sell button
 }
     
 //
@@ -1694,9 +1704,9 @@ function password_hint_alert(){//check if alert was clicked//end dont show again
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++ distributor -> seller recharge
 
-function distributor_seller_sell_amount(){
+function distributor_seller_sell_amount(button_id){
     
-    //voucher code
+    //id no
     var distributor_seller_id_input = document.getElementById('distributor_seller_id_input');
 	
 	//name and surname
@@ -1731,8 +1741,14 @@ function distributor_seller_sell_amount(){
 	   	return dom_innerHtml('sixth_page_distributor_menu_header', 'Insufficient amount in your account, Please recharge.'); 
 	 }
 	
-
-	        
+	//add confirm to waste time
+	var confirm_transaction = confirm('Are you sure you want to send recharge of R' + distributor_seller_recharge_amount_input.value + ', to user : ' + distributor_seller_name_surname_input.value + ', ID no: ' + distributor_seller_id_input.value+' ?.');
+	
+	if(!confirm_transaction){return;}//if corfim is no
+	
+	 //disable button for now
+	document.getElementById(button_id).disabled=true;
+	
      var url= 'http://' + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+distributor_seller_recharge_amount_input.value.trim()+'&seller_id='+distributor_seller_id_input.value.trim()+'&seller_name_surname='+distributor_seller_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+distributor_login.distributor_id.trim()+'&userType=Distributor&userType_to_recharge=Seller';
 	
 	
@@ -1751,14 +1767,15 @@ function distributor_seller_sell_amount(){
                if(response == 'Server or Conection error'){
                    
                 
-                dom_innerHtml('sixth_page_distributor_menu_header', 'Server or Conection error, Please try again later'); 
+                dom_innerHtml('sixth_page_distributor_menu_header', 'Server or Conection error, Please try again later');
+				   document.getElementById(button_id).disabled=false;//sending button enable
 				   return;
                    
                }              
 			   
 			   if(response == 'Error finding seller'){
                    
-                
+                document.getElementById(button_id).disabled=false;//sending button enable
                 dom_innerHtml('sixth_page_distributor_menu_header', 'Error, Please check user details'); 
 				   return;
                    
@@ -1768,12 +1785,15 @@ function distributor_seller_sell_amount(){
 			    distributor_login.credit = distributor_login.credit - Number.parseInt(distributor_seller_recharge_amount_input.value);//calculate and set new value
 			    dom_innerHtml('seventh_page_distributor_amount', distributor_login.credit);//set new value for view
 			    dom_innerHtml('distributor_seller_recharge_status','<b>Success : '+response.name+' '+response.lastname+', ID no:'+response.id+', account Recharged by R'+response.amount+'</b>');//reacherge sucess status
+			   document.getElementById(button_id).disabled=false;//sending button enable
                 return null;
              
            }
            
            else{
-             return dom_innerHtml('sixth_page_distributor_menu_header', 'System/Connection error, please try again later.'); 
+             dom_innerHtml('sixth_page_distributor_menu_header', 'System/Connection error, please try again later.'); 
+			  document.getElementById(button_id).disabled=false;//sending button enable
+			  return;
            }
        });  
           
@@ -1785,7 +1805,7 @@ function distributor_seller_sell_amount(){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++  admin -> distributor account recharge
 
 
-function super_admin_distributor_sell_amount(){
+function super_admin_distributor_sell_amount(button_id){
     
     //voucher code
     var admin_distributor_id_input = document.getElementById('super_admin_distributor_id_input');
@@ -1821,8 +1841,11 @@ function super_admin_distributor_sell_amount(){
 		admin_distributor_recharge_amount_input.style.borderColor ='red';
 	   	return dom_innerHtml('super_admin_menu_header', 'Insufficient amount in your account, Please recharge.'); 
 	 }
+	var send_recharge_confirm = confirm('Are you sure you want to send recharge of R' +admin_distributor_recharge_amount_input.value+ ', to user : ' +admin_distributor_name_surname_input.value+ ', of ID no : ' +admin_distributor_id_input.value+ ' ?.'); //send recharge confirm
 	
-
+	if(!send_recharge_confirm){return;}//if send recharge cancelled
+	
+	document.getElementById(button_id).disabled=true;//disable send rechar button for now
 	        
      var url= 'http://' + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+admin_distributor_recharge_amount_input.value.trim()+'&seller_id='+admin_distributor_id_input.value.trim()+'&seller_name_surname='+admin_distributor_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+admin_login.admin_id.trim()+'&userType=Server Admin&userType_to_recharge=Distributor';
 	
@@ -1843,6 +1866,7 @@ function super_admin_distributor_sell_amount(){
                    
                 
                 dom_innerHtml('super_admin_menu_header', 'Server or Conection error, Please try again later'); 
+				   document.getElementById(button_id).disabled=false;//enable send recharge button
 				   return;
                    
                }              
@@ -1851,6 +1875,7 @@ function super_admin_distributor_sell_amount(){
                    
                 
                 dom_innerHtml('super_admin_menu_header', 'Error, Please check user details'); 
+				    document.getElementById(button_id).disabled=false;//enable send recharge button
 				   return;
                    
                }
@@ -1859,12 +1884,15 @@ function super_admin_distributor_sell_amount(){
 			    admin_login.credit = admin_login.credit - Number.parseInt(admin_distributor_recharge_amount_input.value);//calculate and set new value
 			    dom_innerHtml('super_admin_amount', admin_login.credit);//set new value for view
 			    dom_innerHtml('super_admin_distributor_recharge_status','<b>Success : '+response.name+' '+response.lastname+', ID no:'+response.id+', account Recharged by R'+response.amount+'</b>');//reacherge sucess status
+			    document.getElementById(button_id).disabled=false;//enable send recharge button
                 return null;
              
            }
            
            else{
-             return dom_innerHtml('super_admin_menu_header', 'System/Connection error, please try again later.'); 
+             dom_innerHtml('super_admin_menu_header', 'System/Connection error, please try again later.'); 
+			    document.getElementById(button_id).disabled=false;//enable send recharge button
+			   return;
            }
        });  
           
