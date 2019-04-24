@@ -39,8 +39,9 @@ td { font-size: 12px; padding: 4px;}
 <script type="text/javascript">//checks for internet connection//en if available show external login//if not available show default mikrotik
 
 	if(navigator.onLine){
-		window.open('http://streetwifiy.herokuapp.com/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)', '_self');//open link where hotspot is at [ show statsus page ]
-		//window.open('http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)', '_self');//open link where hotspot is at [ show statsus page ]
+		window.open('http://streetwifiy.herokuapp.com/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)', '_self');
+		//window.open('http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)', '_self');
+
 	}
 	
 </script>	

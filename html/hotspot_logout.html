@@ -29,7 +29,7 @@
 	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 	<hr>
 	<button class='btn btn-primary' onclick="window.open(router_variables_array.login_link,'_self')" style="width: 44vw;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block">Log in</button>
-	<button class='btn btn-primary' onclick="window.open('http://'+window.location.host,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block">Buy</button>
+	<button class='btn btn-primary' onclick="window.open('http://'+window.location.host+'?hotspot_link='+router_login_link,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block">Buy</button>
 	<br/>
 	
 	<!-- +++++++ get variable from router encoded on link  +++++++ -->
@@ -41,9 +41,9 @@
 		//get varibles from router on link
 		var router_variables_array = qs.get();
 		
-		console.log(router_variables_array);
+		//console.log(router_variables_array);
 		
-		
+		var router_login_link = router_variables_array['link-login-only'];//login link of router
 		//fill with data from router
 		
 
@@ -60,7 +60,7 @@
 	
 		
 		 
-	console.log(router_variables_array.refresh_timeout_seconds)
+	//console.log(router_variables_array.refresh_timeout_seconds)
 		
 		//refresh window
 		

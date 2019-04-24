@@ -722,6 +722,8 @@
 		//get varibles from router on link
 		var router_variables_array = qs.get();
 		//console.log(router_variables_array);
+			
+		var router_login_link = router_variables_array['link-login-only'];//login link of router
 
 		// ++++++++++++++++++++++++++++++Error div 	
 		if(router_variables_array.error){//if error from router
@@ -1121,7 +1123,8 @@
 			window.open(hotspot_url+'/status');
 		} 
 		function buy(){
-			window.open(hotspot_transaction_server_url);
+			
+			window.open(hotspot_transaction_server_url + '?hotspot_link=' + hotspot_url);
 		} 
 		function search(){
 			window.open('https://www.google.com/search?q='+document.getElementById('search').value);

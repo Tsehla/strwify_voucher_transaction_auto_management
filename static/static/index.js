@@ -1,3 +1,4 @@
+
 /*_____________________________________________________________________________________________________________________________________________________
 
 app routes
@@ -7,6 +8,9 @@ ________________________________________________________________________________
 /*=====================================================================================================================================================
  external URL link to internal routing
 =====================================================================================================================================================*/
+
+//store url of hotspsot login link
+var hot_spot_url;
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++  get url and route ++++++++++++++++++++++++++++++++++++++++
 var current_url= window.location.pathname;//content after domain 
@@ -30,12 +34,22 @@ function dom_hide_show(showORhide, div){
  if(current_url == '/'){
    
    dom_hide_show('show','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page');
+
+	//temp store hotspot login link from urll//pass it to voucher buy page url
+	 hot_spot_url = document.location.search;
+
  
  } 
 if(current_url == '/buy_voucher'){
-   
+  
    dom_hide_show('hide','first_page'); dom_hide_show('show','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page'); 
     buy_page_on_init();/*page init */
+	
+	//set hot spot login link for router//enable ato login after voucher sold 
+	 var url_params = document.location.search.indexOf('hotspot_link=');
+	 url_params == 1?hot_spot_url=document.location.search.replace('?hotspot_link=',''):hot_spot_url=undefined;
+	// console.log(hot_spot_url);
+	
  
  }
 if(current_url == '/sell_voucher'){
@@ -136,7 +150,7 @@ function router_page_works_menu_open(input){
 /* voucher buy link */
 function buy_voucher(){
     
- window.open('/buy_voucher', '_self');
+ window.open('/buy_voucher'+hot_spot_url, '_self');//pass router login link//while calling this
 	process_destroyer();
 }
 /* voucher sell link */
@@ -273,6 +287,7 @@ function auto_voucher_check(uniqueCode){
            
            if(status == 'success'){
                dom_innerHtml('second_page_ticket_status', response);
+			   
                if(response != 'Voucher Not found'){
                 dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
                var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+JSON.stringify(response.vouchercode)+"</span></p>";
@@ -400,6 +415,11 @@ function voucher_print(response){
 				download_link.href = ticket_canvas.toDataURL('image/jpg').replace('image/jpg', 'image/octed-stream');
 				download_link.click()
 				//download_link.clicked();
+				
+	
+				//auto voucher adding//login
+				
+				auto_login(voucher_pin);
 	
 	
 	
@@ -2775,15 +2795,35 @@ if(transaction_type == 'to_reddem_voucher'){
 
  function voucher_redeem (voucher_id, voucher_amount){
 	 
+
+	 
 	 alert(voucher_id, voucher_amount);
 	 
  }
 
 
 
+/*=====================================================================================================================================================
 
+   automated hotpot login
+    
+=====================================================================================================================================================*/
+//THIS WORKS ONLY FOR HTTP-PAP NOT (HTTP-CHAP)/havent figured a way to detect http pap//using ajax() is way but getting origin permission issue//anyway http-chap not working for main hotspot papge anyway
 
+//trick for next time, make ajax to router, get response link extract variable to see if it http-pap or chap then use corrcet way to login//using this nw im gettng allow origin issue
 
+function auto_login(vocher_code){
+	//hot_spot_url
+	
+	if(!hot_spot_url){return}//if url for router not available
+	 
+	 var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');
+	 
+	 if(!auto_login_confirm ){return}//user refuse auto login
+	
+	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
+
+}
 
 
 
