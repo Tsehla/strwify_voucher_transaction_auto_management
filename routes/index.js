@@ -1165,6 +1165,14 @@ seller or distributor console, credt auto_voucher_check
 		  
 		
 		 //add transaction
+
+		var date = new Date();			
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
+		var day = date.getDay();
+		var month = date.getMonth();
+		var year = date.getFullYear();
+		 
 		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+transaction_name+' R'+transaction_cost+' New balance : R'+response.credits;
 
 var hour = date.getHours();

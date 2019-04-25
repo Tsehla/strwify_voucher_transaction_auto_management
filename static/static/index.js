@@ -2671,9 +2671,13 @@ if(distributor_login.distributor_id){// if distributor logged in
 	
 	
 	
-console.log(url);
+//console.log(url);
 		
-if(transaction_type == 'past_transactions'){
+if(transaction_type == 'past_transactions'){//++++++++++++++++++++++++++++ transacton record menu
+	
+
+	var alert_button = `<br />
+						<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of transactions made in the past. (a) [ - ] means money out. (b) [ + ] means money in.')">Help</button>`; 
 	
 	  $.get(url, function(response, status){
            
@@ -2685,7 +2689,11 @@ if(transaction_type == 'past_transactions'){
                if(response == 'error'){
                    
                 
-                dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+                dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later');
+				 
+				//add alert button
+				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+				   
 				   return;
                    
                }              
@@ -2694,6 +2702,9 @@ if(transaction_type == 'past_transactions'){
                    
                 
                 dom_innerHtml('transactions_and_voucher_header', 'Error, no Transations found'); 
+				   
+				//add alert button
+				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
 				   return;
                    
                }
@@ -2708,11 +2719,18 @@ if(transaction_type == 'past_transactions'){
 			   response.forEach(function(data, index){//add contents
 				   	
 
+				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+data+'</p><hr>';
+				   $('#transactions_and_voucher_viewer').append(transaction_record);
 				   
-				   $('#transactions_and_voucher_viewer').append('<div id="" class="w3-border w3-margin">'+data+'</div><hr>');
-				
-		
 				   
+				   //add help button at end o adding items
+				   
+				   if(index  == response.length - 1){
+					
+
+					   //add alert button
+					   	dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+					  }
 			   });
 			   
 			   
@@ -2721,12 +2739,21 @@ if(transaction_type == 'past_transactions'){
 		   }
 	
 		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+		  
+		  //add alert button
+		  dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
 		 return;
 	  });
 	
 }
 	
-if(transaction_type == 'to_reddem_voucher'){
+if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher reedem menu
+	
+	
+	dom_innerHtml('transactions_and_voucher_viewer', '');//clean div for new content 
+	
+	//add help button contents
+	var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button>`;
 	
 	  $.get(url, function(response, status){
            
@@ -2739,6 +2766,9 @@ if(transaction_type == 'to_reddem_voucher'){
                    
                 
                 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+				   
+				//add alert button
+				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
 				   return;
                    
                }              
@@ -2746,7 +2776,12 @@ if(transaction_type == 'to_reddem_voucher'){
 			   if(response == 'error : no vouchers to claim'){
                    
                 
-                dom_innerHtml('transactions_and_voucher_header', 'Error, No Voucher to claim found'); 
+                dom_innerHtml('transactions_and_voucher_header', 'Error, No Voucher to claim found');
+				 
+				//add alert button
+				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+				   
+				   
 				   return;
                    
                }
@@ -2766,12 +2801,24 @@ if(transaction_type == 'to_reddem_voucher'){
 				   }
 				   
 				   
-				   var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border'><p>Voucher Not used/created by Mistake, Ticket ID : "+data.voucher_id+", Voucher amount : R"+data.voucher_amount+", Produced on the "+data.voucherproducedday+", "+claim_button+"</p></div><br ><hr><br>";
+				   var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border' ><p>Voucher Not used/created by Mistake : <br /> Ticket ID : "+data.voucher_id+"<br /> Voucher amount : R"+data.voucher_amount+", <br />Produced on the "+data.voucherproducedday+",<br /> "+claim_button+"</p></div><br ><hr><br>";
 				   
 				   
 				   $('#transactions_and_voucher_viewer').append(content_div);
-					return;
-		
+				   
+				   
+				   
+				   //add help button at end o adding items
+				   
+				   if(index == response.length -1){
+					
+					   //add alert button
+					   	dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+
+					   
+					  }
+				   
+							
 				   
 			   });
 			   
@@ -2780,6 +2827,8 @@ if(transaction_type == 'to_reddem_voucher'){
 		   }
 	
 		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+		  //add alert button
+		dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
 		 return;
 	  });
 	
