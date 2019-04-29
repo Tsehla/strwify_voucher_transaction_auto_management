@@ -337,10 +337,13 @@ manual voucher check/download
 ========================================================================================================================================================*/
 
 
-function manual_voucher_init(){
+function manual_voucher_init(button_id){
         
+		
         var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
     
+		document.getElementById(button_id).disabled = true;//disable mabual voucher download
+	
         $.get(url, function(response, status){
            
            if(status == 'success'){
@@ -349,6 +352,7 @@ function manual_voucher_init(){
                 if(response == 'Voucher Not found'){
                var show_code = "<p style='color:red;margin:0px;padding:0px;height:0px;width:0px'>Error couldn't find voucher. <span style='color:blue; margin:0px;padding:0px;height:auto;width:auto'>re-Checking...</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
+				document.getElementById(button_id).disabled = false;//enable mabual voucher download
                
                }
                
@@ -358,12 +362,14 @@ function manual_voucher_init(){
                var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+JSON.stringify(response.vouchercode)+"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
                voucher_print(response);//print voucher
+				document.getElementById(button_id).disabled = false;//enable mabual voucher download
                }
            }
            
            else{
             
              dom_innerHtml('second_page_ticket_status', 'error requesting voucher code'); 
+			 document.getElementById(button_id).disabled = false;//enable mabual voucher download
                
            }
            
@@ -752,7 +758,7 @@ function super_admin_activity_console_fn(){//seller console function
                admin_activity_console_current_credit = Number(response.credits);
                document.getElementById("super_admin_console_new_balance_amount").innerHTML = response.credits;
                document.getElementById("super_admin_amount").innerHTML = response.credits;
-               
+              
            }
                return null;
                
@@ -1516,7 +1522,7 @@ function super_admin_login(){
                        admin_login.admin_id = admin_id.value;
                        admin_login.usertype = response.usertype;
                        admin_login.credit = response.credits;
-                      // dom_innerHtml('sixth_page_seller_amount', response.credits); //**************************
+                       dom_innerHtml('super_admin_amount', response.credits); //show amount in user account
                        
 					   //check if password is default
 					   var default_password = document.getElementById('seller_new_account_default_password').innerHTML;
@@ -1524,7 +1530,7 @@ function super_admin_login(){
 						  	alert('For Security : \n\rPlease Change default Password.');
 						  }
 					   
-	//===========				   dom_innerHtml('admin_page_distributor_amount', admin_login.credit);//add credit on login
+//===========	dom_innerHtml('admin_page_distributor_amount', admin_login.credit);//add credit on login
                        admin_fourth_page_menu();
 					   
 					   
@@ -2717,9 +2723,15 @@ if(transaction_type == 'past_transactions'){//++++++++++++++++++++++++++++ trans
 			  document.getElementById('transactions_and_voucher_header').innerHTML='Transactions History';
 		
 			   response.forEach(function(data, index){//add contents
-				   	
-
-				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+data+'</p><hr>';
+				   
+				   var styling_for_other_users = '';
+				   
+				   if(!seller_login.logged_in){//if seller is not logged in apply
+					   styling_for_other_users = '<br />';
+				   }
+				   
+				   var history_record = data.split(';');
+				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+history_record[0]+'<br />'+history_record[1]+styling_for_other_users+history_record[2]+'</p><hr>';
 				   $('#transactions_and_voucher_viewer').append(transaction_record);
 				   
 				   
@@ -2794,14 +2806,29 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 		
 			   response.forEach(function(data, index){//add contents
 				   	
-				 var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data._id+','+ data.voucher_amount+"')\">Redeem Voucher Cash</button>";//show redeem button
+				 var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data.voucher_doc_id.toString()+','+ data.voucher_amount+"')\">Redeem Voucher Cash</button>";//show redeem button
 				   
 				   if(Number(data.voucherproducedday) == Number(data.server_day)){//if ticket was produced in same day// dont allow download: //wannet to have voucher claimed after 30 days, well implementing that is annoying//so will use next day
 					   claim_button = "<b style='color:red'>You can only get money back for this ticket next day</b> ";
 				   }
 				   
+				   //give sense to date/day
+				   var simple_date='';
 				   
-				   var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border' ><p>Voucher Not used/created by Mistake : <br /> Ticket ID : "+data.voucher_id+"<br /> Voucher amount : R"+data.voucher_amount+", <br />Produced on the "+data.voucherproducedday+",<br /> "+claim_button+"</p></div><br ><hr><br>";
+				   if(data.voucherproducedday==1){simple_date='<sup>st</sup>'}//1st
+				   if(data.voucherproducedday==2){simple_date='<sup>nd</sup>'}//2nd
+				   if(data.voucherproducedday==3){simple_date='<sup>rd</sup>'}//3rd
+				   if(data.voucherproducedday>3){simple_date='<sup>th</sup>'}//4th....
+	
+				   if(data.voucherproducedday==21){simple_date='<sup>st</sup>'}//21st
+				   if(data.voucherproducedday==22){simple_date='<sup>nd</sup>'}//22nd
+				   if(data.voucherproducedday==22){simple_date='<sup>nd</sup>'}//23rd
+				     
+				   if(data.voucherproducedday==31){simple_date='<sup>st</sup>'}//31st
+				   if(data.voucherproducedday==32){simple_date='<sup>nd</sup>'}//32nd//haha incase
+				   
+				   
+				   var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border' ><p>Voucher Not used/created by Mistake : <br /> Code from User : "+data.voucher_id+"<br /> Voucher amount : R"+data.voucher_amount+", <br />Produced on the "+data.voucherproducedday+simple_date+",<br /> "+claim_button+"</p></div><br ><hr><br>";
 				   
 				   
 				   $('#transactions_and_voucher_viewer').append(content_div);
@@ -2842,11 +2869,15 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 
 // ++++++++++++++++++++ voucher redeem +++++++++++++++++
 
- function voucher_redeem (voucher_id, voucher_amount){
+ function voucher_redeem (voucher_document_id, voucher_amount){
 	 
-
+//var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 	 
-	 alert(voucher_id, voucher_amount);
+	 
+	 alert(voucher_document_id, voucher_amount);
+	 
+	 
+	 
 	 
  }
 

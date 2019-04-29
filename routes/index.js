@@ -318,7 +318,7 @@ seller or distributor console, credt auto_voucher_check
             
        // var seach_code=year[year.length-2]+year[year.length-1]+month+day+hour+minutes+milliseconds;
             
-        var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds.toString().replace(/ /g, '');
+        var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+':'+hour_minutes_milliseconds.toString().replace(/ /g, '');
        
 //            
        console.log('-----------------------');
@@ -329,7 +329,7 @@ seller or distributor console, credt auto_voucher_check
             
         /* find doc contains [seach_code=] */
         keystone.list('Voucher Codes').model.findOne()
-            .where({soldto : Number(seach_code_), voucherstate : 'used'})
+            .where({soldto : seach_code_, voucherstate : 'used'})
             .exec( function(error, response){
             if(error){
                 res.jsonp('Problem finding Voucher');
@@ -406,7 +406,7 @@ seller or distributor console, credt auto_voucher_check
             
        // var seach_code=year[year.length-2]+year[year.length-1]+month+day+hour+minutes+milliseconds;
             
-        var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+hour_minutes_milliseconds;
+        var seach_code_ = year[year.length-2]+year[year.length-1]+month+day+':'+hour_minutes_milliseconds;
 //            
 //        console.log('-----------------------');
 //        console.log(seach_code_);
@@ -469,7 +469,7 @@ seller or distributor console, credt auto_voucher_check
             }
         }
 	  
-	if(req.query.code == 'sell_recharge'){//distributor rechage seller
+	if(req.query.code == 'sell_recharge'){// +++++++++++++++distributor rechage seller
 		  
 		  
 		  
@@ -537,13 +537,6 @@ seller or distributor console, credt auto_voucher_check
 						//recharge seller account
 					
 					
-					
-					
-					
-					
-					
-					
-					
 								keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : user_to_recharge, name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
 				  
 								function(error, response){
@@ -574,7 +567,7 @@ seller or distributor console, credt auto_voucher_check
 									var year = date.getFullYear();
 									
 									var new_balance = Number(response.credits) + Number(recharge_amount);
-									var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+'Account Recharged'+' R'+recharge_amount+'+ New balance : R'+new_balance;
+									var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Account Recharged'+' R'+recharge_amount+'+; New balance : R'+new_balance;
 
 
 									var new_transactions_array = response.transactionhistory;
@@ -616,7 +609,7 @@ seller or distributor console, credt auto_voucher_check
 						
 						var new_balance = Number(response.credits) - Number(recharge_amount);
 						var seller_recharged_id ='Fund transfered to ID no : ' + seller_id;
-						var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+seller_recharged_id+' R'+recharge_amount+'+ New balance : R'+new_balance;
+						var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+seller_recharged_id+' R'+recharge_amount+'-; New balance : R'+new_balance;
 
 
 						var new_transactions_array = response.transactionhistory;
@@ -1173,7 +1166,7 @@ seller or distributor console, credt auto_voucher_check
 		var month = date.getMonth();
 		var year = date.getFullYear();
 		 
-		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+'  '+transaction_name+' R'+transaction_cost+' New balance : R'+response.credits;
+		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+transaction_name+' R'+transaction_cost+'; New balance : R'+response.credits;
 
 var hour = date.getHours();
 		var new_transactions_array = response.transactionhistory;
@@ -1259,7 +1252,7 @@ var hour = date.getHours();
 
 /*========================================
 
-    transaction menu
+    transaction menu/voucher reedem finder
     
 ========================================*/
 	
@@ -1328,7 +1321,8 @@ if(req.query.type == 'to_reddem_voucher'){
 		 response.forEach(function(data, index){
 			 var date = new Date();
 			 if(data.voucherprinted != true && data.voucherstate != 'new'){
-					respone_.push({voucher_id:data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
+				 	var voucher_id = data.soldto.split(':');//give code from buyer back
+					respone_.push({voucher_id:voucher_id[1], voucher_doc_id: data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
 				}
 			 
 		 });
