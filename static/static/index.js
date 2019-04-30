@@ -223,6 +223,7 @@ var unique_code = null;
 var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:''};
 
 /*=====================================================================================================================================================
+ 
    
    global vars
    admin login
@@ -2806,7 +2807,7 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 		
 			   response.forEach(function(data, index){//add contents
 				   	
-				 var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data.voucher_doc_id.toString()+','+ data.voucher_amount+"')\">Redeem Voucher Cash</button>";//show redeem button
+				 var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data.voucher_doc_id.toString()+','+ data.voucher_amount+"',this.id)\" id='redeem_button_"+index+"'>Redeem Voucher Cash</button>";//show redeem button
 				   
 				   if(Number(data.voucherproducedday) == Number(data.server_day)){//if ticket was produced in same day// dont allow download: //wannet to have voucher claimed after 30 days, well implementing that is annoying//so will use next day
 					   claim_button = "<b style='color:red'>You can only get money back for this ticket next day</b> ";
@@ -2822,7 +2823,7 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 	
 				   if(data.voucherproducedday==21){simple_date='<sup>st</sup>'}//21st
 				   if(data.voucherproducedday==22){simple_date='<sup>nd</sup>'}//22nd
-				   if(data.voucherproducedday==22){simple_date='<sup>nd</sup>'}//23rd
+				   if(data.voucherproducedday==23){simple_date='<sup>rd</sup>'}//23rd
 				     
 				   if(data.voucherproducedday==31){simple_date='<sup>st</sup>'}//31st
 				   if(data.voucherproducedday==32){simple_date='<sup>nd</sup>'}//32nd//haha incase
@@ -2869,12 +2870,69 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 
 // ++++++++++++++++++++ voucher redeem +++++++++++++++++
 
- function voucher_redeem (voucher_document_id, voucher_amount){
-	 
-//var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+ function voucher_redeem (voucher_document_id_and_amount, div_id){
 	 
 	 
-	 alert(voucher_document_id, voucher_amount);
+	// alert(voucher_document_id, voucher_amount);
+	  // var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+		 
+	 if(!seller_login.logged_in){ return alert("Log in as a seller to be able to use this menu");}//log in a seller/for acuracy reasons
+	 
+	 //retrive amount and voucher db id
+	 var voucher_document_id = voucher_document_id_and_amount.split(',')[0];
+	 var voucher_amount = voucher_document_id_and_amount.split(',')[1];
+	 
+	var url= 'http://' + current_domain + '/api/redeem_voucher?voucher_id='+voucher_document_id+'&user_id='+seller_login.seller_id;//redeem voucher link
+	
+	document.getElementById(div_id).disabled=true;//disable reedem button for now
+	 		
+	  $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'Server or Conection error'){
+                   
+                
+                	dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+				   
+				  document.getElementById(div_id).disabled=false;//re-enable  reedem button//wen error
+				   return;
+                   
+               }              
+			   
+			   if(response == 'No data found'){
+                   
+                
+                	dom_innerHtml('transactions_and_voucher_header', 'Error, No data found, Please try again later');
+				    document.getElementById(div_id).disabled=false;//re-enable  reedem button//wen error
+				   return;
+                   
+               }
+			   if(response == 'Save error'){
+                   
+                
+				   	dom_innerHtml('transactions_and_voucher_header', 'Error, Redeeming voucher, please try again later or contact administrator'); 
+				    document.getElementById(div_id).disabled=false;//re-enable  reedem button//wen error
+				   return;
+                   
+               }
+			   
+			   dom_innerHtml('transactions_and_voucher_header', 'Voucher succefully redeemed, check your transaction history'); 
+                   
+			   seller_login.credit = Number(seller_login.credit) + Number(voucher_amount);//update amounts
+			   
+			   dom_innerHtml('firth_page_seller_amount', seller_login.credit );//show updated amount 
+			   extra_menu('to_reddem_voucher');//update extra menu contents
+			   return;
+
+		   }
+		  
+		dom_innerHtml('transactions_and_voucher_header', 'Error processing your request, Please try again later or contact administrator');//if errorredeeming voucher
+	
+	  });
 	 
 	 
 	 

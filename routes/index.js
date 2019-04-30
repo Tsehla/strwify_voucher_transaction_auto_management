@@ -1042,7 +1042,7 @@ seller or distributor console, credt auto_voucher_check
 								'Router Monitoring' : [{
 									routername :router_name ,routerlocation :router_location ,routerdetails :router_details ,router_last_contact_hour : router_last_contact_hour ,router_last_contact_minute : router_last_contact_minute,router_last_contact_day : router_last_contact_day,router_last_contact_date_time_history: router_last_contact_date_time_history,
 								}],
-
+f
 
 								}, function(err, results){
 									if(err){
@@ -1349,6 +1349,155 @@ if(req.query.type == 'to_reddem_voucher'){
 
 
 
+	
+	
+	
+/*========================================
+
+    voucher reedeming
+    
+========================================*/	
+	
+	
+	
+	
+	
+app.get('/api/redeem_voucher', function(req, res){
+	
+	
+	
+		//var url= 'http://' + current_domain + '/api/redeem_voucher?voucher_id='+voucher_document_id&user_id=;//redeem voucher link
+	
+	
+		
+	 keystone.list('Voucher Codes').model.findOne()
+	.where({_id : req.query.voucher_id })
+	.exec(function(err, response){
+		 
+		 
+		 
+		if(err){
+			console.log('error: finding voucher voucher to reedem, with document _id : '+req.query.voucher_id);
+			return_fn('Server or Conection error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+			console.log('error: No voucher found to reedem, with document _id : '+req.query.voucher_id);
+			return_fn('No data found');
+			return;
+		}
+		 
+		
+		 
+		 //get seller and update their account//with amount to reddem
+ 
+		 
+	keystone.list('seller distributor').model.findOne()
+	.where({idnumber : req.query.user_id, usertype: 'Seller'})
+	.exec(function(err, user_data){
+
+		if(err){
+			console.log('error : when finding user when attempting to reedem user  id no : '+response.soldby);
+			return_fn('Server or Conection error');
+			return;
+		}
+		
+		if(user_data == null || user_data == undefined || user_data == ''){//user not found//add user
+
+			console.log('error : when finding user when attempting to reedem user  id no : '+response.soldby+ ' , no response given/response empty.');
+			return_fn('No data found');
+			return;
+		}
+		  
+		
+		 //add transaction
+
+		var date = new Date();			
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
+		var day = date.getDay();
+		var month = date.getMonth();
+		var year = date.getFullYear();
+		
+		var new_balance = Number(user_data.credits) + Number(response.voucheramount);
+		
+		
+		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Voucher redeemed for : '+' R'+ response.voucheramount +'+, Voucher ref _id : '+response._id+'; New balance : R'+new_balance ;
+
+		var hour = date.getHours();
+		var new_transactions_array = user_data.transactionhistory;
+
+			new_transactions_array.unshift(new_transaction_record);
+
+		if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+		 
+		user_data.transactionhistory = new_transactions_array;//update transaction history record
+		user_data.credits = new_balance;//update user amount
+		
+		
+			 user_data.save(function(err, results){//save changes
+				// console.log(results)
+				// console.log(err)
+				if(err){
+					console.log('error:when attempting to save reedemed money to user account, user document _id : '+ user_data._id +', voucher Code document _id : '+req.query.voucher_id);
+					
+					return_fn('Server or Conection error');
+					return;
+				}
+
+				if(results == null || results == undefined || results == ''){//user not found//add user
+					console.log('error:when attempting to save reedemed money to user account, with document _id : '+ user_data._id +', voucher document _id : '+req.query.voucher_id);
+					return_fn('No data found');
+					return;
+				}
+		 });					
+	});
+		 
+		 		 
+		 
+		 
+		 //save voucher//and give sucess results
+		response.voucherprinted = true;
+		response.save(function(error, data){
+			
+		if(err){
+			console.log('error: saving when reedeming, with document _id : '+req.query.voucher_id);
+			return_fn('Server or Conection error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+			console.log('error: No voucher data found when attempting to save reedem, with document _id : '+req.query.voucher_id);
+			return_fn('No data found');
+			return;
+		}
+		 
+			return_fn('Voucher redemption succesfully made and saved');
+			
+		});		 
+		 
+							
+	})
+	
+	
+	//respond function 
+	function return_fn(message){//send respondse
+		
+		res.jsonp(message)
+		
+		
+	}
+	
+	
+})
+	
+	
+	
+	
+	
+	
+	
 /*========================================
 
     hotspot data
