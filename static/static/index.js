@@ -2733,6 +2733,15 @@ if(transaction_type == 'past_transactions'){//++++++++++++++++++++++++++++ trans
 				   
 				   var history_record = data.split(';');
 				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+history_record[0]+'<br />'+history_record[1]+styling_for_other_users+history_record[2]+'</p><hr>';
+				   
+				   //if record has three items//i.e voucher reedem record
+				   
+				   if(history_record.length > 3){
+					   
+					   transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+history_record[0]+'<br />'+history_record[1]+'<br />'+history_record[2]+'<br />'+history_record[3]+'</p><hr>';
+					   
+				   }
+				   
 				   $('#transactions_and_voucher_viewer').append(transaction_record);
 				   
 				   

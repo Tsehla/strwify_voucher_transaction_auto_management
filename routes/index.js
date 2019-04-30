@@ -1423,7 +1423,7 @@ app.get('/api/redeem_voucher', function(req, res){
 		var new_balance = Number(user_data.credits) + Number(response.voucheramount);
 		
 		
-		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Voucher redeemed for : '+' R'+ response.voucheramount +'+, Voucher ref _id : '+response._id+'; New balance : R'+new_balance ;
+		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Voucher redeemed for : '+' R'+ response.voucheramount +'+,; Voucher ref _id : '+response._id+'; New balance : R'+new_balance ;
 
 		var hour = date.getHours();
 		var new_transactions_array = user_data.transactionhistory;
