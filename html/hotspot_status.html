@@ -8,26 +8,32 @@
 
 	<br/>
 	<hr>
-	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Welcome :<span id='welcome_user_name' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">Welcome :<span id='welcome_user_name' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 	<hr>
-	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">IP address :<span id='ip_address' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">IP address :<span id='ip_address' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 	<hr>
 
-	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Data available :<span id='data_available' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div> 
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">Data available :<span id='data_available' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div> 
 	<hr>
-	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Data uploaded / downloaded :<span id='bytes_up_down' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">Data uploaded / downloaded :<span id='bytes_up_down' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 	<hr>
-	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 	<hr>
-	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 12px">status refreshes in :<span id='to_before_refresh' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">status refreshes in :<span id='to_before_refresh' style="color:blue;padding-left: 5px;font-weight: 400"></span></p>
+	<br />
+	<button class='btn' style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-size: 35px;font-weight: 900; line-height: 30px" onclick='page_refresh()'>Update Status</button>
+	</div>
 	<hr>
-	<button class='btn btn-primary' onclick="window.open(router_variables_array.logout_link,'_self')" style="width: 44vw;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block">Log out</button>
-	<button class='btn btn-primary' onclick="window.open('http://'+window.location.host+'?hotspot_link='+router_login_link,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block">Buy</button>
+	<button class='btn btn-danger' onclick="window.open(router_variables_array.logout_link,'_self')" style="width: 44vw;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block;font-size: 35px;font-weight: 900; line-height: 30px">Log out</button>
+	<button class='btn btn-warning' onclick="window.open('http://'+window.location.host+'?hotspot_link='+router_login_link,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-size: 35px;font-weight: 900; line-height: 30px">Buy</button>
 	<br/>
 	
 	<!-- +++++++ get variable from router encoded on link  +++++++ -->
 	<script type="text/javascript" src="../static/qs.js"></script>
 	<script>
+		
+		
+		//EXAMPLE LINK WITH PAYLOAD
 		//http://127.0.0.1:3100/hotspot_status?status=true&refresh_timeout_seconds=60&advert_link=http://streetwifiy.co.za/advert&logout_link=http://streetwifiy.co.za/logout&user_name=8905135852087@meshdesk&ip_address=10.5.50.251&data_uploaded=448.0%20KiB&data_downloaded=1475.5%20KiB&connection_time_used=4m14s&connection_time_left=28d1h27m47s&up_time=4m14s&refresh_time=1m&data_available=unlimited
 		
 		//get varibles from router on link
@@ -40,7 +46,7 @@
 		
 		document.getElementById('welcome_user_name').innerHTML=router_variables_array.user_name+'!';
 		document.getElementById('ip_address').innerHTML= router_variables_array.ip_address;
-		document.getElementById('bytes_up_down').innerHTML= router_variables_array.data_uploaded.replace(/%20/g,' ') +' / ' + router_variables_array.data_downloaded.replace(/%20/g,' ');
+		document.getElementById('bytes_up_down').innerHTML= router_variables_array.data_uploaded.replace(/%20/g,' ').replace(/%3/g,'') +' / ' + router_variables_array.data_downloaded.replace(/%20/g,' ').replace(/%3/g,'');
 		document.getElementById('connection_time').innerHTML= router_variables_array.connection_time_used +' / ' + router_variables_array.connection_time_left;
 		document.getElementById('to_before_refresh').innerHTML= router_variables_array.refresh_time;
 		document.getElementById('data_available').innerHTML= router_variables_array.data_available;
@@ -51,10 +57,12 @@
 		
 		//refresh window
 		
-		setInterval(function(){
+		function page_refresh(){
 			window.open(router_variables_array['link-login-only'].replace('logout','status'),'_self');
 			
-		}, ((router_variables_array.refresh_timeout_seconds * 60)*60))
+		}
+		
+		setInterval(page_refresh(), ((router_variables_array.refresh_timeout_seconds * 60)*60))
 		
 	
 	</script>

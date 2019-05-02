@@ -351,7 +351,7 @@ function manual_voucher_init(button_id){
                
                
                 if(response == 'Voucher Not found'){
-               var show_code = "<p style='color:red;margin:0px;padding:0px;height:0px;width:0px'>Error couldn't find voucher. <span style='color:blue; margin:0px;padding:0px;height:auto;width:auto'>re-Checking...</span></p>";
+               var show_code = "<p style='color:red;margin:0px 0px 0px 2px;padding:0px;height:0px;width:0px'>Error couldn't find voucher. <span style='color:blue; margin:0px;padding:0px;height:auto;width:auto'>re-Checking...</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
 				document.getElementById(button_id).disabled = false;//enable mabual voucher download
                
@@ -360,6 +360,7 @@ function manual_voucher_init(button_id){
                if(response != 'Voucher Not found'){
 
 				dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
+
                var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+JSON.stringify(response.vouchercode)+"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
                voucher_print(response);//print voucher
@@ -488,7 +489,7 @@ function sell_ticket(button_id){
                 	seller_login.credit = response.new_credit;
                 	dom_innerHtml('firth_page_seller_amount', response.new_credit);
 				   	dom_innerHtml('firth_page_sell_menu_header', response.status);
-				   	dom_innerHtml('seller_recharge_status','<span style="color:darkgreen;">Success, Voucher sold to ticket number : '+seller_code_input.value+', for amount : R'+seller_voucher_amount_input.value+'</span>');
+				   	dom_innerHtml('seller_recharge_status','<span style="color:darkgreen;">Success, Voucher sold to ticket number :<br  /> '+seller_code_input.value+', For amount : R'+seller_voucher_amount_input.value+'</span>');
 				   document.getElementById(button_id).disabled=false;//enable sell button
                    return;
                }

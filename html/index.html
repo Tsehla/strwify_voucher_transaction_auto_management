@@ -19,7 +19,7 @@
                 font-size:13px;
                } 
                #first_page{
-               display : none;/* show */
+               display : block;/* show */
                }
                #second_page{
                   display : none;
@@ -153,13 +153,13 @@ buy data voucher
 	
 	
     <div id='seller_code_screen' style="width 80vw; height:20vh; margin:4vh; padding:0px; border:1px double blue">
-      <p id='second_page_user_auto_code' style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+      <p id='second_page_user_auto_code' style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
        Loading code...
     </p>
-    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
-    Ticket status : <span id="second_page_ticket_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:13px;display: inline-block;">Loading...</span>
-    </p>
-    
+    	<p style="width:100%; height:15%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro" >
+			Ticket status : 
+		</p>
+    	<p id="second_page_ticket_status" style="width:100%; height:10%; margin:10px 0px 0px 0px; padding:0px; font-size:13px;display: inline-block;">Loading...</p>
     </div>
     
     
@@ -255,13 +255,13 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b><span style='width:auto; height: auto; padding:0px; margin: 0px' id='fourth_page_login_menu_header'>
     access account
       </span>
   </b>
 </p>
-
+	
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='fourth_page_id_input'>
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='fourth_page_password_input'>
 <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="fourth_page_seller_login()">Log In</button>
@@ -271,7 +271,7 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:39vh;background-color:white;box-shadow:3px 3px 2px darkorange, -1px -1px 2px darkorange">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id ='fourth_page_password_hint_header'> 
    show password hint
   </b>
@@ -290,7 +290,7 @@ distributor login
      
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id="fourth_page_seller_change_password_header">
      change password
   </b>
@@ -306,13 +306,13 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:16px;border-bottom:1px solid gainsboro">
   <b> 
    forgot password
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:25px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
 </p>
 
   
@@ -332,19 +332,19 @@ distributor login
  <div id="firth_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:100vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
-<p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+<p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
  <b id='firth_page_sell_menu_header'>
     sell menu
  </b>
 </p>
 
-<div id='seller_code_screen' style="width 80vw; height:20vh; margin:4vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+<div id='seller_code_screen' style="width 80vw; height:25vh; margin:4vh; padding:0px; border:1px double blue">
+      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
        Credit : R <span id="firth_page_seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
-    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
-    Ticket sell status : <span id="seller_recharge_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:13px">Loading...</span>
-    </p>
+    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    Ticket sell status : </p>
+	<p id="seller_recharge_status" style="width:auto; height:20%; margin:10px 0px 0px 2px; padding:0px; font-size:13px">Loading...</p>
     
     </div>
 
@@ -430,7 +430,7 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b><span style='width:auto; height: auto; padding:0px; margin: 0px' id='sixth_page_login_menu_header'>
     access account
       </span>
@@ -446,7 +446,7 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:39vh;background-color:white;box-shadow:3px 3px 2px darkorange, -1px -1px 2px darkorange">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id ='fourth_page_password_hint_header'> 
    show password hint
   </b>
@@ -465,7 +465,7 @@ distributor login
      
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id="sixth_page_seller_change_password_header">
      change password
   </b>
@@ -481,13 +481,13 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:16px;border-bottom:1px solid gainsboro">
   <b> 
    forgot password
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:25px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
 </p>
 
   
@@ -508,7 +508,7 @@ distributor login
  <div id="seventh_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="distributor_menu_wrapper">
  <div id="distributor_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
  <b id= 'sixth_page_distributor_menu_header'>
  recharge menu
  </b>
@@ -516,13 +516,13 @@ distributor login
 	 
 	 
 	 
-<div id='distributor_code_screen' style="width 80vw; height:10vh; margin:1vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
+<div id='distributor_code_screen' style="width 80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
+      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
        Credit : R <span id="seventh_page_distributor_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
-    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
-    Sell status: <span id="distributor_seller_recharge_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:9px;color:darkblue">_+_+_+_</span>
-    </p>
+    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    Sell status: </p>
+	<p id="distributor_seller_recharge_status" style="width:auto; height:auto; margin:10px 0px 0px 2px; padding:0px; font-size:9px;color:darkblue">_+_+_+_</p>
     
 </div>
 
@@ -618,7 +618,7 @@ distributor login
   <div id="eigth_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
 	 <b style='width: 70%; display: inline-block' id="eight_page_distributor_menu_header">
 		 register new seller
 	 </b>
@@ -687,7 +687,7 @@ distributor login
 	 
 <!-- router monitor -->
 <div id="" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:20vh;background-color:white;box-shadow:3px 3px 2px #f0ad4e, -1px -1px 2px #f0ad4e">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b><span style='width:auto; height: auto; padding:0px; margin: 0px' id=''>
     	Routers satus monitor
       </span>
@@ -702,7 +702,7 @@ distributor login
 	 
 <!-- login wrapper Start -->
 <div id="admin_login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b><span style='width:auto; height: auto; padding:0px; margin: 0px' id='admin_fourth_page_login_menu_header'>
     access account
       </span>
@@ -718,7 +718,7 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="admin_login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id="admin_change_password_header">
      change password
   </b>
@@ -734,13 +734,13 @@ distributor login
 
 <!-- login wrapper Start -->
 <div id="admin_login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
-  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:25px;border-bottom:1px solid gainsboro">
+  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:16px;border-bottom:1px solid gainsboro">
   <b> 
    forgot password
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:25px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
 </p>
 
   
@@ -762,7 +762,7 @@ distributor login
  <div id="super_admin_works_menu" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="super_admin_menu_wrapper">
  <div id="super_admin_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:18px; border-bottom:1px solid gainsboro">
  <b id= 'super_admin_menu_header'>
 	 Dash board
  </b>
@@ -770,13 +770,13 @@ distributor login
 	 
 	 
 	 
-<div id='super_admin_code_screen' style="width 80vw; height:10vh; margin:1vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:70%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
+<div id='super_admin_code_screen' style="width 80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
+      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
        Credit : R <span id="super_admin_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
-    <p style="width:100%; height:30%; text-align:left; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
-    Sell status: <span id="super_admin_distributor_recharge_status" style="width:auto; height:auto; margin:0px; padding:0px; font-size:9px;color:darkblue">_+_+_+_</span>
-    </p>
+    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    Sell status: </p>
+	<p id="super_admin_distributor_recharge_status" style="width:auto; height:auto; margin:10px 0px 0px 2px; padding:0px; font-size:9px;color:darkblue">_+_+_+_</p>
     
 </div>
 
@@ -876,7 +876,7 @@ distributor login
   <div id="admin_eigth_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
  <div id="admin_seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
 	 <b style='width: 70%; display: inline-block' id="admin_eight_page_distributor_menu_header">
 		 register new distributor
 	 </b>
@@ -926,7 +926,7 @@ distributor login
   <div id="recharge_codes_container" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
  <div id="admin_seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
 	 <b style='width: 70%; display: inline-block' id="recharge_codes_menu_header">
 		 Add recharge vouchers
 	 </b>
@@ -1027,7 +1027,7 @@ distributor login
   <div id="router_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="router_menu_wrapper">
  <div id="router_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
 	 <b style='width: 70%; display: inline-block' id="router_menu_header">
 		 Roter Status Monitor
 	 </b>
@@ -1082,7 +1082,7 @@ distributor login
   <div id="transactions_and_voucher_page" style="width:100vw; min-height: auto; position: absolute;top: 0px;left: 0px;"><!-- first page Start -->
  <div id="transactions_and_voucher_wrapper" style="height: auto;width: auto">
  <div id="transactions_and_voucher_menu" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
- <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:25px; border-bottom:1px solid gainsboro">
+ <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
 	 <b style='width: 70%; display: inline-block' id="transactions_and_voucher_header">
 		 N/A
 	 </b>
