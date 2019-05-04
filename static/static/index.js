@@ -387,6 +387,19 @@ voucher printing
 
 function voucher_print(response){
    // alert('voucher print fn');
+				var month_text = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+				var day_of_week_text = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+	
+				var date = new Date();
+				var hour = date.getHours();
+				var minutes = date.getMinutes();
+				var day_of_week = day_of_week_text[date.getDay()];
+				var day_of_month = date.getDate();
+				var month =month_text[ date.getMonth()];
+				var year  = date.getFullYear();
+	
+				var print_date = (hour<12?hour=hour.toString()+':'+minutes.toString()+'am':hour=hour.toString()+':'+minutes.toString()+'pm')+' '+day_of_week+' '+day_of_month+'/'+month+'/'+year;
+	
 	
 				var voucher_pin = response.vouchercode;
 				var voucher_profile = response.voucherprofile;
@@ -405,8 +418,12 @@ function voucher_print(response){
 				canvas_type.fillText(voucher_profile, 55, 50);
 				canvas_type.font= '13px Arial';
 				canvas_type.fillText(voucher_expiry_days, 65, 65);
-				canvas_type.font= '40px Arial';
-				canvas_type.fillText('R' + voucher_amount_cost, 25, 105);
+				canvas_type.font= '39px Arial';
+				canvas_type.fillText('R' + voucher_amount_cost, 25, 100);
+				canvas_type.font= '9px Arial';
+				canvas_type.fillText('PRINT '+ print_date, 9, 110);
+				canvas_type.font= '7px Arial';
+				canvas_type.fillText('T/C : service provided as is, use at own risk.',155,112);
 			
 
 		

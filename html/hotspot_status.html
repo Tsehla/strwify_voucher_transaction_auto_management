@@ -49,7 +49,7 @@
 		document.getElementById('bytes_up_down').innerHTML= router_variables_array.data_uploaded.replace(/%20/g,' ').replace(/%3/g,'') +' / ' + router_variables_array.data_downloaded.replace(/%20/g,' ').replace(/%3/g,'');
 		document.getElementById('connection_time').innerHTML= router_variables_array.connection_time_used +' / ' + router_variables_array.connection_time_left;
 		document.getElementById('to_before_refresh').innerHTML= router_variables_array.refresh_time;
-		document.getElementById('data_available').innerHTML= router_variables_array.data_available;
+		document.getElementById('data_available').innerHTML= router_variables_array.data_available.replace(/%20/g,' ');
 	
 		
 		 
@@ -62,7 +62,11 @@
 			
 		}
 		
-		setInterval(page_refresh(), ((router_variables_array.refresh_timeout_seconds * 60)*60))
+		setInterval(function(){
+			
+			window.open(router_variables_array['link-login-only'].replace('logout','status'),'_self');
+			
+		}, ((router_variables_array.refresh_timeout_seconds * 60)*60))
 		
 	
 	</script>
