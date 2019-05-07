@@ -2966,6 +2966,55 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 	 
  }
 
+/*=====================================================================================================================================================
+
+distributor/Super admin help
+    
+=====================================================================================================================================================*/
+
+function distributor_superadmin_acc_help(type_of_user){
+	
+	
+	if(type_of_user == 'distributor'){
+		
+		var confirm_help_type = confirm('Would you prefer Picture/video?');
+		
+		if(confirm_help_type){
+			window.open('http://'+current_domain+'/static/default_slide_images/3.jpg');
+			return;
+		}
+			
+		
+		alert(`1) Enter ID number of the seller you want to recharge\n2) Enter name and surname of seller you want to Recharge\n\t\t\tExample : John Doe\n\n3) Enter Amount in Rands to Recharge the seller with\n\t\t\tExample : \n\t\t\t\tfor R5.00 Enter 5\n\t\t\t\tfor R10.00 Enter 10\n\t\t\t\tfor R100.00 Enter 100\n\nNB\nAllways make sure the details are for the person you want to recharge`);
+		return;
+		
+	}
+	
+	
+	
+		
+	if(type_of_user == 'superadmin'){
+		
+		
+		var confirm_help_type = confirm('Would you prefer Picture/video?');
+		
+		if(confirm_help_type){
+			window.open('http://'+current_domain+'/static/default_slide_images/4.jpg');
+			
+			return;
+		}
+			alert(`1) Enter ID number of the seller you want to recharge\n2) Enter name and surname of seller you want to Recharge\n\t\t\tExample : John Doe\n\n3) Enter Amount in Rands to Recharge the seller with\n\t\t\tExample : \n\t\t\t\tfor R5.00 Enter 5\n\t\t\t\tfor R10.00 Enter 10\n\t\t\t\tfor R100.00 Enter 100\n\nNB\nAllways make sure the details are for the person you want to recharge`)
+		return;
+		
+	}
+	
+	
+}
+
+
+
+
+
 
 
 /*=====================================================================================================================================================

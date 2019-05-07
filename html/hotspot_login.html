@@ -328,6 +328,18 @@
             <h1>How to use recharge Voucher</h1>
             <button onclick='document.getElementById("help_container").style.display="none"' class='btn btn-danger'>x</button>
             <div id='help'>
+				<h2>Help Picture/video's</h2>
+				     <ul>
+                        <li>
+                          How to buy recharge and and access Wifi <i style='color:green; margin:0px;padding: 0px;' id='help_picture_video_buy'></i>
+                        </li>
+						 
+						 <li>
+                            How to sell recharge Vouchers <i style='color:green; margin:0px;padding: 0px;' id='help_picture_video_sell'></i>
+                        </li> 
+						 						
+                    </ul>
+				
                 <h2>Recharge</h2>
                
                     <ol>
@@ -397,7 +409,7 @@
                 height: 10%;
                 margin-top: 0px;
                 text-align: center;
-                font-size: 1.5em;
+                font-size: 1em;
                 font-weight: 600;
                 border-bottom:1px solid brown;
                 padding : 0px;
@@ -841,7 +853,7 @@
 
 		//+++++++++++++++++ db pulled data ++++++++++++++++++++++
 
-		var hotspot_url = router_variables_array["link-login-only"];//GET it form mikrotik [this] hotspot inititated link
+		var hotspot_url = router_variables_array["link-login-only"].replace('/login','');//GET it form mikrotik [this] hotspot inititated link
 		var wall_link_description; //Get wallpaper links data from db
 
 
@@ -859,6 +871,9 @@
 			var free_sites_bottom_text = 'Pass it on, unconditionally help a stranger, a friend, a family member';//free sites bottom text;
 			var notifications_from_db = ['Dare to be diffrents','Dare to write your destiny, Dare to write your destiny,Dare to write your destiny'];//notifications text
 			var notification_bottom_text = 'If it was easy, no one would care. If it was impossible, no one would dare';//notification page bottom text
+			
+			var help_picture_video_buy = 'static/default_slide_images/1.jpg';// help how to buy voucher and use wifi
+			var help_picture_video_sell = 'static/default_slide_images/2.jpg';//help how to sell wifi
 			
 			wall_link_description =[//walp data	
 				{image_link :"static/default_slide_images/1.jpg" , image_status_text : "Click here to see Picture", image_status_link: "static/default_slide_images/1.jpg"},	
@@ -912,6 +927,16 @@
 					notification_bottom_text = data_from_db.notification_bottom_text;
 					//console.log('7'+notification_bottom_text);
 					 }
+				
+				if(data_from_db.hotspot_how_to_buy){	 
+					help_picture_video_buy = data_from_db.hotspot_how_to_buy;
+					
+					 }
+				if(data_from_db.hotspot_how_to_sell){	 
+					 help_picture_video_sell = data_from_db.hotspot_how_to_sell;
+			
+					 }
+				
 				
 				if(data_from_db.hotspot_wallpaper){	//wallpaperdata
 					
@@ -973,6 +998,11 @@
 			document.getElementById('free_sites_bottom_text').innerHTML = free_sites_bottom_text ;
 			//free sites -- bottom text
 			document.getElementById('notification_bottom_text').innerHTML = notification_bottom_text ;
+			//how to link image/sell -- buy
+			document.getElementById('help_picture_video_buy').innerHTML = "<a href="+help_picture_video_buy+" style='margin:0px;padding:0px;'>Click Here</a>"  ;
+				
+			//how to link image  /video -- sell
+			document.getElementById('help_picture_video_sell').innerHTML = "<a href="+help_picture_video_sell+" style='margin:0px;padding:0px;'>Click Here</a>"  ;
 			
 			
 			//++++++++++++++++++++ free links ++++++++++

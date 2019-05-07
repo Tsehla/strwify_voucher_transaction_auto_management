@@ -1554,6 +1554,10 @@ app.get('/api/hotspot_data', function(req, res){
 				hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
 				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
 				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare.',
+				hotspot_how_to_buy :'static/default_slide_images/1.jpg',
+				hotspot_how_to_sell :  'static/default_slide_images/2.jpg',
+				hotspot_how_to_recharge_seller : 'static/default_slide_images/3.jpg',
+				hotspot_how_to_super_admin: 'static/default_slide_images/4.jpg',
 				hotspot_logo : 'static/images/logo.png',
 				
 			}]
