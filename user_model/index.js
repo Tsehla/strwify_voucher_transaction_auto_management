@@ -43,12 +43,13 @@ seller_distributor_model.add({
     //province :{type :String, initial:true, required:true, label :'Province' },
     province :{type :String, label :'Province' },
     //password : {type: String, required:true, initial:true, label :'Password'},
-    password : {type: String, label :'Password'},
+    password : {type: types.Password, label :'Password'},
     email : {type : types.Email, label :'Email (optional)'},
     //credits : {type : Number, initial:true, required:true, default:0, label :'Credit Amount'},
     credits : {type : Number, default:0, label :'Credit Amount'},
     //usertype : {type :types.Select, options :'Seller, Distributor, Server admin, Buyer', initial:true, required:true, default :'Seller', label :'Type of User' }
     usertype : {type :types.Select, options :'Seller, Distributor, Server Admin, Buyer', default :'Seller', label :'Type of User' },
+	added_customers : {type : types.TextArray, label :'My Customers'},//customers invited to system
 	transactionhistory : {type : types.TextArray, label :'Transactions'},//keep record of all transactions on account
 	manage_router : {type : types.Boolean, default:false, label :'Manage Router?'},
     
@@ -68,19 +69,17 @@ var voucher_model = new keystone.List(voucher_code);
 voucher_model.add(
     
     {
-    vouchercode : {type:String, unique:true, initial:true, required:true, default:'xxxxxx', label :'Voucher Code'},
-    voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
-	voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
-	voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
-    voucherstate : {type : types.Select, options: "used, new", default:'new', label :'Voucher State'},
-    soldby : {type : String, label :'Sold By'},
-    soldto : {type: String, default:'', label :'Sold To'},
-    loadedby : {type: String, default:'', label :'Added by'},
-    voucherprinted : {type : types.Boolean, default:false, label :'Voucher Printed'},
-	voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'},
-    
-       
-}
+		vouchercode : {type:String, unique:true, initial:true, required:true, default:'xxxxxx', label :'Voucher Code'},
+		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
+		voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
+		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
+		voucherstate : {type : types.Select, options: "used, new", default:'new', label :'Voucher State'},
+		soldby : {type : String, label :'Sold By'},
+		soldto : {type: String, default:'', label :'Sold To'},
+		loadedby : {type: String, default:'', label :'Added by'},
+		voucherprinted : {type : types.Boolean, default:false, label :'Voucher Printed'},
+		voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'},
+	}
 
 );
 
@@ -158,7 +157,31 @@ router_hotspot_page_model .add({
 router_hotspot_page_model.register();
 
 
+//---------------------------------------------------------
+    
+//messages model
+//----------------------------------------------------------
+var messages = 'Messaging';
+var messages_model = new keystone.List(messages);
 
+messages_model.add(
+    
+    {
+	message_initiator_id : {type:String, initial:true, default:'', label :'Message From'},
+	message_initiator_names : {type:String, initial:true, default:'', label :'Message From'},
+	message_parcitipant_id : {type:String, initial:true, default:'', label :'Message To'},
+	message_parcitipant_names : {type:String, initial:true, default:'', label :'Message To'},
+	from_delete : {type :types.Boolean, default:false, label :'From delete requested?' },//if true, message will no appear when creater check inbox messages 
+	to_delete : {type :types.Boolean, default:false, label :'To delete requested?' },//if true, message will no appear when participant check inbox messages 
+	last_updated :{type:String, default:'', label :'Last updated Month'},//last time this doc was updated//on third month message will be deleted//or when both [from_delete & to delete are true]
+	messages_array: {type : types.TextArray, label :'Messages', default:['{"from":"Tsehla:,"message":"Hello, Welcome, Please read Help , to know how the system works!.","date":"13:20am Tuesday 09 May 2019"}','{"from":"Tsehla:,"message":"Hello, Enjoy !!!","date":"01:20am Monday 08 May 2019"}']},
+ 
+       
+}
+
+);
+
+messages_model.register();
 
 
 

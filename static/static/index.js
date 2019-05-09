@@ -3008,6 +3008,35 @@ function distributor_superadmin_acc_help(type_of_user){
 		
 	}
 	
+	if(type_of_user == 'seller'){
+		
+		
+		var confirm_help_type = confirm('Would you prefer Picture/video?');
+		
+		if(confirm_help_type){
+			window.open('http://'+current_domain+'/static/default_slide_images/2.jpg');
+			
+			return;
+		}
+		
+		alert(`1) Enter amount of data to sell.\n\t\tExample :\n\t\t\tFor R5.00 Enter 5\n\t\t\tFor R10.00, Enter 10\n\t\t\tFor R100.00, Enter 100\n\n2) Get the Temporary code from the buyer\n3) Enter the temporary code to the second input box\n5) Press sell ticket button\n4) Wait few second and ask buyer to press get ticket button in their cellphone\n\nNB\nMake sure buyer does not close the app or change the code until transaction is complete`);
+		return;
+		
+	}
+	if(type_of_user == 'buyer'){
+		
+		var confirm_help_type = confirm('Would you prefer Picture/video?');
+		
+		if(confirm_help_type){
+			window.open('http://'+current_domain+'/static/default_slide_images/1.jpg');
+			
+			return;
+		}
+		alert(`1) Give code to seller\n2) When ticket ready click 'Get ticket' button\n3) Connect to StreetWifiy\n4) Goto : streetwifiy.co.za\n5) Enter voucher code as shown on ticket\n6) Please pay attention to expeiry days and use your data before then\n\nNB\nDo not leave page/app or change code until you have downloaded your voucher card\n\n***\nENJOY\n***`);
+		return;
+		
+	}
+	
 	
 }
 
