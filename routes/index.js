@@ -111,7 +111,7 @@ keystone.get('routes', function(app){
        // console.log(response.name+response.surname);
     
         if(error){ return res.jsonp('User Not found');}
-        if(response ==  null || response == ''){ return res.jsonp('User Not found')};
+        if(response ==  null || response == ''){ return res.jsonp('User Not found')}
         var name = response.name+response.surname;
         if(name.trim().toLocaleLowerCase() == user_name.trim().toLocaleLowerCase()){ //if name match user provided name too
             return res.jsonp(response);
@@ -696,7 +696,7 @@ seller or distributor console, credt auto_voucher_check
  app.get('/api/add_user', function(req, res){
 	
 	
-  // http://127.0.0.1:4100/api/add_user?user_type=seller&name=Petrus&surname=Nkhi&password=happy%20customers%20lead%20to%20rich%20life&id=8888888888888 
+  // http://127.0.0.1:4100/api/add_user?user_type=seller&name=Petrus&surname=Nkhi&password=happy%20customers%20lead%20to%20rich%20life&id=8888888888888 '&added_by_name='+admin_login.name+'&added_by_id='+admin_login.admin_id+'&added_by_usertype='+admin_login.usertype;  
 	 var userType = req.query.user_type;
 	 var user_type = userType.replace(userType[0], userType[0].toUpperCase());//capitalize first letter
 	 
@@ -713,11 +713,12 @@ seller or distributor console, credt auto_voucher_check
 		}
 		
 		if(response == null || response == undefined || response == ''){//user not found//add user
+			var user_added_by = {'name':req.query.added_by_name,'type_of_user':req.query.added_by_usertype,'id_no':req.query.added_by_id};//add user creating account as contact to this new user account
 			
 			keystone.createItems({//add items to db//user details
 				
 				'seller distributor' : [
-					{name: req.query.name.toLowerCase() ,surname : req.query.surname.toLowerCase() ,idnumber : req.query.id ,password : req.query.password.trim().replace(/%20/g, ' ').toLowerCase() ,usertype : user_type}
+					{name: req.query.name.toLowerCase() ,surname : req.query.surname.toLowerCase() ,idnumber : req.query.id ,password : req.query.password.trim().replace(/%20/g, ' ').toLowerCase() ,usertype : user_type, added_customers_partners:[JSON.stringify(user_added_by)], }
 					
 					
 				]
@@ -729,7 +730,8 @@ seller or distributor console, credt auto_voucher_check
 					res.jsonp('Server or Conection error');
 					return;
 				}
-				
+				add_as_contact();//add new account user as contact
+				add_new_user_message()//add new user welcome mesage
 				res.jsonp('Account succesfully created');
 			});
 			
@@ -742,12 +744,108 @@ seller or distributor console, credt auto_voucher_check
 		
 	});
 	
+	 
+	//fuction add this user as a contact to the user creating this account 
 	
-	
-	
+		function add_as_contact(){
+			
+			var added_by_userType = req.query.added_by_usertype;
+	 		var added_by_user_type = added_by_userType.replace(added_by_userType[0], added_by_userType[0].toUpperCase());//capitalize first letter
+			
+			keystone.list('seller distributor').model.findOne()
+			.where({idnumber : req.query.added_by_id, usertype :added_by_user_type})
+			.exec(function(err, response){
+
+				if(err){
+					console.log('error when finding/adding new user as contact to user id : '+req.query.added_by_id+' ,user type : '+req.query.added_by_usertype);
+					return;
+				}
+
+				if(response == null || response == undefined || response == ''){//user not found//add user
+					console.log('error no data when finding/adding new user as contact to user id : '+req.query.added_by_id+' ,user type : '+req.query.added_by_usertype);
+					return;
+				}
+				
+				var user_added_by = {'name':req.query.name.toLowerCase()+' '+req.query.surname.toLowerCase(),'type_of_user':user_type,'id_no':req.query.id};//create contact data
+				
+				var added_customers_partners_array = response.added_customers_partners;//get old contact list
+				
+				added_customers_partners_array.push(JSON.stringify(user_added_by));
+				
+				response.added_customers_partners = added_customers_partners_array;//append new contact to existing list
+				
+				response.save(function(error, results){//save new contact changes to profile
+					
+					if(error){
+						console.log('error saving new user as contact to user id : '+req.query.added_by_id+' ,user type : '+req.query.added_by_usertype);
+						return;
+					}
+
+					if(results == null || results == undefined || results == ''){//user not found//add user
+						console.log('error saving new user as contact to user id : '+req.query.added_by_id+' ,user type : '+req.query.added_by_usertype);
+						return;
+					}
+					
+				});
+				
+			return;
+
+			});
+
+
+		}
+	 	//new user creation message
+	 	function add_new_user_message(){
+			
+			//user added user type
+			var userType = req.query.user_type;
+	 		var user_type = userType.replace(userType[0], userType[0].toUpperCase());//capitalize first letter
+			
+			//user adding usertype			
+			var added_by_userType = req.query.added_by_usertype;
+	 		var added_by_user_type = added_by_userType.replace(added_by_userType[0], added_by_userType[0].toUpperCase());//capitalize first letter
+			
+			//date and time
+			var date = new Date();
+			var hour = date.getHours();
+			var minutes = date.getMinutes();
+			var day = date.getDay();
+			var day_of_month = date.getDate()
+			var month = date.getMonth();
+			var year = date.getFullYear();
+			
+			var week_array=['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+			var month_array = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+			
+			var message_date_time =  hour+':'+minutes+((hour > 12)?'am':'pm')+' '+week_array[day]+' '+day_of_month+' '+month_array[month]+' '+year;
+			//welcome message
+			var new_message_contents =['{"from":"'+req.query.added_by_name+' : '+added_by_user_type+'","message":"Hello, Welcome, Please read Help , to know how the system works!.","date":"'+message_date_time+'"}','{"from":"'+req.query.added_by_name+' : '+added_by_user_type+'","message":"Reply to this message to contact me.","date":"'+message_date_time+'"}'];
+			
+			keystone.createItems({//add items to db//user details				
+				
+				'Messaging' : [					
+					{
+						message_initiator_id:req.query.added_by_id, message_initiator_names:req.query.added_by_name, message_initiator_usertype:added_by_user_type, message_parcitipant_id:req.query.id, message_parcitipant_names:req.query.name.toLowerCase()+' '+req.query.surname.toLowerCase(), message_parcitipant_usertype:user_type, new_message_participator:true, last_updated: date.getMonth(), messages_array:new_message_contents,
+					}
+				]
+				
+				
+			}, function(err, results){
+				if(err){
+					console.log('Error creating message to db message initiatotor ID : '+ req.query.added_by_id+', usertype : '+added_by_user_type+' , new user id : '+req.query.id+', usertype : '+user_type);
+					return;
+				}
+
+			});
+			
+		}
 	
 	
 	 });
+	
+
+	
+	
 	
 
 /*========================================
@@ -1252,7 +1350,7 @@ var hour = date.getHours();
 
 /*========================================
 
-    transaction menu/voucher reedem finder
+    extra menu//transaction menu/voucher reedem finder//messages
     
 ========================================*/
 	
@@ -1263,10 +1361,11 @@ app.get('/api/transations', function(req, res){
 	
 //http://127.0.0.1:4100/api/transations?type=to_reddem_voucher&user_id=8905135852087&usertype=Seller	
 //http://127.0.0.1:4100/api/transations?type=past_transactions&user_id=8905135852087&usertype=Seller
+//http://127.0.0.1:4100/api/transations?type=messaging&user_id=8905135852087&usertype=Seller
 	
 console.log(req.query.user_id,req.query.usertype,req.query.type );	
 	
-if(req.query.type == 'past_transactions'){	
+if(req.query.type == 'past_transactions'){	//find transaction made
 	
 	
 	
@@ -1296,7 +1395,7 @@ if(req.query.type == 'past_transactions'){
 }
 	
 	
-if(req.query.type == 'to_reddem_voucher'){	
+if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 	
 	 keystone.list('Voucher Codes').model.find()
 	.where({soldby : req.query.user_id})
@@ -1337,7 +1436,38 @@ if(req.query.type == 'to_reddem_voucher'){
 							
 	})
 	
+}
+	
+	
+	if(req.query.type == 'messages'){//find messages	
+		
+		//http://127.0.0.1:4100/api/transations?type=messages&user_id=8905135852087&usertype=Seller
+	
+	 keystone.list('Messaging').model.find()
+	.where({$or:[ {message_initiator_id : req.query.user_id,message_initiator_usertype:req.query.usertype,from_delete:false}, {message_parcitipant_id : req.query.user_id,message_parcitipant_usertype:req.query.usertype,to_delete:false} ]})
+	.exec(function(err, response){
+		
+		 
+		if(err){
+			console.log('error: No messages found for user ID : '+req.query.user_id);
+			return_fn('error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+			console.log('error: No messages found for user ID : '+req.query.user_id);
+			return_fn('error : no messages found');
+			return;
+		}
+		 
+		return_fn(response); 
+		 
+		return;  
+							
+	})
+	
 }	
+	
 	
 	function return_fn(data){//send response back
 		

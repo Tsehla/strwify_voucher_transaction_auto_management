@@ -207,7 +207,7 @@ function dom_innerHtml(div, value){
     
 =====================================================================================================================================================*/
 /*seller & ||  user login details collcetor */
-var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
 
 
 /* auto generated code from the user */
@@ -220,7 +220,7 @@ var unique_code = null;
     
 =====================================================================================================================================================*/
 
-var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:''};
+var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
 
 /*=====================================================================================================================================================
  
@@ -230,12 +230,11 @@ var distributor_login = {logged_in : false, distributor_id : '', usertype : '', 
     
 ========================================================================================================================*/
 
-var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:''};
+var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
 /*_____________________________________________________________________________________________________________________________________________________
 
 buy data page
 _______________________________________________________________________________________________________________________________________________________*/
-
 
 
 /*===================================================================================================================================================== 
@@ -876,6 +875,8 @@ function sixth_page_distributor_login(){
                        distributor_login.logged_in = true;
                        distributor_login.distributor_id = distributor_id.value;
                        distributor_login.usertype = response.usertype;
+                       distributor_login.name = response.name+' '+response.surname;
+					   distributor_login.customer_partners_contact_list = response.added_customers_partners;
                        distributor_login.credit = response.credits;
                       // dom_innerHtml('sixth_page_seller_amount', response.credits); //**************************
                        
@@ -1205,6 +1206,8 @@ function fourth_page_seller_login(){
                        seller_login.logged_in = true;
                        seller_login.seller_id = seller_id.value;
                        seller_login.usertype = response.usertype;
+                       seller_login.name = response.name+' '+response.surname;
+					   seller_login.customer_partners_contact_list = response.added_customers_partners;
                        seller_login.credit = response.credits;
                        dom_innerHtml('firth_page_seller_amount', response.credits); 
                        
@@ -1540,6 +1543,9 @@ function super_admin_login(){
                        admin_login.logged_in = true;
                        admin_login.admin_id = admin_id.value;
                        admin_login.usertype = response.usertype;
+                       admin_login.name = response.name+' '+response.surname;
+					   admin_login.customer_partners_contact_list = response.added_customers_partners;
+					   console.log(admin_login.customer_partners_contact_list);
                        admin_login.credit = response.credits;
                        dom_innerHtml('super_admin_amount', response.credits); //show amount in user account
                        
@@ -1996,8 +2002,7 @@ function distributor_seller_new_account_creation(){
     }
 
 	        
-     var url= 'http://' + current_domain + '/api/add_user?user_type=seller&name='+distributor_seller_add_name_input.value.trim()+'&surname='+distributor_seller_add_surname_input.value.trim()+'&password='+seller_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+distributor_seller_add_id_input.value.trim();
-	
+     var url= 'http://' + current_domain + '/api/add_user?user_type=seller&name='+distributor_seller_add_name_input.value.trim()+'&surname='+distributor_seller_add_surname_input.value.trim()+'&password='+seller_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+distributor_seller_add_id_input.value.trim()+'&added_by_name='+distributor_login.name+'&added_by_id='+distributor_login.distributor_id+'&added_by_usertype='+distributor_login.usertype;
 	
 	
     //console.log(url);
@@ -2086,8 +2091,7 @@ function admin_distributor_new_account_creation(){
     }
 
 	        
-     var url= 'http://' + current_domain + '/api/add_user?user_type=distributor&name='+admin_distributor_add_name_input.value.trim()+'&surname='+admin_distributor_add_surname_input.value.trim()+'&password='+distributor_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+admin_distributor_add_id_input.value.trim();
-	
+     var url= 'http://' + current_domain + '/api/add_user?user_type=distributor&name='+admin_distributor_add_name_input.value.trim()+'&surname='+admin_distributor_add_surname_input.value.trim()+'&password='+distributor_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+admin_distributor_add_id_input.value.trim()+'&added_by_name='+admin_login.name+'&added_by_id='+admin_login.admin_id+'&added_by_usertype='+admin_login.usertype;
 	
 	
     //console.log(url);
@@ -2280,11 +2284,7 @@ function admin_voucher_upload(){//send voucher to db
 	
 	var url= 'http://' + current_domain + '/api/add_vouchers?voucher_codes='+JSON.stringify(mob)+'&added_by='+admin_login.admin_id;
 	
-	
-	
     //console.log(url);
-		
-	
     
        $.get(url, function(response, status){
            console.log(response);
@@ -2890,6 +2890,95 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 }
 	
 	
+	
+if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
+	
+	var new_message_available = false;//check if theres a nww 
+	
+	dom_innerHtml('transactions_and_voucher_viewer', '');//clean div for new content 
+	
+	//add help button contents
+	var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
+	
+	  $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'error'){  
+				   
+					dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+					//add alert button
+					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+				   return;
+                   
+               }              
+			   
+			   if(response == 'error : no messages found'){
+					dom_innerHtml('transactions_and_voucher_header', 'Error, No Messages found');
+					//add alert button
+					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);			   			   
+				 return;                 
+               }
+
+			  // console.log(response);
+			   
+			   //clear div current contents
+			  document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+			  document.getElementById('transactions_and_voucher_header').innerHTML='Messages';
+		
+			   response.forEach(function(data,index){
+				   var document_id = data._id;//id of current document
+				  data.messages_array.forEach(function(message_item,index){
+					  
+					  var message_item = JSON.parse(message_item);
+					  var message_fron_to;//message to or from
+					  
+					  message_item['from']?message_fron_to=message_item['from']:message_fron_to=message_item['to'];//message to or from
+					  
+								   
+					   var content_div = "<div id='"+document_id+"_container' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span> "+message_item.date+"<br />"+message_item.message+"</div><br>";
+					  
+
+					   $('#transactions_and_voucher_viewer').append(content_div);
+					  
+					   if(index == data.messages_array.length -1){
+						   
+						   	
+						   $('#transactions_and_voucher_viewer').append('<button class="btn btn-danger" style="margin:10px;width:95%;height:30px" onclick="messaging_send(\''+document_id+'\',\'delete\')">Delete</button><br />');
+						   $('#transactions_and_voucher_viewer').append('<input type="text" id="'+document_id+'_input" placeholder="Your response..." class="form-control" style="height:30px;text-align:center;margin:2px"><button style="width:95%;height:30px" class="btn btn-success" onclick="messaging_send(\''+document_id+'\',\'input\')">Reply</button><br><hr>');
+						
+
+						  }	
+				   
+				   });
+				   
+
+					   //add help button at end o adding items
+
+					   if(index == response.length -1){
+
+						   //add alert button
+							dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+
+						  }		
+				});
+			   
+				return;
+
+		   }
+	
+		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+		  //add alert button
+		dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+		 return;
+	  });
+	
+}
+	
+
 
 	
 }
@@ -2965,6 +3054,75 @@ if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher ree
 	 
 	 
  }
+
+//send message +++++++++++++++++++++++++++++
+
+function messaging_send(messaging_document_id, action_type){
+	
+	alert(messaging_document_id+', '+action_type);
+}
+
+
+//create mssage ++++++++++++++++++++++++++++++
+
+function message_creation(){//gives user ability to add contacts and send message
+	
+//	var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+//	var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+//	var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+	
+		var my_users_contact = [{"name":"No contacts found.","type_of_user":"","id_no":""}];//default usr list {"name":"tsehla nkhi","type_of_user":"Seller","id_no":"89051"}
+		
+		if(seller_login.logged_in){//if seller is logged in
+			my_users_contact = seller_login.customer_partners_contact_list;
+		}
+	
+		if(distributor_login.logged_in){//if distributor is logged in
+			my_users_contact = distributor_login.customer_partners_contact_list;
+		}
+	
+		if(admin_login.logged_in){//if admin is logged in
+			my_users_contact = admin_login.customer_partners_contact_list;
+		}
+		
+		//help button
+		var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
+	
+	  //clear div current contents
+		document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+		document.getElementById('transactions_and_voucher_header').innerHTML='Create New Messages';
+		//alert();
+		//contactable user list
+		var user_contact_list = `<select id='user_select_list' style='width:95%;height:50px;'></select><br /><br />`;
+		$('#transactions_and_voucher_viewer').append(user_contact_list);
+		//message input text
+		var message_box = `<textarea id='message_text_box' style='width:95%;min-height:100px;height:50vh;'>Message</textarea><br /><br />`;
+		$('#transactions_and_voucher_viewer').append(message_box);
+		//message send
+		var message_send_button = `<button id='new_message_send' style='width:45%;height:50px;margin:10px;' onclick='alert()' class='btn btn-primary'>Send Message</button><button id='new_contact_add' style='width:45%;height:50px;margin:10px;' onclick='alert("Coming soon.")' class='btn btn-primary'>Add New Contact</button>`;
+		$('#transactions_and_voucher_viewer').append(message_send_button);
+	
+		//fill user select list with contacts
+		my_users_contact.forEach(function(data, index){
+			
+			var data = JSON.parse(data);
+			
+			if(data.name != "No contacts found." && index == 0){
+				
+			   	$('#user_select_list').append("<option value='all'>Send to All</option>");
+				
+			   }
+			$('#user_select_list').append("<option value="+data.id_no+">"+data.name+" : "+data.type_of_user+"</option>");
+			
+		});
+	
+		
+		//clean then add alert button
+		dom_innerHtml('transactions_and_voucher_viewer_alert_button', '');
+		dom_innerHtml('transactions_and_voucher_viewer_alert_button', alert_button);
+	
+}
+
 
 /*=====================================================================================================================================================
 
