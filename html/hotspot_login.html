@@ -853,7 +853,11 @@
 
 		//+++++++++++++++++ db pulled data ++++++++++++++++++++++
 
-		var hotspot_url = router_variables_array["link-login-only"].replace('/login','');//GET it form mikrotik [this] hotspot inititated link
+		var hotspot_url = router_variables_array["link-login-only"];//GET it form mikrotik [this] hotspot inititated link
+		if(router_variables_array["link-login-only"]){//remove login part of link
+		   hotspot_url = router_variables_array["link-login-only"].replace('/login','');
+		   }
+			
 		var wall_link_description; //Get wallpaper links data from db
 
 
