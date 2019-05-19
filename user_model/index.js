@@ -175,7 +175,8 @@ messages_model.add(
 	to_delete : {type :types.Boolean, default:false, label :'To delete requested?' },//if true, message will no appear when participant check inbox messages 
 	new_message_initiator : {type :types.Boolean, default:false, label :'New message for initiator!' },//new message for initiator//if true alert will appear
 	new_message_participator : {type :types.Boolean, default:false, label :'New message for participator!' },//new message for participator//if true alert will appear
-	last_updated :{type:String, default:'', label :'Last updated Month'},//last time this doc was updated//on third month message will be deleted//or when both [from_delete & to delete are true]
+	last_updated_month :{type:String, default:'', label :'Last updated Month'},//last time this doc was updated//on third month message will be deleted//or when both [from_delete & to delete are true]
+	last_updated_date :{type:String, default:'', label :'Last content updated Date'},//last time content was edited//used for sorting and fron end
 	messages_array: {type : types.TextArray, label :'Messages', default:['{"from":"Tsehla:,"message":"Hello, Welcome, Please read Help , to know how the system works!.","date":"13:20am Tuesday 09 May 2019"}','{"from":"Tsehla:,"message":"Hello, Enjoy !!!","date":"01:20am Monday 08 May 2019"}']},
  
        

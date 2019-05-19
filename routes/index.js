@@ -821,11 +821,12 @@ seller or distributor console, credt auto_voucher_check
 			//welcome message
 			var new_message_contents =['{"from":"'+req.query.added_by_name+' : '+added_by_user_type+'","message":"Hello, Welcome, Please read Help , to know how the system works!.","date":"'+message_date_time+'"}','{"from":"'+req.query.added_by_name+' : '+added_by_user_type+'","message":"Reply to this message to contact me.","date":"'+message_date_time+'"}'];
 			
+			
 			keystone.createItems({//add items to db//user details				
 				
 				'Messaging' : [					
 					{
-						message_initiator_id:req.query.added_by_id, message_initiator_names:req.query.added_by_name, message_initiator_usertype:added_by_user_type, message_parcitipant_id:req.query.id, message_parcitipant_names:req.query.name.toLowerCase()+' '+req.query.surname.toLowerCase(), message_parcitipant_usertype:user_type, new_message_participator:true, last_updated: date.getMonth(), messages_array:new_message_contents,
+						message_initiator_id:req.query.added_by_id, message_initiator_names:req.query.added_by_name, message_initiator_usertype:added_by_user_type, message_parcitipant_id:req.query.id, message_parcitipant_names:req.query.name.toLowerCase()+' '+req.query.surname.toLowerCase(), message_parcitipant_usertype:user_type, new_message_participator:true, messages_array:new_message_contents, last_updated_month:month, last_updated_date: date,
 					}
 				]
 				
@@ -842,11 +843,7 @@ seller or distributor console, credt auto_voucher_check
 	
 	
 	 });
-	
 
-	
-	
-	
 
 /*========================================
 
@@ -1443,8 +1440,9 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 		
 		//http://127.0.0.1:4100/api/transations?type=messages&user_id=8905135852087&usertype=Seller
 	
-	 keystone.list('Messaging').model.find()
+	 keystone.list('Messaging').model.find()//hide message that have delete checked
 	.where({$or:[ {message_initiator_id : req.query.user_id,message_initiator_usertype:req.query.usertype,from_delete:false}, {message_parcitipant_id : req.query.user_id,message_parcitipant_usertype:req.query.usertype,to_delete:false} ]})
+	.sort('-last_updated_date')
 	.exec(function(err, response){
 		
 		 
@@ -1477,8 +1475,328 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 
 });
 
+/*========================================
+
+    messages//delete or reply
+    
+========================================*/
+	
+//var url= 'http://' + current_domain + '/api/reply_or_delete?action_type='+ intended_action +'&document_id=' + messaging_document_id + '&pay_load=' + pay_load;//reply or delete link
+
+/* 
+	http://127.0.0.1:3100/api/reply_or_delete?action_type=reply&document_id=5cdc09ae59e47907e4c7bb7e&
+pay_load={%22from%22:%22tsehla%20d%20:%20Distributor%22,%22message%22:%22hello%22,%22date%22:%2218:1pm%20Wednesday%2015%20May%202019%22} 
+
+*/
+	
+app.get('/api/reply_or_delete', function(req, res){	
+	
+	
+	if(req.query.action_type == 'reply'){	//if reply
+	 
+		//console.log(req.query);
+	
+	
+	
+	 keystone.list('Messaging').model.findById(req.query.document_id)
+	.exec(function(err, response){
+
+			if(err){
+				console.log('error: finding message for message ID : '+req.query.document_id);
+				responder('Server or Conection error');
+				return;
+			}
+
+			if(response == null || response == undefined || response == ''){//message not found//this shouldnt happen//for this configuration//unless some deep error/issue
+				console.log('error: No messages found for document ID : '+req.query.document_id);
+				responder('No data found');
+				return;
+			}
+		 
+		 	//console.log(response.toObject().messages_array);//mangoose return results with its object wrapper data//use toObject() to clean it up
+		 	var message_array = response.toObject().messages_array;//used toObject to remove mangoose properties return when doing ////this query
+		 	 message_array.push(req.query.pay_load);
+		 	
+		 	var date = new Date();
+		 
+		 	response.messages_array  = message_array;//save new edited array
+		 	response.last_updated_month = date.getMonth();//set current month as lat updated
+			response.last_updated_date = date;//save current date//used for sorting results display at front end
+		 
+		 	response.save(function(error, data){
+				if(err){
+					console.log('error: saving message for message ID : '+req.query.document_id);
+					responder('Server or Conection error');
+					return;
+				}
+
+				if(data == null || data == undefined || data == ''){//message not found//this shouldnt happen//for this configuration//unless some deep error/issue
+					console.log('error: saving messages, No messages found for document ID : '+req.query.document_id);
+					responder('No data found');
+					return;
+				}
+						 
+		 		responder('success');
+				return;
+				
+			});
+		 
+		 	
+//		 	responder('Server or Conection error');
+		 	return;
+							
+		});	
+
+	}
+	
+	
+	if(req.query.action_type == 'delete'){	//if delete
+	 
+		//console.log(req.query);
+	
+	
+	
+	 keystone.list('Messaging').model.findById(req.query.document_id)
+	.exec(function(err, response){
+
+			if(err){
+				console.log('error: finding message to delete for message ID : '+req.query.document_id+', delete for : '+req.query.pay_load);
+				responder('Server or Conection error');
+				return;
+			}
+
+			if(response == null || response == undefined || response == ''){//message not found//this shouldnt happen//for this configuration//unless some deep error/issue
+				console.log('error: deleting No messages found for document ID : '+req.query.document_id+', delete for : '+req.query.pay_load);
+				responder('No data found');
+				return;
+			}
+		 	
+		 	var date = new Date();
+		 
+		 	response[req.query.pay_load]  = true;//set as deleted
+		 	response.last_updated_month = date.getMonth();//set current month as lat updated
+			response.last_updated_date = date;//save current date//used for sorting results display at front end
+		 
+		 	response.save(function(error, data){
+				if(err){
+					console.log('error: saving delete message for message ID : '+req.query.document_id+', delete for : '+req.query.pay_load);
+					responder('Server or Conection error');
+					return;
+				}
+
+				if(data == null || data == undefined || data == ''){//message not found//this shouldnt happen//for this configuration//unless some deep error/issue
+					console.log('error: saving delete messages, No messages found for document ID : '+req.query.document_id+', delete for : '+req.query.pay_load);
+					responder('No data found');
+					return;
+				}
+						 
+		 		responder('success');
+				return;
+				
+			});
+		 
+		 	
+//		 	responder('Server or Conection error');
+		 	return;
+							
+		});	
+
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function responder(what_to_say){//response function
+		
+		res.jsonp(what_to_say);
+		return;
+	}
+	
+});
+	
+	
+/*========================================
+
+   nessage // new message contact adding
+    
+========================================*/
+	
+	
+ app.get('/api/new_message_or_add_contact_or_delete_contact', function(req, res){
+	// 	var url = 'http://' + current_domain + '/api/new_message_or_add_contact?action_type=new_message&message_initiator_id=' + logged_in_user_id + '&mesage_initiator_usertype='+logged_in_user_type+'&message_initiator_name='+logged_in_user_name+'&message_participant_details='+participant_details+'&message=' + new_message;//reply link
+	
+	
+		if(req.query.action_type == 'new_message'){	//if new message
+			
+			
+			//console.log(req.query);
+			
+			var message_recipiens_list =req.query.message_participant_details.replace(/},/g,'};').split(';');//eish, dont ask//json missbehaving 
+	
+			console.log(message_recipiens_list);//use req query for message innitiator detais
+			//console.log(JSON.parse(x[0]));
+			
+			var new_messages_array = [];//list of messages container
+			
+			var date = new Date();//get current date
+			
+			message_recipiens_list.forEach(function(data){
+				var data = JSON.parse(data);
+				console.log(data.name);					
+				
+				new_messages_array.push(
+				{
+					message_initiator_id:req.query.message_initiator_id,
+					message_initiator_names:req.query.message_initiator_name,
+					message_initiator_usertype:req.query.mesage_initiator_usertype,
+					message_parcitipant_id:data.id_no,
+					message_parcitipant_names:data.name,
+					message_parcitipant_usertype:data.type_of_user, 
+					new_message_participator:true,  
+					messages_array:req.query.message, 
+					last_updated_month:date.getMonth(), 
+					last_updated_date: date,
+					}
+				);
+				
+				
+			});
+			
+			keystone.createItems({//add items to db//user details				
+				
+				'Messaging' : new_messages_array,
+				
+				
+			}, function(err, results){
+				if(err){
+					console.log('Error creating New message to db message initiatotor ID : '+ req.query.message_initiator_id+', usertype : '+req.query.mesage_initiator_usertype);
+					responder('Server or Conection error');
+					return;
+				}
+
+				responder('sucess');
+				return;
+			});
+			
+		
+			return;
+			
+		}
+	 
+	 
+	 
+	 if(req.query.action_type == 'new_contact'){	//if new contact
+			
+		//var url = 'http://' + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_contact&current_user_id='+logged_in_user_id+'&current_usertype='+logged_in_user_type+'&new_contact_user_id='+new_contact_id_no.value.toString().trim()+'&new_contact_usertype='+new_contact_usertype.value+'&pay_load='+new_user_contact_; 
+			
+		//console.log(req.query);
+		 
+		 //search for user to be added as a new contact
+		 
+			keystone.list('seller distributor').model.findOne()
+				.where({idnumber : req.query.new_contact_user_id, usertype : req.query.new_contact_usertype})
+				.exec(function(err, response){
+
+					if(err){
+						console.log('error: finding User to add as contact user ID : '+req.query.new_contact_user_id+', type of user : '+req.query.new_contact_usertype+', requested by user ID : '+req.query.current_user_id+', requester user type : '+req.query.current_usertype);
+						responder('Server or Conection error');
+						return;
+					}
+
+					if(response == null || response == undefined || response == ''){//user not found
+						console.log('error: User not Found : finding User to add as contact user ID : '+req.query.new_contact_user_id+', type of user : '+req.query.new_contact_usertype+', requested by user ID : '+req.query.current_user_id+', requester user type : '+req.query.current_usertype);
+						responder('No data found');
+						return;
+					}
 
 
+								//get current logged in user and save new contact
+								keystone.list('seller distributor').model.findOne()
+								.where({idnumber : req.query.current_user_id, usertype : req.query.current_usertype})
+								.exec(function(err, response){
+
+									if(err){
+										console.log('error: [finding logged in user] in efforts of : finding User to add as contact user ID : '+req.query.new_contact_user_id+', type of user : '+req.query.new_contact_usertype+', requested by user ID : '+req.query.current_user_id+', requester user type : '+req.query.current_usertype);
+										responder('Server or Conection error');
+										return;
+									}
+
+									if(response == null || response == undefined || response == ''){//user not found
+										console.log('error: [logged in user not found] in efforts of : finding User to add as contact user ID : '+req.query.new_contact_user_id+', type of user : '+req.query.new_contact_usertype+', requested by user ID : '+req.query.current_user_id+', requester user type : '+req.query.current_usertype);
+										responder('No data found');
+										return;
+									}
+
+
+									var new_contact_list_array = response.toObject().added_customers_partners;//used toObject to remove mangoose properties return when doing ////this query
+									
+									new_contact_list_array.push(req.query.pay_load);
+									
+									response.added_customers_partners = new_contact_list_array;//append changes to contact
+									
+											 
+									response.save(function(error, data){//save contact changes
+										if(err){
+											console.log('error: [logged in user conatact saving error] in efforts of : finding User to add as contact user ID : '+req.query.new_contact_user_id+', type of user : '+req.query.new_contact_usertype+', requested by user ID : '+req.query.current_user_id+', requester user type : '+req.query.current_usertype);
+											responder('Server or Conection error');
+											return;
+										}
+
+										if(data == null || data == undefined || data == ''){//message not found//this shouldnt happen//for this configuration//unless some deep error/issue
+											console.log('error: [logged in user contact saving error; no response] in efforts of : finding User to add as contact user ID : '+req.query.new_contact_user_id+', type of user : '+req.query.new_contact_usertype+', requested by user ID : '+req.query.current_user_id+', requester user type : '+req.query.current_usertype);
+											responder('No data found');
+											return;
+										}
+
+										responder('success');
+										return;
+
+									});
+
+									return;
+
+							});	
+
+					
+				
+				
+					//console.log(response);
+					
+					return;
+
+			});	
+
+
+		 
+		 
+			
+		}
+	 
+	 
+	 
+	 
+	 
+		
+	function responder(what_to_say){//response function
+		
+		res.jsonp(what_to_say);
+		return;
+	}
+	
+	
+	
+ });
+		
+	
+	
+	
 	
 	
 	

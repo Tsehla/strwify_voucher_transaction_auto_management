@@ -2930,27 +2930,83 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 			  document.getElementById('transactions_and_voucher_header').innerHTML='Messages';
 		
 			   response.forEach(function(data,index){
+				   
 				   var document_id = data._id;//id of current document
+				   
 				  data.messages_array.forEach(function(message_item,index){
 					  
+				
+					  if(index == 0){//control divs for message
+						//add opening div tag for this message//container used for deleting whole thing
+						  
+						$('#transactions_and_voucher_viewer').append(`<hr><div id="`+document_id+`_container" style="width:auto;height:auto; margin:0px;padding:0px">`);
+						  
+						//message container div opening tag
+					   $('#'+document_id+'_container').append(`<div id="`+document_id+`message_container" style="width:auto;height:auto; margin:0px;padding:0px">`);
+						 }
+					  //vars 
 					  var message_item = JSON.parse(message_item);
 					  var message_fron_to;//message to or from
 					  
 					  message_item['from']?message_fron_to=message_item['from']:message_fron_to=message_item['to'];//message to or from
 					  
 								   
-					   var content_div = "<div id='"+document_id+"_container' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span> "+message_item.date+"<br />"+message_item.message+"</div><br>";
+					   var content_div = "<div id='' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span> "+message_item.date+"<br />"+message_item.message+"</div><br>";
+				
 					  
-
-					   $('#transactions_and_voucher_viewer').append(content_div);
+					  //message
+					   $('#'+document_id+'message_container').append(content_div);
+					  
 					  
 					   if(index == data.messages_array.length -1){
 						   
-						   	
-						   $('#transactions_and_voucher_viewer').append('<button class="btn btn-danger" style="margin:10px;width:95%;height:30px" onclick="messaging_send(\''+document_id+'\',\'delete\')">Delete</button><br />');
-						   $('#transactions_and_voucher_viewer').append('<input type="text" id="'+document_id+'_input" placeholder="Your response..." class="form-control" style="height:30px;text-align:center;margin:2px"><button style="width:95%;height:30px" class="btn btn-success" onclick="messaging_send(\''+document_id+'\',\'input\')">Reply</button><br><hr>');
-						
+						   //find user logged in id
+						   var logged_in_user_id = '';
+						   
+						   if(admin_login.admin_id){//is admin logged in
+							  	logged_in_user_id = admin_login.admin_id;
+							  }
+						   
+						   if(distributor_login.distributor_id){ //is didtributor logged in
+							  	logged_in_user_id =distributor_login.distributor_id;
+							  }
+						   
+						   if(seller_login.seller_id){// is seller logged in
+							  	logged_in_user_id = seller_login.seller_id;
+							  }
+							  
+								
+								
 
+						   
+						   //is logged in user message initiator or reciever//to find out whom to delete/hide message for
+						   var is_message_initiator_or_not;
+						   
+						   if(data.message_initiator_id.toString() == logged_in_user_id.toString()){
+							  	is_message_initiator_or_not = 'from_delete';//user is initiator of this message
+							  }
+						   		
+						   if(data.message_parcitipant_id.toString() == logged_in_user_id.toString()){
+							  	is_message_initiator_or_not = 'to_delete';//user is participant of this message
+							  }
+						   
+						   
+						   //message container closing tag
+					   		$('#'+document_id+'message_container').append(`</div>`);
+						   
+						   //add conversation parties//usefull if message has not reply yet
+						  // console.log(data);
+						   $('#'+document_id+'_container').append(`<div id='' style='width:100%;height:20px;font-size:13px;font-weight:bold;color:blue'>[ `+data.message_initiator_names+` : `+data.message_initiator_usertype+` << >> `+data.message_parcitipant_names+` : `+data.message_parcitipant_usertype+` ]</div>`);
+						   
+						   
+						   //add reply or delete button
+						   	
+						   $('#'+document_id+'_container').append('<button class="btn btn-danger" id="' + document_id + '_delete" style="margin:10px;width:95%;height:30px" onclick="messaging_send(\''+document_id+'\',\''+is_message_initiator_or_not+'\')">Delete</button><br />');
+						   $('#'+document_id+'_container').append('<input type="text" id="'+document_id+'_reply" placeholder="Your response..." class="form-control" style="height:30px;text-align:center;margin:2px"><button style="width:95%;height:30px" class="btn btn-success" id="'+document_id+'_input"  onclick="messaging_send(\''+document_id+'\',\'input\')">Reply</button><br><hr>');
+						
+						   //add main div container closing tag
+						   $('#'+document_id+'_container').append(`</div>`);
+						   
 						  }	
 				   
 				   });
@@ -3055,15 +3111,189 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 	 
  }
 
-//send message +++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++ send message +++++++++++++++++++++++++++++
 
 function messaging_send(messaging_document_id, action_type){
 	
-	alert(messaging_document_id+', '+action_type);
+	//deta time
+	var date = new Date();
+	var hour = date.getHours();
+	var minutes = date.getMinutes();
+	var week_day = date.getDay();
+	var month_day = date.getDate();
+	var month = date.getMonth();
+	var year = date.getFullYear();
+	
+	var am_or_pm = hour<12?'am':'pm';
+	var week_day_text = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	
+	week_day_text = week_day_text[week_day];//week in text
+	
+	var month_text = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+	month_text = month_text[month];//month in text
+	
+	
+	if(action_type == 'input'){
+	//	alert(messaging_document_id+', '+action_type+' ,input');
+		
+		//logged in user
+		var logged_in_user_name;
+		var logged_in_user_type;
+
+		//get logged in user details
+		var logged_in_user_array_var = '';
+						   
+		if(admin_login.admin_id){//is admin logged in
+			logged_in_user_array_var = admin_login;
+		}
+						   
+		if(distributor_login.distributor_id){ //is didtributor logged in
+			logged_in_user_array_var = distributor_login;
+		}
+						   
+		if(seller_login.seller_id){// is seller logged in
+			logged_in_user_array_var = seller_login;
+		}
+		
+		
+		//get reply text
+		var reply_input_text = document.getElementById(messaging_document_id+'_reply');
+		
+		
+		//server api link + vars	
+		var reply_message = {"from":logged_in_user_array_var.name+' : '+logged_in_user_array_var.usertype, "message":reply_input_text.value, "date":+hour+':'+minutes+am_or_pm+' '+week_day_text+' '+month_day+' '+month_text+' '+year };
+		
+		reply_message = JSON.stringify(reply_message);//turn to json string
+		
+		var url = 'http://' + current_domain + '/api/reply_or_delete?action_type=reply&document_id=' + messaging_document_id + '&pay_load=' + reply_message;//reply link
+			
+		var confirm_reply = confirm("Are you sure?");//give alert
+		if(!confirm_reply){return;}//if cancelled pressed// end function
+
+		
+		
+		document.getElementById(messaging_document_id+'_input').disabled=true;//disable reply button for now
+	 		
+		$.get(url, function(response, status){
+           
+           if(status == 'success'){
+      
+               if(response == 'Server or Conection error'){
+                   
+				  dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+				   
+				  document.getElementById(messaging_document_id+'_input').disabled=false;//re-enable  reply button//wen error
+				   return;
+                   
+               }              
+			   
+			   if(response == 'No data found'){
+                   
+                	dom_innerHtml('transactions_and_voucher_header', 'Error, Message not Found, Please try again later');
+				    document.getElementById(messaging_document_id+'_input').disabled=false;//re-enable  reply button//wen error
+				   return;
+                   
+               }
+			   if(response == 'Save error'){
+                   
+				   	dom_innerHtml('transactions_and_voucher_header', 'Error, Message not Found, please try again later or contact administrator'); 
+				    document.getElementById(messaging_document_id+'_input').disabled=false;//re-enable  reply button//wen error
+				   return;
+                   
+               }
+			   
+			  			
+			//on success add reply to message on screen//no reloading
+			var content_div = "<div id='' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+logged_in_user_array_var.name+" : "+logged_in_user_array_var.usertype+"</span> "+hour+":"+minutes+am_or_pm+" "+week_day_text+" "+month_day+" "+month_text+" "+year+"<br />"+reply_input_text.value+"</div><br>";
+						  
+			//message   
+			$('#'+messaging_document_id+'message_container').append(content_div);
+			   
+			document.getElementById(messaging_document_id+'_reply').value='';//clear input box
+			   
+			document.getElementById(messaging_document_id+'_input').disabled=false;//re-enable  reply button//wen error
+			   
+			   console.log(response);
+			return;
+
+		   }
+			
+			
+			dom_innerHtml('transactions_and_voucher_header', 'Error, Connecting, please try again later or contact administrator'); 
+			document.getElementById(messaging_document_id+'_input').disabled=false;//re-enable  reedem button//wen error
+			return;
+
+	
+	  });
+	 
+		return;
+	
+	}
+
+
+//	alert(messaging_document_id+', '+action_type+' ,not input');
+
+	
+	var confirm_delete = confirm("Are you sure you want to delete this message?");//give alert
+	if(!confirm_delete){return;}//if cancelled pressed// end function
+
+	
+	var url = 'http://' + current_domain + '/api/reply_or_delete?action_type=delete&document_id=' + messaging_document_id + '&pay_load=' + action_type;// delete link
+
+		document.getElementById(messaging_document_id+'_delete').disabled=true;//disable  delete button 	
+	
+		$.get(url, function(response, status){
+           
+           if(status == 'success'){
+      
+               if(response == 'Server or Conection error'){
+                   
+				  dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+				   
+				 	document.getElementById(messaging_document_id+'_delete').disabled=false;//re-enable delete button //wen error
+				   return;
+                   
+               }              
+			   
+			   if(response == 'No data found'){
+                   
+                	dom_innerHtml('transactions_and_voucher_header', 'Error, deleting Message not Found, Please try again later');
+				   	document.getElementById(messaging_document_id+'_delete').disabled=false;//re-enable delete button //wen error
+				   return;
+                   
+               }
+			   if(response == 'Save error'){
+                   
+				   	dom_innerHtml('transactions_and_voucher_header', 'Error, deleting Message not Found, please try again later or contact administrator'); 
+				   	document.getElementById(messaging_document_id+'_delete').disabled=false;//re-enable delete button //wen error
+				   return;
+                   
+               }
+			   	
+				//on sucess remove message on screen//no reloading
+				document.getElementById(messaging_document_id+'_container').style.display='none';
+	
+			return;
+
+		   }
+			
+			
+			dom_innerHtml('transactions_and_voucher_header', 'Error, Connecting, please try again later or contact administrator'); 
+			document.getElementById(messaging_document_id+'_delete').disabled=false;//re-enable delete button //wen error
+			return;
+
+	
+	  });
+	 
+	
+	
+	
+	
+
 }
 
 
-//create mssage ++++++++++++++++++++++++++++++
+//  +++++++++++++++++++++++++++++ create mssage ++++++++++++++++++++++++++++++
 
 function message_creation(){//gives user ability to add contacts and send message
 	
@@ -3086,20 +3316,20 @@ function message_creation(){//gives user ability to add contacts and send messag
 		}
 		
 		//help button
-		var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
+		var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block;font-size:18px" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
 	
 	  //clear div current contents
 		document.getElementById('transactions_and_voucher_viewer').innerHTML='';
 		document.getElementById('transactions_and_voucher_header').innerHTML='Create New Messages';
 		//alert();
 		//contactable user list
-		var user_contact_list = `<select id='user_select_list' style='width:95%;height:50px;'></select><br /><br />`;
+		var user_contact_list = `<select id='user_select_list' style='width:95%;height:50px;font-size:18px' class='form-control' ></select><br /><br />`;
 		$('#transactions_and_voucher_viewer').append(user_contact_list);
 		//message input text
-		var message_box = `<textarea id='message_text_box' style='width:95%;min-height:100px;height:50vh;'>Message</textarea><br /><br />`;
+		var message_box = `<textarea id='message_text_box' style='width:95%;min-height:100px;height:50vh;font-size:18px' class='form-control' >Message</textarea><br /><br />`;
 		$('#transactions_and_voucher_viewer').append(message_box);
 		//message send
-		var message_send_button = `<button id='new_message_send' style='width:45%;height:50px;margin:10px;' onclick='alert()' class='btn btn-primary'>Send Message</button><button id='new_contact_add' style='width:45%;height:50px;margin:10px;' onclick='alert("Coming soon.")' class='btn btn-primary'>Add New Contact</button>`;
+		var message_send_button = `<button id='new_message_send' style='width:45%;height:50px;margin:10px;font-size:18px' class='btn btn-primary' onclick="new_contact_or_message_send('new_message')">Send Message</button><button id='new_contact_add' style='width:45%;height:50px;margin:10px;font-size:18px' class='btn btn-primary' onclick="new_contact_or_message_send('new_contact')">Add New Contact</button>`;
 		$('#transactions_and_voucher_viewer').append(message_send_button);
 	
 		//fill user select list with contacts
@@ -3112,7 +3342,7 @@ function message_creation(){//gives user ability to add contacts and send messag
 			   	$('#user_select_list').append("<option value='all'>Send to All</option>");
 				
 			   }
-			$('#user_select_list').append("<option value="+data.id_no+">"+data.name+" : "+data.type_of_user+"</option>");
+			$('#user_select_list').append("<option value="+data.id_no+";"+data.type_of_user.trim().replace(/\s/g,'#')+";"+data.name.trim().replace(/\s/g,'#')+">"+data.name+" : "+data.type_of_user+"</option>");
 			
 		});
 	
@@ -3122,6 +3352,378 @@ function message_creation(){//gives user ability to add contacts and send messag
 		dom_innerHtml('transactions_and_voucher_viewer_alert_button', alert_button);
 	
 }
+
+
+//  +++++++++++++++++++++++++++++ add new contact/send new message ++++++++++++++++++++++++++++++
+
+function new_contact_or_message_send(calling_button){
+	
+	
+		//logged in user
+		var logged_in_user_name;
+		var logged_in_user_type;
+		var logged_in_user_id;
+		var logged_in_user_contacts_list;
+		
+
+		//get logged in user details						   
+		if(admin_login.admin_id){//is admin logged in
+			logged_in_user_name = admin_login.name;
+			logged_in_user_type = admin_login.usertype;
+			logged_in_user_id = admin_login.admin_id;
+			logged_in_user_contacts_list = admin_login.customer_partners_contact_list;
+		}
+						   
+		if(distributor_login.distributor_id){ //is didtributor logged in
+			logged_in_user_name = distributor_login.name;
+			logged_in_user_type = distributor_login.usertype;
+			logged_in_user_id = distributor_login.distributor_id;
+			logged_in_user_contacts_list = distributor_login.customer_partners_contact_list;
+		}
+						   
+		if(seller_login.seller_id){// is seller logged in
+			logged_in_user_name = seller_login.name;
+			logged_in_user_type = seller_login.usertype;
+			logged_in_user_id = seller_login.seller_id;
+			logged_in_user_contacts_list = seller_login.customer_partners_contact_list;
+			
+		}
+
+	
+	// new message add -----------------
+	if(calling_button == 'new_message'){
+	   //	alert('new_message');
+		//alert('contact : '+get_contact.value+', message : '+get_message.value);
+		
+		
+		//deta time
+		var date = new Date();
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
+		var week_day = date.getDay();
+		var month_day = date.getDate();
+		var month = date.getMonth();
+		var year = date.getFullYear();
+
+		var am_or_pm = hour<12?'am':'pm';
+		var week_day_text = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+		week_day_text = week_day_text[week_day];//week in text
+
+		var month_text = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+		month_text = month_text[month];//month in text
+
+		
+		//get contact and get message
+		var get_contact = document.getElementById('user_select_list');
+		var get_message = document.getElementById('message_text_box');
+		
+		//get single participant data
+		var single_participant_detais = get_contact.value.split(';');
+	//	console.log(get_contact)
+		//console.log(single_participant_detais)
+		
+		//participant details
+		var participant_details = {"id_no": single_participant_detais[0],"type_of_user":single_participant_detais[1].replace(/#/g,' '),name:single_participant_detais[2].replace(/#/g,' ')};
+		participant_details= JSON.stringify(participant_details);//prepare it for sending over wire
+		
+		//if all selected as participant
+		//console.log(logged_in_user_contacts_list);
+		if(single_participant_detais[0] == 'all'){
+		   	participant_details = logged_in_user_contacts_list
+		   }
+		
+
+		
+		//server api link + vars	
+		var new_message = {"from":logged_in_user_name+' : '+logged_in_user_type, "message":get_message.value, "date":+hour+':'+minutes+am_or_pm+' '+week_day_text+' '+month_day+' '+month_text+' '+year };
+		
+		 new_message = JSON.stringify(new_message);//turn to json string
+		
+		var url = 'http://' + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_message&message_initiator_id=' + logged_in_user_id + '&mesage_initiator_usertype='+logged_in_user_type+'&message_initiator_name='+logged_in_user_name+'&message_participant_details='+participant_details+'&message=' + new_message;//reply link
+			
+		var confirm_reply = confirm("Are you sure?");//give alert
+		if(!confirm_reply){return;}//if cancelled pressed// end function
+
+		
+		
+		document.getElementById('new_message_send').disabled=true;//disable sendmessage button for now
+	 		
+		$.get(url, function(response, status){
+
+			   if(status == 'success'){
+
+				   if(response == 'Server or Conection error'){
+
+					  dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+
+					  document.getElementById('new_message_send').disabled=false;//re-enable  send message button//wen error
+					   return;
+
+				   }              
+
+
+				//on success add reply to message on screen
+
+				   get_message.value = 'MESSAGE SENT! ...';//clear input box
+
+				  document.getElementById('new_message_send').disabled=false;//re-enable  send message button
+
+				return;
+
+			   }
+
+
+				dom_innerHtml('transactions_and_voucher_header', 'Error, Connecting, please try again later or contact administrator'); 
+				document.getElementById('new_message_send').disabled=false;//re-enable  send message button//wen error
+				return;
+
+
+		  });
+
+	   
+	   }
+	
+	
+	// new contact add --------------
+	
+	 if(calling_button == 'new_contact'){
+	   //	alert('new_contact');
+		 
+		 
+		 
+		 
+		 //help button
+		var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
+	
+	  	//clear div current contents
+		document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+		document.getElementById('transactions_and_voucher_header').innerHTML='Create New Contact';
+		 
+		//add user details
+		var new_contact_user_name_input = `<input type='text' id='new_contact_user_name_input_box' style='width:98%;height:50px; margin:10px;font-size:18px' class='form-control' placeholder='add New contact Name'>` ;
+		$('#transactions_and_voucher_viewer').append(new_contact_user_name_input);
+		 
+		var new_contact_user_surname_input = `<input type='text' id='new_contact_user_surname_input_box' style='width:98%;height:50px;  margin:10px;font-size:18px' class='form-control ' placeholder='add New contact Surname'>` ;
+		$('#transactions_and_voucher_viewer').append(new_contact_user_surname_input);
+		 
+		var new_contact_user_id_no_input = `<input type='Number' id='new_contact_user_id_no_input_box' style='width:98%;height:50px;  margin:10px;font-size:18px' class='form-control' placeholder='add New contact ID number'>` ;
+		$('#transactions_and_voucher_viewer').append(new_contact_user_id_no_input);
+		 
+		var new_contact_user_type_select = `<select id='new_contact_user_type_select_box' style='width:98%;height:50px;  margin:10px;font-size:18px' class='form-control'>
+			<option value='Choose'>Choose type of User</option>
+			<option value='Seller'>Seller</option>
+			<option value='Distributor'>Distributor</option>
+			<option value='Buyer'>Buyer</option>
+			<option value='Server Admin'>Server Admin</option>
+		</select>` ;
+		$('#transactions_and_voucher_viewer').append(new_contact_user_type_select);
+
+		//message send
+		var message_add_or_contact_save_button = `<button id='add_message_button' style='width:45%;height:50px;margin:20px 10px 10px 10px;font-size:18px' class='btn btn-primary' onclick="message_creation()">Add Message</button><button id='save_new_contact' style='width:45%;height:50px;margin:20px 10px 10px 10px;font-size:18px' class='btn btn-primary' onclick="new_contact_save()">Save New Contact</button>`;
+		$('#transactions_and_voucher_viewer').append(message_add_or_contact_save_button);
+	
+
+	
+		
+		//clean then add alert button
+		dom_innerHtml('transactions_and_voucher_viewer_alert_button', '');
+		dom_innerHtml('transactions_and_voucher_viewer_alert_button', alert_button);
+		 
+		 
+	   }
+	
+}
+
+
+//save contact +++++++++++++++++
+
+function new_contact_save(){
+	
+	var new_contact_name = document.getElementById('new_contact_user_name_input_box');//get contact name
+	var new_contact_surname = document.getElementById('new_contact_user_surname_input_box');//get surname
+	var new_contact_id_no = document.getElementById('new_contact_user_id_no_input_box');//get id number
+	var new_contact_usertype = document.getElementById('new_contact_user_type_select_box');//get usertype
+
+	
+	//input validation
+	if(new_contact_name.value.trim() == ''){//check if name not mepty
+	   		document.getElementById('new_contact_user_name_input_box').style.borderColor='red';
+			dom_innerHtml('transactions_and_voucher_header', 'Please check : Name '); 
+			return;
+	   }
+		if(new_contact_surname.value.trim() == ''){//check if surname not empty
+	   		document.getElementById('new_contact_user_surname_input_box').style.borderColor='red';
+			dom_innerHtml('transactions_and_voucher_header', 'Please check : Surname'); 
+			return;
+	   }
+		if(new_contact_id_no.value.length < 10 || new_contact_id_no.value.length > 13){//check if id not empty and value not less than ten or creater than 13
+	   		document.getElementById('new_contact_user_id_no_input_box').style.borderColor='red';
+			dom_innerHtml('transactions_and_voucher_header', 'Please check : ID number '); 
+			return;
+	   }
+		if(new_contact_usertype.value == 'Choose'){//check if usertype is selected
+	   		document.getElementById('new_contact_user_type_select_box').style.borderColor='red';
+			dom_innerHtml('transactions_and_voucher_header', 'Please select : Type of User'); 
+			return;
+	   }
+	
+
+	
+	
+	//check if user dont have contact saved already-------------------
+	
+		//logged in user
+		var logged_in_user_name;
+		var logged_in_user_type;
+		var logged_in_user_id;
+		var logged_in_user_contacts_list;
+
+		//get logged in user details						   
+		if(admin_login.admin_id){//is admin logged in
+			logged_in_user_name = admin_login.name;
+			logged_in_user_type = admin_login.usertype;
+			logged_in_user_id = admin_login.admin_id;
+			logged_in_user_contacts_list = admin_login.customer_partners_contact_list;
+		}
+						   
+		if(distributor_login.distributor_id){ //is didtributor logged in
+			logged_in_user_name = distributor_login.name;
+			logged_in_user_type = distributor_login.usertype;
+			logged_in_user_id = distributor_login.distributor_id;
+			logged_in_user_contacts_list = distributor_login.customer_partners_contact_list;
+		}
+						   
+		if(seller_login.seller_id){// is seller logged in
+			logged_in_user_name = seller_login.name;
+			logged_in_user_type = seller_login.usertype;
+			logged_in_user_id = seller_login.seller_id;
+			logged_in_user_contacts_list = seller_login.customer_partners_contact_list;
+			
+		}
+	
+	
+		var is_contact_already_stored = false;//check if stored contact found
+	
+		
+		logged_in_user_contacts_list.forEach(function(data){
+			
+			var data = JSON.parse(data);
+			
+			//console.log(data);
+			
+			if(Number(new_contact_id_no.value) == Number(data.id_no) && new_contact_usertype.value == data.type_of_user){//if contact found
+			   
+			   is_contact_already_stored = true;//contact found
+			   
+			   }
+			
+			
+		});
+		
+
+		if(is_contact_already_stored){//if contact alread stored//stop function
+			
+			//switch lights on
+			document.getElementById('new_contact_user_type_select_box').style.borderColor='blue';
+			document.getElementById('new_contact_user_id_no_input_box').style.borderColor='blue';
+			document.getElementById('new_contact_user_surname_input_box').style.borderColor='blue';	
+			document.getElementById('new_contact_user_name_input_box').style.borderColor='blue';
+
+			dom_innerHtml('transactions_and_voucher_header', 'Contact already stored...');//give response
+
+			return;
+		   }
+
+
+			var new_user_contact_ = {name: new_contact_name.value.toLowerCase().trim()+" "+new_contact_surname.value.toLowerCase().trim(), type_of_user:  new_contact_usertype.value, id_no: new_contact_id_no.value.toString().trim()};//create contact detail format
+			new_user_contact_ = JSON.stringify(new_user_contact_);//prepare it for sending 
+
+
+			//console.log(logged_in_user_contacts_list);
+
+	
+				var url = 'http://' + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_contact&current_user_id='+logged_in_user_id+'&current_usertype='+logged_in_user_type+'&new_contact_user_id='+new_contact_id_no.value.toString().trim()+'&new_contact_usertype='+new_contact_usertype.value+'&pay_load='+new_user_contact_; 
+
+	
+				document.getElementById('save_new_contact').disabled=true;//disable  save button
+	
+	 	 
+		 		$.get(url, function(response, status){
+
+			   if(status == 'success'){
+
+				   if(response == 'Server or Conection error'){
+
+					  dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+
+					  document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+					   return;
+
+				   }              
+
+				   if(response == 'No data found'){
+
+						dom_innerHtml('transactions_and_voucher_header', 'Error, Adding Contact, Please try again later');
+						document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+					   return;
+
+				   }
+				   if(response == 'Save error'){
+
+						dom_innerHtml('transactions_and_voucher_header', 'Error, Adding Contact, please try again later or contact administrator'); 
+						document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+					   return;
+
+				   }
+
+
+				//on success add reply to message on screen
+				   
+				   //update loaded user contact list
+				   logged_in_user_contacts_list.push(new_user_contact_);
+				   
+				   //show green lights
+				   	document.getElementById('new_contact_user_type_select_box').style.borderColor='green';
+					document.getElementById('new_contact_user_id_no_input_box').style.borderColor='green';
+					document.getElementById('new_contact_user_surname_input_box').style.borderColor='green';	
+					document.getElementById('new_contact_user_name_input_box').style.borderColor='green';
+				   
+				  	//give response
+				   	dom_innerHtml('transactions_and_voucher_header', 'Contact Saved...');
+				   
+				  	document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+
+					return;
+
+			   }
+
+
+				dom_innerHtml('transactions_and_voucher_header', 'Error, Connecting, please try again later or contact administrator'); 
+				document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+				return;
+
+
+		  });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
+
+
+
 
 
 /*=====================================================================================================================================================
