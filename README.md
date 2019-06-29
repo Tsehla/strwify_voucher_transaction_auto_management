@@ -25,11 +25,19 @@ https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/maste
 Feature overview
 -> All users can communicate with each other via inbuilt messaging platform, they can also add contact of anyone registered on the system.
 -> All users can monitor transaction taking place on their account live, or see stored history
+
 -> All brand specific data can be easily changed
+
 -> Router hotspot can be changed to use the one inbuilt on this app, for added features like :
+
     => Display ads with links/text, 
+    
     => Send announcements
+    
     => Add hotspot usage self help text/images/video
+    
     => Add free links directory, etc
+    
     => Each hotspot can have different above mentioned features data/media or use same.
+    
 -> The hotspot uses RadiusDesk for authenticating on router
