@@ -41,3 +41,20 @@ Feature overview
     => Each hotspot can have different above mentioned features data/media or use same.
     
 -> The hotspot uses RadiusDesk for authenticating on router
+
+
+
+# Demo : 
+
+Hot Hotspot landing Page : 
+http://street-wify-transcat.herokuapp.com/hotspot?hotspot_link=http://streetwifiy.co.za/login&location=&link-login-only=http://streetwifiy.co.za/login
+
+Staging login :
+
+=> admin [ ID =1111111111111, Password : 12345 ], (http://street-wify-transcat.herokuapp.com/admin_login )
+
+=> distributor [ ID=2222222222222, Password: 12345 ], (http://street-wify-transcat.herokuapp.com/distributor_login )
+
+=> seller [ ID=3333333333333, Password:12345 ], (http://street-wify-transcat.herokuapp.com/seller_login )
+
+
