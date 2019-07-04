@@ -109,7 +109,9 @@ router_model.add(
 		
 		router_last_contact_hour :{type : types.Number, label :'Last contact hour'}, 
 		router_last_contact_minute :{type : types.Number, label :'Last contact minute'}, 
-		router_last_contact_day :{type : types.Number, label :'Last contact day'}, 
+		router_last_contact_day :{type : types.Number, label :'Last contact day'},
+		
+		router_last_ip :{type : String, label :'Last contact IP addresses'}, 
 		
 		router_last_contact_date_time_history :{type : types.TextArray, label :'Router contact history'}, //add date as array for 30 addings//lol
     

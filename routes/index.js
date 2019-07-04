@@ -1085,6 +1085,8 @@ seller or distributor console, credt auto_voucher_check
 			var router_location = req.query.router_location;
 			var router_details = req.query.router_details;
 		
+			var router_ip = req.query.hotspot_ip;
+		
 			//time and date
 		
 			var date = new Date();
@@ -1135,7 +1137,7 @@ seller or distributor console, credt auto_voucher_check
 								keystone.createItems({//add items to db//user details
 
 								'Router Monitoring' : [{
-									routername :router_name ,routerlocation :router_location ,routerdetails :router_details ,router_last_contact_hour : router_last_contact_hour ,router_last_contact_minute : router_last_contact_minute,router_last_contact_day : router_last_contact_day,router_last_contact_date_time_history: router_last_contact_date_time_history,
+									routername :router_name ,routerlocation :router_location ,routerdetails :router_details ,router_last_contact_hour : router_last_contact_hour ,router_last_contact_minute : router_last_contact_minute,router_last_contact_day : router_last_contact_day,router_last_contact_date_time_history: router_last_contact_date_time_history,router_last_ip : router_ip,
 								}],
 
 
@@ -1177,6 +1179,7 @@ seller or distributor console, credt auto_voucher_check
 					response.router_last_contact_hour = date.getHours();
 					response.router_last_contact_minute = date.getMinutes();
 					response.router_last_contact_day = date.getDay();
+					response.router_last_ip = router_ip;
 				
 					var history_array = response.router_last_contact_date_time_history;
 					//history_array.push(router_last_contact_date_time_history);

@@ -2481,6 +2481,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 										
 										Router Location : <br />`+ data.routerlocation +`<br />
 										Router Extra details : <br />` + data.routerdetails + `<br />
+										Router IP addresses: <br />` + data.router_last_ip + `<br />
 										
 									 </p>
 									<div style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; line-height:auto; vertical-align: middle; font-size:15px;display:block;' id='' >
