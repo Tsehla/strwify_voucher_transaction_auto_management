@@ -57,8 +57,10 @@ Staging login :
 
 => seller [ ID=3333333333333, Password:12345 ], (http://street-wify-transcat.herokuapp.com/seller_login )
 
+# 
 
-******* Pending Features ********
+******* Pending Features ******
+
 -> Add ability to send recharge to users added as contact
 
 
