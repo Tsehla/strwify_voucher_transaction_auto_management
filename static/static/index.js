@@ -26,6 +26,40 @@ function dom_hide_show(showORhide, div){
     }
     
 }
+/*++++++++++++++++++++++++++++++++++++++++++++++++ add break on text/string +++++++++++++++++++++++++++++++++++++++*/
+function text_line_break(input_string){
+
+	//example string 
+	//var input_string = "This is the second version router, running test adding new features,This is the second version router, running test adding new features";
+
+	input_string = input_string.replace(/\s/g, ' ^').split('^');//replace space with space and ^ then split to array by ^ char;
+
+	var new_string='';//resulting input_string
+	let temp_array =[];//temporary altered array
+	input_string.forEach((value, index)=>{
+	
+	//create new array
+		  temp_array.push(value);//transfer text/char to new array
+	
+		  (input_string.length>10)?(index != input_string.length-1)?((index+1)%10==0)?temp_array.push('<br>'):null:null:null;////skip array index 0//if string to array has more than ten items/words/char //if array text index divisable by 10, and not last item of array//add break
+			console.info(index%10,index%10==0);
+	  //fill new string 
+		if(index == input_string.length-1 ){//when done processing last item from original string array
+		  temp_array.forEach((text_or_char)=>{//create new edited string
+			   new_string += text_or_char;
+		  });
+	
+		}
+	});
+	
+	console.log(new_string);
+	return new_string;
+
+}
+
+
+
+
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++ home auto run function ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -2469,19 +2503,51 @@ function show_router_workd_extra_menu(input){//show admin config menu
 				     var week_day =['Holiday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];//weekday
 				     var is_muted = (data.routermute? 'muted' : 'not_muted');
 				   
-				     var muted_button = (data.routermute? "<button class='btn btn-success' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"unmute\")'>un-Mute Router Router</button>" : "<button class='btn btn-danger w3-block' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"mute\")'>Mute</button>");
+					 var muted_button = (data.routermute? "<button class='btn btn-success' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"unmute\")'>un-Mute Router Router</button>" : "<button class='btn btn-danger w3-block' style='width:100%' onclick='router_mute_control(\""+data._id+"\",\"mute\")'>Mute</button>");
+					 
+					 
+					//Ip adress string cleaning function
+					function ip_string_cleaning(ip_string_input){
+
+							//Example recieved string from db/router
+							//	var ip_string_input = "{.id=*1;address=192.168.88.1/24;comment=defconf;interface=ether1;network=192.168.88.0};http://street-wify-transcat.herokuapp.com/api/router_checkin?router_name=V2 router,{.id=*2;address=102.111.00.69/22;comment=;interface=lte1;network=102.111.00.69}";
+								if(!ip_string_input){return 'No IP provided by router/database';}//if no ip provided quit
+
+								ip_string_input=ip_string_input.replace(/[{}]/g,'').split(';');//clean string and turn to array
+								var new_ip_string ='<span style="text-decoration:underline;">Connection :</span><br/>';
+								
+								ip_string_input.forEach((value, index)=>{//extract usefull data from ip string array
+
+								//add string connection if still more adresses available
+								var connection_add = index != ip_string_input.length-1?'<br/><span style="text-decoration:underline;">Connection :</span>':'';
+
+								//get/search ip adress
+								(value.search('address')==0)?(new_ip_string+=ip_string_input[index]+'<br>'):null;
+								
+								//get/search interface
+								(value.search('interface')==0)?new_ip_string+=ip_string_input[index]+'<br>':null;
+								
+								//get/search network
+									(value.search('network')==0)?new_ip_string+=ip_string_input[index]+connection_add+'<br>':null;
+								//
+								});
+								
+								return new_ip_string;
+
+					 	}
+
 			   
 					   $("#router_log_viewer").append(`
 
 								 <div  style="width:100%; height:auto; margin:13px 0px 13px 0px; display:block; "  class="form-control router_log `+ is_muted +`">
 									<p style='width:100%; height: auto; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
-										 Router Name :<br />`+ data.routername +`<br />Last Contact :<br />Time : `+ data.router_last_contact_hour + ':' + data.router_last_contact_minute + am_pm +`, Day :`+ week_day[ data.router_last_contact_day ] +`
+										 Router Name :<br />`+ text_line_break(data.routername) +`<br />Last Contact :<br />Time : `+ text_line_break(data.router_last_contact_hour + ':' + data.router_last_contact_minute + am_pm +`, Day :`+ week_day[ data.router_last_contact_day ]) +`
 									 </p>
-									  <p style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted green; line-height:auto; vertical-align: middle; font-size:15px; display:`+ router_extramenu_show_hide +`' id=''>
+									  <p style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; border:3px dotted green; line-height:auto; vertical-align: middle; font-size:15px; display:`+ router_extramenu_show_hide +`' id=''>
 										
-										Router Location : <br />`+ data.routerlocation +`<br />
-										Router Extra details : <br />` + data.routerdetails + `<br />
-										Router IP addresses: <br />` + data.router_last_ip + `<br />
+										<span style='font-weight: bold;'>Router Location :</span> <br />`+ text_line_break(data.routerlocation) +`<br />
+										<span style='font-weight: bold;'>Router Extra details : </span><br />` + text_line_break(data.routerdetails) + `<br />
+										<span style='font-weight: bold;'>Router IP addresses: </span><br />` + ip_string_cleaning(data.router_last_ip) + `<br />
 										
 									 </p>
 									<div style='width:90vw; height: auto; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; line-height:auto; vertical-align: middle; font-size:15px;display:block;' id='' >
@@ -2493,6 +2559,12 @@ function show_router_workd_extra_menu(input){//show admin config menu
 								</div>
 
 						`);
+
+
+
+
+
+
 				   	router_contact_history='';
 				    console.log(router_contact_history);
 				  });
