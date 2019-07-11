@@ -41,8 +41,8 @@ function text_line_break(input_string){
 	//create new array
 		  temp_array.push(value);//transfer text/char to new array
 	
-		  (input_string.length>10)?(index != input_string.length-1)?((index+1)%10==0)?temp_array.push('<br>'):null:null:null;////skip array index 0//if string to array has more than ten items/words/char //if array text index divisable by 10, and not last item of array//add break
-			console.info(index%10,index%10==0);
+		  (input_string.length>7)?(index != input_string.length-1)?((index+1)%7==0)?temp_array.push('<br>'):null:null:null;////skip array index 0//if string to array has more than ten items/words/char //if array text index divisable by 10, and not last item of array//add break
+			//console.info(index%10,index%10==0);
 	  //fill new string 
 		if(index == input_string.length-1 ){//when done processing last item from original string array
 		  temp_array.forEach((text_or_char)=>{//create new edited string
