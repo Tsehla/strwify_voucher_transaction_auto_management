@@ -993,7 +993,7 @@
 			document.getElementById('how_to_log_in').innerHTML = '<a href="' + hotspot_url + '/login">' + hotspot_url + '/login</a>';
 			
 			//	how to link -- logout
-			document.getElementById('how_to_log_out').innerHTML = '<a href="' + hotspot_url + '/logout">' + hotspot_url + '/logout</a>';
+			document.getElementById('how_to_log_out').innerHTML = '<a href="' + hotspot_url + '/logout?erase-cookie=1">' + hotspot_url + '/logout</a>';
 			//how to link -- buy
 			document.getElementById('how_to_buy').innerHTML = '<a href="' + hotspot_transaction_server_url + '">Click <i style="color:green">BUY</i> Button to buy recharge voucher</a>';
 			//how to link -- bottom text
@@ -1158,7 +1158,7 @@
 		//++++++++++++++++++++ hotspot stuff
 		 
 		function logout(){
-			window.open(hotspot_url+'/login'); 
+			window.open(hotspot_url+'/logout?erase-cookie=1'); 
 		 } 
 			
 		function balance(){
