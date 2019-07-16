@@ -52,7 +52,7 @@ function text_line_break(input_string){
 		}
 	});
 	
-	console.log(new_string);
+	//console.log(new_string);
 	return new_string;
 
 }
@@ -163,7 +163,7 @@ function recharge_codes_container_works_menu(){
 }
 
 function recharge_codes_container_works_menu_open(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('show','recharge_codes_container');dom_hide_show('hide','router_page');d
+       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('show','recharge_codes_container');dom_hide_show('hide','router_page');
 	    process_destroyer();
     
 }
@@ -1353,8 +1353,9 @@ function fourth_page_seller_show_password_hint(){ //seller password hint
             
             
             if(i==scrambled_password.length -1 ){
-                //console.log(scrambled_password);
-                document.getElementById('fourth_page_seller_password_hint').innerHTML=scrambled_password.toString().replace(/,/g,'&nbsp;');
+				//console.log(scrambled_password);
+				document.getElementById('fourth_page_seller_password_hint').innerHTML=scrambled_password.toString().replace(/,/g,'&nbsp;');
+				alert('This is your pasword Hint :\r\n'+scrambled_password.toString().replace(/,/g,'')+'\r\nDoes it ring any bells?');
                 break;
             }
             
@@ -1579,7 +1580,7 @@ function super_admin_login(){
                        admin_login.usertype = response.usertype;
                        admin_login.name = response.name+' '+response.surname;
 					   admin_login.customer_partners_contact_list = response.added_customers_partners;
-					   console.log(admin_login.customer_partners_contact_list);
+					//   console.log(admin_login.customer_partners_contact_list);
                        admin_login.credit = response.credits;
                        dom_innerHtml('super_admin_amount', response.credits); //show amount in user account
                        
@@ -2566,7 +2567,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 
 
 				   	router_contact_history='';
-				    console.log(router_contact_history);
+				 //   console.log(router_contact_history);
 				  });
 			   
 			   router_log_view_control ('active');
@@ -2823,13 +2824,13 @@ if(transaction_type == 'past_transactions'){//++++++++++++++++++++++++++++ trans
 				   }
 				   
 				   var history_record = data.split(';');
-				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+history_record[0]+'<br />'+history_record[1]+styling_for_other_users+history_record[2]+'</p><hr>';
+				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word; font-size:12px;">'+history_record[0]+'<br />'+history_record[1]+styling_for_other_users+history_record[2]+'</p><hr>';
 				   
 				   //if record has three items//i.e voucher reedem record
 				   
 				   if(history_record.length > 3){
 					   
-					   transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word">'+history_record[0]+'<br />'+history_record[1]+'<br />'+history_record[2]+'<br />'+history_record[3]+'</p><hr>';
+					   transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word; font-size:12px;">'+history_record[0]+'<br />'+history_record[1]+'<br />'+history_record[2]+'<br />'+history_record[3]+'</p><hr>';
 					   
 				   }
 				   
@@ -3024,7 +3025,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 					  message_item['from']?message_fron_to=message_item['from']:message_fron_to=message_item['to'];//message to or from
 					  
 								   
-					   var content_div = "<div id='' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span> "+message_item.date+"<br />"+message_item.message+"</div><br>";
+					   var content_div = "<div id='' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span><br /><i> "+message_item.date+"</i><br />"+ text_line_break(message_item.message)+"</div><br>";
 				
 					  
 					  //message
@@ -3069,7 +3070,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 						   
 						   //add conversation parties//usefull if message has not reply yet
 						  // console.log(data);
-						   $('#'+document_id+'_container').append(`<div id='' style='width:100%;height:20px;font-size:13px;font-weight:bold;color:blue'>[ `+data.message_initiator_names+` : `+data.message_initiator_usertype+` << >> `+data.message_parcitipant_names+` : `+data.message_parcitipant_usertype+` ]</div>`);
+						   $('#'+document_id+'_container').append(`<div id='' style='width:100%;height:20px;font-size:10px;font-weight:bold;color:blue'>[ `+data.message_initiator_names+` : `+data.message_initiator_usertype+` << >> `+data.message_parcitipant_names+` : `+data.message_parcitipant_usertype+` ]</div>`);
 						   
 						   
 						   //add reply or delete button

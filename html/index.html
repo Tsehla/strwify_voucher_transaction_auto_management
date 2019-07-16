@@ -84,7 +84,7 @@
       
    </head>
 
-   <body>
+   <body >
    
 
 	<!--- voucher print test
@@ -93,11 +93,11 @@
 	   
 <!-- extra side menu --->
 <div id='outer_menu_open_overlay' onclick='document.getElementById("side_menu_container").style.right="140px"' style='height: 100vh; width: 5vw; position: fixed;right:0px;'>
- <div id='side_menu_container' style="height: auto;width: 100px;position: relative;right: 2px;background: auto" onfocusout='document.getElementById("side_menu_container").style.right="2px"'>
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:10px" >CLOSE</button>
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('past_transactions')">Transactions</button>
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('to_reddem_voucher')">Vouchers</button>
-	 <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px">Admin</button>
+ <div id='side_menu_container' style="height: auto;width: 100px;position: relative;right: 12px;background: auto" onfocusout='document.getElementById("side_menu_container").style.right="12px"'>
+
+	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:10px 10px 10px 10px" onclick="extra_menu('past_transactions'), document.getElementById('side_menu_container').style.right='12px'">Transactions</button>
+	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('to_reddem_voucher'), document.getElementById('side_menu_container').style.right='12px'">Vouchers</button>
+	 <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='alert("This is Admin Page")'>Admin</button>
 	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('messages')">Messages</button>
 	 
 	
@@ -318,7 +318,7 @@ distributor login
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
 </p>
 
   
@@ -337,7 +337,7 @@ distributor login
  <!-- voucher sell -->
  <div id="firth_page" style="width:100vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
- <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:100vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:100vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px"'>
 <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
  <b id='firth_page_sell_menu_header'>
     sell menu
@@ -345,7 +345,7 @@ distributor login
 </p>
 
 <div id='seller_code_screen' style="width 80vw; height:25vh; margin:4vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+      <p style="width:100%; height:50%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
        Credit : R <span id="firth_page_seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
     <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
@@ -493,7 +493,7 @@ distributor login
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
 </p>
 
   
@@ -511,7 +511,7 @@ distributor login
 
  <!-- transact menu --->
 	   
- <div id="seventh_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="seventh_page" style="width:100vw; height: auto" onclick='document.getElementById("side_menu_container").style.right="12px"'><!-- first page Start -->
  <div id="distributor_menu_wrapper">
  <div id="distributor_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -644,7 +644,7 @@ distributor login
           Temporary password for New Seller :
      </p>
       <p style='width:93vw%; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px' id='seller_new_account_default_password'>
-             happy customers lead to rich life
+             street wifiy
      </p>
 
 
@@ -655,7 +655,7 @@ distributor login
  
  <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="distributor_seller_new_account_creation()">Create Account</button>
  <br />
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nhappy customers lead to rich life\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
  
  
  
@@ -746,7 +746,7 @@ distributor login
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
 </p>
 
   
@@ -765,7 +765,7 @@ distributor login
 	   
 	   
 	   
- <div id="super_admin_works_menu" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="super_admin_works_menu" style="width:100vw; height: auto" onclick='document.getElementById("side_menu_container").style.right="12px"'><!-- first page Start -->
  <div id="super_admin_menu_wrapper">
  <div id="super_admin_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:18px; border-bottom:1px solid gainsboro">
@@ -902,7 +902,7 @@ distributor login
           Temporary password for New Distributor :
      </p>
       <p style='width:93vw%; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px' id='distributor_new_account_default_password'>
-             happy customers lead to rich life
+             street wifiy
      </p>
 
 
@@ -913,7 +913,7 @@ distributor login
  
  <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="admin_distributor_new_account_creation()">Create Account</button>
  <br />
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nhappy customers lead to rich life\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
+ <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
  
  
  
@@ -957,14 +957,14 @@ distributor login
 		<div id='' style="text-align: left; height: auto" clss='w3-block'>
 		<p style='color: red; text-align: left; font-size: 20px;font-weight: bolder' class="w3-block w3-margin">1)</p>
 		<label for='voucher_value'>Voucher Price :  <b style='font-size: 20px'>R</b></label>
-	 	<input type="number" value='0.00' step='0.01' id='price_input_box'>
+	 	<input type="number" value='0.00' step='0.01' id='price_input_box' style="width: 20%; display: inline" class="form-control">
 		<br />
 		<br />
 			
 		<!-- time input -->
 		<p style='color: red; text-align: left; font-size: 20px;font-weight: bolder' class="w3-block w3-margin">2)</p>
 		<label for='voucher_value'>Voucher Expiery : </label>
-	 	<input type="number" id='voucher_expiery_date' value='0.00' step='0.01'> <!-- input time value -->
+	 	<input type="number" id='voucher_expiery_date' value='0.00' step='0.01' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
 		<select class='btn btn-primary' id='voucher_expiery_date_type'> <!-- input value type --> 
 			<option selected='selected'>Minutes</option>	
 			<option>Hours</option>	
@@ -1007,9 +1007,9 @@ distributor login
  <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter Price per single Voucher.\n2) Enter voucher expeiry time from first use in Minutes/Days/Week/etc.\n3) Enter Vouchers file from Radiusdesk with .csv ending. See Example on Voucher Example image link. \n\n------\nHighlited are information that the file needs to have in it, some details besides the first row may be diffrent.\n------\n\n4) Veryfy the details of voucher are correct in "Content loaded .." window.\n\n5) Click add vouchers button.`)'>Help</button>
  
  <!-- Voucher example image -->
- <div id='example_voucher_format' style='display: none;width: auto;position: absolute;top:20vh;left: auto'>
+ <div id='example_voucher_format' style='display: none;width: 95vw;position: absolute;top:20vh;left: auto; overflow: scroll;'>
 
-		 	<button class='btn btn-primary' onclick='document.getElementById("example_voucher_format").style.display="none"' style="width: 100vw;">Close</button><br/>
+		 	<button class='btn btn-primary' onclick='document.getElementById("example_voucher_format").style.display="none"' style="width: 95vw;">Close</button><br/>
 	 		<img src="../static/images/voucher_csv_example.PNG" id='ticket_outline' style="width:auto height: 270px;margin: 0px;" alt="ticket img" />
 
 </div>
