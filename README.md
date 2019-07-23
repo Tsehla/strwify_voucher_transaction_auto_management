@@ -3,6 +3,7 @@ This is backend system, meant to allow seamless voucher selling and buying proce
 
 # Running
 Make sure you have a working local mongo db installaton.
+Rename file dot.env to .env and fill in details to enable some features of this app to work
 Run npm i, to start server
 
 # Login
