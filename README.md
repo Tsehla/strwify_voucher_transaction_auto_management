@@ -1,5 +1,5 @@
 # strwify_voucher_transaction_auto_management
-This is backend system, meant to allow seamless voucher selling and buying process: between The system admins> Distributers > sellers >to buyer
+-> This is backend system, meant to allow seamless voucher selling and buying process: between The system admins> Distributers > sellers >to buyer
 
 ==> This app is build to work with mikrotik router hotspot and provide dynamic custom hotspot login page and router ip address or keep track of it if ip is dynamic, to allow remote login and administration and give notification if router is offline; but it can work fine as a voucher selling system for Internet or Events.
 
