@@ -1,5 +1,9 @@
 # strwify_voucher_transaction_auto_management
 This is backend system, meant to allow seamless voucher selling and buying process: between The system admins> Distributers > sellers >to buyer
+==> This app is build to work with mikrotik router hotspot and provide dynamic custom hotspot login page and router ip address or keep track of it if ip is dynamic, to allow remote login and administration and give notification if router is offline; but it can work fine as a voucher selling system for Internet or Events.
+==> The router hotspot uses http-pap (issue with http-chap support at moment) for hotspot authentication, and hotspot uses Radius by radiusdesk installed on digital ocean using https://github.com/muffycompo/radiusdesk-installer, Radiusdesk can be installed anywhere
+==> Ticket are loaded to the app using Permanent-user/Voucher csv export format.
+
 
 # Running
 Make sure you have a working local mongo db installaton.
