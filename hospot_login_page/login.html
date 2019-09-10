@@ -27,6 +27,8 @@ td { font-size: 14px; color: #7A7A7A; }
 	
 <script type="text/javascript">//checks for internet connection//en if available show external login//if not available show default mikrotik
 
+	/*
+	
 	if(navigator.onLine){
 		
 	
@@ -45,6 +47,13 @@ td { font-size: 14px; color: #7A7A7A; }
 		
 		
 	}
+	
+	*/    //	DELAY removed, use winbox or android winbox app to configure hotspot walled garden to allow access to where external hotspot page is at i.e streetwifiy.herokuapp.com add as ( *herokuapp* ), while you not able to login via hotspot page. also disabled httpChap, and choose httpPap may leave cookie on.
+	
+	
+	
+	window.open('http://streetwifiy.herokuapp.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&location=orangefarm', '_self');//open link where hotspot is at
+	
 	
 </script>
 
