@@ -27,7 +27,7 @@
       "quantity": 1
     }
   },
-  "name": "app.json for heroku",
+  "name": "strwify_voucher_transaction_auto_management",
   "scripts": {
   },
   "stack": "heroku-18"
