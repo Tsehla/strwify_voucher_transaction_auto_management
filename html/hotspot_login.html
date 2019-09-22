@@ -65,7 +65,7 @@
 				<input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="password" type="password" placeholder="Password" id='input_password' onkeyup='form_sender_decider(event)'/>
 
 				<!-- inputs login button -->	
-				<button style="min-height: 20px; max-height: 15%; width: 100%; margin-top:4%;margin-bottom:4%" class="btn btn-primary" onclick='form_sender_decider(event)'>Log in</button>
+				<button style="min-height: 20px; max-height: 15%; width: 100%; margin-top:4%;margin-bottom:4%" class="btn btn-primary" onclick='form_sender_decider(null)'>Log in</button>
 
 			 </div>    
 
@@ -748,17 +748,24 @@
             let error_message = router_variables_array.error.replace(/%20/g,' ').trim();
 
             if(error_message == 'RADIUS server is not responding'){// make error from router friendly and informative
-                error_message = 'Error, login details/voucher code used or invalid, Please try again later'
+                error_message = 'Error, login details/voucher code used or is invalid, Please try again later';
             }
 			document.getElementById('error_div').innerHTML = error_message;
 		}
 
 		//++++++++++++++++++++++++form sender
 		function form_sender_decider(key_pressed) {
-           // alert(key_pressed.which)
-            if(key_pressed.which != 13 || key_pressed.keyCode != 13 || key_pressed.which != 1){ //when enter key is pressed execute function also// 1 for click event
-                return;
-            };
+           // alert(key_pressed)
+
+            if(key_pressed != null){//null is value given to function call when mouse clicked
+              //  alert(key_pressed.which)
+
+                if(key_pressed.which != 13 || key_pressed.keyCode != 13 ){ //check if function was called by enter key or not
+     
+                    return;
+                };
+
+            }
 
 			var user_name_input_voucher_code = document.getElementById('input_voucher_code').value.toLowerCase();//converted to lower case//easy for Radiusdesk produced voucher since all are in lowercase anyway
 			var user_name_input_user_name = document.getElementById('input_user_name').value;
