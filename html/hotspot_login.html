@@ -44,7 +44,7 @@
 
 				<!-- input content -->
 				<!-- hotspot logo -->
-				<p style='color: white;font-size: 15px;font-weight: 500;padding: 0px;border : 0px solid red;height: 70px' id='logo_container'></p>
+				<p style='color: white;font-size: 15px;font-weight: 500;padding: 0px;border : 0px solid red;min-height: 70px' id='logo_container'></p>
 				<br/>	
 
 				<!-- top text -->
@@ -52,20 +52,20 @@
 				<br/>	
 
 				<!-- voucher code input -->
-				<input style="height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Voucher code" id='input_voucher_code'/>
+				<input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Voucher code" id='input_voucher_code' onkeyup='form_sender_decider(event)'/>
 				<br/>
 
 				<!-- or -->
 				<p style='color: white;font-size: 12px;font-weight: 500;margin-top: 30px'>OR</p>
 
 				<!-- username input -->
-				<input style="height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Username" id='input_user_name'/>
+				<input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Username" id='input_user_name' />
 
 				<!-- user password input -->
-				<input style="height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="password" type="password" placeholder="Password" id='input_password'/>
+				<input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="password" type="password" placeholder="Password" id='input_password' onkeyup='form_sender_decider(event)'/>
 
 				<!-- inputs login button -->	
-				<button style="height: 15%; width: 100%; margin-top:4%;margin-bottom:4%" class="btn btn-primary" onclick='form_sender_decider()'>Log in</button>
+				<button style="min-height: 20px; max-height: 15%; width: 100%; margin-top:4%;margin-bottom:4%" class="btn btn-primary" onclick='form_sender_decider()'>Log in</button>
 
 			 </div>    
 
@@ -74,7 +74,7 @@
 		<br />
 
 		<!--router error div -->
-		<div style="color: #FF8080; font-size: 1.5em; width: 100%; height: 2em;text-align: center; background-color: dimgrey;border: 2px solid red;display:none" id='error_div'></div>
+		<div style="color: #FF8080; font-size: 1.5em; width: 100%; height: auto;text-align: center; background-color: dimgrey;border: 2px solid red;display:none" id='error_div'></div>
 
 
 
@@ -700,7 +700,7 @@
         <div id="bottom_bar" style="width:100%; min-height: 54px; max-height:64px ; background-color: #3498db; position: fixed; bottom: 5%" >
 
               <!-- Free data button -->
-            <button id='free_data_login_button' onclick="free_login()" class="btn btn-success" style="min-width: 95px; height:45px; position: absolute; left:5%; margin-top: 4.5px;display: none">Free Data Voucher</button>
+            <button id='free_data_login_button' onclick="free_login()" class="btn btn" style="min-width: 95px; height:45px; position: absolute; left:5%; margin-top: 4.5px;display: none;background: rebeccapurple; color: whitesmoke">Free Data Voucher</button>
 
             <!--add vouchers button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='none',login_display()" class="btn btn-success" style="min-width: 95px; height:45px; position: absolute; right:5%; margin-top: 4.5px">Enter Voucher Code</button>
@@ -744,12 +744,21 @@
 		if(router_variables_array.error){//if error from router
 
 			document.getElementById('error_div').style.display='block';
-			document.getElementById('error_div').innerHTML = router_variables_array.error.replace(/%20/g,' ');
 
+            let error_message = router_variables_array.error.replace(/%20/g,' ').trim();
+
+            if(error_message == 'RADIUS server is not responding'){// make error from router friendly and informative
+                error_message = 'Error, login details used or invalid, try again later'
+            }
+			document.getElementById('error_div').innerHTML = error_message;
 		}
 
 		//++++++++++++++++++++++++form sender
-		function form_sender_decider() {
+		function form_sender_decider(key_pressed) {
+
+            if(key_pressed.which != 13 || key_pressed.keyCode != 13){ //when enter key is pressed execute function also
+                return;
+            };
 
 			var user_name_input_voucher_code = document.getElementById('input_voucher_code').value.toLowerCase();//converted to lower case//easy for Radiusdesk produced voucher since all are in lowercase anyway
 			var user_name_input_user_name = document.getElementById('input_user_name').value;
