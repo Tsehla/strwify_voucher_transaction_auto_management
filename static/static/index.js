@@ -81,8 +81,10 @@ if(current_url == '/buy_voucher'){
 	
 	//set hot spot login link for router//enable ato login after voucher sold 
 	 var url_params = document.location.search.indexOf('hotspot_link=');
-	 url_params == 1?hot_spot_url=document.location.search.replace('?hotspot_link=',''):hot_spot_url=undefined;
-	// console.log(hot_spot_url);
+	//++++++ check if hotspot link is available in main Url, extract link if so ++++=+
+	 url_params != -1 ?hot_spot_url=document.location.search.replace('?free_login&hotspot_link=',''):hot_spot_url=undefined;
+	//console.log(hot_spot_url);
+	
 	
  
  }
@@ -277,12 +279,12 @@ generate unique random code
 
 =====================================================================================================================================================*/
 
-/*conncet & check ticket staus */
-//buy page first start fn 
 
-function buy_page_on_init(){ 
-   
-    var url= 'http://' + current_domain + '/api/buy?code=unique_code';//change '' + current_domain + '' to live domain
+
+function buy_page_on_init(){ //get unique code for this user session
+
+
+	var url= 'http://' + current_domain + '/api/buy?code=unique_code';//change '' + current_domain + '' to live domain
     
     
        $.get(url, function(response, status){//response contain unique code
@@ -290,8 +292,8 @@ function buy_page_on_init(){
 
            if(status == 'success'){
              
-                auto_voucher_check(response);
-               
+				auto_voucher_check(response);
+			             
                 return dom_innerHtml('second_page_user_auto_code', response);
                
            }
@@ -310,9 +312,20 @@ start timer for auto voucher download
 
     
 function auto_voucher_check(uniqueCode){
-        unique_code = uniqueCode;
-        var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '' + current_domain + '' to live domain
-        
+		unique_code = uniqueCode;
+		
+		//+++++++++++ default url for voucher finding +++++++++++++
+		var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '' + current_domain + '' to live domain
+		
+
+		//+++++++++++++++ search link params to see if this page was called by free voucher button click ++++++++++
+
+		if(document.location.search.indexOf('free_login') != -1){ //if true change url handling request
+			//alert('Yes user was directed by pressing free voucher button on hotspot page');
+			url= 'http://' + current_domain + '/api/buy?code=free_voucher'
+		}
+
+			
         var response = uniqueCode;
 
         var auto_voucher_loader = setInterval(function check_voucher(){
@@ -373,8 +386,16 @@ manual voucher check/download
 
 function manual_voucher_init(button_id){
         
+		//+++++++++++ default url for voucher finding +++++++++++++	
+		var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
 		
-        var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
+
+		//+++++++++++++++ search link params to see if this page was called by free voucher button click ++++++++++
+
+		if(document.location.search.indexOf('free_login') != -1){ //if true change url handling request
+			//alert('Yes user was directed by pressing free voucher button on hotspot page');
+			url= 'http://' + current_domain + '/api/buy?code=free_voucher'
+		}
     
 		document.getElementById(button_id).disabled = true;//disable mabual voucher download
 	

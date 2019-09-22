@@ -694,28 +694,23 @@
 
         </style>
 		
+	
+
+		<!-- Connection buttons -->   
+        <div id="bottom_bar" style="width:100%; min-height: 54px; max-height:64px ; background-color: #3498db; position: fixed; bottom: 5%" >
+
+              <!-- Free data button -->
+            <button id='free_data_login_button' onclick="free_login()" class="btn btn-success" style="min-width: 95px; height:45px; position: absolute; left:5%; margin-top: 4.5px;display: none">Free Data Voucher</button>
+
+            <!--add vouchers button -->
+			<button onclick="document.getElementById('bottom_bar').style.display='none',login_display()" class="btn btn-success" style="min-width: 95px; height:45px; position: absolute; right:5%; margin-top: 4.5px">Enter Voucher Code</button>
+
+
+        </div>
+        
+      
+   
 		
-		
-		
-		
-		
-		
-		
-
-
-
-
-
-
-
-		<!-- Router connect button -->   
-		<div id="bottom_bar" style="width:100%; min-height: 54px; max-height:64px ; background-color: #3498db; position: fixed; bottom: 5%" >
-			<button onclick="document.getElementById('bottom_bar').style.display='none',login_display()" class="btn btn-success" style="width: 95px; height:45px; position: absolute; right:5%; margin-top: 4.5px">Connect</button>
-
-
-		</div>
-
-
 		<script type='text/JavaScript' src='../static/jquery-3.3.1.min.js' ></script> 
 		<script type="text/javascript" src="../static/md5.js"></script>
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
@@ -1028,7 +1023,12 @@
 					$('#jobs_free_links').append('<a href="'+data.link+'">'+data.text+'</a>');
 				});
 			 }
-			
+            
+             
+            //++++++++++++++++++++ show free data button if enabled by hotspot owner +++++++
+                if(data_from_db.free_data_allow){
+                        document.getElementById('free_data_login_button').style.display='block';
+                }
 			
 			
 			//++++++++++++++++++++ notifications   ++++++++++	 
@@ -1174,7 +1174,17 @@
 			
 		
 			
-			
+        //++++++++++ free login +++++++++++++
+        
+       function free_login(){
+            alert("This voucher is meant to allow you to test the system.\r\nIt may work once off, or once per day.");
+            if(hotspot_transaction_server_url){//if transact app link given
+					window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + router_variables_array["link-login-only"], '_self');
+            }
+            else{//if transact app link not given
+                alert('Error, unable to send you to hotspot transaction menu. Website address not found');
+            }
+        }
 
 
 

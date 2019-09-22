@@ -16,6 +16,13 @@ exports.create={
         voucherstate : 'new',
 	
         },
+        {//free voucher format
+            voucheramount : 0,
+            vouchercode :'123asdf',
+            voucherstate : 'new',
+            voucherprofile : '20 MB',
+        
+        },
         {
         voucheramount : 1,
         vouchercode : '456asdf',

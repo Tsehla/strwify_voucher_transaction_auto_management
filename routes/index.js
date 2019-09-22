@@ -359,7 +359,31 @@ seller or distributor console, credt auto_voucher_check
         //on sucess, create voucher on the front
             
         
-        }
+		}
+		
+		/////free voucher code request
+		if(req.query.code == 'free_voucher'){
+		
+			keystone.list('Voucher Codes').model.findOne({voucheramount : 0 })
+            .exec( function(error, response){
+            if(error){
+                res.jsonp('Problem finding Voucher');
+            }
+            if(response == null){
+                res.jsonp('Voucher Not found')
+                }
+            else{
+                res.jsonp(response); 
+				
+            }
+           
+            
+        	});
+
+
+
+		}
+
         
         
     });
@@ -1993,7 +2017,7 @@ app.get('/api/hotspot_data', function(req, res){
 	find_router_hotspsot_data();//start function 
 	
 	//create model for the location
-	function create_new_named_hotspot_data(){
+	function create_new_named_hotspot_data(){//data specified on model is used, this here is disregarded...
 		
 		keystone.createItems({
 			'Router hotspot page' : [{
@@ -2001,6 +2025,7 @@ app.get('/api/hotspot_data', function(req, res){
 				hotspot_wallpaper: ['{"image_link" :"static/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "static/default_slide_images/1.jpg"}','{"image_link" :"static/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "static/default_slide_images/2.jpg"}','{"image_link" :"static/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "static/default_slide_images/3.jpg"}','{"image_link" :"static/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "static/default_slide_images/4.jpg"}','{"image_link" :"static/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "static/default_slide_images/5.jpg"}','{"image_link" :"static/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "static/default_slide_images/6.jpg"}','{"image_link" :"static/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "static/default_slide_images/7.jpg"}','{"image_link" :"static/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "static/default_slide_images/8.jpg"}','{"image_link" :"static/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "static/default_slide_images/9.jpg"}','{"image_link" :"static/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "static/default_slide_images/10.jpg"}'],
 				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
 				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
+				free_data_allow : true,
 				hotspot_announcements : ['Dare to be different','Dare to write your destiny.'],
 				hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
 				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
