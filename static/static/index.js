@@ -65,27 +65,28 @@ function text_line_break(input_string){
 
 (function(){
  
- if(current_url == '/'){
+ if(current_url == '/transaction'){
    
    dom_hide_show('show','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page');
 
 	//temp store hotspot login link from urll//pass it to voucher buy page url
 	 hot_spot_url = document.location.search;
 
+
  
  } 
 if(current_url == '/buy_voucher'){
   
    dom_hide_show('hide','first_page'); dom_hide_show('show','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page'); 
-    buy_page_on_init();/*page init */
+   buy_page_on_init();/*page init */
 	
-	//set hot spot login link for router//enable ato login after voucher sold 
-	 var url_params = document.location.search.indexOf('hotspot_link=');
+	//set hot spot login link for router//enable auto login after voucher sold//handles both free login request or paid voucher request
+	 var url_params = document.location.search.indexOf('?hotspot_link=') > -1 ?document.location.search.indexOf('?hotspot_link=') : document.location.search.indexOf('?free_login&hotspot_link=');
+
 	//++++++ check if hotspot link is available in main Url, extract link if so ++++=+
-	 url_params != -1 ?hot_spot_url=document.location.search.replace('?free_login&hotspot_link=',''):hot_spot_url=undefined;
+	 url_params != -1 ?hot_spot_url=document.location.search.replace('?free_login&hotspot_link=','').replace('?hotspot_link=',''):hot_spot_url=undefined;
 	//console.log(hot_spot_url);
-	
-	
+		
  
  }
 if(current_url == '/sell_voucher'){
@@ -186,7 +187,7 @@ function router_page_works_menu_open(input){
 /* voucher buy link */
 function buy_voucher(){
     
- window.open('/buy_voucher'+hot_spot_url, '_self');//pass router login link//while calling this
+ window.open('/buy_voucher'+ (hot_spot_url?hot_spot_url:''), '_self');//pass router login link//while calling this if its exists
 	process_destroyer();
 }
 /* voucher sell link */

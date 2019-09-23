@@ -1006,7 +1006,7 @@
 			//	how to link -- logout
 			document.getElementById('how_to_log_out').innerHTML = '<a href="' + hotspot_url + '/logout?erase-cookie=1">' + hotspot_url + '/logout</a>';
 			//how to link -- buy
-			document.getElementById('how_to_buy').innerHTML = '<a href="' + hotspot_transaction_server_url + '">Click <i style="color:green">BUY</i> Button to buy recharge voucher</a>';
+			document.getElementById('how_to_buy').innerHTML = '<a href="' + hotspot_transaction_server_url + '/transaction">Click <i style="color:green">BUY</i> Button to buy recharge voucher</a>';
 			//how to link -- bottom text
 			document.getElementById('how_to_bottom_text').innerHTML = how_to_bottom_text ;
 			//free sites -- bottom text
@@ -1078,15 +1078,17 @@
 			
 			
 
-		//++++++++++++++if page accessed from not router redirect
+		//++++++++++++++if page accessed not through streetwifi network router
 
 		if(!router_variables_array.login){//if login:true missing from url link//when not accesssed via hotspot running on router
 
-		var go_to_home_page = confirm('Please enter this page by conneting to hotspot and Enter : '+hotspot_url+' in your browser to be able to enter voucher codes.\r\rDo you want to go to home page?');
+        
+		//var go_to_home_page = confirm('Please enter this page by conneting to hotspot and Enter : '+hotspot_url+' in your browser to be able to enter voucher codes.\r\rDo you want to go to home page?');
+		var go_to_home_page = confirm('Please enter this page by conneting to a relevant wifi hotspot to be able to enter voucher codes and access internet.\r\rYou can buy and sell vouchers right now.\r\nDo you want to go to transaction page?');
 
 			if(go_to_home_page){//open home page/transaction app
 				if(hotspot_transaction_server_url){//if transact app link given
-					window.open(hotspot_transaction_server_url, '_self');
+					window.open(hotspot_transaction_server_url + "/transaction", '_self');
 				}
 			}
 
@@ -1184,7 +1186,7 @@
 		} 
 		function buy(){
 			
-			window.open(hotspot_transaction_server_url + '?hotspot_link=' + router_variables_array["link-login-only"]);
+			window.open(hotspot_transaction_server_url + '/transaction?hotspot_link=' + router_variables_array["link-login-only"]);
 		} 
 		function search(){
 			window.open('https://www.google.com/search?q='+document.getElementById('search').value);

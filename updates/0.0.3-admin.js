@@ -18,7 +18,7 @@ exports.create={
         },
         {//free voucher format
             voucheramount : 0,
-            vouchercode :'123asdf',
+            vouchercode :'free',
             voucherstate : 'new',
             voucherprofile : '20 MB',
         
@@ -79,34 +79,46 @@ exports.create={
 		voucherexpiry : '2 DAYS'
         }, 
         {
-        voucheramount : 1,
+        voucheramount : 2,
         vouchercode : '181asdf',
         voucherstate : 'new',
+        voucherprofile : '200 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
-        voucheramount : 1,
+        voucheramount : 2,
         vouchercode : '191asdf',
         voucherstate : 'new',
+        voucherprofile : '200 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
         voucheramount : 1,
         vouchercode : '122asdf',
         voucherstate : 'new',
+        voucherprofile : '200 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
-        voucheramount : 1,
+        voucheramount : 2,
         vouchercode : '132asdf',
         voucherstate : 'new',
+        voucherprofile : '200 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
-        voucheramount : 1,
+        voucheramount : 2,
         vouchercode : '142asdf',
         voucherstate : 'new',
+        voucherprofile : '200 MB',
+		voucherexpiry : '2 DAYS'
         }, 
         {
-        voucheramount : 1,
+        voucheramount : 2,
         vouchercode : '152asdf',
         voucherstate : 'new',
+        voucherprofile : '200 MB',
+		voucherexpiry : '2 DAYS'
         } ],
     'seller distributor' : [{
 		name : 'Tsehla',
@@ -121,7 +133,37 @@ exports.create={
         credits : 500,
         usertype : 'Server Admin'
         
-        }
+        },
+        {
+            name : 'Tsehla',
+            surname : 'Seller',
+            idnumber : '8905135852087',
+            contact : ['071000000', '081000000', '091111111'],
+            address : '7184 ext 4 JHB _2',
+            city : 'jhb_2',
+            province : 'gauteng_2',
+            password : '12345asdf',
+            email : 'petrusnk@gmil.com',
+            credits : 500,
+            usertype : 'Seller'
+            
+            },
+            {
+                name : 'Tsehla',
+                surname : 'Distributor',
+                idnumber : '8905135852087',
+                contact : ['071000000', '081000000', '091111111'],
+                address : '7184 ext 4 JHB _2',
+                city : 'jhb_2',
+                province : 'gauteng_2',
+                password : '12345asdf',
+                email : 'petrusnk@gmil.com',
+                credits : 500,
+                usertype : 'Distributor'
+                
+                }
+    
+
 	],
 	
 		'Router Monitoring':[

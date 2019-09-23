@@ -1326,26 +1326,30 @@ var hour = date.getHours();
         
         res.sendFile(path.resolve('./html/index.html'));
         
-    });
+	});
+	app.get('/transaction', function(req, res){
+		 res.sendFile(path.resolve('./html/transaction.html'));
+		 
+	 });
     app.get('/buy_voucher', function(req, res){
-        res.sendFile(path.resolve('./html/index.html'));
+        res.sendFile(path.resolve('./html/transaction.html'));
         
     });
     app.get('/sell_voucher', function(req, res){
-        res.sendFile(path.resolve('./html/index.html'));
+        res.sendFile(path.resolve('./html/transaction.html'));
         
     });
     app.get('/seller_login', function(req, res){
-        res.sendFile(path.resolve('./html/index.html'));
+        res.sendFile(path.resolve('./html/transaction.html'));
         
     });    
     
     app.get('/distributor_login', function(req, res){
-        res.sendFile(path.resolve('./html/index.html'));
+        res.sendFile(path.resolve('./html/transaction.html'));
         
     });
 	app.get('/admin_login', function(req, res){
-        res.sendFile(path.resolve('./html/index.html'));
+        res.sendFile(path.resolve('./html/transaction.html'));
         
     });
 
