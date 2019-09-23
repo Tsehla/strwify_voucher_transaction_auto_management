@@ -2451,7 +2451,7 @@ function admin_voucher_upload(){//send voucher to db
     
 =====================================================================================================================================================*/
 
-//mock link for db, update status from router// http://127.0.0.1:4100/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
+//mock link for db, update status from router// http://127.0.0.1:4100/api/router_checkin\?router_name=Home%20router&router_location=Orange%20Farm&router_details=If%20issue%20contact%20Tsehla%20on%2007190000&hotspot_ip="{.id=*1;address=192.168.88.1/24;comment=defconf;interface=ether1;network=192.168.88.0}"
 
 //retrive status from db
 //var url= 'http://' + current_domain + '/api/router_checkin_data_get;
@@ -2533,7 +2533,9 @@ function show_router_workd_extra_menu(input){//show admin config menu
 					function ip_string_cleaning(ip_string_input){
 
 							//Example recieved string from db/router
-							//	var ip_string_input = "{.id=*1;address=192.168.88.1/24;comment=defconf;interface=ether1;network=192.168.88.0};http://street-wify-transcat.herokuapp.com/api/router_checkin?router_name=V2 router,{.id=*2;address=102.111.00.69/22;comment=;interface=lte1;network=102.111.00.69}";
+							//	var ip_string_input = "{.id=*1;address=192.168.88.1/24;comment=defconf;interface=ether1;network=192.168.88.0};
+							// update link example ::::: http://127.0.0.1:4100/api/router_checkin\?router_name=Home%20router&router_location=Orange%20Farm&router_details=If%20issue%20contact%20Tsehla%20on%2007190000&hotspot_ip="{.id=*1;address=192.168.88.1/24;comment=defconf;interface=ether1;network=192.168.88.0}"
+
 								if(!ip_string_input){return 'No IP provided by router/database';}//if no ip provided quit
 
 								ip_string_input=ip_string_input.replace(/[{}]/g,'').split(';');//clean string and turn to array
@@ -2541,7 +2543,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 								
 								ip_string_input.forEach((value, index)=>{//extract usefull data from ip string array
 
-								//add string connection if still more adresses available
+								//add string connection if still more adresses available//prohibit add on last line
 								var connection_add = index != ip_string_input.length-1?'<br/><span style="text-decoration:underline;">Connection :</span>':'';
 
 								//get/search ip adress
@@ -2551,9 +2553,25 @@ function show_router_workd_extra_menu(input){//show admin config menu
 								(value.search('interface')==0)?new_ip_string+=ip_string_input[index]+'<br>':null;
 								
 								//get/search network
-									(value.search('network')==0)?new_ip_string+=ip_string_input[index]+connection_add+'<br>':null;
-								//
+
+									function router_ip_open(){//clean router ip adress for easy acess at front
+
+										var link_cleaning = (ip_string_input[index]);
+									
+										link_cleaning = link_cleaning.replace('network=' ,'').replace('"' ,'');
+										
+										link_cleaning = `<br><button style='width:20%; height:50px' class='btn btn-warning' onclick='window.open("http://`+ link_cleaning +`","_blank")'>Open link</button>`;
+
+										//console.log(link_cleaning);
+
+										 return link_cleaning;
+									}
+									(value.search('network')==0)?new_ip_string+=ip_string_input[index] + router_ip_open() + connection_add+'<br>':null;
+								
+	
 								});
+
+
 								
 								return new_ip_string;
 
