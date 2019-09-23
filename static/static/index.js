@@ -2560,7 +2560,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 									
 										link_cleaning = link_cleaning.replace('network=' ,'').replace('"' ,'');
 										
-										link_cleaning = `<br><button style='width:20%; height:50px' class='btn btn-warning' onclick='window.open("http://`+ link_cleaning +`","_blank")'>Open link</button>`;
+										link_cleaning = `<br><button style='min-width:100px; width:20%; height:50px' class='btn btn-warning' onclick='window.open("http://`+ link_cleaning +`","_blank")'>Open link</button>`;
 
 										//console.log(link_cleaning);
 
