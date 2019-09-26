@@ -135,7 +135,7 @@ var router_hotspot_page_model = new keystone.List(router_hotspot_page);
 
 router_hotspot_page_model .add({
 	router_location : {type :String, initial:true, required:true, default:'default', label : 'Router location' },
-	hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"static/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "static/default_slide_images/1.jpg"}','{"image_link" :"static/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "static/default_slide_images/2.jpg"}','{"image_link" :"static/default_slide_images/3.jpg" , "image_status_text" : "Image 3", "image_status_link": "static/default_slide_images/3.jpg"}','{"image_link" :"static/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "static/default_slide_images/4.jpg"}','{"image_link" :"static/default_slide_images/5.jpg" , "image_status_text" : "Image 5", "image_status_link": "static/default_slide_images/5.jpg"}','{"image_link" :"static/default_slide_images/6.jpg" , "image_status_text" : "Image 6", "image_status_link": "static/default_slide_images/6.jpg"}','{"image_link" :"static/default_slide_images/7.jpg" , "image_status_text" : "Image 7", "image_status_link": "static/default_slide_images/7.jpg"}','{"image_link" :"static/default_slide_images/8.jpg" , "image_status_text" : "Image 8", "image_status_link": "static/default_slide_images/8.jpg"}','{"image_link" :"static/default_slide_images/9.jpg" , "image_status_text" : "Image 9", "image_status_link": "static/default_slide_images/9.jpg"}','{"image_link" :"static/default_slide_images/10.jpg" , "image_status_text" : "Image 10", "image_status_link": "static/default_slide_images/10.jpg"}'], label :'Wallpaper data' },
+	hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg"}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg"}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Image 3", "image_status_link": "/default_slide_images/3.jpg"}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "/default_slide_images/4.jpg"}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Image 5", "image_status_link": "/default_slide_images/5.jpg"}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Image 6", "image_status_link": "/default_slide_images/6.jpg"}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Image 7", "image_status_link": "/default_slide_images/7.jpg"}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Image 8", "image_status_link": "/default_slide_images/8.jpg"}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Image 9", "image_status_link": "/default_slide_images/9.jpg"}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Image 10", "image_status_link": "/default_slide_images/10.jpg"}'], label :'Wallpaper data' },
         
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{"link":"https://www.google.com","text":"Search on google"}'],},
@@ -146,12 +146,12 @@ router_hotspot_page_model .add({
 	hotspot_free_sites_bottom_text : {type : String, label :'Hotspot Free sites bottom text', default: 'Pass it on, unconditionally help a stranger, a friend, a family member.',},
 	notification_bottom_text : {type : String, label :'Hotspot notification bottom text', default: 'If it was easy, no one would care. If it was impossible, no one would dare.',},
 	
-	hotspot_how_to_buy : {type : String, label :'Hotspot How to buy image', default: 'static/default_slide_images/1.jpg',},
-	hotspot_how_to_sell : {type : String, label :'Hotspot How to sell image', default: 'static/default_slide_images/2.jpg',},
-	hotspot_how_to_recharge_seller : {type : String, label :'Hotspot How to recharge-seller image', default: 'static/default_slide_images/3.jpg',},
-	hotspot_how_to_super_admin: {type : String, label :'Hotspot How to Super-admin image', default: 'static/default_slide_images/4.jpg',},
+	hotspot_how_to_buy : {type : String, label :'Hotspot How to buy image', default: '/default_slide_images/1.jpg',},
+	hotspot_how_to_sell : {type : String, label :'Hotspot How to sell image', default: '/default_slide_images/2.jpg',},
+	hotspot_how_to_recharge_seller : {type : String, label :'Hotspot How to recharge-seller image', default: '/default_slide_images/3.jpg',},
+	hotspot_how_to_super_admin: {type : String, label :'Hotspot How to Super-admin image', default: '/default_slide_images/4.jpg',},
 	
-	hotspot_logo : {type : String, label :'Hotspot Logo', default: 'static/images/logo.png',},
+	hotspot_logo : {type : String, label :'Hotspot Logo', default: '/images/logo.png',},
 	hotspot_manager : {type : types.TextArray, label :'hotspot Managers'},
 });
 

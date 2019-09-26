@@ -1,0 +1,11 @@
+owner,name,password,batch,realm,profile,perc_data_used,perc_time_used,status,last_accept_time,last_accept_nas,last_reject_time,last_reject_nas,last_reject_message,extra_name,extra_value,created,modified
+,basicpet,basicpet,,,200mb,,,,,,,,,,,,
+,cheapwire,cheapwire,,,200mb,,,,,,,,,,,,
+,coolpollution,coolpollution,,,200mb,,,,,,,,,,,,
+,dearestroute,dearestroute,,,200mb,,,,,,,,,,,,
+,deepguide,deepguide,,,200mb,,,,,,,,,,,,
+,fatalcar,fatalcar,,,200mb,,,,,,,,,,,,
+,longcrow,longcrow,,,200mb,,,,,,,,,,,,
+,maturehumor,maturehumor,,,200mb,,,,,,,,,,,,
+,proudnotebook,proudnotebook,,,200mb,,,,,,,,,,,,
+,valueself,valueself,,,200mb,,,,,,,,,,,,

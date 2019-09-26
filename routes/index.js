@@ -4,7 +4,7 @@ var path = require ('path');//to solve sendFile forbidden error
 //var express = require('express');
 
 keystone.get('routes', function(app){
-   // app.use(express.static('./static/'));
+   // app.use(express.static('.//'));
     
    //enable cors 
 	app.use(function(req, res, next) { //allow cross origin requests
@@ -1324,7 +1324,7 @@ var hour = date.getHours();
         //im think use api, method to serve, nunjuck changes will be anoying
         //use public to serve html standard, use api to acess data//test first
         
-        res.sendFile(path.resolve('./html/index.html'));
+        res.sendFile(path.resolve('./html/home_page_html/index.html'));
         
 	});
 	app.get('/transaction', function(req, res){
@@ -2026,7 +2026,7 @@ app.get('/api/hotspot_data', function(req, res){
 		keystone.createItems({
 			'Router hotspot page' : [{
 				router_location : location_of_router.toLowerCase(),
-				hotspot_wallpaper: ['{"image_link" :"static/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "static/default_slide_images/1.jpg"}','{"image_link" :"static/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "static/default_slide_images/2.jpg"}','{"image_link" :"static/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "static/default_slide_images/3.jpg"}','{"image_link" :"static/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "static/default_slide_images/4.jpg"}','{"image_link" :"static/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "static/default_slide_images/5.jpg"}','{"image_link" :"static/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "static/default_slide_images/6.jpg"}','{"image_link" :"static/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "static/default_slide_images/7.jpg"}','{"image_link" :"static/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "static/default_slide_images/8.jpg"}','{"image_link" :"static/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "static/default_slide_images/9.jpg"}','{"image_link" :"static/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "static/default_slide_images/10.jpg"}'],
+				hotspot_wallpaper: ['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg"}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg"}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "/default_slide_images/3.jpg"}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "/default_slide_images/4.jpg"}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "/default_slide_images/5.jpg"}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "/default_slide_images/6.jpg"}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "/default_slide_images/7.jpg"}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "/default_slide_images/8.jpg"}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "/default_slide_images/9.jpg"}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "/default_slide_images/10.jpg"}'],
 				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
 				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
 				free_data_allow : true,
@@ -2034,11 +2034,11 @@ app.get('/api/hotspot_data', function(req, res){
 				hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
 				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
 				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare.',
-				hotspot_how_to_buy :'static/default_slide_images/1.jpg',
-				hotspot_how_to_sell :  'static/default_slide_images/2.jpg',
-				hotspot_how_to_recharge_seller : 'static/default_slide_images/3.jpg',
-				hotspot_how_to_super_admin: 'static/default_slide_images/4.jpg',
-				hotspot_logo : 'static/images/logo.png',
+				hotspot_how_to_buy :'/default_slide_images/1.jpg',
+				hotspot_how_to_sell :  '/default_slide_images/2.jpg',
+				hotspot_how_to_recharge_seller : '/default_slide_images/3.jpg',
+				hotspot_how_to_super_admin: '/default_slide_images/4.jpg',
+				hotspot_logo : '/images/logo.png',
 				
 			}]
 			

@@ -1,0 +1,2 @@
+This is for homepage contents, you can replace anything here with your contents, I recomment you only put html files in here, and put others in :/static/static/home_page_contents/.
+when refering to the files within html, only use single [static] in path, example refering to [ mystyle.css ] : static/home_page_contents/mystyle.css .

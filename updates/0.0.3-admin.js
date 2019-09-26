@@ -2,7 +2,7 @@ exports.create={
     
     'server admin' : [{
         name : 'tsehla',
-        idnumber : 8905135852087,
+        idnumber : 8905135800000,
         contact : 719010014,
         password : '12345asdf',
         email : 'tsehla@streetwifiy.co.za'
@@ -123,13 +123,13 @@ exports.create={
     'seller distributor' : [{
 		name : 'Tsehla',
         surname : 'Admin',
-        idnumber : '8905135852087',
+        idnumber : '8905135800000',
         contact : ['071000000', '081000000', '091111111'],
         address : '7184 ext 4 JHB _2',
         city : 'jhb_2',
         province : 'gauteng_2',
         password : '12345asdf',
-        email : 'petrusnk@gmil.com',
+        email : 'tsehla@streetwifiy.co.za',
         credits : 500,
         usertype : 'Server Admin'
         
@@ -137,13 +137,13 @@ exports.create={
         {
             name : 'Tsehla',
             surname : 'Seller',
-            idnumber : '8905135852087',
+            idnumber : '8905135800000',
             contact : ['071000000', '081000000', '091111111'],
             address : '7184 ext 4 JHB _2',
             city : 'jhb_2',
             province : 'gauteng_2',
             password : '12345asdf',
-            email : 'petrusnk@gmil.com',
+            email : 'tsehla@streetwifiy.co.za',
             credits : 500,
             usertype : 'Seller'
             
@@ -151,13 +151,13 @@ exports.create={
             {
                 name : 'Tsehla',
                 surname : 'Distributor',
-                idnumber : '8905135852087',
+                idnumber : '8905135800000',
                 contact : ['071000000', '081000000', '091111111'],
                 address : '7184 ext 4 JHB _2',
                 city : 'jhb_2',
                 province : 'gauteng_2',
                 password : '12345asdf',
-                email : 'petrusnk@gmil.com',
+                email : 'tsehla@streetwifiy.co.za',
                 credits : 500,
                 usertype : 'Distributor'
                 

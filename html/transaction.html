@@ -74,9 +74,9 @@
       </style>
       
       <!-- during dev -->
-      <link rel="stylesheet" href="../static/bootstrap.min.css">
-      <link rel="stylesheet" href="../static/line-awesome/css/line-awesome.css">
-      <link rel="stylesheet" href="../static/index.css">
+      <link rel="stylesheet" href="/bootstrap.min.css">
+      <link rel="stylesheet" href="/line-awesome/css/line-awesome.css">
+      <link rel="stylesheet" href="/index.css">
       <!-- when system running 
       <link type="text/css" href="index.css">
       <link rel="stylesheet" href="bootstrap.min.css">
@@ -110,7 +110,7 @@
    <!-- landing choose action --->
    
         <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn"  onclick='buy_voucher()'>
-        <img src="../static/images/buyer.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+        <img src="/images/buyer.svg" style="width: auto; height: 30vh; margin: 2vh ;">
         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
 
 buy data voucher
@@ -119,7 +119,7 @@ buy data voucher
         
         </div>
         <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='sell_voucher()'>
-         <img src="../static/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <img src="/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
          <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
          
          Sell voucher
@@ -152,7 +152,7 @@ buy data voucher
 
 	<!-- voucher code image -->
 	<!-- ticket canvas -->
-	<img src="../static/images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
+	<img src="/images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
 	<canvas style="width: 280px; height: 270px; display: none" id='ticket_canvas'> Ticket </canvas>
 	
 	
@@ -199,7 +199,7 @@ buy data voucher
    <!-- landing choose action --->
    
         <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_distributor_login()'>
-        <img src="../static/images/distributor.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+        <img src="/images/distributor.svg" style="width: auto; height: 30vh; margin: 2vh ;">
         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
 
 distributor login
@@ -208,7 +208,7 @@ distributor login
         
         </div>
         <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick = 'third_page_seller_login()'>
-         <img src="../static/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <img src="/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
          <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
          
          Seller login
@@ -223,7 +223,7 @@ distributor login
 	
 		  <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:10vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick = 'admin_fourth_page_login()'>
 		<!--
-         <img src="../static/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <img src="/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
 		-->
 		<i class="la la-gear la-spin" style="font-size: 30px; margin-top: 0.1vh;margin-bottom: 1vh"></i>
          <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
@@ -983,13 +983,13 @@ distributor login
 			
 		<br/>
 	 	<label for="csvinput"> Select file with vouchers ending with (.csv)</label>
-		<input type="file" id="voucher_code_add" name="csvinput" accept="text/csv" class="form-control">
+		<input type="file" id="voucher_code_add" name="csvinput" accept="text/csv" class="form-control" onclick="upload_csv_cleaning()">
 	 	<br />
 			
 		<!-- input preview -->
 	 	<div id='input_content_show' style='height: 50px;background: black;color: white;border-radius:5px; overflow: auto;text-align: left' class='w3-block w3-margin w3-border' >
 			<p class='w3-margin w3-block ' style="text-align: center"><b>Content loaded ...</b></p>
-			<div id='report_box' style='height: auto' class='w3-margin w3-block'></div>
+			<table id='report_box' style='height: auto' class='w3-margin w3-block'></table>
 			<div id='old_content_as_report_box' style='height: auto' class='w3-margin w3-block'></div>
 			<table id='input_content_show_table' style="width: auto;height: auto;border: 1px solid white;" >
 			
@@ -1009,7 +1009,7 @@ distributor login
  <div id='example_voucher_format' style='display: none;width: 95vw;position: absolute;top:20vh;left: auto; overflow: scroll;'>
 
 		 	<button class='btn btn-primary' onclick='document.getElementById("example_voucher_format").style.display="none"' style="width: 95vw;">Close</button><br/>
-	 		<img src="../static/images/voucher_csv_example.PNG" id='ticket_outline' style="width:auto height: 270px;margin: 0px;" alt="ticket img" />
+	 		<img src="/images/voucher_csv_example.PNG" id='ticket_outline' style="width:auto height: 270px;margin: 0px;" alt="ticket img" />
 
 </div>
   
@@ -1127,9 +1127,9 @@ distributor login
 	   
 
 	   
-    <script type='text/JavaScript' src='../static/jquery-3.3.1.min.js' ></script>   
-    <script type='text/JavaScript' src='../static/papaparse.min.js' ></script>   
-   <script type='text/JavaScript' src='../static/index.js' ></script>
+    <script type='text/JavaScript' src='/jquery-3.3.1.min.js' ></script>   
+    <script type='text/JavaScript' src='/papaparse.min.js' ></script>   
+   <script type='text/JavaScript' src='/index.js' ></script>
   
 
    

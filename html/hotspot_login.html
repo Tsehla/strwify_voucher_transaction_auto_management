@@ -4,7 +4,7 @@
 
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 			<link rel="stylesheet" href="bootstrap.min.css">
-			<link rel="stylesheet" href="../static/line-awesome/css/line-awesome.css">
+			<link rel="stylesheet" href="/line-awesome/css/line-awesome.css">
 
 
 			<style type="text/css">
@@ -34,13 +34,13 @@
 	<body id='page_body'>
     
 		<!-- login input forms -->
-		<div style="width: 60vw;height: auto; position: absolute; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(../static/images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
+		<div style="width: 60vw;height: auto; position: absolute; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(/images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
 
 			<!-- close button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='block',login_hide()" style="width: 40px; height: 40px; font-size: 1.5em; position: absolute;right: 1%; border: 0px" class="btn btn-info">&times;</button>
 
 			<!-- login overlay background -->
-			<div style="border: 3px double #cccccc; padding: 0px;background-image: url(../static/images/black-wood.jpg); width: 100%;height: 100%">
+			<div style="border: 3px double #cccccc; padding: 0px;background-image: url(/images/black-wood.jpg); width: 100%;height: 100%">
 
 				<!-- input content -->
 				<!-- hotspot logo -->
@@ -383,7 +383,7 @@
                				
 				
                 <h2>Voucher</h2>
-                <div style="width: auto; height: 200px; background-image: url(static/images/voucher%20template.PNG); background-position: center; background-repeat: no-repeat;background-size: contain"></div>
+                <div style="width: auto; height: 200px; background-image: url(images/voucher%20template.PNG); background-position: center; background-repeat: no-repeat;background-size: contain"></div>
             </div>
        <Marquee role='marquee' id='how_to_bottom_text'></Marquee>
        </div>
@@ -711,10 +711,10 @@
       
    
 		
-		<script type='text/JavaScript' src='../static/jquery-3.3.1.min.js' ></script> 
-		<script type="text/javascript" src="../static/md5.js"></script>
+		<script type='text/JavaScript' src='/jquery-3.3.1.min.js' ></script> 
+		<script type="text/javascript" src="/md5.js"></script>
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
-		<script type="text/javascript" src="../static/qs.js"></script>
+		<script type="text/javascript" src="/qs.js"></script>
 		<script type="text/javascript">
 			
 			
@@ -875,7 +875,7 @@
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
 			//++++++++++++++if network issue, use belo copy of default variable
-			var logo_image_url = '../static/images/logo.png';//logo image
+			var logo_image_url = '/images/logo.png';//logo image
 			var how_to_bottom_text = 'Help yourself, To be helped;'//text shown on help menu as marquee
 			var education_free_links =[
 					{link:"https://scholar.google.co.za/", text:"Google scholar"},
@@ -887,20 +887,20 @@
 			var notifications_from_db = ['Dare to be diffrents','Dare to write your destiny, Dare to write your destiny,Dare to write your destiny'];//notifications text
 			var notification_bottom_text = 'If it was easy, no one would care. If it was impossible, no one would dare';//notification page bottom text
 			
-			var help_picture_video_buy = 'static/default_slide_images/1.jpg';// help how to buy voucher and use wifi
-			var help_picture_video_sell = 'static/default_slide_images/2.jpg';//help how to sell wifi
+			var help_picture_video_buy = 'default_slide_images/1.jpg';// help how to buy voucher and use wifi
+			var help_picture_video_sell = 'default_slide_images/2.jpg';//help how to sell wifi
 			
 			wall_link_description =[//walp data	
-				{image_link :"static/default_slide_images/1.jpg" , image_status_text : "Click here to see Picture", image_status_link: "static/default_slide_images/1.jpg"},	
-				{image_link :"static/default_slide_images/2.jpg" , image_status_text : "Click here to see Picture", image_status_link: "static/default_slide_images/2.jpg"},	
-				{image_link :"static/default_slide_images/3.jpg" , image_status_text : "Legal for Creatives", image_status_link: "static/default_slide_images/3.jpg"},	
-				{image_link :"static/default_slide_images/4.jpg" , image_status_text : "Five Fingers", image_status_link: "static/default_slide_images/4.jpg"},	
-				{image_link :"static/default_slide_images/5.jpg" , image_status_text : "Marseillies", image_status_link: "static/default_slide_images/5.jpg"},	
-				{image_link :"static/default_slide_images/6.jpg" , image_status_text : " Unarams", image_status_link: "static/default_slide_images/6.jpg"},	
-				{image_link :"static/default_slide_images/7.jpg" , image_status_text : "Anrya", image_status_link: "static/default_slide_images/7.jpg"},	
-				{image_link :"static/default_slide_images/8.jpg" , image_status_text : "Urban Village", image_status_link: "static/default_slide_images/8.jpg"},	
-				{image_link :"static/default_slide_images/9.jpg" , image_status_text : "Nonkuphiri", image_status_link: "static/default_slide_images/9.jpg"},	
-				{image_link :"static/default_slide_images/10.jpg" , image_status_text : "Know Your Voucher", image_status_link: "static/default_slide_images/10.jpg"}
+				{image_link :"default_slide_images/1.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/1.jpg"},	
+				{image_link :"default_slide_images/2.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/2.jpg"},	
+				{image_link :"default_slide_images/3.jpg" , image_status_text : "Legal for Creatives", image_status_link: "default_slide_images/3.jpg"},	
+				{image_link :"default_slide_images/4.jpg" , image_status_text : "Five Fingers", image_status_link: "default_slide_images/4.jpg"},	
+				{image_link :"default_slide_images/5.jpg" , image_status_text : "Marseillies", image_status_link: "default_slide_images/5.jpg"},	
+				{image_link :"default_slide_images/6.jpg" , image_status_text : " Unarams", image_status_link: "default_slide_images/6.jpg"},	
+				{image_link :"default_slide_images/7.jpg" , image_status_text : "Anrya", image_status_link: "default_slide_images/7.jpg"},	
+				{image_link :"default_slide_images/8.jpg" , image_status_text : "Urban Village", image_status_link: "default_slide_images/8.jpg"},	
+				{image_link :"default_slide_images/9.jpg" , image_status_text : "Nonkuphiri", image_status_link: "default_slide_images/9.jpg"},	
+				{image_link :"default_slide_images/10.jpg" , image_status_text : "Know Your Voucher", image_status_link: "default_slide_images/10.jpg"}
 			];
 
 			
