@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <title>StreetWifiy</title>
+    <head>
+        <link href='/home_page_contents/bootstrap.min.css' rel='stylesheet'>
+        <!-- main style sheet -->
+        <link rel='stylesheet' href='/home_page_contents/index.css'>
+
+        <!-- fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Crimson+Text&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Arimo&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+        <!-- Logo/Navitation -->
+        <div id='logo_navigation_bar'>
+            <!-- logo -->
+            <div id='logo_image'  style='background-image: url("/home_page_contents/images/logo.png")'> Image</div>
+            <div id='contact' class='navi_contents btn' onclick='window.open("https://web.facebook.com/pages/category/Community-Organization/Creativexminds-512440145609479/?_rdc=1&_rdr")' >Contact</div>
+            <div id='about' class='navi_contents btn' onclick="window.location.href='#about_text'">About</div>
+            <div id='client_area' class='navi_contents btn btn-success' onclick="window.open('http://'+location.host+'/hotspot')">Client Area</div>
+           <!-- <div id='gallery' class='navi_contents btn'>Gallery</div> -->
+        </div>
+
+        <!-- slider -->
+        <div id='slider_box'>
+            <!-- slider header -->
+            <div id='slider_header' >Hello head</div>
+
+            <!-- slider text -->
+            <div id='slider_text'>hello text</div>
+
+            <!-- slider button -->
+            <div id='tell_more_button'><button class="btn btn-primary" onclick='window.open("https://web.facebook.com/pages/category/Community-Organization/Creativexminds-512440145609479/?_rdc=1&_rdr")'>Tell me more</button></div>
+
+            <!-- bread crumb/navi -->
+            <div id='bread_crumb'>
+                <button onclick="sider_back_or_forth('back')" class='btn'><<</button>
+                <button onclick="sider_back_or_forth('forward')" class='btn btn-default'>>></button>
+            </div>
+
+        </div>
+
+        <!-- about -->
+        <div id="about_text">
+            <a name='about_text'></a>
+            <h1>
+                StreetWifiy
+            </h1>
+            <p>
+               Offers internet across neighbourhood, in a form of wifi hotspots.
+               The hotspots are established using plug and play modern equipment to ensure quality and dependable connection.
+               Cheap and Quality service is made possible by creating customs software that runs on the equipment we use and do task that would normally cost a fortune, 
+               and we pass those savings to the consumers and investors of the program.
+               <br />
+               We believe in Creativity, Openness and we value Partnerships. 
+                <br />
+               Why not talk to us, if you believe we can add value, to your life, business or neighbourhood.
+               
+            </p>
+            <button class="btn btn-primary">Talk to us</button>
+
+        </div>
+        <!-- footer -->
+        <div id='footer_box'>
+            All rights reserved.<br /> EST 2016
+        </div>
+
+        <!-- main script -->
+        <script type="text/javascript" src="/home_page_contents/index.js"></script>
+    </body>
+</html>
