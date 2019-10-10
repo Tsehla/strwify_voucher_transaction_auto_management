@@ -173,14 +173,14 @@ body {
 
 
 /* media queries */
-@media only screen (min-width: 450px) {
+@media only screen and (min-width: 1024px) {
 
-    body { font-size: 1.17em; }
+    body { font-size: 1.47em; }
     #slider_header {
-        font-size: 1.2em;
+        font-size: 1.6em;
     }
     #slider_text {
-        font-size: 1.17em;
+        font-size: 1.47em;
     }
     #about_text {
         width: 98.5%;
