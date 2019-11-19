@@ -1,5 +1,5 @@
 ////TODO :
-give seller auto notification on their account rechage, 
+give seller auto notification on their account rechage ,
 
 ------
 allow distributor to manage router login page contents like wallpers ect if they are allocated manage router action calling with location x. super admin manage all
