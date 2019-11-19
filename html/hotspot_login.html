@@ -700,7 +700,7 @@
         <div id="bottom_bar" style="width:100%; min-height: 54px; max-height:auto ; background-color: #3498db; position: fixed; bottom: 3%" >
 
               <!-- Free data button -->
-            <button id='free_data_login_button' onclick="free_login()" class="btn btn" style="min-width: 95px; height:45px; margin: 4.5px 2.5%; display: none;background: rebeccapurple; color: whitesmoke; display: inline-block; float: left;">Free Data Voucher</button>
+            <button id='free_data_login_button' onclick="free_login()" class="btn btn" style="min-width: 95px; height:45px; margin: 4.5px 2.5%; display: none;background: rebeccapurple; color: whitesmoke; float: left;">Free Data Voucher</button>
            
             <!--add vouchers button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='none',login_display()" class="btn btn-success" style="min-width: 95px; height:45px;; margin: 4.5px 2.5%;   display: inline-block; float:right;">Enter Voucher Code</button>
@@ -869,7 +869,8 @@
 		   hotspot_url = router_variables_array["link-login-only"].replace('/login','');
 		   }
 			
-		var wall_link_description; //Get wallpaper links data from db
+        var wall_link_description; //Get wallpaper links data from db
+        var sponsore_ads; //store sponsore details for current slide
 
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
@@ -891,16 +892,16 @@
 			var help_picture_video_sell = 'default_slide_images/2.jpg';//help how to sell wifi
 			
 			wall_link_description =[//walp data	
-				{image_link :"default_slide_images/1.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/1.jpg"},	
-				{image_link :"default_slide_images/2.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/2.jpg"},	
-				{image_link :"default_slide_images/3.jpg" , image_status_text : "Legal for Creatives", image_status_link: "default_slide_images/3.jpg"},	
-				{image_link :"default_slide_images/4.jpg" , image_status_text : "Five Fingers", image_status_link: "default_slide_images/4.jpg"},	
-				{image_link :"default_slide_images/5.jpg" , image_status_text : "Marseillies", image_status_link: "default_slide_images/5.jpg"},	
-				{image_link :"default_slide_images/6.jpg" , image_status_text : " Unarams", image_status_link: "default_slide_images/6.jpg"},	
-				{image_link :"default_slide_images/7.jpg" , image_status_text : "Anrya", image_status_link: "default_slide_images/7.jpg"},	
-				{image_link :"default_slide_images/8.jpg" , image_status_text : "Urban Village", image_status_link: "default_slide_images/8.jpg"},	
-				{image_link :"default_slide_images/9.jpg" , image_status_text : "Nonkuphiri", image_status_link: "default_slide_images/9.jpg"},	
-				{image_link :"default_slide_images/10.jpg" , image_status_text : "Know Your Voucher", image_status_link: "default_slide_images/10.jpg"}
+				{image_link :"default_slide_images/1.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/1.jpg", ads_sponsored : true, hidden:false},	
+				{image_link :"default_slide_images/2.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/2.jpg", ads_sponsored : true, hidden:false},	
+				{image_link :"default_slide_images/3.jpg" , image_status_text : "Legal for Creatives", image_status_link: "default_slide_images/3.jpg", ads_sponsored : false, hidden:false},	
+				{image_link :"default_slide_images/4.jpg" , image_status_text : "Five Fingers", image_status_link: "default_slide_images/4.jpg", ads_sponsored : false, hidden:false},	
+				{image_link :"default_slide_images/5.jpg" , image_status_text : "Marseillies", image_status_link: "default_slide_images/5.jpg", ads_sponsored : false, hidden:true},	
+				{image_link :"default_slide_images/6.jpg" , image_status_text : " Unarams", image_status_link: "default_slide_images/6.jpg", ads_sponsored : false, hidden:true},	
+				{image_link :"default_slide_images/7.jpg" , image_status_text : "Anrya", image_status_link: "default_slide_images/7.jpg", ads_sponsored : false, hidden:true},	
+				{image_link :"default_slide_images/8.jpg" , image_status_text : "Urban Village", image_status_link: "default_slide_images/8.jpg", ads_sponsored : false, hidden:true},	
+				{image_link :"default_slide_images/9.jpg" , image_status_text : "Nonkuphiri", image_status_link: "default_slide_images/9.jpg", ads_sponsored : false, hidden:true},	
+				{image_link :"default_slide_images/10.jpg" , image_status_text : "Know Your Voucher", image_status_link: "default_slide_images/10.jpg", ads_sponsored : false, hidden:true}
 			];
 
 			
@@ -953,7 +954,7 @@
 					 }
 				
 				
-				if(data_from_db.hotspot_wallpaper){	//wallpaperdata
+				if(data_from_db.hotspot_wallpaper){	//if wallpaper data from db
 					
 					//console.log(data_from_db);
 					
@@ -961,8 +962,15 @@
 					
 					data_from_db.hotspot_wallpaper.forEach(function(data){
 						//console.log(data)
-						//console.log(JSON.parse(data))
-						wall_link_description.push(JSON.parse(data));//add contents as objects
+                        //console.log(JSON.parse(data));
+
+                        let  slide_data = JSON.parse(data);//turn data to object
+
+                        if(slide_data.hidden == false){ //exclude those hidden
+
+                            wall_link_description.push(slide_data);//add content to array
+                        }
+						
 					
 					});
 					
@@ -975,9 +983,14 @@
 					}
 					
 					if(wall_link_description.length > 0){			
-						//add wallpaper and link on page load
+						//add wallpaper and link on page load// plus sponsore details
 						document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
-						document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
+                        document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
+                        
+                       // current slide sponsore details/on page load
+                       sponsore_ads = wall_link_description[0];
+                        
+
 					}
 				 }
 			}
@@ -1043,7 +1056,8 @@
              
             //++++++++++++++++++++ show free data button if enabled by hotspot owner +++++++
                 if(data_from_db.free_data_allow){
-                        document.getElementById('free_data_login_button').style.display='block';
+                
+                        document.getElementById('free_data_login_button').style.display='inline-block';
                 }
 			
 			
@@ -1125,14 +1139,17 @@
 			//increment when function call
 			current_image_content_tracker = current_image_content_tracker +1;
 			
-			//check if image tracker is still with provided image length rang
+			//check if image tracker is still with provided image length range
 			if(current_image_content_tracker > wall_link_description.length -1){//if image tracker is over image array leng\\reset image traccker
 			   	current_image_content_tracker = 0;
 			   }
 			
 			document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
 
-			document.getElementById('walp_links').innerHTML = wall_link_description[current_image_content_tracker].image_status_text;
+            document.getElementById('walp_links').innerHTML = wall_link_description[current_image_content_tracker].image_status_text;
+            
+            // current slide sponsore details
+            sponsore_ads = wall_link_description[current_image_content_tracker];
 			
        
         };
@@ -1140,7 +1157,7 @@
         
         var walp_interval =  setInterval(walp_changer, 6000);
         
-        //++++++++++++++++++manual change
+        //++++++++++++++++++ manual change
         
         document.getElementById('right_arrow_1').onclick = function (){//next image
 			clearInterval(walp_interval);
@@ -1197,13 +1214,38 @@
         //++++++++++ free login +++++++++++++
         
        function free_login(){
-            alert("This voucher is meant to allow you to test the system.\r\nIt may work once off, or once per day.");
-            if(hotspot_transaction_server_url){//if transact app link given
-					window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + router_variables_array["link-login-only"], '_self');
+
+
+            var alert_message = "Free Voucher Sponsored by CreativeXmindS.\r\nFind US on facebook..";
+
+            if(sponsore_ads.ads_sponsored){//voucher sponsored
+                
+                alert_message = "Free Voucher Sponsored by\r\n" + wall_link_description[current_image_content_tracker].image_status_text;
+                
             }
-            else{//if transact app link not given
-                alert('Error, unable to send you to hotspot transaction menu. Website address not found');
-            }
+
+
+            alert(alert_message);//give alert
+
+                if(hotspot_transaction_server_url){//if transact app link given
+
+                    if(sponsore_ads.ads_sponsored){ 
+
+                        window.open(wall_link_description[current_image_content_tracker].image_status_link, '_blank');
+
+                        window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + router_variables_array["link-login-only"], '_self');
+
+                        return true;
+                    }
+                    
+                    window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + router_variables_array["link-login-only"], '_self');
+                }
+
+                else{//if transact app link not given
+                    alert('Error, unable to send you to hotspot transaction menu. Website address not found');
+                }
+
+
         }
 
 

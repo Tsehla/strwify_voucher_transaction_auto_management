@@ -311,7 +311,8 @@ function buy_page_on_init(){ //get unique code for this user session
 start timer for auto voucher download
 =====================================================================================================================================================*/
 
-    
+var free_voucher_login = false;//allow unattended login if free voucher
+
 function auto_voucher_check(uniqueCode){
 		unique_code = uniqueCode;
 		
@@ -323,7 +324,9 @@ function auto_voucher_check(uniqueCode){
 
 		if(document.location.search.indexOf('free_login') != -1){ //if true change url handling request
 			//alert('Yes user was directed by pressing free voucher button on hotspot page');
-			url= 'http://' + current_domain + '/api/buy?code=free_voucher'
+			url= 'http://' + current_domain + '/api/buy?code=free_voucher';
+			
+			free_voucher_login = true;//login is free voucher
 		}
 
 			
@@ -3959,6 +3962,13 @@ function distributor_superadmin_acc_help(type_of_user){
 function auto_login(vocher_code){
 	//hot_spot_url
 	
+	if(free_voucher_login){//if free login auto log in
+
+		window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
+
+		return;
+	}
+
 	if(!hot_spot_url){return}//if url for router not available
 	 
 	 var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');

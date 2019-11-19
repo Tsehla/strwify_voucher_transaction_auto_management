@@ -1327,6 +1327,13 @@ var hour = date.getHours();
         res.sendFile(path.resolve('./html/home_page_html/index.html'));
         
 	});
+	app.get('/sitemap', function(req, res){
+		//give home page/s sitemap
+		 //for google indexing
+		 
+		 res.sendFile(path.resolve('./html/home_page_html/sitemap.xml'));
+		 
+	 });
 	app.get('/transaction', function(req, res){
 		 res.sendFile(path.resolve('./html/transaction.html'));
 		 
@@ -2026,7 +2033,7 @@ app.get('/api/hotspot_data', function(req, res){
 		keystone.createItems({
 			'Router hotspot page' : [{
 				router_location : location_of_router.toLowerCase(),
-				hotspot_wallpaper: ['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg"}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg"}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "/default_slide_images/3.jpg"}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "/default_slide_images/4.jpg"}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "/default_slide_images/5.jpg"}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "/default_slide_images/6.jpg"}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "/default_slide_images/7.jpg"}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "/default_slide_images/8.jpg"}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "/default_slide_images/9.jpg"}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "/default_slide_images/10.jpg"}'],
+				hotspot_wallpaper: ['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored ": false, "hidden" : true}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true}'],
 				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
 				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
 				free_data_allow : true,
