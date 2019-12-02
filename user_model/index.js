@@ -67,7 +67,7 @@ var voucher_model = new keystone.List(voucher_code);
 voucher_model.add(
     
     {
-		vouchercode : {type:String, unique:true, initial:true, required:true, default:'xxxxxx', label :'Voucher Code'},
+		vouchercode : {type:String, unique:true, initial:true, required:true, default:'N/A', label :'Voucher Code'},
 		voucher_username : {type: String, default:'N/A', label :'Voucher User Name'},
 		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
 		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
