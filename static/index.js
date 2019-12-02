@@ -460,6 +460,11 @@ function voucher_print(response){
 	
 	
 				var voucher_pin = response.vouchercode;
+
+					if(voucher_pin == 'xxxxxx'){
+						voucher_pin = response.voucher_username;
+					}
+
 				var voucher_profile = response.voucherprofile;
 				var voucher_expiry_days = response.voucherexpiry;
 				var voucher_amount_cost = response.voucheramount;
@@ -501,8 +506,10 @@ function voucher_print(response){
 				
 	
 				//auto voucher adding//login
+				var voucher_username = response.voucher_username;
+				var voucher_password = response.voucher_password;
 				
-				auto_login(voucher_pin);
+				auto_login(voucher_pin, voucher_username, voucher_password);
 	
 	
 	
@@ -3959,10 +3966,17 @@ function distributor_superadmin_acc_help(type_of_user){
 
 //trick for next time, make ajax to router, get response link extract variable to see if it http-pap or chap then use corrcet way to login//using this nw im gettng allow origin issue
 
-function auto_login(vocher_code){
+function auto_login(vocher_code, voucher_username, voucher_password){
 	//hot_spot_url
 	
 	if(free_voucher_login){//if free login auto log in
+
+		if(voucher_username != 'N/A' &&  voucher_password != 'N/A'){//check if username and password is given
+
+			window.open(hot_spot_url + '?password=' + voucher_username +'&username=' + voucher_password,'_self');
+
+			return;
+		}
 
 		window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
 
