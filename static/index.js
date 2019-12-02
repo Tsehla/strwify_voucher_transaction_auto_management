@@ -341,7 +341,7 @@ function auto_voucher_check(uniqueCode){
 			   
                if(response != 'Voucher Not found'){
                 dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
-               var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>"+JSON.stringify(response.vouchercode)+"</span></p>";
+               var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>" + JSON.stringify((response.vouchercode == 'N/A')?response.voucher_username:response.vouchercode) +"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
                 stop_auto_voucher_check();//timer stop
                 voucher_print(response);//print voucher
