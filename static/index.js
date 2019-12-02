@@ -3973,7 +3973,9 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 
 		if(voucher_username != 'N/A' &&  voucher_password != 'N/A'){//check if username and password is given
 
-			window.open(hot_spot_url + '?password=' + voucher_username +'&username=' + voucher_password,'_self');
+			//http://streetwifiy.co.za/login?username=free&password=vouchr&dst=&popup=true
+
+			window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_self');
 
 			return;
 		}
