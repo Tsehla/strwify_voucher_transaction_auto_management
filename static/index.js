@@ -3191,6 +3191,12 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 }
 	
 
+//uploads/advertiment
+if(transaction_type == 'upload'){
+
+	window.open('http://' + current_domain +'/upload', '_blank');
+	return;
+}
 
 	
 }
