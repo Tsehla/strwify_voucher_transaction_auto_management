@@ -1075,14 +1075,14 @@
 					
 					if(data.length > 10){//if notification is creater than 10 characters
 						
-						notification_preview = data.slice(0, 50)+'...';
+						notification_preview = data.slice(0, 50)+', See more...';
 					}
                     
                     if(data.includes('href=')){//if its a link/or mixture of link and text
 
-                        var style_edited_data = data.replace('<a',"<a style='display:inline'");
+                        var style_edited_data = data.replace(/<a/gi,"<a style='display:inline'");
 
-                        $('#notification').append('<h2>ANNOUNCE ' + (index + 1).toString()  + `</h2><br/><span id='notification_link' onclick="this.innerHTML=\`${style_edited_data}\`">${((data.length > 100)?(style_edited_data.slice(0, 110))+'...':style_edited_data)}</span>`);
+                        $('#notification').append('<h2>ANNOUNCE ' + (index + 1).toString()  + `</h2><br/><span id='notification_link' onclick="this.innerHTML=\`${style_edited_data}\`">${((data.length > 100)?(style_edited_data.slice(0, 110).replace(/<a/gi,'<span').replace(/<\/a>/gi, '</span>'))+', See more...':style_edited_data)}</span>`);
 
                     }
                     
