@@ -2038,7 +2038,7 @@ app.get('/api/hotspot_data', function(req, res){
 				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
 				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
 				free_data_allow : true,
-				hotspot_announcements : ['Dare to be different','Dare to write your destiny.'],
+				hotspot_announcements : ['Dare to be different','Dare to write your destiny.',"<a href='http://www.google.com'>Click to go to Google</a>","To search the internet click <a href='http://www.google.com'>google</a> then type your query","<a href='http://www.google.com'>Google search</a>, <a href='http://scholar.google.com'>Google scholar</a>"],
 				hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
 				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
 				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare.',

@@ -141,7 +141,7 @@ router_hotspot_page_model .add({
         
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{"link":"https://www.google.com","text":"Search on google"}'],},
-	hotspot_announcements : {type : types.TextArray, label :'Hotspot Announcements', default: ['Dare to be different','Dare to write your destiny.'],},
+	hotspot_announcements : {type : types.TextArray, label :'Hotspot Announcements', default: ['Dare to be different','Dare to write your destiny.',"<a href='http://www.google.com'>Click to go to Google</a>","To search the internet click <a href='http://www.google.com'>google</a> then type your query","<a href='http://www.google.com'>Google search</a>, <a href='http://scholar.google.com'>Google scholar</a>"],},
 	free_data_allow: {type :types.Boolean, default:false, label :'Allow free data' },
 	
 	hotspot_how_to_bottom_text : {type : String, label :'Hotspot Howto bottom text', default: 'Help yourself, To be helped.',},
