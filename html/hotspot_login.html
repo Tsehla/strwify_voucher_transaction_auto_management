@@ -1077,9 +1077,19 @@
 						
 						notification_preview = data.slice(0, 50)+'...';
 					}
-					
-					
-					$('#notification').append('<h2>ANNOUNCE ' + (index + 1).toString()  + '</h2><br/><a href="#" onclick=\'this.innerHTML ="'+data+'"\'>' + notification_preview + '</a>');
+                    
+                    if(data.includes('href=')){//if its a link/or mixture of link and text
+
+                        var style_edited_data = data.replace('<a',"<a style='display:inline'");
+
+                        $('#notification').append('<h2>ANNOUNCE ' + (index + 1).toString()  + `</h2><br/><span id='notification_link' onclick="this.innerHTML=\`${style_edited_data}\`">${((data.length > 100)?(style_edited_data.slice(0, 110))+'...':style_edited_data)}</span>`);
+
+                    }
+                    
+
+					else{//if it only text
+                         $('#notification').append('<h2>ANNOUNCE ' + (index + 1).toString()  + '</h2><br/><a href="#" onclick=\'this.innerHTML ="'+data+'"\'>' + notification_preview + '</a>');
+                    }
 				});
 			}
 					

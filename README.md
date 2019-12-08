@@ -16,7 +16,7 @@ Rename file dot.env to .env and fill in details to enable some features of this 
 Run npm i, to start server
 
 # Login
-For login use any details shown on https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/master/updates for specific type of user you want to acess.
+For login use any details shown on https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/master/updates for specific type of user you want to access.
 
 # links
 
