@@ -13,7 +13,7 @@ keystone.get('routes', function(app){
    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
    console.log('Disable when running on local host [ app.use(secure) ]\n\r(/routes/index.js) on non https server');
    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-	//app.use(secure);//forces http usage //diable when running on local host//on non http server
+	app.use(secure);//forces http usage //diable when running on local host//on non http server
 	
 
     
