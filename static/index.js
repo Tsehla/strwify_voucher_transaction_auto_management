@@ -20,7 +20,7 @@ var current_domain = window.location.host;//domain en port//use this on live
 //change https to http when on localhost
 var http_https = "https://";
 
-if(current_domain.search('127.0.0.1') || current_domain.search('localhost')){
+if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){
 
 	http_https = 'http://';//return http
 }

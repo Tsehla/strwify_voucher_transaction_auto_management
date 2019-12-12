@@ -11,7 +11,7 @@ keystone.get('routes', function(app){
 
    app.use(function(req, res, next){  //force secure/[https] if address is local server
 	 //console.log(req.hostname)
-	 if(!req.host.search('127.0..1') || !req.host.search('localhost')){
+	 if(req.host.search('127.0.0.1') == -1 & req.host.search('localhost') == -1){//no match
 		 app.use(secure);
 	 }
 		next();
