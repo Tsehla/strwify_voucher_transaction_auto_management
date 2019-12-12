@@ -4786,7 +4786,8 @@ function qr_code_read(){
 		//  dom_hide_show('hide', 'outputMessage_close');	
           outputData.parentElement.hidden = false;	
 		  outputData.innerText = code.data;	
-		  document.getElementById('seller_ticket_unique_code').value = Number(code.data);//fill input form	
+		  
+		  document.getElementById('seller_ticket_unique_code').value = Number(code.data.replace(/\s/g,''));//fill input form
 		  stop_qr_record();//close scanner	
 
         } else {	
