@@ -25,8 +25,8 @@ if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost')
 	http_https = 'http://';//return http
 }
 
-console.log(current_domain);
-console.log(http_https);
+// console.log(current_domain);
+// console.log(http_https);
 
 
 
