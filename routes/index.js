@@ -11,21 +11,28 @@ keystone.get('routes', function(app){
 
   
 
-//    app.use(function(req, res, next){  //force secure/[https] if address is local server
-// 	 //console.log(req.hostname)
-// 	 if(req.host.search('127.0.0.1') == -1 & req.host.search('localhost') == -1){//no match
-// 		 app.use(secure);
-// 	 }
-// 		next();
-//    });
+   app.use(function(req, res, next){  //force secure/[https] if address is local server
+	 //console.log(req.hostname)
+
+	 if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1){//no match
+		console.log('server running on local')	 
+	 }
+
+	 else{
+		app.use(secure);
+	 }
+		next();
+   });
   
-app.use(secure);
+//app.use(secure);
+
     
    //enable cors 
 	app.use(function(req, res, next) { //allow cross origin requests
           res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
           res.header("Access-Control-Allow-Origin", "*");
-          res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		  
           next();
 		});
 
