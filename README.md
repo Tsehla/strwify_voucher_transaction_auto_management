@@ -10,7 +10,7 @@ This is backend system, meant to allow seamless voucher selling and buying proce
 
 # Running
 
-https required when not running on localhost/else disable [ app.use(secure); ] on [/routes/index.js];
+https required when not running on localhost/else disable [ app.use(secure); ] on [/routes/index.js] and [ var http_https = "https://"; ] to [ var http_https = "http://";] on [ /static/index.js].
 
 Make sure you have a working local mongo db installaton.
 
