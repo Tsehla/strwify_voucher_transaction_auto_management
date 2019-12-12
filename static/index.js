@@ -15,18 +15,32 @@ var hot_spot_url;
 // ++++++++++++++++++++++++++++++++++++++++++++++++  get url and route ++++++++++++++++++++++++++++++++++++++++
 var current_url= window.location.pathname;//content after domain 
 var current_domain = window.location.host;//domain en port//use this on live
-/*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
 
-// function dom_hide_show(showORhide, div){
+
+//change https to http when on localhost
+var http_https = "https://";
+
+if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){//match exist
+
+	http_https = 'http://';//return http
+}
+
+console.log(current_domain);
+console.log(http_https);
+
+
+
+/*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
+function dom_hide_show(showORhide, div){
     
-//     if(showORhide == 'hide'){
-//         document.getElementById(div).style.display='none';
-//     }
-//    if(showORhide == 'show'){
-//         document.getElementById(div).style.display='block';
-//     }
+    if(showORhide == 'hide'){
+        document.getElementById(div).style.display='none';
+    }
+   if(showORhide == 'show'){
+        document.getElementById(div).style.display='block';
+    }
     
-// }
+}
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++ add break on text/string +++++++++++++++++++++++++++++++++++++++*/
 function text_line_break(input_string){
@@ -225,29 +239,7 @@ function dom_innerHtml(div, value){
   document.getElementById(div).innerHTML=value;
 }
 
-/* hide or show div */
 
-function dom_hide_show(option, ...argument){
-
-	if(option.toLowerCase() == 'hide'){//hide
-
-		argument.forEach(function(div_Id){ //to hide
-			document.getElementById(div_Id).style.display = 'none';
-		})
-		return 'divs hidden == success';
-	}
-
-	if(option.toLowerCase() == 'show'){//show
-
-		argument.forEach(function(div_Id){ //to show
-			document.getElementById(div_Id).style.display = 'block';
-		})
-		return 'divs shown == success';
-
-	}
-	return 'nothing to show or hide';
-
-}
 
 
 /*=====================================================================================================================================================
@@ -309,7 +301,7 @@ generate unique random code
 function buy_page_on_init(){ //get unique code for this user session
 
 
-	var url= 'http://' + current_domain + '/api/buy?code=unique_code';//change '' + current_domain + '' to live domain
+	var url= http_https + current_domain + '/api/buy?code=unique_code';//change '' + current_domain + '' to live domain
     
     
        $.get(url, function(response, status){//response contain unique code
@@ -317,8 +309,7 @@ function buy_page_on_init(){ //get unique code for this user session
 
            if(status == 'success'){
              
-				auto_voucher_check(response);//start check for voucher with unique code
-				qr_code_fn(response)//create qr image with code 
+				auto_voucher_check(response);
 			             
                 return dom_innerHtml('second_page_user_auto_code', response);
                
@@ -342,14 +333,14 @@ function auto_voucher_check(uniqueCode){
 		unique_code = uniqueCode;
 		
 		//+++++++++++ default url for voucher finding +++++++++++++
-		var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '' + current_domain + '' to live domain
+		var url= http_https + current_domain + '/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '' + current_domain + '' to live domain
 		
 
 		//+++++++++++++++ search link params to see if this page was called by free voucher button click ++++++++++
 
 		if(document.location.search.indexOf('free_login') != -1){ //if true change url handling request
 			//alert('Yes user was directed by pressing free voucher button on hotspot page');
-			url= 'http://' + current_domain + '/api/buy?code=free_voucher';
+			url= http_https + current_domain + '/api/buy?code=free_voucher';
 			
 			free_voucher_login = true;//login is free voucher
 		}
@@ -416,14 +407,14 @@ manual voucher check/download
 function manual_voucher_init(button_id){
         
 		//+++++++++++ default url for voucher finding +++++++++++++	
-		var url= 'http://' + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
+		var url= http_https + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
 		
 
 		//+++++++++++++++ search link params to see if this page was called by free voucher button click ++++++++++
 
 		if(document.location.search.indexOf('free_login') != -1){ //if true change url handling request
 			//alert('Yes user was directed by pressing free voucher button on hotspot page');
-			url= 'http://' + current_domain + '/api/buy?code=free_voucher'
+			url= http_https + current_domain + '/api/buy?code=free_voucher'
 		}
     
 		document.getElementById(button_id).disabled = true;//disable mabual voucher download
@@ -562,7 +553,7 @@ function sell_ticket(button_id){
     
     
         
-        var url= 'http://' + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '' + current_domain + '' to live domain
+        var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -653,7 +644,7 @@ function seller_activity_console_fn (){//seller console function
     
     //var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
-    var url =  'http://' + current_domain + '/api/console_amount_activity?user_type=seller&idnumber='+seller_login.seller_id;
+    var url =  http_https + current_domain + '/api/console_amount_activity?user_type=seller&idnumber='+seller_login.seller_id;
     
     if(seller_login.logged_in == true){//if user is logged in
         
@@ -738,7 +729,7 @@ function distributor_activity_console_fn(){//seller console function
     
     //var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
-    var url =  'http://' + current_domain + '/api/console_amount_activity?user_type=distributor&idnumber='+distributor_login.distributor_id;
+    var url =  http_https + current_domain + '/api/console_amount_activity?user_type=distributor&idnumber='+distributor_login.distributor_id;
 		
 	//console.log(distributor_login.distributor_id);
 	//console.log(distributor_login);
@@ -830,7 +821,7 @@ function super_admin_activity_console_fn(){//seller console function
     
     //var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
 
-    var url =  'http://' + current_domain + '/api/console_amount_activity?user_type=Server Admin&idnumber='+admin_login.admin_id;
+    var url =  http_https + current_domain + '/api/console_amount_activity?user_type=Server Admin&idnumber='+admin_login.admin_id;
 		
 	//console.log(distributor_login.distributor_id);
 	//console.log(distributor_login);
@@ -952,7 +943,7 @@ function sixth_page_distributor_login(){
             
             
         //change [http://' + current_domain + '] url to live server url
-        var url= 'http://' + current_domain + '/login?usertype=distributor&id_number='+distributor_id.value;
+        var url= http_https + current_domain + '/login?usertype=distributor&id_number='+distributor_id.value;
     
         $.get(url, function(response, status){
            
@@ -1045,7 +1036,7 @@ function sixth_page_seller_show_password_hint(){ //distributor password hint
         return null;
     }
     
-    var url = 'http://' + current_domain + '/password_hint?usertype=distributor&id_number='+id_number+'&user_name='+user_name;
+    var url = http_https + current_domain + '/password_hint?usertype=distributor&id_number='+id_number+'&user_name='+user_name;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -1179,7 +1170,7 @@ function sixth_page_seller_change_password(){
 	}
 	
     
-    var url = 'http://'+current_domain+'/password_change?usertype=distributor&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+    var url = http_https+current_domain+'/password_change?usertype=distributor&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -1283,7 +1274,7 @@ function fourth_page_seller_login(){
             
             
         //change [http://' + current_domain + '] url to live server url
-        var url= 'http://' + current_domain + '/login?usertype=seller&id_number='+seller_id.value;
+        var url= http_https + current_domain + '/login?usertype=seller&id_number='+seller_id.value;
     
         $.get(url, function(response, status){
            
@@ -1372,7 +1363,7 @@ function fourth_page_seller_show_password_hint(){ //seller password hint
         return null;
     }
     
-    var url = 'http://' + current_domain + '/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
+    var url = http_https + current_domain + '/password_hint?usertype=seller&id_number='+id_number+'&user_name='+user_name;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -1506,7 +1497,7 @@ function fourth_page_seller_change_password(){
 	}
 	
 	
-    var url = 'http://'+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+    var url = http_https+current_domain+'/password_change?usertype=seller&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -1620,7 +1611,7 @@ function super_admin_login(){
             
             
         //change [http://' + current_domain + '] url to live server url
-        var url= 'http://' + current_domain + '/login?usertype=server%20Admin&id_number='+admin_id.value;
+        var url= http_https + current_domain + '/login?usertype=server%20Admin&id_number='+admin_id.value;
 			//console.log(url);
     
         $.get(url, function(response, status){
@@ -1728,7 +1719,7 @@ function admin_password_change_fn(){
 	}
 	
 	
-    var url = 'http://'+current_domain+'/password_change?usertype=server%20Admin&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
+    var url = http_https+current_domain+'/password_change?usertype=server%20Admin&id_number='+id_number+'&old_password='+old_password+'&new_password='+new_password;
     
      $.get(url, function(response, status){
          console.log(' res : '+response);
@@ -1897,7 +1888,7 @@ function distributor_seller_sell_amount(button_id){
 	 //disable button for now
 	document.getElementById(button_id).disabled=true;
 	
-     var url= 'http://' + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+distributor_seller_recharge_amount_input.value.trim()+'&seller_id='+distributor_seller_id_input.value.trim()+'&seller_name_surname='+distributor_seller_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+distributor_login.distributor_id.trim()+'&userType=Distributor&userType_to_recharge=Seller';
+     var url= http_https + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+distributor_seller_recharge_amount_input.value.trim()+'&seller_id='+distributor_seller_id_input.value.trim()+'&seller_name_surname='+distributor_seller_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+distributor_login.distributor_id.trim()+'&userType=Distributor&userType_to_recharge=Seller';
 	
 	
 	
@@ -1995,7 +1986,7 @@ function super_admin_distributor_sell_amount(button_id){
 	
 	document.getElementById(button_id).disabled=true;//disable send rechar button for now
 	        
-     var url= 'http://' + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+admin_distributor_recharge_amount_input.value.trim()+'&seller_id='+admin_distributor_id_input.value.trim()+'&seller_name_surname='+admin_distributor_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+admin_login.admin_id.trim()+'&userType=Server Admin&userType_to_recharge=Distributor';
+     var url= http_https + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount='+admin_distributor_recharge_amount_input.value.trim()+'&seller_id='+admin_distributor_id_input.value.trim()+'&seller_name_surname='+admin_distributor_name_surname_input.value.trim().replace(/ /,'*')+'&distributor_id='+admin_login.admin_id.trim()+'&userType=Server Admin&userType_to_recharge=Distributor';
 	
 	
 	
@@ -2099,7 +2090,7 @@ function distributor_seller_new_account_creation(){
     }
 
 	        
-     var url= 'http://' + current_domain + '/api/add_user?user_type=seller&name='+distributor_seller_add_name_input.value.trim()+'&surname='+distributor_seller_add_surname_input.value.trim()+'&password='+seller_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+distributor_seller_add_id_input.value.trim()+'&added_by_name='+distributor_login.name+'&added_by_id='+distributor_login.distributor_id+'&added_by_usertype='+distributor_login.usertype;
+     var url= http_https + current_domain + '/api/add_user?user_type=seller&name='+distributor_seller_add_name_input.value.trim()+'&surname='+distributor_seller_add_surname_input.value.trim()+'&password='+seller_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+distributor_seller_add_id_input.value.trim()+'&added_by_name='+distributor_login.name+'&added_by_id='+distributor_login.distributor_id+'&added_by_usertype='+distributor_login.usertype;
 	
 	
     //console.log(url);
@@ -2188,7 +2179,7 @@ function admin_distributor_new_account_creation(){
     }
 
 	        
-     var url= 'http://' + current_domain + '/api/add_user?user_type=distributor&name='+admin_distributor_add_name_input.value.trim()+'&surname='+admin_distributor_add_surname_input.value.trim()+'&password='+distributor_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+admin_distributor_add_id_input.value.trim()+'&added_by_name='+admin_login.name+'&added_by_id='+admin_login.admin_id+'&added_by_usertype='+admin_login.usertype;
+     var url= http_https + current_domain + '/api/add_user?user_type=distributor&name='+admin_distributor_add_name_input.value.trim()+'&surname='+admin_distributor_add_surname_input.value.trim()+'&password='+distributor_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+admin_distributor_add_id_input.value.trim()+'&added_by_name='+admin_login.name+'&added_by_id='+admin_login.admin_id+'&added_by_usertype='+admin_login.usertype;
 	
 	
     //console.log(url);
@@ -2406,7 +2397,7 @@ function admin_voucher_upload(){//send voucher to db
 	
 	
 	
-	var url= 'http://' + current_domain + '/api/add_vouchers?voucher_codes='+JSON.stringify(mob)+'&added_by='+admin_login.admin_id;
+	var url= http_https + current_domain + '/api/add_vouchers?voucher_codes='+JSON.stringify(mob)+'&added_by='+admin_login.admin_id;
 	
     //console.log(url);
     
@@ -2541,7 +2532,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 		router_extramenu_show_hide = 'block';//show if function called within admin-logged in account
 	}
 	
-	var url= 'http://' + current_domain + '/api/router_checkin_data_get';
+	var url= http_https + current_domain + '/api/router_checkin_data_get';
 	
 	
 	
@@ -2627,7 +2618,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 									
 										link_cleaning = link_cleaning.replace('network=' ,'').replace('"' ,'');
 										
-										link_cleaning = `<br><button style='min-width:100px; width:20%; height:50px' class='btn btn-warning' onclick='window.open("http://`+ link_cleaning +`","_blank")'>Open link</button>`;
+										link_cleaning = `<br><button style='min-width:100px; width:20%; height:50px' class='btn btn-warning' onclick='window.open("https://`+ link_cleaning +`","_blank")'>Open link</button>`;
 
 										//console.log(link_cleaning);
 
@@ -2745,7 +2736,7 @@ function router_mute_control(id,todo){
 	
 	var todo_request = todo =='mute'?true:false;
 	
-	var url= 'http://' + current_domain + '/api/router_checkin_data_save?status_id='+id+'&router_todo='+todo_request+'&user_id='+admin_login.admin_id;
+	var url= http_https + current_domain + '/api/router_checkin_data_save?status_id='+id+'&router_todo='+todo_request+'&user_id='+admin_login.admin_id;
 	
 	//console.log(url);
 		
@@ -2862,17 +2853,17 @@ document.getElementById('transactions_and_voucher_page').style.display='block';
 	
 if(admin_login.admin_id){//if admin logged in
 	
-	var url= 'http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+admin_login.admin_id+'&usertype='+admin_login.usertype;
+	var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+admin_login.admin_id+'&usertype='+admin_login.usertype;
 }
 	
 if(seller_login.seller_id){// if seller logged in
 	
-	var url= 'http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+seller_login.seller_id+'&usertype='+seller_login.usertype;
+	var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+seller_login.seller_id+'&usertype='+seller_login.usertype;
 }
 
 if(distributor_login.distributor_id){// if distributor logged in
 	
-	var url= 'http://' + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+distributor_login.distributor_id+'&usertype='+distributor_login.usertype
+	var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+distributor_login.distributor_id+'&usertype='+distributor_login.usertype
 }
 	
 	
@@ -3216,12 +3207,6 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 }
 	
 
-//uploads/advertiment
-if(transaction_type == 'upload'){
-
-	window.open('http://' + current_domain +'/upload', '_blank');
-	return;
-}
 
 	
 }
@@ -3241,7 +3226,7 @@ if(transaction_type == 'upload'){
 	 var voucher_document_id = voucher_document_id_and_amount.split(',')[0];
 	 var voucher_amount = voucher_document_id_and_amount.split(',')[1];
 	 
-	var url= 'http://' + current_domain + '/api/redeem_voucher?voucher_id='+voucher_document_id+'&user_id='+seller_login.seller_id;//redeem voucher link
+	var url= http_https + current_domain + '/api/redeem_voucher?voucher_id='+voucher_document_id+'&user_id='+seller_login.seller_id;//redeem voucher link
 	
 	document.getElementById(div_id).disabled=true;//disable reedem button for now
 	 		
@@ -3352,7 +3337,7 @@ function messaging_send(messaging_document_id, action_type){
 		
 		reply_message = JSON.stringify(reply_message);//turn to json string
 		
-		var url = 'http://' + current_domain + '/api/reply_or_delete?action_type=reply&document_id=' + messaging_document_id + '&pay_load=' + reply_message;//reply link
+		var url = http_https + current_domain + '/api/reply_or_delete?action_type=reply&document_id=' + messaging_document_id + '&pay_load=' + reply_message;//reply link
 			
 		var confirm_reply = confirm("Are you sure?");//give alert
 		if(!confirm_reply){return;}//if cancelled pressed// end function
@@ -3425,7 +3410,7 @@ function messaging_send(messaging_document_id, action_type){
 	if(!confirm_delete){return;}//if cancelled pressed// end function
 
 	
-	var url = 'http://' + current_domain + '/api/reply_or_delete?action_type=delete&document_id=' + messaging_document_id + '&pay_load=' + action_type;// delete link
+	var url = http_https + current_domain + '/api/reply_or_delete?action_type=delete&document_id=' + messaging_document_id + '&pay_load=' + action_type;// delete link
 
 		document.getElementById(messaging_document_id+'_delete').disabled=true;//disable  delete button 	
 	
@@ -3627,7 +3612,7 @@ function new_contact_or_message_send(calling_button){
 		
 		 new_message = JSON.stringify(new_message);//turn to json string
 		
-		var url = 'http://' + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_message&message_initiator_id=' + logged_in_user_id + '&mesage_initiator_usertype='+logged_in_user_type+'&message_initiator_name='+logged_in_user_name+'&message_participant_details='+participant_details+'&message=' + new_message;//reply link
+		var url = http_https + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_message&message_initiator_id=' + logged_in_user_id + '&mesage_initiator_usertype='+logged_in_user_type+'&message_initiator_name='+logged_in_user_name+'&message_participant_details='+participant_details+'&message=' + new_message;//reply link
 			
 		var confirm_reply = confirm("Are you sure?");//give alert
 		if(!confirm_reply){return;}//if cancelled pressed// end function
@@ -3830,7 +3815,7 @@ function new_contact_save(){
 			//console.log(logged_in_user_contacts_list);
 
 	
-				var url = 'http://' + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_contact&current_user_id='+logged_in_user_id+'&current_usertype='+logged_in_user_type+'&new_contact_user_id='+new_contact_id_no.value.toString().trim()+'&new_contact_usertype='+new_contact_usertype.value+'&pay_load='+new_user_contact_; 
+				var url = http_https + current_domain + '/api/new_message_or_add_contact_or_delete_contact?action_type=new_contact&current_user_id='+logged_in_user_id+'&current_usertype='+logged_in_user_type+'&new_contact_user_id='+new_contact_id_no.value.toString().trim()+'&new_contact_usertype='+new_contact_usertype.value+'&pay_load='+new_user_contact_; 
 
 	
 				document.getElementById('save_new_contact').disabled=true;//disable  save button
@@ -3927,7 +3912,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open('http://'+current_domain+'/static/default_slide_images/3.jpg');
+			window.open(http_https+current_domain+'/static/default_slide_images/3.jpg');
 			return;
 		}
 			
@@ -3946,7 +3931,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open('http://'+current_domain+'/static/default_slide_images/4.jpg');
+			window.open(http_https+current_domain+'/static/default_slide_images/4.jpg');
 			
 			return;
 		}
@@ -3961,7 +3946,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open('http://'+current_domain+'/static/default_slide_images/2.jpg');
+			window.open(http_https+current_domain+'/static/default_slide_images/2.jpg');
 			
 			return;
 		}
@@ -3975,7 +3960,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open('http://'+current_domain+'/static/default_slide_images/1.jpg');
+			window.open(http_https+current_domain+'/static/default_slide_images/1.jpg');
 			
 			return;
 		}
@@ -4031,807 +4016,6 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 
 }
 
-
-/*=====================================================================================================================================================
-
-   buy voucher Simple/Manual view
-    
-=====================================================================================================================================================*/
-
-/* div view manage */
-function simple_or_manual_view(div){
-
-	var get_div = document.getElementById(div);
-
-
-
-	if(div == 'simpleViewButton'){
-		get_div.style.boxShadow = 'none';//remove shadow/activate
-		//get_div.disabled = true;//disable clicked button
-
-		document.getElementById('manualViewButton').style.boxShadow = '-1px 1px 2px gainsboro, -2px 1px 2px gainsboro';//apply shadow to button 
-		document.getElementById('manualViewButton').style.backgroundColor = '#F8F8F8';
-		document.getElementById('simpleViewButton').style.backgroundColor = '#FfFfFf';
-
-		document.getElementById('manualViewButton').disabled = false;//enable non clicked button
-
-		dom_hide_show('hide', 'manual_screen_content')//hide
-		dom_hide_show('show', 'qr_container')//show
-
-	}
-
-	if(div == 'manualViewButton'){
-
-		get_div.style.boxShadow = 'none';//remove shadow/activate 
-		//get_div.disabled = true;//disable clicked button
-
-		document.getElementById('simpleViewButton').style.boxShadow = '2px 1px 2px gainsboro, 2px 1px 2px gainsboro';//apply shadow to button
-		document.getElementById('simpleViewButton').style.backgroundColor = '#F8F8F8';
-		document.getElementById('manualViewButton').style.backgroundColor = '#FfFfFf';
-
-		document.getElementById('simpleViewButton').disabled = false;//enable non clicked button
-
-		dom_hide_show('hide', 'qr_container')//show
-		dom_hide_show('show', 'manual_screen_content')//hide
-		
-		
-	}
-
-}
-
-/* qr code */
-
-function qr_code_fn(uniqueCode){
-
-	var qr_backgroud_array = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg'];
-	var qr_logo_array = ["logo1.jpg","logo2.jpg","logo3.jpg","logo4.jpg"]
-
-			var	qr_text = uniqueCode; // Content
-			var	qr_title = 'Unique Code'; // Title
-			var	qr_subTitle = uniqueCode; // Subtitle content
-			var	qr_logo = '/images/qr_code_images/logos/' + qr_logo_array[Math.floor(Math.random() * qr_logo_array.length)]; // LOGO
-			var	qr_backgroundImage = '/images/qr_code_images/backgrounds/' + qr_backgroud_array[Math.floor(Math.random() * qr_backgroud_array.length)];//background img;
-			
-			var qr_design_array = [
-				
-				/*{
-					
-					config: {
-						text : qr_text,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-						width: 240,
-						height: 240,
-						quietZone: 0,
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-
-						//PI: '#f55066',
-
-						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
-					}
-				},*/
-				/*{
-					
-					config: {
-						text : qr_text,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-						width: 240,
-						height: 240,
-						colorDark: "#473C8B",
-						colorLight: "#FFFACD",
-
-						//PI: '#f55066',
-
-						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
-					}
-				},*/
-				/*{
-					
-					config: {
-						text : qr_text,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						width: 240,
-						height: 240,
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						
-						dotScale: 0.4
-					}
-				
-				}, */
-				{
-					
-					config: {
-						text : qr_text,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						width: 240,
-						height: 240,
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-				
-						PI: '#BF3030',
-						PO: '#269926', 
-						
-						AI: '#009ACD',
-						AO: '#B03060',
-						
-				
-						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
-				
-					}
-				
-				},
-				/*{
-					
-					config: {
-						text : qr_text,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						width: 240,
-						height: 240,
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-				
-						PI: '#f55066',
-						PI_TL: '#b7d28d', // Position Inner - Top Left 
-						PO_TL: '#aa5b71', // Position Outer - Top Right
-						
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						
-						dotScale: 0.5
-					}
-				
-				},*/
-				/*{
-					
-					config: {
-						text : qr_text,
-						width: 240,
-						height: 240,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-
-
-						AO: '#A67C00', // Position Outer - Top Right
-						AI: '#A67C00',  // Position Outer - Bottom Right
-
-						// === Timing Pattern Color
-						timing: '#e1622f',
-						timing_V: '#00C12B',
-
-						correctLevel: QRCode.CorrectLevel.H, //  L, M, Q, H
-
-						
-						dotScale: 0.4
-
-					}
-				},*/
-
-
-				{
-					
-					config: {
-						text : qr_text,
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-						width: 240,
-						height: 240,
-						colorDark: "#000000",
-
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-
-						backgroundImage: qr_backgroundImage,
-						backgroundImageAlpha: 1,
-						autoColor: false,
-
-						
-						dotScale: 1
-
-					}
-
-				},
-				
-				{
-					
-					config: {
-						text : qr_text,
-				
-						width: 240,
-						height: 240,
-						colorDark: "#000000",
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						PI: '#f55066',
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						backgroundImage: qr_backgroundImage,
-						autoColor: true,
-						
-						
-						dotScale: 0.5
-					}
-				
-				},
-				
-				{
-				
-					config: {
-						text : qr_text,
-				
-						width: 240,
-						height: 240,
-						colorDark: "#000000",
-
-							// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						PI: '#f55066',
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						backgroundImage: qr_backgroundImage,
-						backgroundImageAlpha: 0.3,
-						autoColor: true,
-				
-						
-						dotScale: 0.5,
-						
-						binarize: true
-				
-						
-					}
-				
-				},
-				
-				{
-					
-					config: {
-						text : qr_text, // Content
-
-						width: 240, // Widht
-						height: 240, // Height
-						colorDark: "#000000", // Dark color
-						colorLight: "#ffffff", // Light color
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-
-
-						// === Logo
-						logo: qr_logo, // LOGO
-						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  
-						//					logoWidth:80, 
-						//					logoHeight:80,
-						logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
-						logoBackgroundTransparent: false, // Whether use transparent image, default is false
-
-
-						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H
-
-					}
-
-				},
-				
-				{
-				
-					config: {
-						text : qr_text, // Content
-				
-						width: 240, // Widht
-						height: 240, // Height
-						colorDark: "#000000", // Dark color
-						colorLight: "#ffffff", // Light color
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-				
-						// === Logo
-						logo: qr_logo, // LOGO
-						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  
-						//					logoWidth:80, 
-						//					logoHeight:80,
-						logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
-						logoBackgroundTransparent: false, // Whether use transparent image, default is false
-				
-					
-						timing_V: '#00B2EE',
-				
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						
-						dotScale: 0.5
-					}
-				
-				},
-				{
-					
-					config: {
-						text : qr_text, // Content
-				
-						width: 240, // Widht
-						height: 240, // Height
-						colorDark: "#27408B", // Dark color
-						colorLight: "#FFF8DC", // Light color
-
-							// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						// === Logo
-						logo: qr_logo, // LOGO
-						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  
-						//					logoWidth:80, 
-						//					logoHeight:80,
-						logoBackgroundColor: '#FFF8DC', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
-						logoBackgroundTransparent: false, // Whether use transparent image, default is false
-				
-						// === Posotion Pattern(Eye) Color
-						PO: '#e1622f', // Global Position Outer color. if not set, the defaut is `colorDark`
-						PI: '#aa5b71', // Global Position Inner color. if not set, the defaut is `colorDark`
-						//					PO_TL:'', // Position Outer - Top Left 
-						PI_TL: '#b7d28d', // Position Inner - Top Left 
-						PO_TR: '#aa5b71', // Position Outer - Top Right 
-						PI_TR: '#c17e61', // Position Inner - Top Right 
-						//					PO_BL:'', // Position Outer - Bottom Left 
-						//					PI_BL:'' // Position Inner - Bottom Left 
-				
-						// === Timing Pattern Color
-						//	timing: '#e1622f', // Global Timing color. if not set, the defaut is `colorDark`
-						timing_H: '#ff6600', // Horizontal timing color
-						timing_V: '#cc0033', // Vertical timing color
-				
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						
-						dotScale: 0.5
-					}
-				
-				},
-				{
-					
-					config: {
-						text : qr_text, // Content
-				
-						width: 240, // Widht
-						height: 240, // Height
-						quietZone: 20, 
-						colorDark: "#27408B", // Dark color
-						colorLight: "#FFF8DC", // Light color
-
-							// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-				
-						// === Logo
-						logo: qr_logo, // LOGO
-						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  
-						//					logoWidth:80, 
-						//					logoHeight:80,
-						logoBackgroundColor: '#FFF8DC', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
-						logoBackgroundTransparent: false, // Whether use transparent image, default is false
-				
-				
-						backgroundImage: qr_backgroundImage,
-						backgroundImageAlpha: 0.3,
-						autoColor: true,
-						
-						// === Posotion Pattern(Eye) Color
-						PO: '#e1622f', // Global Position Outer color. if not set, the defaut is `colorDark`
-						PI: '#aa5b71', // Global Position Inner color. if not set, the defaut is `colorDark`
-						//					PO_TL:'', // Position Outer - Top Left 
-						PI_TL: '#b7d28d', // Position Inner - Top Left 
-						PO_TR: '#aa5b71', // Position Outer - Top Right 
-						PI_TR: '#c17e61', // Position Inner - Top Right 
-						//					PO_BL:'', // Position Outer - Bottom Left 
-						//					PI_BL:'' // Position Inner - Bottom Left 
-				
-						// === Timing Pattern Color
-						//	timing: '#e1622f', // Global Timing color. if not set, the defaut is `colorDark`
-						timing_H: '#ff6600', // Horizontal timing color
-						timing_V: '#cc0033', // Vertical timing color
-				
-				
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-				
-						
-						dotScale: 0.5
-					}
-				
-				},
-				{
-					
-					config: {
-						text : qr_text,
-						width: 240,
-						height: 240,
-
-							// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-						colorDark: "#000000",
-						colorLight: "#ffffff",
-
-
-						// === Timing Pattern Color
-						timing: '#e1622f',
-
-						correctLevel: QRCode.CorrectLevel.H, //  L, M, Q, H
-
-						
-						dotScale: 0.4
-					}
-
-				},
-
-
-
-				// All
-				{
-					
-					config: {
-						text : qr_text, // Content
-
-						width: 240, // Widht
-						height: 240, // Height
-						quietZone: 0,
-						colorDark: "#000000", // Dark color
-						colorLight: "#FFFACD", // Light color
-
-						// === Title
-						title:  qr_title, // Title
-						titleFont: "bold 18px Arial", // Title font
-						titleColor: "#004284", // Title Color
-						titleBackgroundColor: "#fff", // Title Background
-						titleHeight: 70, // Title height, include subTitle
-						titleTop: 25, // Title draw position(Y coordinate), default is 30
-
-
-						// === SubTitle
-						subTitle: qr_subTitle, // Subtitle content
-						subTitleFont: "14px Arial", // Subtitle font
-						subTitleColor: "#004284", // Subtitle color
-						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50
-
-
-						// === Logo
-						logo: qr_logo, // LOGO
-						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  
-						//					logoWidth:80, 
-						//					logoHeight:80,
-						logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'
-						logoBackgroundTransparent: false, // Whether use transparent image, default is false
-
-						// === Posotion Pattern(Eye) Color
-						PO: '#e1622f', // Global Position Outer color. if not set, the defaut is `colorDark`
-						PI: '#aa5b71', // Global Position Inner color. if not set, the defaut is `colorDark`
-						//					PO_TL:'', // Position Outer - Top Left 
-						PI_TL: '#b7d28d', // Position Inner - Top Left 
-						PO_TR: '#aa5b71', // Position Outer - Top Right 
-						PI_TR: '#c17e61', // Position Inner - Top Right 
-						//					PO_BL:'', // Position Outer - Bottom Left 
-						//					PI_BL:'' // Position Inner - Bottom Left 
-
-						// === Timing Pattern Color
-						//	timing: '#e1622f', // Global Timing color. if not set, the defaut is `colorDark`
-						timing_H: '#ff6600', // Horizontal timing color
-						timing_V: '#cc0033', // Vertical timing color
-
-						// === Aligment color
-						AI:'#27408B',
-						AO:'#7D26CD',
-
-						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H
-
-						
-						dotScale: 0.5
-					}
-
-				}
-
-			]
-			
-
-		
-				container = document.getElementById('qr_container').innerHTML+=`
-					<div class="imgblock" style='margin: 10px 0;text-align: center;float: center;min-height: 420px;border-bottom: 1px solid #B4B7B4;'>
-						<div class="qr" id="qrcode_div"></div>
-		
-					</div>
-									
-					<i style='font-size:12px;'>Show Quck Response Code to seller/Tell unique numbers..</i>
-					`;
-
-				 new QRCode(document.getElementById("qrcode_div"), qr_design_array[Math.floor(Math.random() * qr_design_array.length)].config);
-			
-
-}
-
-/* qr code reader */
-
-var video = document.createElement("video");
-var canvasElement = document.getElementById("canvas");
-var canvas = canvasElement.getContext("2d");
-var loadingMessage = document.getElementById("loadingMessage");
-var outputContainer = document.getElementById("output");
-var outputMessage = document.getElementById("outputMessage");
-var outputData = document.getElementById("outputData");
-var localStream;
-
-function qr_code_read(){
-
-	dom_hide_show('show','qr_scan_div');//show qr div/canvas
-
-    function drawLine(begin, end, color) {
-      canvas.beginPath();
-      canvas.moveTo(begin.x, begin.y);
-      canvas.lineTo(end.x, end.y);
-      canvas.lineWidth = 4;
-      canvas.strokeStyle = color;
-      canvas.stroke();
-    }
-
-    // Use facingMode: environment to attemt to get the front camera on phones
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {
-	  video.srcObject = stream;
-	  localStream = stream; //streaming data object
-      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen
-      video.play();
-      requestAnimationFrame(tick);
-    });
-
-    function tick() {
-      loadingMessage.innerText = "⌛ Loading video..."
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-		//dom_hide_show('hide','loadingMessage_close')
-        loadingMessage.hidden = true;
-        canvasElement.hidden = false;
-        outputContainer.hidden = false;
-
-        canvasElement.height = video.videoHeight;
-        canvasElement.width = video.videoWidth;
-        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);
-        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);
-        var code = jsQR(imageData.data, imageData.width, imageData.height, {
-          inversionAttempts: "dontInvert",
-        });
-        if (code) {
-          drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");
-          drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");
-          drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");
-          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");
-		  outputMessage.hidden = true;
-		//  dom_hide_show('hide', 'outputMessage_close');
-          outputData.parentElement.hidden = false;
-		  outputData.innerText = code.data;
-		  document.getElementById('seller_ticket_unique_code').value = Number(code.data);//fill input form
-		  stop_qr_record();//close scanner
-
-        } else {
-		  outputMessage.hidden = false;
-		 // dom_hide_show('show','outputMessage_close');
-          outputData.parentElement.hidden = true;
-        }
-      }
-      requestAnimationFrame(tick);
-    }
-
-
-
-
-
-}
-
-
-function stop_qr_record(){//stop camera
-	dom_hide_show('hide','qr_scan_div');// hide scanner div
-
-	video.pause();
-	video.src = "";
-	//localStream.getTracks()[0].stop();
-	localStream.getTracks().forEach(function(media_streaming){//close all media streaming
-		media_streaming.stop();
-	});
-	
-
-}
 
 
 
