@@ -4716,7 +4716,7 @@ function qr_code_fn(uniqueCode){
 
 
 				container = document.getElementById('qr_container').innerHTML+=`	
-					<div class="imgblock" style='margin: 10px 0;text-align: center;float: center;min-height: 240px;height:50vh;border-bottom: 1px solid #B4B7B4;'>	
+					<div class="imgblock" style='margin: 10px 0;text-align: center;float: center;min-height: 320px;height:55vh;border-bottom: 1px solid #B4B7B4;'>	
 						<div class="qr" id="qrcode_div"></div>	
 			
 					</div>	
