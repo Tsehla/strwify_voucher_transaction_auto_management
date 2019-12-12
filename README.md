@@ -9,6 +9,9 @@ This is backend system, meant to allow seamless voucher selling and buying proce
 
 
 # Running
+
+https required when not running on localhost/else disable [ app.use(secure); ] on [/routes/index.js];
+
 Make sure you have a working local mongo db installaton.
 
 Rename file dot.env to .env and fill in details to enable some features of this app to work.
@@ -16,7 +19,7 @@ Rename file dot.env to .env and fill in details to enable some features of this 
 Run npm i, to start server
 
 # Login
-For login use any details shown on https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/master/updates for specific type of user you want to access.
+For login use any details shown on https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/master/updates for specific type of user you want to acess.
 
 # links
 
