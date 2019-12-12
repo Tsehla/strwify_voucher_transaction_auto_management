@@ -10,11 +10,11 @@
       <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
      --> 
       <style>
-             { border:1px solid brown;}
+            /* { border:1px solid brown;}*/
           body{
                 padding:0px;
                 margin:0px;
-                width:100vw;
+                width:99vw;
                 height:auto;
                 font-size:13px;
                } 
@@ -69,7 +69,9 @@
       	  	   #transactions_and_voucher_page{
                display : none;/* hide */
                }
-               
+               #manual_screen_content{
+               display : none;/* hide */
+               }
                
       </style>
       
@@ -106,7 +108,7 @@
 </div>
 	   
 	   
-<div id="first_page" style="width:100vw; height: auto"><!-- first page Start -->
+<div id="first_page" style="width:99vw; height: auto"><!-- first page Start -->
 
    <!-- landing choose action --->
    
@@ -130,7 +132,7 @@ buy data voucher
 
         </div>
          
-        <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+        <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
             StreetWiFiy
         </p>
         
@@ -146,22 +148,34 @@ buy data voucher
        
 <!-- second page Start -->
        
- <div id="second_page" style="width:100vw; height: auto">
+ <div id="second_page" style="width:99vw; height: auto">
 <div id="buyer_menu_wrapper">
-<div id='buyer_container' class='btn' style="margin:10vh 2vw 1vh 2vw; padding:0px;width:95vw; height:80vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+<div id='buyer_container' class='btn' style="margin:5vh 2vw 1vh 2vw; padding:0px;width:95vw; height:80vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+
+  <!-- Simple/Manual screen -->
+    <div id='' style="width: 95vw; height:7vh; padding:0px; margin:0px;">
+
+    <button id='simpleViewButton' style="width: 49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white;" class='btn' onclick='simple_or_manual_view(this.id)'>Simple</button>
+
+    <button id='manualViewButton' style="width: 49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:#F8F8F8; box-shadow: -1px 1px 2px gainsboro, -2px 1px 2px gainsboro;" class='btn' onclick='simple_or_manual_view(this.id)'>Manual</button>
+  </div>
 
 	<!-- voucher code image -->
 	<!-- ticket canvas -->
 	<img src="/images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
-	<canvas style="width: 280px; height: 270px; display: none" id='ticket_canvas'> Ticket </canvas>
-	
-	
+  <canvas style="width: 280px; height: 270px; display: none" id='ticket_canvas'> Ticket </canvas>
+
+  <!-- simple screen content -->
+  <div id="qr_container" style='width: 95vw;margin: 10px auto;'></div>
+  
+	<!-- manual screen contents -->
+	<span id='manual_screen_content'>
 	
     <div id='seller_code_screen' style="width 80vw; height:20vh; margin:4vh; padding:0px; border:1px double blue">
-      <p id='second_page_user_auto_code' style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+      <p id='second_page_user_auto_code' style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding: 0px; font-size:20px">
        Loading code...
     </p>
-    	<p style="width:100%; height:15%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro" >
+    	<p style="width:100%; height:15%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding: 0px; font-size:10px; border-top:1px dotted gainsboro" >
 			Ticket status : 
 		</p>
     	<p id="second_page_ticket_status" style="width:100%; height:10%; margin:10px 0px 0px 0px; padding:0px; font-size:13px;display: inline-block;">Loading...</p>
@@ -171,7 +185,7 @@ buy data voucher
     <button class='btn btn-primary' style="width: 80vw; height:10vh; margin: 4vh; padding:0px" onclick="manual_voucher_init(this.id)" id='get_ticket_button_id'>
             Get Ticket
     </button>
-    <div style="width:95vw; height: auto; margin:2px; padding 0px; display:flex;">
+    <div style="width:95vw; height: auto; margin:2px; padding: 0px; display:flex;">
      <button class='btn btn-danger' style="width: 40vw; height:20vh; margin: 4vh 4vw 4vh 4vw; padding:0px" onclick="window.location.reload()">
      Get New code
      </button>
@@ -180,9 +194,10 @@ buy data voucher
      </button><!-- turn alert to modal -->
 
      </div>
+    </span>
     
 </div>
-          <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+          <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
           StreetWiFiy
           </p>
      </div>
@@ -191,10 +206,11 @@ buy data voucher
    
        
 <!-- seller/dist menu -->
-       
+
+
    
 
-<div id="third_page" style="width:100vw; height: auto"><!-- third page Start -->
+<div id="third_page" style="width:99vw; height: auto"><!-- third page Start -->
 
    <!-- landing choose action --->
    
@@ -239,7 +255,7 @@ distributor login
 	
 
          
-        <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+        <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
             StreetWiFiy
         </p>
         
@@ -254,7 +270,7 @@ distributor login
  <!-- --------login-------- -->
  <!-- seller -->
     
- <div id="fourth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="fourth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id='buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
 
@@ -269,7 +285,7 @@ distributor login
 	
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='fourth_page_id_input'>
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='fourth_page_password_input'>
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="fourth_page_seller_login()">Log In</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="fourth_page_seller_login()">Log In</button>
     
 </div><!--login wrapper end -->
 
@@ -289,7 +305,7 @@ distributor login
        Hint : scroll >>>
    </p>
 </div>
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="fourth_page_seller_show_password_hint()">Show Hint</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="fourth_page_seller_show_password_hint()">Show Hint</button>
     
 </div><!--login wrapper end -->  
      
@@ -304,7 +320,7 @@ distributor login
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id="fourth_page_seller_change_password_id">
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter old Sentence Password' class="form-control" id="fourth_page_seller_change_password_old_password">
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter new Sentence Password' class="form-control" id="fourth_page_seller_change_password_new_password" onclick="password_change_alert()">
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="fourth_page_seller_change_password()">Change Password</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="fourth_page_seller_change_password()">Change Password</button>
     
 </div><!--login wrapper end -->
 
@@ -327,16 +343,16 @@ distributor login
 </div>
    
 
-    <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+    <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
     StreetWiFiy
     </p>
 </div>
 </div>
 
  <!-- voucher sell -->
- <div id="firth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="firth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
- <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:100vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px"'>
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px"'>
 <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
  <b id='firth_page_sell_menu_header'>
     sell menu
@@ -344,10 +360,10 @@ distributor login
 </p>
 
 <div id='seller_code_screen' style="width 80vw; height:25vh; margin:4vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:50%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding 0px; font-size:20px">
+      <p style="width:100%; height:50%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding: 0px; font-size:20px">
        Credit : R <span id="firth_page_seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
-    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding: 0px; font-size:10px; border-top:1px dotted gainsboro">
     Ticket sell status : </p>
 	<p id="seller_recharge_status" style="width:auto; height:20%; margin:10px 0px 0px 2px; padding:0px; font-size:13px">Loading...</p>
     
@@ -357,14 +373,49 @@ distributor login
 <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount'>
      
 <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control" id ='seller_ticket_unique_code'>
-     
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success" onclick ='sell_ticket(this.id)' id='sell_ticket_id_button'>Sell Ticket</button>
-<br />
 
-<button style="width:100%; height:7vh; margin 30px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick='distributor_superadmin_acc_help("seller")'>Help</button>
-<br />
+
+<div style="padding: 0px;margin: 0px;width: 95vw; height: auto"> 
+
+    <div style="padding: 0px;margin: 0px;width: 70vw;display: inline-block;height: 16vh;">
+
+        <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success" onclick ='sell_ticket(this.id)' id='sell_ticket_id_button'>Sell Ticket</button>
+
+        <button style="width:100%; height:7vh; margin :10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick='distributor_superadmin_acc_help("seller")'>Help</button>
+
+    </div>
+
+    <div style="padding: 0px;margin: 0px;width: 18vw;height: 16vh; float: right; margin : 10px 7px 0px 0px;">
+
+            <button id='' style="width:100%; height:100%" class='btn btn-warning' onclick="qr_code_read()">Scan<br /><i style='font-size: 50px; color: black;' class="la la-qrcode"></i><br />qr Code</button>
+
+    </div>
+
+
+    <!-- qr scan div -->
+
+    <div id='qr_scan_div' style="font-family: 'Ropa Sans', sans-serif;color: #333; width: 95vw;margin: 0 auto; position: fixed;top:10vh; display: none;">
+
+        <div id="loadingMessage" style="text-align: center;padding: 10px; background-color: black;width: 100%; color: red;">🎥 Unable to access video stream <br />(please make sure you have a webcam enabled)</div>
+
+         <!-- 
+        <button id='loadingMessage_close' style="width: 100%;height: 5vh;min-height: 20px;" class="btn btn-danger" onclick="">Close Qr Scanner</button>
+        -->
+        <canvas id="canvas" hidden style='min-width: 240px;max-width:640px'></canvas>
+      
+        <div id="output" hidden style=' margin-top: 0px;background: black; padding: 10px; padding-bottom: 0;min-width:100%;text-align: center '>
+
+            <div id="outputMessage" style="padding-bottom: 10px;word-wrap: break-word; color:red">No QR code detected.</div>
+            <div hidden style="padding-bottom: 10px;word-wrap: break-word;color:green"><b>Data:</b> <span id="outputData"></span></div>
+            <button id style="width: 100%;height: 5vh;min-height: 20px;" class="btn btn-success" onclick="stop_qr_record()">Close Qr Scanner</button>
+        </div>
+    </div>
+
+</div> 
+
+
      
-<button style="width:100%; height:7vh; margin 30px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick=' seller_activity_console_open()' >Accont Recharge and Transactions activity</button>
+<button style="width:100%; height:7vh; margin :30px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick=' seller_activity_console_open()' >Accont Recharge and Transactions activity</button>
 
 <!-----seller activity console -->
      
@@ -419,7 +470,7 @@ distributor login
 
 </div>
     
- <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+ <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
     StreetWiFiy
     </p>
  
@@ -429,7 +480,7 @@ distributor login
 
  <!-- ---------distributor------------- --->
  <!-- login --->
- <div id="sixth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="sixth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id='buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
 
@@ -444,7 +495,7 @@ distributor login
 
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='sixth_page_id_input'>
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='sixth_page_password_input'>
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="sixth_page_distributor_login()">Log In</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="sixth_page_distributor_login()">Log In</button>
     
 </div><!--login wrapper end -->
 
@@ -464,7 +515,7 @@ distributor login
        Hint : scroll >>>
    </p>
 </div>
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="sixth_page_seller_show_password_hint()">Show Hint</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="sixth_page_seller_show_password_hint()">Show Hint</button>
     
 </div><!--login wrapper end -->  
      
@@ -479,7 +530,7 @@ distributor login
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id="sixth_page_seller_change_password_id">
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter old Sentence Password' class="form-control" id="sixth_page_seller_change_password_old_password">
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter new Sentence Password' class="form-control" id="sixth_page_seller_change_password_new_password" onclick="password_change_alert()">
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="sixth_page_seller_change_password()">Change Password</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="sixth_page_seller_change_password()">Change Password</button>
     
 </div><!--login wrapper end -->
 
@@ -502,7 +553,7 @@ distributor login
 </div>
    
 
-    <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+    <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
     StreetWiFiy
     </p>
 </div>
@@ -510,7 +561,7 @@ distributor login
 
  <!-- transact menu --->
 	   
- <div id="seventh_page" style="width:100vw; height: auto" onclick='document.getElementById("side_menu_container").style.right="12px"'><!-- first page Start -->
+ <div id="seventh_page" style="width:99vw; height: auto" onclick='document.getElementById("side_menu_container").style.right="12px"'><!-- first page Start -->
  <div id="distributor_menu_wrapper">
  <div id="distributor_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -522,10 +573,10 @@ distributor login
 	 
 	 
 <div id='distributor_code_screen' style="width 80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
+      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding: 0px; font-size:20px">
        Credit : R <span id="seventh_page_distributor_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
-    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:3vh; margin:0px; padding: 0px; font-size:10px; border-top:1px dotted gainsboro">
     Sell status: </p>
 	<p id="distributor_seller_recharge_status" style="width:auto; height:auto; margin:10px 0px 0px 2px; padding:0px; font-size:9px;color:darkblue">_+_+_+_</p>
     
@@ -537,10 +588,10 @@ distributor login
  
  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Recharge amount' class="form-control" id='distributor_seller_recharge_amount_input'>
  
- <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 2vh; padding:0px" id='distributor_user_send_recharge_button' onclick="distributor_seller_sell_amount(this.id)">
+ <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 1vh; padding:0px" id='distributor_user_send_recharge_button' onclick="distributor_seller_sell_amount(this.id)">
  Send Recharge
  </button>
- <div style="width:95vw; height: auto; margin:2px; padding 0px; display:flex;">
+ <div style="width:95vw; height: auto; margin:2px; padding: 0px; display:flex;">
  <button class='btn btn-danger' style="width: 40vw; height:15h; margin: 2vh 4vw 2vh 4vw; padding:0px" onclick="distributor_works_menu_add_user()">
  Add new Seller <br />ACCOUNT
  </button>
@@ -549,7 +600,7 @@ distributor login
  </button><!-- turn alert to modal -->
  
  </div>
-	 <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 2vh; padding:0px" onclick='distributor_activity_console_open()'>
+	 <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 1vh; padding:0px" onclick='distributor_activity_console_open()'>
 	 	Account Activity
 	 </button>
  
@@ -610,7 +661,7 @@ distributor login
  
  </div>
  
- <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+ <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
  StreetWiFiy
  </p>
  
@@ -620,7 +671,7 @@ distributor login
 	    
  
  <!-- register seller account -->
-  <div id="eigth_page" style="width:100vw; height: auto"><!-- first page Start -->
+  <div id="eigth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -652,15 +703,15 @@ distributor login
 
 	 
  
- <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="distributor_seller_new_account_creation()">Create Account</button>
+ <button style="width:100%; height:10vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="distributor_seller_new_account_creation()">Create Account</button>
  <br />
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
+ <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
  
  
  
  
  </div>
-<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+<p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
  StreetWiFiy
  </p>
    </div>
@@ -685,7 +736,7 @@ distributor login
 	<!-- --------login-------- -->
  <!-- sadmin -->
     
- <div id="admin_fourth_page" style="width:100vw; height: auto"><!-- first page Start -->
+ <div id="admin_fourth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
  <div id='admin_buyer_container' class='btn' style="margin:4vh 2vw 1vh 2vw; padding:0px;width:95vw; height: auto; background-color:snow">
 	 
@@ -699,7 +750,7 @@ distributor login
   </b>
 </p>
 
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="router_page_works_menu_open()">View status</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="router_page_works_menu_open()">View status</button>
     
 </div>
 	 
@@ -716,7 +767,7 @@ distributor login
 
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='admin_fourth_page_id_input'>
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='admin_fourth_page_password_input'>
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="super_admin_login()">Log In</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="super_admin_login()">Log In</button>
     
 </div><!--login wrapper end -->
 
@@ -732,7 +783,7 @@ distributor login
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id="admin_change_password_id_number">
   <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter old Sentence Password' class="form-control" id="admin_change_password_old_password">
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter new Sentence Password' class="form-control" id="admin_change_password_new_password" onclick="password_change_alert()">
-<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick=" admin_password_change_fn()">Change Password</button>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick=" admin_password_change_fn()">Change Password</button>
     
 </div><!--login wrapper end -->
 
@@ -755,7 +806,7 @@ distributor login
 </div>
    
 
-    <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+    <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
     StreetWiFiy
     </p>
 </div>
@@ -764,7 +815,7 @@ distributor login
 	   
 	   
 	   
- <div id="super_admin_works_menu" style="width:100vw; height: auto" onclick='document.getElementById("side_menu_container").style.right="12px"'><!-- first page Start -->
+ <div id="super_admin_works_menu" style="width:99vw; height: auto" onclick='document.getElementById("side_menu_container").style.right="12px"'><!-- first page Start -->
  <div id="super_admin_menu_wrapper">
  <div id="super_admin_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:18px; border-bottom:1px solid gainsboro">
@@ -776,10 +827,10 @@ distributor login
 	 
 	 
 <div id='super_admin_code_screen' style="width 80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding 0px; font-size:20px">
+      <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding: 0px; font-size:20px">
        Credit : R <span id="super_admin_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
-    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:3vh; margin:0px; padding 0px; font-size:10px; border-top:1px dotted gainsboro">
+    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:3vh; margin:0px; padding: 0px; font-size:10px; border-top:1px dotted gainsboro">
     Sell status: </p>
 	<p id="super_admin_distributor_recharge_status" style="width:auto; height:auto; margin:10px 0px 0px 2px; padding:0px; font-size:9px;color:darkblue">_+_+_+_</p>
     
@@ -794,7 +845,7 @@ distributor login
  <button class='btn btn-primary' style="width: 80vw; height:8vh; margin: 2vh; padding:0px" onclick="super_admin_distributor_sell_amount(this.id)" id='super_admin_distributor_sell_amount_button'>
  Send Recharge
  </button>
- <div style="width:95vw; height: auto; margin:2px; padding 0px; display:flex;">
+ <div style="width:95vw; height: auto; margin:2px; padding: 0px; display:flex;">
  <button class='btn btn-danger' style="width: 40vw; height:15h; margin: 2vh 4vw 2vh 4vw; padding:0px" onclick="super_admin_works_menu_add_user()">
  Add new Distributer <br />ACCOUNT
  </button>
@@ -811,7 +862,7 @@ distributor login
 	 </button>
 	 
 	<!-- router status button --> 
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="router_page_works_menu_open(true), alert('1) Use unique names when naming each router.\n2) Changes capital names on the link below, to have your router appear on the status menu and be monitored if its working or not.\n\n ---- EXAMPLE ---- \n\nhttp://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS\n\n----TO----\n\nhttp://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router\n\n4) Make router contact this link every 20 minutes not more that 30 minutes (setup a router schedule to do this) on your mikrotik router.' )">View Routers  status</button>
+ <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="router_page_works_menu_open(true), alert('1) Use unique names when naming each router.\n2) Changes capital names on the link below, to have your router appear on the status menu and be monitored if its working or not.\n\n ---- EXAMPLE ---- \n\nhttp://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS\n\n----TO----\n\nhttp://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router\n\n4) Make router contact this link every 20 minutes not more that 30 minutes (setup a router schedule to do this) on your mikrotik router.' )">View Routers  status</button>
 	 <!-----admin activity console -->
      
 <div id="super_admin_activity_console_wrapper" style="margin:0px 0px 13px 0px; padding:0px; width : 93.9vw; height : 80vh; background-color : black; box-shadow : 3px 3px 2px orange, -1px -1px 2px orange; position : absolute; left : 2.5vw; top :10vh; display : none;">
@@ -869,7 +920,7 @@ distributor login
  
  </div>
  
- <p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+ <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
  StreetWiFiy
  </p>
  
@@ -878,7 +929,7 @@ distributor login
 	   
 	   
  <!-- register distributor account -->
-  <div id="admin_eigth_page" style="width:100vw; height: auto"><!-- first page Start -->
+  <div id="admin_eigth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
  <div id="admin_seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -910,15 +961,15 @@ distributor login
 
 	 
  
- <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="admin_distributor_new_account_creation()">Create Account</button>
+ <button style="width:100%; height:10vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="admin_distributor_new_account_creation()">Create Account</button>
  <br />
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
+ <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
  
  
  
  
  </div>
-<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+<p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
  StreetWiFiy
  </p>
    </div>
@@ -928,7 +979,7 @@ distributor login
 	   
    
 	   
-  <div id="recharge_codes_container" style="width:100vw; height: auto"><!-- first page Start -->
+  <div id="recharge_codes_container" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="admin_buyer_menu_wrapper">
  <div id="admin_seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -1001,9 +1052,9 @@ distributor login
 	 
 	 
  <p style='color: red; text-align: left; font-size: 20px;font-weight: bolder' class="w3-block w3-margin">4)</p>
- <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" disabled=true class="btn btn-danger" onclick="admin_voucher_upload()" id='add_voucher_button'>Add Vouchers</button>
+ <button style="width:100%; height:10vh; margin : 10px 0px 10px 0px; padding:0px; display: block" disabled=true class="btn btn-danger" onclick="admin_voucher_upload()" id='add_voucher_button'>Add Vouchers</button>
  <br />
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter Price per single Voucher.\n2) Enter voucher expeiry time from first use in Minutes/Days/Week/etc.\n3) Enter Vouchers file from Radiusdesk with .csv ending. See Example on Voucher Example image link. \n\n------\nHighlited are information that the file needs to have in it, some details besides the first row may be diffrent.\n------\n\n4) Veryfy the details of voucher are correct in "Content loaded .." window.\n\n5) Click add vouchers button.`)'>Help</button>
+ <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter Price per single Voucher.\n2) Enter voucher expeiry time from first use in Minutes/Days/Week/etc.\n3) Enter Vouchers file from Radiusdesk with .csv ending. See Example on Voucher Example image link. \n\n------\nHighlited are information that the file needs to have in it, some details besides the first row may be diffrent.\n------\n\n4) Veryfy the details of voucher are correct in "Content loaded .." window.\n\n5) Click add vouchers button.`)'>Help</button>
  
  <!-- Voucher example image -->
  <div id='example_voucher_format' style='display: none;width: 95vw;position: absolute;top:20vh;left: auto; overflow: scroll;'>
@@ -1015,7 +1066,7 @@ distributor login
   
  
  </div>
-<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+<p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
  StreetWiFiy
  </p>
    </div>
@@ -1029,7 +1080,7 @@ distributor login
 	   
 <!-- router menu/viewer -->
 	   
-  <div id="router_page" style="width:100vw; height: auto"><!-- first page Start -->
+  <div id="router_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="router_menu_wrapper">
  <div id="router_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -1057,16 +1108,16 @@ distributor login
 
 <!--
  
- <button style="width:100%; height:10vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="admin_distributor_new_account_creation()">Create Account</button>
+ <button style="width:100%; height:10vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="admin_distributor_new_account_creation()">Create Account</button>
 -->
  <br />
- <button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Router "Last Contact" should be within last 30 minutes, if over 30 minute please contact us. **ONLY for ACTIVE routers **\n\n--- ADMIN MENU ---\n2) "Mute/Un-Mute" Stops/Enable system to send alerts when router has not contacted server for over thirty minutes.\n\n PLease log in as Admin to see more details....`)'>Help</button>
+ <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Router "Last Contact" should be within last 30 minutes, if over 30 minute please contact us. **ONLY for ACTIVE routers **\n\n--- ADMIN MENU ---\n2) "Mute/Un-Mute" Stops/Enable system to send alerts when router has not contacted server for over thirty minutes.\n\n PLease log in as Admin to see more details....`)'>Help</button>
  
  
  
  
  </div>
-<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+<p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
  StreetWiFiy
  </p>
    </div>
@@ -1084,7 +1135,7 @@ distributor login
 	   
 <!-- transaction fill up -->
 
-  <div id="transactions_and_voucher_page" style="width:100vw; min-height: auto; position: absolute;top: 0px;left: 0px;"><!-- first page Start -->
+  <div id="transactions_and_voucher_page" style="width:99vw; min-height: auto; position: absolute;top: 0px;left: 0px;"><!-- first page Start -->
  <div id="transactions_and_voucher_wrapper" style="height: auto;width: auto">
  <div id="transactions_and_voucher_menu" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -1103,7 +1154,7 @@ distributor login
 	  
  
  </div>
-<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+<p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
  StreetWiFiy
  </p>
    </div>
@@ -1127,10 +1178,13 @@ distributor login
 	   
 
 	   
-    <script type='text/JavaScript' src='/jquery-3.3.1.min.js' ></script>   
-    <script type='text/JavaScript' src='/papaparse.min.js' ></script>   
-   <script type='text/JavaScript' src='/index.js' ></script>
-  
+    <script type='text/JavaScript' src='/jquery-3.3.1.min.js' ></script> <!-- jquery -->  
+    <script type='text/JavaScript' src='/papaparse.min.js' ></script> <!-- reads csv -->
+
+    <script type='text/JavaScript' src='/index.js' ></script><!-- default script -->
+    <script type='text/JavaScript' src='/qr_code/js/easy.qrcode.js' ></script><!-- qr code generator-->
+    <script type='text/JavaScript' src='/qr_code/js/jsQR.js' ></script><!-- qr code reader -->
+   
 
    
    </body>
