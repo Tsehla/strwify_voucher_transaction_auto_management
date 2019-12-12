@@ -31,15 +31,27 @@ console.log(http_https);
 
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
-function dom_hide_show(showORhide, div){
-    
-    if(showORhide == 'hide'){
-        document.getElementById(div).style.display='none';
-    }
-   if(showORhide == 'show'){
-        document.getElementById(div).style.display='block';
-    }
-    
+function dom_hide_show(option, ...argument){	
+
+	if(option.toLowerCase() == 'hide'){//hide	
+
+		argument.forEach(function(div_Id){ //to hide	
+			document.getElementById(div_Id).style.display = 'none';	
+		})	
+		return 'divs hidden == success';	
+	}	
+
+	if(option.toLowerCase() == 'show'){//show	
+
+		argument.forEach(function(div_Id){ //to show	
+			document.getElementById(div_Id).style.display = 'block';	
+		})	
+		return 'divs shown == success';	
+
+	}	
+	return 'nothing to show or hide';	
+
+
 }
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++ add break on text/string +++++++++++++++++++++++++++++++++++++++*/
@@ -102,6 +114,11 @@ if(current_url == '/buy_voucher'){
 	//++++++ check if hotspot link is available in main Url, extract link if so ++++=+
 	 url_params != -1 ?hot_spot_url=document.location.search.replace('?free_login&hotspot_link=','').replace('?hotspot_link=',''):hot_spot_url=undefined;
 	//console.log(hot_spot_url);
+
+	//if free voucher login/show manual view page menu
+	if(document.location.search.indexOf('?free_login&hotspot_link=') > -1){
+		simple_or_manual_view('manualViewButton');//show manual version voucher buy menu
+	}
 		
  
  }
@@ -309,7 +326,9 @@ function buy_page_on_init(){ //get unique code for this user session
 
            if(status == 'success'){
              
-				auto_voucher_check(response);
+				auto_voucher_check(response);//start check for voucher with unique code
+				
+				qr_code_fn(response)//create qr image with code 
 			             
                 return dom_innerHtml('second_page_user_auto_code', response);
                
@@ -2618,7 +2637,7 @@ function show_router_workd_extra_menu(input){//show admin config menu
 									
 										link_cleaning = link_cleaning.replace('network=' ,'').replace('"' ,'');
 										
-										link_cleaning = `<br><button style='min-width:100px; width:20%; height:50px' class='btn btn-warning' onclick='window.open("https://`+ link_cleaning +`","_blank")'>Open link</button>`;
+										link_cleaning = `<br><button style='min-width:100px; width:20%; height:50px' class='btn btn-warning' onclick='window.open("`+ http_https+ link_cleaning +`","_blank")'>Open link</button>`;
 
 										//console.log(link_cleaning);
 
@@ -3204,6 +3223,13 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 		 return;
 	  });
 	
+}
+
+//uploads/advertiment	
+if(transaction_type == 'upload'){	
+
+	window.open('http://' + current_domain +'/upload', '_blank');	
+	return;	
 }
 	
 
@@ -3992,6 +4018,7 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 	
 	if(free_voucher_login){//if free login auto log in
 
+
 		if(voucher_username != 'N/A' &&  voucher_password != 'N/A'){//check if username and password is given
 
 			//http://streetwifiy.co.za/login?username=free&password=vouchr&dst=&popup=true
@@ -4015,6 +4042,781 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
 
 }
+
+
+
+
+/*=====================================================================================================================================================	
+   buy voucher Simple/Manual view	
+    	
+=====================================================================================================================================================*/	
+
+/* div view manage */	
+function simple_or_manual_view(div){	
+
+	var get_div = document.getElementById(div);	
+
+
+
+	if(div == 'simpleViewButton'){	
+		get_div.style.boxShadow = 'none';//remove shadow/activate	
+		//get_div.disabled = true;//disable clicked button	
+
+		document.getElementById('manualViewButton').style.boxShadow = '-1px 1px 2px gainsboro, -2px 1px 2px gainsboro';//apply shadow to button 	
+		document.getElementById('manualViewButton').style.backgroundColor = '#F8F8F8';	
+		document.getElementById('simpleViewButton').style.backgroundColor = '#FfFfFf';	
+
+		document.getElementById('manualViewButton').disabled = false;//enable non clicked button	
+
+		dom_hide_show('hide', 'manual_screen_content')//hide	
+		dom_hide_show('show', 'qr_container')//show	
+
+	}	
+
+	if(div == 'manualViewButton'){	
+
+		get_div.style.boxShadow = 'none';//remove shadow/activate 	
+		//get_div.disabled = true;//disable clicked button	
+
+		document.getElementById('simpleViewButton').style.boxShadow = '2px 1px 2px gainsboro, 2px 1px 2px gainsboro';//apply shadow to button	
+		document.getElementById('simpleViewButton').style.backgroundColor = '#F8F8F8';	
+		document.getElementById('manualViewButton').style.backgroundColor = '#FfFfFf';	
+
+		document.getElementById('simpleViewButton').disabled = false;//enable non clicked button	
+
+		dom_hide_show('hide', 'qr_container')//show	
+		dom_hide_show('show', 'manual_screen_content')//hide	
+
+
+	}	
+
+}	
+
+/* qr code */	
+
+function qr_code_fn(uniqueCode){	
+
+	var qr_backgroud_array = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg'];	
+	var qr_logo_array = ["logo1.jpg","logo2.jpg","logo3.jpg","logo4.jpg"]	
+
+			var	qr_text = uniqueCode; // Content	
+			var	qr_title = 'Unique Code'; // Title	
+			var	qr_subTitle = uniqueCode; // Subtitle content	
+			var	qr_logo = '/images/qr_code_images/logos/' + qr_logo_array[Math.floor(Math.random() * qr_logo_array.length)]; // LOGO	
+			var	qr_backgroundImage = '/images/qr_code_images/backgrounds/' + qr_backgroud_array[Math.floor(Math.random() * qr_backgroud_array.length)];//background img;	
+
+			var qr_design_array = [	
+
+				/*{	
+						
+					config: {	
+						text : qr_text,	
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+						width: 240,	
+						height: 240,	
+						quietZone: 0,	
+						colorDark: "#000000",	
+						colorLight: "#ffffff",	
+						//PI: '#f55066',	
+						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H	
+					}	
+				},*/	
+				/*{	
+						
+					config: {	
+						text : qr_text,	
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+						width: 240,	
+						height: 240,	
+						colorDark: "#473C8B",	
+						colorLight: "#FFFACD",	
+						//PI: '#f55066',	
+						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H	
+					}	
+				},*/	
+				/*{	
+						
+					config: {	
+						text : qr_text,	
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+					
+						width: 240,	
+						height: 240,	
+						colorDark: "#000000",	
+						colorLight: "#ffffff",	
+					
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+					
+							
+						dotScale: 0.4	
+					}	
+					
+				}, */	
+				{	
+
+					config: {	
+						text : qr_text,	
+
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						width: 240,	
+						height: 240,	
+						colorDark: "#000000",	
+						colorLight: "#ffffff",	
+
+						PI: '#BF3030',	
+						PO: '#269926', 	
+
+						AI: '#009ACD',	
+						AO: '#B03060',	
+
+
+						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H	
+
+					}	
+
+				},	
+				/*{	
+						
+					config: {	
+						text : qr_text,	
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+					
+						width: 240,	
+						height: 240,	
+						colorDark: "#000000",	
+						colorLight: "#ffffff",	
+					
+						PI: '#f55066',	
+						PI_TL: '#b7d28d', // Position Inner - Top Left 	
+						PO_TL: '#aa5b71', // Position Outer - Top Right	
+							
+					
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+					
+							
+						dotScale: 0.5	
+					}	
+					
+				},*/	
+				/*{	
+						
+					config: {	
+						text : qr_text,	
+						width: 240,	
+						height: 240,	
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+						colorDark: "#000000",	
+						colorLight: "#ffffff",	
+						AO: '#A67C00', // Position Outer - Top Right	
+						AI: '#A67C00',  // Position Outer - Bottom Right	
+						// === Timing Pattern Color	
+						timing: '#e1622f',	
+						timing_V: '#00C12B',	
+						correctLevel: QRCode.CorrectLevel.H, //  L, M, Q, H	
+							
+						dotScale: 0.4	
+					}	
+				},*/	
+
+
+				{	
+
+					config: {	
+						text : qr_text,	
+
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						width: 240,	
+						height: 240,	
+						colorDark: "#000000",	
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+						backgroundImage: qr_backgroundImage,	
+						backgroundImageAlpha: 1,	
+						autoColor: false,	
+
+
+						dotScale: 1	
+
+					}	
+
+				},	
+
+				{	
+
+					config: {	
+						text : qr_text,	
+
+						width: 240,	
+						height: 240,	
+						colorDark: "#000000",	
+
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						PI: '#f55066',	
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+						backgroundImage: qr_backgroundImage,	
+						autoColor: true,	
+
+
+						dotScale: 0.5	
+					}	
+
+				},	
+
+				{	
+
+					config: {	
+						text : qr_text,	
+
+						width: 240,	
+						height: 240,	
+						colorDark: "#000000",	
+
+							// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						PI: '#f55066',	
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+						backgroundImage: qr_backgroundImage,	
+						backgroundImageAlpha: 0.3,	
+						autoColor: true,	
+
+
+						dotScale: 0.5,	
+
+						binarize: true	
+
+
+					}	
+
+				},	
+
+				{	
+
+					config: {	
+						text : qr_text, // Content	
+
+						width: 240, // Widht	
+						height: 240, // Height	
+						colorDark: "#000000", // Dark color	
+						colorLight: "#ffffff", // Light color	
+
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+
+
+						// === Logo	
+						logo: qr_logo, // LOGO	
+						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  	
+						//					logoWidth:80, 	
+						//					logoHeight:80,	
+						logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'	
+						logoBackgroundTransparent: false, // Whether use transparent image, default is false	
+
+
+						correctLevel: QRCode.CorrectLevel.H // L, M, Q, H	
+
+					}	
+
+				},	
+
+				{	
+
+					config: {	
+						text : qr_text, // Content	
+
+						width: 240, // Widht	
+						height: 240, // Height	
+						colorDark: "#000000", // Dark color	
+						colorLight: "#ffffff", // Light color	
+
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+
+						// === Logo	
+						logo: qr_logo, // LOGO	
+						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  	
+						//					logoWidth:80, 	
+						//					logoHeight:80,	
+						logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'	
+						logoBackgroundTransparent: false, // Whether use transparent image, default is false	
+
+
+						timing_V: '#00B2EE',	
+
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+
+						dotScale: 0.5	
+					}	
+
+				},	
+				{	
+
+					config: {	
+						text : qr_text, // Content	
+
+						width: 240, // Widht	
+						height: 240, // Height	
+						colorDark: "#27408B", // Dark color	
+						colorLight: "#FFF8DC", // Light color	
+
+							// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						// === Logo	
+						logo: qr_logo, // LOGO	
+						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  	
+						//					logoWidth:80, 	
+						//					logoHeight:80,	
+						logoBackgroundColor: '#FFF8DC', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'	
+						logoBackgroundTransparent: false, // Whether use transparent image, default is false	
+
+						// === Posotion Pattern(Eye) Color	
+						PO: '#e1622f', // Global Position Outer color. if not set, the defaut is `colorDark`	
+						PI: '#aa5b71', // Global Position Inner color. if not set, the defaut is `colorDark`	
+						//					PO_TL:'', // Position Outer - Top Left 	
+						PI_TL: '#b7d28d', // Position Inner - Top Left 	
+						PO_TR: '#aa5b71', // Position Outer - Top Right 	
+						PI_TR: '#c17e61', // Position Inner - Top Right 	
+						//					PO_BL:'', // Position Outer - Bottom Left 	
+						//					PI_BL:'' // Position Inner - Bottom Left 	
+
+						// === Timing Pattern Color	
+						//	timing: '#e1622f', // Global Timing color. if not set, the defaut is `colorDark`	
+						timing_H: '#ff6600', // Horizontal timing color	
+						timing_V: '#cc0033', // Vertical timing color	
+
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+
+						dotScale: 0.5	
+					}	
+
+				},	
+				{	
+
+					config: {	
+						text : qr_text, // Content	
+
+						width: 240, // Widht	
+						height: 240, // Height	
+						quietZone: 20, 	
+						colorDark: "#27408B", // Dark color	
+						colorLight: "#FFF8DC", // Light color	
+
+							// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						// === Logo	
+						logo: qr_logo, // LOGO	
+						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  	
+						//					logoWidth:80, 	
+						//					logoHeight:80,	
+						logoBackgroundColor: '#FFF8DC', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'	
+						logoBackgroundTransparent: false, // Whether use transparent image, default is false	
+
+
+						backgroundImage: qr_backgroundImage,	
+						backgroundImageAlpha: 0.3,	
+						autoColor: true,	
+
+						// === Posotion Pattern(Eye) Color	
+						PO: '#e1622f', // Global Position Outer color. if not set, the defaut is `colorDark`	
+						PI: '#aa5b71', // Global Position Inner color. if not set, the defaut is `colorDark`	
+						//					PO_TL:'', // Position Outer - Top Left 	
+						PI_TL: '#b7d28d', // Position Inner - Top Left 	
+						PO_TR: '#aa5b71', // Position Outer - Top Right 	
+						PI_TR: '#c17e61', // Position Inner - Top Right 	
+						//					PO_BL:'', // Position Outer - Bottom Left 	
+						//					PI_BL:'' // Position Inner - Bottom Left 	
+
+						// === Timing Pattern Color	
+						//	timing: '#e1622f', // Global Timing color. if not set, the defaut is `colorDark`	
+						timing_H: '#ff6600', // Horizontal timing color	
+						timing_V: '#cc0033', // Vertical timing color	
+
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+
+						dotScale: 0.5	
+					}	
+
+				},	
+				{	
+
+					config: {	
+						text : qr_text,	
+						width: 240,	
+						height: 240,	
+
+							// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+						colorDark: "#000000",	
+						colorLight: "#ffffff",	
+
+
+						// === Timing Pattern Color	
+						timing: '#e1622f',	
+
+						correctLevel: QRCode.CorrectLevel.H, //  L, M, Q, H	
+
+
+						dotScale: 0.4	
+					}	
+
+				},	
+
+
+
+				// All	
+				{	
+
+					config: {	
+						text : qr_text, // Content	
+
+						width: 240, // Widht	
+						height: 240, // Height	
+						quietZone: 0,	
+						colorDark: "#000000", // Dark color	
+						colorLight: "#FFFACD", // Light color	
+
+						// === Title	
+						title:  qr_title, // Title	
+						titleFont: "bold 18px Arial", // Title font	
+						titleColor: "#004284", // Title Color	
+						titleBackgroundColor: "#fff", // Title Background	
+						titleHeight: 70, // Title height, include subTitle	
+						titleTop: 25, // Title draw position(Y coordinate), default is 30	
+
+
+						// === SubTitle	
+						subTitle: qr_subTitle, // Subtitle content	
+						subTitleFont: "14px Arial", // Subtitle font	
+						subTitleColor: "#004284", // Subtitle color	
+						subTitleTop: 40, // Subtitle drwa position(Y coordinate), default is 50	
+
+
+						// === Logo	
+						logo: qr_logo, // LOGO	
+						//					logo:"http://127.0.0.1:8020/easy-qrcodejs/demo/logo.png",  	
+						//					logoWidth:80, 	
+						//					logoHeight:80,	
+						logoBackgroundColor: '#ffffff', // Logo backgroud color, Invalid when `logBgTransparent` is true; default is '#ffffff'	
+						logoBackgroundTransparent: false, // Whether use transparent image, default is false	
+
+						// === Posotion Pattern(Eye) Color	
+						PO: '#e1622f', // Global Position Outer color. if not set, the defaut is `colorDark`	
+						PI: '#aa5b71', // Global Position Inner color. if not set, the defaut is `colorDark`	
+						//					PO_TL:'', // Position Outer - Top Left 	
+						PI_TL: '#b7d28d', // Position Inner - Top Left 	
+						PO_TR: '#aa5b71', // Position Outer - Top Right 	
+						PI_TR: '#c17e61', // Position Inner - Top Right 	
+						//					PO_BL:'', // Position Outer - Bottom Left 	
+						//					PI_BL:'' // Position Inner - Bottom Left 	
+
+						// === Timing Pattern Color	
+						//	timing: '#e1622f', // Global Timing color. if not set, the defaut is `colorDark`	
+						timing_H: '#ff6600', // Horizontal timing color	
+						timing_V: '#cc0033', // Vertical timing color	
+
+						// === Aligment color	
+						AI:'#27408B',	
+						AO:'#7D26CD',	
+
+						correctLevel: QRCode.CorrectLevel.H, // L, M, Q, H	
+
+
+						dotScale: 0.5	
+					}	
+
+				}	
+
+			]	
+
+
+
+				container = document.getElementById('qr_container').innerHTML+=`	
+					<div class="imgblock" style='margin: 10px 0;text-align: center;float: center;min-height: 420px;border-bottom: 1px solid #B4B7B4;'>	
+						<div class="qr" id="qrcode_div"></div>	
+			
+					</div>	
+										
+					<i style='font-size:12px;'>Show Quck Response Code to seller/Tell unique numbers..</i>	
+					`;	
+
+				 new QRCode(document.getElementById("qrcode_div"), qr_design_array[Math.floor(Math.random() * qr_design_array.length)].config);	
+
+
+}	
+
+/* qr code reader */	
+
+var video = document.createElement("video");	
+var canvasElement = document.getElementById("canvas");	
+var canvas = canvasElement.getContext("2d");	
+var loadingMessage = document.getElementById("loadingMessage");	
+var outputContainer = document.getElementById("output");	
+var outputMessage = document.getElementById("outputMessage");	
+var outputData = document.getElementById("outputData");	
+var localStream;	
+
+function qr_code_read(){	
+
+	dom_hide_show('show','qr_scan_div');//show qr div/canvas	
+
+    function drawLine(begin, end, color) {	
+      canvas.beginPath();	
+      canvas.moveTo(begin.x, begin.y);	
+      canvas.lineTo(end.x, end.y);	
+      canvas.lineWidth = 4;	
+      canvas.strokeStyle = color;	
+      canvas.stroke();	
+    }	
+
+    // Use facingMode: environment to attemt to get the front camera on phones	
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } }).then(function(stream) {	
+	  video.srcObject = stream;	
+	  localStream = stream; //streaming data object	
+      video.setAttribute("playsinline", true); // required to tell iOS safari we don't want fullscreen	
+      video.play();	
+      requestAnimationFrame(tick);	
+    });	
+
+    function tick() {	
+      loadingMessage.innerText = "⌛ Loading video..."	
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {	
+		//dom_hide_show('hide','loadingMessage_close')	
+        loadingMessage.hidden = true;	
+        canvasElement.hidden = false;	
+        outputContainer.hidden = false;	
+
+        canvasElement.height = video.videoHeight;	
+        canvasElement.width = video.videoWidth;	
+        canvas.drawImage(video, 0, 0, canvasElement.width, canvasElement.height);	
+        var imageData = canvas.getImageData(0, 0, canvasElement.width, canvasElement.height);	
+        var code = jsQR(imageData.data, imageData.width, imageData.height, {	
+          inversionAttempts: "dontInvert",	
+        });	
+        if (code) {	
+          drawLine(code.location.topLeftCorner, code.location.topRightCorner, "#FF3B58");	
+          drawLine(code.location.topRightCorner, code.location.bottomRightCorner, "#FF3B58");	
+          drawLine(code.location.bottomRightCorner, code.location.bottomLeftCorner, "#FF3B58");	
+          drawLine(code.location.bottomLeftCorner, code.location.topLeftCorner, "#FF3B58");	
+		  outputMessage.hidden = true;	
+		//  dom_hide_show('hide', 'outputMessage_close');	
+          outputData.parentElement.hidden = false;	
+		  outputData.innerText = code.data;	
+		  document.getElementById('seller_ticket_unique_code').value = Number(code.data);//fill input form	
+		  stop_qr_record();//close scanner	
+
+        } else {	
+		  outputMessage.hidden = false;	
+		 // dom_hide_show('show','outputMessage_close');	
+          outputData.parentElement.hidden = true;	
+        }	
+      }	
+      requestAnimationFrame(tick);	
+    }	
+
+
+
+
+
+}	
+
+
+function stop_qr_record(){//stop camera	
+	dom_hide_show('hide','qr_scan_div');// hide scanner div	
+
+	video.pause();	
+	video.src = "";	
+	//localStream.getTracks()[0].stop();	
+	localStream.getTracks().forEach(function(media_streaming){//close all media streaming	
+		media_streaming.stop();	
+	});	
+
+
+}	
 
 
 
