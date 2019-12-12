@@ -13,19 +13,6 @@ keystone.get('routes', function(app){
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
           next();
 		});
-	
-	app.use (function (req, res, next) {//turn links to https
-
-		if (req.secure) {
-					// request was via https, so do no special handling
-			next();
-		} 
-		
-		else {
-					// request was via http, so redirect to https
-					res.redirect('https://' + req.headers.host + req.url);
-			}
-	});
 
    
     //super admin login
