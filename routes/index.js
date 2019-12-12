@@ -9,22 +9,12 @@ var fs = require('fs'); //file read
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
 
-  
-
-   app.use(function(req, res, next){  //force secure/[https] if address is local server
-	 //console.log(req.hostname)
-
-	 if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1){//no match
-		console.log('server running on local')	 
-	 }
-
-	 else{
-		app.use(secure);
-	 }
-		next();
-   });
-  
-//app.use(secure);
+   console.log('\n\r');
+   console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+   console.log('Disable when running on local host [ app.use(secure) ]\n\r(/routes/index.js) on non https server');
+   console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+	app.use(secure);//forces http usage //diable when running on local host//on non http server
+	
 
     
    //enable cors 
