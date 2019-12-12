@@ -1,6 +1,5 @@
 var keystone = require('keystone');
 var nunjucks = require('nunjucks');
-var fs = require('fs'); //file read
 var path = require ('path');//to solve sendFile forbidden error
 //var express = require('express');
 
@@ -13,7 +12,20 @@ keystone.get('routes', function(app){
           res.header("Access-Control-Allow-Origin", "*");
           res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
           next();
-        });
+		});
+	
+	app.use (function (req, res, next) {//turn links to https
+
+		if (req.secure) {
+					// request was via https, so do no special handling
+			next();
+		} 
+		
+		else {
+					// request was via http, so redirect to https
+					res.redirect('https://' + req.headers.host + req.url);
+			}
+	});
 
    
     //super admin login
@@ -2038,7 +2050,7 @@ app.get('/api/hotspot_data', function(req, res){
 				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
 				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
 				free_data_allow : true,
-				hotspot_announcements : ['Dare to be different','Dare to write your destiny.',"<a href='http://www.google.com'>Click to go to Google</a>","To search the internet click <a href='http://www.google.com'>google</a> then type your query","<a href='http://www.google.com'>Google search</a>, <a href='http://scholar.google.com'>Google scholar</a>"],
+				hotspot_announcements : ['Dare to be different','Dare to write your destiny.'],
 				hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
 				hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
 				notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare.',
@@ -2091,150 +2103,14 @@ app.get('/api/hotspot_data', function(req, res){
 	
 	
 	
-	//================================
-	//			upload
-	//================================
-
-	//Images for backgrounds//upload
-
-	app.post('/upload', function(req, res) {
-		
-		var date = new Date();			
-		var hour = date.getHours();
-		var minutes = date.getMinutes();
-		var seconds = date.getSeconds();
-		var day = date.getDay();
-		var month = date.getMonth();
-		var year = date.getFullYear();
-			
-		var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
-		
-		if(!req.files.filetoupload){//upload file not selected
-			console.log(" Error, file to upload not selected..")
-				res.redirect("/upload");
-				res.end();
-			return;
-		}
-
-		fs.readFile(req.files.filetoupload.path, function (err, data) {
-	
-			var imageName = upload_date_time + req.files.filetoupload.originalname;
-	
-			
-			if(!imageName){//Error uploading
-	
-				console.log("There was an error_ uloading image..")
-				res.redirect("/upload");
-				res.end();
-	
-			} else { 
-	
-			  var newPath = "./static/images/uploads/ads/" + imageName;
-	
-			  /// write file to uploads/ folder
-			  fs.writeFile(newPath, data, function (err) {
-	
-				//res.sendFile(path.resolve("./static/images/uploads/ads/" + imageName));
-				extends_upload(req, res,imageName);
-	
-			  });
-			}
-		}); 
-	});
 	
 	
-	// show upload contents
-
-	app.get('/upload', function(req, res) {
-
-		extends_upload(req, res);
-
-	})
 	
-	function extends_upload(req, res, uploadImageLink=null){//uploads and show uploaded contents
-
-		var directory_files = '';//directory files html formatted
-
-		fs.readdir("./static/images/uploads/ads/" , (err, files) => {//read upload folder contents
-
-			files.forEach(file => {
-
-			  directory_files =  directory_files + `<br /><a href="#" onclick="show_file('${file}')" style='margin:20px'>`+ file + '</a><br />';
-			  //console.log(directory_files);
-			});
-		  
-			//write upload form, + directory contents
-			res.writeHead(200, {'Content-Type': 'text/html'});
-			res.write(`
-			<html>
-			<head>
-				<title>Upload</title>
-				<link rel="stylesheet" href="/bootstrap.min.css">
-				<link rel="stylesheet" href="/line-awesome/css/line-awesome.css">
-				<link rel="stylesheet" href="/index.css">
-
-			</head>
-				<body>
-
-					<div style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
-						
-						<form action="upload" method="post" enctype="multipart/form-data" style='margin:30px'>
-						<br/>
-						<p> Upload/Images/Text/Doc</p>
-						<input type="file" name="filetoupload" class='form-control' ><br>
-						<input type="submit" class='btn btn-primary'>
-						</form>
-						<hr>
-						<br />
-						<p style='text-align:center'> Recommended image size is : width = 802px , height = 1285px. <br /> Have your image have 30% empty space on sides, Example <a href="#" onclick='show_example()'>Click on me..</a>.
-						<br >
-
-						<!-- show uploaded file link if successful -->
-
-						${ ((uploadImageLink)? `<p>Image added <br /><a href="#" onclick="show_file('${uploadImageLink}')">${uploadImageLink}</a></p>` :'<br />Give your image descriptive name. Example <i>Orange-Farm, creativeXminds advertisment june 2019</i>..') }
-
-
-					</div>
-
-					<div style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; min-height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
-					${ directory_files }
-
-					</div>
-
-					<p id="page_location_footer" style="width:100vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
-					StreetWiFiy
-					</p>
-
-					<script>
-						var current_domain = window.location.host
-						
-
-						function show_file(file){
-
-							window.open('http://' + current_domain +'/images/uploads/ads/' + file );
-
-						}
-
-						function show_example(){
-
-							window.open('http://' + current_domain +'/images/background%20example.png');
-
-						}
-					</script>
-
-				</body>
-			</html>
-			
-			`
-			
-			
-			);
-		
-			res.end();
-		});
-
-
-
-	}
+	
+	
+	
+	
+	
+	
 	
 });
