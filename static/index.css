@@ -1,2 +1,9 @@
 body{ 
-      background-color: snow;   }
+      background-color: snow;   
+    }
+
+
+/* remove blue focus border on button press */
+#manualViewButton:focus {outline:0;}
+#simpleViewButton:focus {outline:0;}
+
