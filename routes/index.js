@@ -2,9 +2,21 @@ var keystone = require('keystone');
 var nunjucks = require('nunjucks');
 var path = require ('path');//to solve sendFile forbidden error
 //var express = require('express');
+var secure = require('express-force-https');//force https usages
 
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
+
+  
+
+   app.use(function(req, res, next){  //force secure/[https] if address is local server
+	 //console.log(req.hostname)
+	 if(!req.host.search('127.0..1') || !req.host.search('localhost')){
+		 app.use(secure);
+	 }
+		next();
+   });
+  
     
    //enable cors 
 	app.use(function(req, res, next) { //allow cross origin requests
