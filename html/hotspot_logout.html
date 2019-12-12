@@ -29,13 +29,21 @@
 	<div style="width: 100vw;height: auto;align-content: center" class="btn"><p  style="width: auto;font-size: 35px">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 	<hr>
 	<button class='btn btn-success' onclick="window.open(router_variables_array.login_link,'_self')" style="width: 44vw;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block;font-size: 35px;font-weight: 900; line-height: 30px">Log in</button>
-	<button class='btn btn-warning' onclick="window.open('http://' + window.location.host + '/transaction?hotspot_link='+router_login_link,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-size: 35px;font-weight: 900; line-height: 30px">Buy</button>
+	<button class='btn btn-warning' onclick="window.open(http_https + window.location.host + '/transaction?hotspot_link='+router_login_link,'_self')" style="width: 46vw;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-size: 35px;font-weight: 900; line-height: 30px">Buy</button>
 	<br/>
 	
 	<!-- +++++++ get variable from router encoded on link  +++++++ -->
 	<script type="text/javascript" src="/qs.js"></script>
 	<script>
-		
+
+		//change https to http when on localhost
+		var http_https = "https://";
+
+		if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){//match exist
+
+			http_https = 'http://';//return http
+		}
+				
 		//EXAMPLE LINK WITH PAYLOAD
 		//http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=http://streetwifiy.co.za/login&user_name=8905135852087@meshdesk&ip_address=10.5.50.251&mac_address=90:2E:1C:69:B3:BA&uptime=13s&time_left=28d1h27m24s&data_uploaded=13.3%20KiB&data_downloaded=43.2%20KiB&data_left=unlimited
 		

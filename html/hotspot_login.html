@@ -715,7 +715,15 @@
 		<script type="text/javascript" src="/md5.js"></script>
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
 		<script type="text/javascript" src="/qs.js"></script>
-		<script type="text/javascript">
+        <script type="text/javascript">
+        
+        //change https to http when on localhost
+        var http_https = "https://";
+
+        if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){//match exist
+
+            http_https = 'http://';//return http
+        }
 			
 			
 			//EXAMPLE LINK WITH PAYLOAD
@@ -842,7 +850,7 @@
 
 		}
 		//++++++++++++++++++ connect to db ++++++++++++++
-		var hotspot_transaction_server_url = 'http://' + window.location.host;//GET form db server where voucher app runs from	 = window.location.host;
+		var hotspot_transaction_server_url = http_https + window.location.host;//GET form db server where voucher app runs from	 = window.location.host;
 		var hot_spot_db_url = hotspot_transaction_server_url + '/api/hotspot_data?location='+ router_variables_array.location;
 			
 		//console.log(hot_spot_db_url) ;	
