@@ -25,6 +25,8 @@ if(current_domain.search('127.0.0.1:3100') || current_domain.search('localhost:3
 	http_https = 'http://';//return http
 }
 
+console.log(http_https );
+
 
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
