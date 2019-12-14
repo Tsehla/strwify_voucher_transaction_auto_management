@@ -4716,12 +4716,10 @@ function qr_code_fn(uniqueCode){
 
 
 				container = document.getElementById('qr_container').innerHTML+=`	
-					<div class="imgblock" style='margin: 10px 0;text-align: center;float: center;min-height: 350px;max-height:55vh;min-width:350px;max-width:80vw;border-bottom: 1px solid #B4B7B4;'>	
-						<div class="qr" id="qrcode_div"></div>	
-			
-					</div>	
-										
-					<i style='font-size:12px;'>Show Quck Response Code to seller/Tell unique numbers..</i>	
+					
+					<div class="qr" id="qrcode_div"></div>	
+					<hr>	
+					<i style="font-size:12px;text-align:center; width:auto;height:auto;white-space:normal;margin:5px">Show Quck Response Code to seller/Tell unique numbers..</i>	
 					`;	
 
 				 new QRCode(document.getElementById("qrcode_div"), qr_design_array[Math.floor(Math.random() * qr_design_array.length)].config);	
