@@ -9,13 +9,7 @@ var fs = require('fs'); //file read
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
 
-   console.log('\n\r');
-   console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-   console.log('Disable when running on local host [ app.use(secure) ]\n\r(/routes/index.js) on non https server');
-   console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-//	app.use(secure);//forces http usage //diable when running on local host//on non http server
-	
-app.use(function(req, res, next) { //allow cross origin requests
+app.use(function(req, res, next) { //force https use
 		//console.log(req.secure);
 
 		/* NONE HEROKU HOSTING ssl checking
