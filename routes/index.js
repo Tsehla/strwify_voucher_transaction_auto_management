@@ -16,20 +16,36 @@ keystone.get('routes', function(app){
 //	app.use(secure);//forces http usage //diable when running on local host//on non http server
 	
 app.use(function(req, res, next) { //allow cross origin requests
-	//console.log(req.secure);
-	 if(!req.secure){
-		
-	 	if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 ){}//ignore if local server
+		//console.log(req.secure);
 
-	 	else{//change link to https/none local server
-			//console.log(req.headers)
-			res.redirect('https://'+ req.headers.host + req.url);
-			res.end;
-			return;
-	 	}
-	 }
-	
-	next();
+		/* NONE HEROKU HOSTING ssl checking
+			if(!req.secure){
+				
+				if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 ){}//ignore if local server
+
+				else{//change link to https/none local server
+					//console.log(req.headers)
+					res.redirect('https://'+ req.headers.host + req.url);
+					res.end;
+					return;
+				}
+			}
+		*/
+
+		//heroku app hosted ssl checking
+
+
+		//Heroku stores the origin protocol in a header variable. The app itself is isolated within the dyno and all request objects have an HTTP protocol.
+		if (req.get('X-Forwarded-Proto')=='https' || req.hostname == 'localhost') {
+			//Serve  App by passing control to the next middleware
+			next();
+		}
+		
+		else if(req.get('X-Forwarded-Proto')!='https' && req.get('X-Forwarded-Port')!='443'){
+			//Redirect if not HTTP with original request URL
+			res.redirect('https://' + req.hostname + req.url);
+		}
+
   });	
     
    //enable cors 
