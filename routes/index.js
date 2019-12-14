@@ -15,7 +15,22 @@ keystone.get('routes', function(app){
    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
 //	app.use(secure);//forces http usage //diable when running on local host//on non http server
 	
+app.use(function(req, res, next) { //allow cross origin requests
+	//console.log(req.secure);
+	 if(!req.secure){
+		
+	 	if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 ){}//ignore if local server
 
+	 	else{//change link to https/none local server
+			//console.log(req.headers)
+			res.redirect('https://'+ req.headers.host + req.url);
+			res.end;
+			return;
+	 	}
+	 }
+	
+	next();
+  });	
     
    //enable cors 
 	app.use(function(req, res, next) { //allow cross origin requests
