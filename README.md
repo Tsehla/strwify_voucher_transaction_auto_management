@@ -10,7 +10,7 @@ This is backend system, meant to allow seamless voucher selling and buying proce
 
 # Running
 
-https required when running on server other than localhost/else remove midleware [ app.use(function(req, res, next) { //force https use ] on [/routes/index.js] and change [ var http_https = "https://"; ] to [ var http_https = "http://";] on [ /static/index.js] and on [/html/] contents. doing this will cause some features not to work like Qr scanner option.
+https required when running on server other than localhost/else change [ var http_https = "https://"; ] to [ var http_https = "http://";] on [ /static/index.js] and on [/html/] contents. doing this will cause some features not to work like Qr scanner option.
 
 Make sure you have a working local mongo db installaton.
 

@@ -8,30 +8,11 @@ var fs = require('fs'); //file read
 
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
+   
 
    var cors = require('cors');
 
-   app.use(cors()); // Use this after the variable declaration
-
-				
-	//	if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 || req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' ){
-	
-	// app.options('*', function (req,res) { 
-		
-	// 	res.sendStatus(200); 
-	// 	res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-    //     res.header("Access-Control-Allow-Origin", "*");
-	// 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	
-	// });
-   //enable cors 
-	// app.use(function(req, res, next) { //allow cross origin requests
-    //       res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-    //       res.header("Access-Control-Allow-Origin", "*");
-	// 	  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-		  
-    //       next();
-	// 	});
+   app.use(cors()); //cores
 
    
     //super admin login
