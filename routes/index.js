@@ -14,6 +14,7 @@ keystone.get('routes', function(app){
 
    app.use(cors()); //cores
 
+   app.options('*',cors()); //cores
    
     //super admin login
     app.get('/admin', function(req, res){
