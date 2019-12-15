@@ -11,15 +11,22 @@ keystone.get('routes', function(app){
 				
 	//	if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 || req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' ){
 	
-	app.options('*', function (req,res) { res.sendStatus(200); });
+	app.options('*', function (req,res) { 
+		
+		res.sendStatus(200); 
+		res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+        res.header("Access-Control-Allow-Origin", "*");
+		res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	
+	});
    //enable cors 
-	app.use(function(req, res, next) { //allow cross origin requests
-          res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
-          res.header("Access-Control-Allow-Origin", "*");
-		  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	// app.use(function(req, res, next) { //allow cross origin requests
+    //       res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
+    //       res.header("Access-Control-Allow-Origin", "*");
+	// 	  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 		  
-          next();
-		});
+    //       next();
+	// 	});
 
    
     //super admin login
