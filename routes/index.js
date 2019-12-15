@@ -8,7 +8,7 @@ var fs = require('fs'); //file read
 
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
-/*
+
 app.use(function(req, res, next) { //force https use
 		//console.log(req.secure);
 
@@ -54,10 +54,10 @@ app.use(function(req, res, next) { //force https use
 			//Redirect if not HTTP with original request URL
 			res.redirect('https://' + req.hostname + req.url);
 		}
-		*
+		*/
   });	
 
-  */
+  
 
 
    //enable cors 
