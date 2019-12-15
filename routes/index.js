@@ -16,7 +16,7 @@ app.use(function(req, res, next) { //force https use
 		//	if(!req.secure){
 				
 				if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 || req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' ){
-					return next();
+					next();
 					
 				}//ignore if local server
 
@@ -26,10 +26,10 @@ app.use(function(req, res, next) { //force https use
 						//console.log(req.headers)
 						res.redirect('https://'+ req.headers.host + req.url);
 						
-						return;
+						
 				}
 
-				res.end;
+				
 		//	}
 		
 
