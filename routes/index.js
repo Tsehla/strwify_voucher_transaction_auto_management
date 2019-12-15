@@ -13,7 +13,7 @@ keystone.get('routes', function(app){
 
     var cors = require('cors');
 
-   	app.use(cors(corsOptions)); //cors
+   	app.use(cors()); //cors
 
    	app.options('*',cors()); //preflight cors
    
