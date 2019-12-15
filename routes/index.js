@@ -13,7 +13,7 @@ app.use(function(req, res, next) { //force https use
 		//console.log(req.secure);
 
 		// NONE HEROKU HOSTING ssl checking
-			if(!req.secure){
+		//	if(!req.secure){
 				
 				if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 || req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' ){
 					return next();
@@ -22,13 +22,15 @@ app.use(function(req, res, next) { //force https use
 
 				//else if(req.get('X-Forwarded-Proto')=='http' || req.protocol == 'http'){//change link to https/none local server
 
-				else{//change link to https/none local server
+				if(req.hostname.search('127.0.0.1') < 0 || req.hostname.search('localhost') < 0 || req.get('X-Forwarded-Proto')=='http' || req.protocol == 'http'){//change link to https/none local server
 						//console.log(req.headers)
 						res.redirect('https://'+ req.headers.host + req.url);
-						res.end;
+						
 						return;
 				}
-			}
+
+				res.end;
+		//	}
 		
 
 		/*
