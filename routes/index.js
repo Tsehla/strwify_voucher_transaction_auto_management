@@ -10,11 +10,36 @@ keystone.get('routes', function(app){
    // app.use(express.static('.//'));
    
 
-   var cors = require('cors');
+  
 
-   app.use(cors()); //cores
+//    var corsOptions='';
+//    var cors = require('cors');
 
-   app.options('*',cors()); //cores
+//    app.use(function(req, res, next){
+	
+// 	   corsOptions = {
+// 		origin: ,
+// 		optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// 	  }
+// 	//    console.log('---------')
+// 	//    console.log(req_data.protocol+'://'+req_data.headers.host);
+// 	//    console.log('---------')
+// 	  // console.log(req_data.headers)
+
+// 		//next();
+//    })
+
+   app.use(function(req, res, next) {
+	let link = req.protocol+'://'+req.headers.host;
+	res.header("Access-Control-Allow-Origin", link);
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+  });
+
+   
+   //app.use(cors(corsOptions)); //cores
+
+  // app.options('*',cors()); //cores
    
     //super admin login
     app.get('/admin', function(req, res){
