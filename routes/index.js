@@ -8,58 +8,9 @@ var fs = require('fs'); //file read
 
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
-
-app.use(function(req, res, next) { //force https use
-		//console.log(req.secure);
-
-		// NONE HEROKU HOSTING ssl checking
-		//	if(!req.secure){
 				
-				if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 || req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' ){
-					next();
-					
-				}//ignore if local server
-
-				//else if(req.get('X-Forwarded-Proto')=='http' || req.protocol == 'http'){//change link to https/none local server
-
-				if(req.hostname.search('127.0.0.1') < 0 || req.hostname.search('localhost') < 0 || req.get('X-Forwarded-Proto')=='http' || req.protocol == 'http'){//change link to https/none local server
-						//console.log(req.headers)
-						res.redirect('https://'+ req.headers.host + req.url);
-						
-						
-				}
-
-				
-		//	}
-		
-
-		/*
-		//heroku app hosted ssl checking
-
-
-		//Heroku stores the origin protocol in a header variable. The app itself is isolated within the dyno and all request objects have an HTTP protocol.
-		if (req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' || req.hostname == 'localhost' || req.hostname == '127.0.0.1') {
-			//Serve  App by passing control to the next middleware
-			next();
-		}
-		
-		else{
-			//Redirect if not HTTP with original request URL
-			res.redirect('https://' + req.hostname + req.url);
-		}
-
-		/*
-				
-		else if(req.get('X-Forwarded-Proto')!='https' && req.get('X-Forwarded-Port')!='443'){
-			//Redirect if not HTTP with original request URL
-			res.redirect('https://' + req.hostname + req.url);
-		}
-		*/
-  });	
-
-  
-
-
+	//	if(req.hostname.search('127.0.0.1') > -1 || req.hostname.search('localhost') > -1 || req.get('X-Forwarded-Proto')=='https' || req.protocol == 'https' ){
+					  
    //enable cors 
 	app.use(function(req, res, next) { //allow cross origin requests
           res.setHeader("Access-Control-Allow-Methods", "POST, PUT, OPTIONS, DELETE, GET");
