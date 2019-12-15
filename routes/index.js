@@ -31,7 +31,7 @@ keystone.get('routes', function(app){
 
    app.use(function(req, res, next) {
 	let link = req.protocol+'://'+req.headers.host;
-	res.status(200).send('OK')
+	res.sendStatus(200);
 	res.header("Access-Control-Allow-Origin", link);
 	res.header("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
 	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Auth-Token");
