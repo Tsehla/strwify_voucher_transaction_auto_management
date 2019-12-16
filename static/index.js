@@ -18,7 +18,7 @@ var current_domain = window.location.host;//domain en port//use this on live
 
 
 //change https to http when on localhost
-var http_https = "https://";
+var http_https = "http://";
 
 if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){//match exist
 
@@ -4729,6 +4729,9 @@ function qr_code_fn(uniqueCode){
 
 /* qr code reader */	
 
+
+/* requires https to work
+
 var video = document.createElement("video");	
 var canvasElement = document.getElementById("canvas");	
 var canvas = canvasElement.getContext("2d");	
@@ -4818,5 +4821,8 @@ function stop_qr_record(){//stop camera
 }	
 
 
+*/
+
+//http qr code scanner
 
 

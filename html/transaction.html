@@ -386,7 +386,21 @@ distributor login
 
     </div>
 
+     <!-- qr scan https version -->
+     <!-- 
     <div style="padding: 0px;width: 18vw;height: 16vh; float: right; margin : 10px 7px 0px 0px;"  onclick="qr_code_read()" class='btn btn-warning'>
+
+          <span style="margin :0.5;display:block">Scan</span>
+        
+          <i style="font-size: 50px; color: black;display:block" class="la la-qrcode"></i>
+              
+          <span style="margin :0.5;display:block;white-space:nowrap">qr Code</span>
+
+    </div>
+    -->
+
+    <!-- qr scan http version -->
+    <div style="padding: 0px;width: 18vw;height: 16vh; float: right; margin : 10px 7px 0px 0px;"  onclick="window.scanner_start()" class='btn btn-warning'>
 
           <span style="margin :0.5;display:block">Scan</span>
         
@@ -398,7 +412,7 @@ distributor login
 
 
     <!-- qr scan div -->
-
+    <!-- qr scan https version -->
     <div id='qr_scan_div' style="font-family: 'Ropa Sans', sans-serif;color: #333; width: 95vw;margin: 0 auto; position: fixed;top:10vh; display: none;">
 
         <div id="loadingMessage" style="text-align: center;padding: 10px; background-color: black;width: 100%; color: red;">🎥 Unable to access video stream <br />(please make sure you have a webcam enabled)</div>
@@ -417,7 +431,46 @@ distributor login
         </div>
     </div>
 
+    
+<!-- qr scan http version -->
+    <div id='qr_scan_div_1' style="font-family: 'Ropa Sans', sans-serif;color: #333; width: 95vw;margin: 0 auto; position: fixed;top:10vh; display: none;">
+
+      <canvas id="canvas" style="min-width: 240px;max-width:95vw;height:65vh" ></canvas>
+
+      <div style="margin-bottom: 16px;">
+        <b>Device has camera: </b><span id="cam-has-camera"></span>
+        <br>
+        <video muted playsinline id="qr-video"></video>
+    </div>
+    <div style="margin-bottom: 16px;">
+        <select id="inversion-mode-select">
+            <option value="original">Scan original (dark QR code on bright background)</option>
+            <option value="invert">Scan with inverted colors (bright QR code on dark background)</option>
+            <option value="both">Scan both</option>
+        </select>
+        <br>
+    </div>
+    <b>Detected QR code: </b>
+    <span id="cam-qr-result">None</span>
+    <br>
+    <b>Last detected at: </b>
+    <span id="cam-qr-result-timestamp"></span>
+    <hr style='margin-top: 32px;'>
+    
+    <h1>Scan from File:</h1>
+    <input type="file" id="file-selector" style='display: block;margin-bottom: 16px;'>
+    <b>Detected QR code: </b>
+    <span id="file-qr-result">None</span>
+    
+
+
+      
+    </div>
+
+
 </div> 
+
+
 
 
      
@@ -1188,8 +1241,64 @@ distributor login
     <script type='text/JavaScript' src='/papaparse.min.js' ></script> <!-- reads csv -->
 
     <script type='text/JavaScript' src='/qr_code/js/easy.qrcode.js' ></script><!-- qr code generator-->
-    <script type='text/JavaScript' src='/qr_code/js/jsQR.js' ></script><!-- qr code reader -->
     <script type='text/JavaScript' src='/index.js' ></script><!-- default script -->
+    <!-- <script type='text/JavaScript' src='/qr_code/js/jsQR.js' ></script>  --><!-- qr code reader https version -->
+    <script type="module">/* qr code reader http version */
+      import QrScanner from "/qr_code/qr_scanner/qr-scanner.js";
+
+      QrScanner.WORKER_PATH = '/qr_code/qr_scanner/worker.js';
+
+      const video = document.getElementById('qr-video');
+      const camHasCamera = document.getElementById('cam-has-camera');
+      const camQrResult = document.getElementById('cam-qr-result');
+      const camQrResultTimestamp = document.getElementById('cam-qr-result-timestamp');
+      const fileSelector = document.getElementById('file-selector');
+      const fileQrResult = document.getElementById('file-qr-result');
+
+      function setResult(label, result) {
+        label.textContent = result;
+        camQrResultTimestamp.textContent = new Date().toString();
+        label.style.color = 'teal';
+        clearTimeout(label.highlightTimeout);
+        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
+      }
+
+      // ####### Web Cam Scanning #######
+
+
+      function scanner_start(){//start scanner
+
+      dom_hide_show('show','qr_scan_div_1');//show qr div/canvas
+
+      QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
+
+      const scanner = new QrScanner(video, result => setResult(camQrResult, result));
+      scanner.start();
+
+      document.getElementById('inversion-mode-select').addEventListener('change', event => {
+        scanner.setInversionMode(event.target.value);
+      });
+
+
+
+      }
+
+      window.scanner_start = scanner_start();
+
+      // ####### File Scanning #######
+
+      fileSelector.addEventListener('change', event => {
+        const file = fileSelector.files[0];
+        if (!file) {
+          return;
+        }
+        QrScanner.scanImage(file)
+          .then(result => setResult(fileQrResult, result))
+          .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
+      });
+
+    </script>
+  
    
 
    
