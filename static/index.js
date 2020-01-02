@@ -4729,9 +4729,6 @@ function qr_code_fn(uniqueCode){
 
 /* qr code reader */	
 
-
-/* requires https to work
-
 var video = document.createElement("video");	
 var canvasElement = document.getElementById("canvas");	
 var canvas = canvasElement.getContext("2d");	
@@ -4821,8 +4818,5 @@ function stop_qr_record(){//stop camera
 }	
 
 
-*/
-
-//http qr code scanner
 
 

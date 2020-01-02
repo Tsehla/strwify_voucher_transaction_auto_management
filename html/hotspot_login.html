@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html>
-	<head>
+	
+<!-- Mirrored from streetwifiy.herokuapp.com/hotspot by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Jan 2020 13:54:46 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
 			<title>Wifi Hotspot > login</title>
 
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 			<link rel="stylesheet" href="bootstrap.min.css">
-			<link rel="stylesheet" href="/line-awesome/css/line-awesome.css">
+			<link rel="stylesheet" href="line-awesome/css/line-awesome.css">
 
 
 			<style type="text/css">
@@ -35,13 +38,13 @@
 	<body id='page_body'>
     
 		<!-- login input forms -->
-		<div style="width: 60vw;height: auto; position: absolute; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(/images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
+		<div style="width: 60vw;height: auto; position: absolute; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
 
 			<!-- close button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='block',login_hide()" style="width: 40px; height: 40px; font-size: 1.5em; position: absolute;right: 1%; border: 0px" class="btn btn-info">&times;</button>
 
 			<!-- login overlay background -->
-			<div style="border: 3px double #cccccc; padding: 0px;background-image: url(/images/black-wood.jpg); width: 100%;height: 100%">
+			<div style="border: 3px double #cccccc; padding: 0px;background-image: url(images/black-wood.jpg); width: 100%;height: 100%">
 
 				<!-- input content -->
 				<!-- hotspot logo -->
@@ -384,7 +387,7 @@
                				
 				
                 <h2>Voucher</h2>
-                <div style="width: auto; height: 200px; background-image: url(images/voucher%20template.PNG); background-position: center; background-repeat: no-repeat;background-size: contain"></div>
+                <div style="width: auto; height: 200px; background-image: url(images/voucher%20template.png); background-position: center; background-repeat: no-repeat;background-size: contain"></div>
             </div>
        <Marquee role='marquee' id='how_to_bottom_text'></Marquee>
        </div>
@@ -712,17 +715,17 @@
       
    
 		
-		<script type='text/JavaScript' src='/jquery-3.3.1.min.js' ></script> 
-		<script type="text/javascript" src="/md5.js"></script>
+		<script type='text/JavaScript' src='jquery-3.3.1.min.js' ></script> 
+		<script type="text/javascript" src="md5.js"></script>
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
-		<script type="text/javascript" src="/qs.js"></script>
+		<script type="text/javascript" src="qs.js"></script>
         <script type="text/javascript">
 
         var current_url= window.location.pathname;//content after domain 
         var current_domain = window.location.host;//domain en port//use this on live
         
         //change https to http when on localhost
-        var http_https = "http://";
+        var http_https = "https:///";
 
         if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){//match exist
 
@@ -888,7 +891,7 @@
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
 			//++++++++++++++if network issue, use belo copy of default variable
-			var logo_image_url = '/images/logo.png';//logo image
+			var logo_image_url = 'images/logo.png';//logo image
 			var how_to_bottom_text = 'Help yourself, To be helped;'//text shown on help menu as marquee
 			var education_free_links =[
 					{link:"https://scholar.google.co.za/", text:"Google scholar"},
@@ -1275,4 +1278,6 @@
 		</script>
 	
 	</body>
+
+<!-- Mirrored from streetwifiy.herokuapp.com/hotspot by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Jan 2020 13:54:54 GMT -->
 </html>

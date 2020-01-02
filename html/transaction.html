@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
+  
+<!-- Mirrored from streetwifiy.herokuapp.com/transaction by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Jan 2020 13:44:32 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
       <title>
         StrWifiy Transact
       </title>
@@ -77,9 +80,9 @@
       </style>
       
       <!-- during dev -->
-      <link rel="stylesheet" href="/bootstrap.min.css">
-      <link rel="stylesheet" href="/line-awesome/css/line-awesome.css">
-      <link rel="stylesheet" href="/index.css">
+      <link rel="stylesheet" href="bootstrap.min.css">
+      <link rel="stylesheet" href="line-awesome/css/line-awesome.css">
+      <link rel="stylesheet" href="index.css">
       <!-- when system running 
       <link type="text/css" href="index.css">
       <link rel="stylesheet" href="bootstrap.min.css">
@@ -114,7 +117,7 @@
    <!-- landing choose action --->
    
         <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn"  onclick='buy_voucher()'>
-        <img src="/images/buyer.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+        <img src="images/buyer.svg" style="width: auto; height: 30vh; margin: 2vh ;">
         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
 
 buy data voucher
@@ -123,7 +126,7 @@ buy data voucher
         
         </div>
         <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='sell_voucher()'>
-         <img src="/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <img src="images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
          <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
          
          Sell voucher
@@ -163,7 +166,7 @@ buy data voucher
 
 	<!-- voucher code image -->
 	<!-- ticket canvas -->
-	<img src="/images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
+	<img src="images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
   <canvas style="width: 280px; height: 270px; display: none" id='ticket_canvas'> Ticket </canvas>
 
   <!-- simple screen content -->
@@ -216,7 +219,7 @@ buy data voucher
    <!-- landing choose action --->
    
         <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_distributor_login()'>
-        <img src="/images/distributor.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+        <img src="images/distributor.svg" style="width: auto; height: 30vh; margin: 2vh ;">
         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
 
 distributor login
@@ -225,7 +228,7 @@ distributor login
         
         </div>
         <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick = 'third_page_seller_login()'>
-         <img src="/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
+         <img src="images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
          <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
          
          Seller login
@@ -386,21 +389,7 @@ distributor login
 
     </div>
 
-     <!-- qr scan https version -->
-     <!-- 
     <div style="padding: 0px;width: 18vw;height: 16vh; float: right; margin : 10px 7px 0px 0px;"  onclick="qr_code_read()" class='btn btn-warning'>
-
-          <span style="margin :0.5;display:block">Scan</span>
-        
-          <i style="font-size: 50px; color: black;display:block" class="la la-qrcode"></i>
-              
-          <span style="margin :0.5;display:block;white-space:nowrap">qr Code</span>
-
-    </div>
-    -->
-
-    <!-- qr scan http version -->
-    <div style="padding: 0px;width: 18vw;height: 16vh; float: right; margin : 10px 7px 0px 0px;"  onclick="window.scanner_start()" class='btn btn-warning'>
 
           <span style="margin :0.5;display:block">Scan</span>
         
@@ -412,7 +401,7 @@ distributor login
 
 
     <!-- qr scan div -->
-    <!-- qr scan https version -->
+
     <div id='qr_scan_div' style="font-family: 'Ropa Sans', sans-serif;color: #333; width: 95vw;margin: 0 auto; position: fixed;top:10vh; display: none;">
 
         <div id="loadingMessage" style="text-align: center;padding: 10px; background-color: black;width: 100%; color: red;">🎥 Unable to access video stream <br />(please make sure you have a webcam enabled)</div>
@@ -431,46 +420,7 @@ distributor login
         </div>
     </div>
 
-    
-<!-- qr scan http version -->
-    <div id='qr_scan_div_1' style="font-family: 'Ropa Sans', sans-serif;color: #333; width: 95vw;margin: 0 auto; position: fixed;top:10vh; display: none;">
-
-      <canvas id="canvas" style="min-width: 240px;max-width:95vw;height:65vh" ></canvas>
-
-      <div style="margin-bottom: 16px;">
-        <b>Device has camera: </b><span id="cam-has-camera"></span>
-        <br>
-        <video muted playsinline id="qr-video"></video>
-    </div>
-    <div style="margin-bottom: 16px;">
-        <select id="inversion-mode-select">
-            <option value="original">Scan original (dark QR code on bright background)</option>
-            <option value="invert">Scan with inverted colors (bright QR code on dark background)</option>
-            <option value="both">Scan both</option>
-        </select>
-        <br>
-    </div>
-    <b>Detected QR code: </b>
-    <span id="cam-qr-result">None</span>
-    <br>
-    <b>Last detected at: </b>
-    <span id="cam-qr-result-timestamp"></span>
-    <hr style='margin-top: 32px;'>
-    
-    <h1>Scan from File:</h1>
-    <input type="file" id="file-selector" style='display: block;margin-bottom: 16px;'>
-    <b>Detected QR code: </b>
-    <span id="file-qr-result">None</span>
-    
-
-
-      
-    </div>
-
-
 </div> 
-
-
 
 
      
@@ -1089,7 +1039,7 @@ distributor login
 		<!-- voucher input -->
 		<p style='color: red; text-align: left; font-size: 20px;font-weight: bolder' class="w3-block w3-margin">3)</p>
 			
-		<p href='' onclick='document.getElementById("example_voucher_format").style.display="block"' style='text-decoration: underline;color:#0645AD'>  Example Voucher Contents</p>
+		<p href='#' onclick='document.getElementById("example_voucher_format").style.display="block"' style='text-decoration: underline;color:#0645AD'>  Example Voucher Contents</p>
 			
 		<br/>
 	 	<label for="csvinput"> Select file with vouchers ending with (.csv)</label>
@@ -1119,7 +1069,7 @@ distributor login
  <div id='example_voucher_format' style='display: none;width: 95vw;position: absolute;top:20vh;left: auto; overflow: scroll;'>
 
 		 	<button class='btn btn-primary' onclick='document.getElementById("example_voucher_format").style.display="none"' style="width: 95vw;">Close</button><br/>
-	 		<img src="/images/voucher_csv_example.PNG" id='ticket_outline' style="width:auto height: 270px;margin: 0px;" alt="ticket img" />
+	 		<img src="images/voucher_csv_example.png" id='ticket_outline' style="width:auto height: 270px;margin: 0px;" alt="ticket img" />
 
 </div>
   
@@ -1237,70 +1187,16 @@ distributor login
 	   
 
 	   
-    <script type='text/JavaScript' src='/jquery-3.3.1.min.js' ></script> <!-- jquery -->  
-    <script type='text/JavaScript' src='/papaparse.min.js' ></script> <!-- reads csv -->
+    <script type='text/JavaScript' src='jquery-3.3.1.min.js' ></script> <!-- jquery -->  
+    <script type='text/JavaScript' src='papaparse.min.js' ></script> <!-- reads csv -->
 
-    <script type='text/JavaScript' src='/qr_code/js/easy.qrcode.js' ></script><!-- qr code generator-->
-    <script type='text/JavaScript' src='/index.js' ></script><!-- default script -->
-    <!-- <script type='text/JavaScript' src='/qr_code/js/jsQR.js' ></script>  --><!-- qr code reader https version -->
-    <script type="module">/* qr code reader http version */
-      import QrScanner from "/qr_code/qr_scanner/qr-scanner.js";
-
-      QrScanner.WORKER_PATH = '/qr_code/qr_scanner/worker.js';
-
-      const video = document.getElementById('qr-video');
-      const camHasCamera = document.getElementById('cam-has-camera');
-      const camQrResult = document.getElementById('cam-qr-result');
-      const camQrResultTimestamp = document.getElementById('cam-qr-result-timestamp');
-      const fileSelector = document.getElementById('file-selector');
-      const fileQrResult = document.getElementById('file-qr-result');
-
-      function setResult(label, result) {
-        label.textContent = result;
-        camQrResultTimestamp.textContent = new Date().toString();
-        label.style.color = 'teal';
-        clearTimeout(label.highlightTimeout);
-        label.highlightTimeout = setTimeout(() => label.style.color = 'inherit', 100);
-      }
-
-      // ####### Web Cam Scanning #######
-
-
-      function scanner_start(){//start scanner
-
-      dom_hide_show('show','qr_scan_div_1');//show qr div/canvas
-
-      QrScanner.hasCamera().then(hasCamera => camHasCamera.textContent = hasCamera);
-
-      const scanner = new QrScanner(video, result => setResult(camQrResult, result));
-      scanner.start();
-
-      document.getElementById('inversion-mode-select').addEventListener('change', event => {
-        scanner.setInversionMode(event.target.value);
-      });
-
-
-
-      }
-
-      window.scanner_start = scanner_start();
-
-      // ####### File Scanning #######
-
-      fileSelector.addEventListener('change', event => {
-        const file = fileSelector.files[0];
-        if (!file) {
-          return;
-        }
-        QrScanner.scanImage(file)
-          .then(result => setResult(fileQrResult, result))
-          .catch(e => setResult(fileQrResult, e || 'No QR code found.'));
-      });
-
-    </script>
-  
+    <script type='text/JavaScript' src='qr_code/js/easy.qrcode.js' ></script><!-- qr code generator-->
+    <script type='text/JavaScript' src='qr_code/js/jsQR.js' ></script><!-- qr code reader -->
+    <script type='text/JavaScript' src='index.js' ></script><!-- default script -->
    
 
    
    </body>
+
+<!-- Mirrored from streetwifiy.herokuapp.com/transaction by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 02 Jan 2020 13:44:37 GMT -->
 </html>
