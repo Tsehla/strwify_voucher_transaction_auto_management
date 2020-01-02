@@ -1097,13 +1097,8 @@ seller or distributor console, credt auto_voucher_check
 	//+++++++++++++++++++++++++++++++ store router data ++++++++++++++++++++++++++++++++++
 	
 	
-	//mock link for db, update status from router// http://127.0.0.1:4100/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
-	
-	//http://WWW.RECHARGE-WEBSITE.COM/api/router_checkin?router_name=NAME&router_location=LOCATION&router_details=DETAILS
-	
-	//https://*********.herokuapp.com/api/router_checkin?router_name=Mikrotik Home&router_location=Home:My room&router_details=My Home Router, Small red and orange one
-	
-	//http://ww.myserver.com/api/router_checkin?router_name=Home-Router-1&router_location=Orange-Farm&router_details=This-is-my-home-router
+	//mock link for db, update status from router// 
+	//http://127.0.0.1:3100/api/router_checkin?router_name=Home%20router&router_location=Orange%20Farm&router_details=If%20issue%20contact%20Tsehla%20on%200719010014&hotspot_ip=
 	
 	
 	app.get('/api/router_checkin', function(req, res){
@@ -1111,8 +1106,14 @@ seller or distributor console, credt auto_voucher_check
 			var router_name = req.query.router_name;
 			var router_location = req.query.router_location;
 			var router_details = req.query.router_details;
-		
-			var router_ip = req.query.hotspot_ip;
+
+			//for mikrotik router who get intenet connection from modem or other non mikrotik lte router, we will extract ip address from request object
+
+		 	//console.log('router ip provided by the router', req.query.hotspot_ip);
+			//console.log('router ip, extracted from req object', req.header('x-forwarded-for'),req.connection.remoteAddress)
+			var router_ip = '{address=NA;interface=NA;network='+(req.header('x-forwarded-for')?req.header('x-forwarded-for'):req.connection.remoteAddress)+'}'+req.query.hotspot_ip ;
+			
+			
 		
 			//time and date
 		
