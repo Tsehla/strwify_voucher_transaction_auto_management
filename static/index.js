@@ -3938,7 +3938,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open(http_https+current_domain+'/static/default_slide_images/3.jpg');
+			window.open(http_https+current_domain+'/default_slide_images/3.jpg');
 			return;
 		}
 			
@@ -3957,7 +3957,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open(http_https+current_domain+'/static/default_slide_images/4.jpg');
+			window.open(http_https+current_domain+'/default_slide_images/4.jpg');
 			
 			return;
 		}
@@ -3972,7 +3972,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open(http_https+current_domain+'/static/default_slide_images/2.jpg');
+			window.open(http_https+current_domain+'/default_slide_images/2.jpg');
 			
 			return;
 		}
@@ -3986,7 +3986,7 @@ function distributor_superadmin_acc_help(type_of_user){
 		var confirm_help_type = confirm('Would you prefer Picture/video?');
 		
 		if(confirm_help_type){
-			window.open(http_https+current_domain+'/static/default_slide_images/1.jpg');
+			window.open(http_https+current_domain+'/default_slide_images/1.jpg');
 			
 			return;
 		}
