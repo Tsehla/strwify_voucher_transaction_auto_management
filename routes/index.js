@@ -11,11 +11,12 @@ keystone.get('routes', function(app){
    
 
 
-    var cors = require('cors');
+	var corse = require('cors');
+	app.use(corse());
 
-   	app.use(cors(corsOptions)); //cors
+   	//app.use(cors(corsOptions)); //cors
 
-   	app.options('*',cors()); //preflight cors
+   	//app.options('*',cors()); //preflight cors
    
     //super admin login
     app.get('/admin', function(req, res){
