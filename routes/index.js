@@ -1111,7 +1111,9 @@ seller or distributor console, credt auto_voucher_check
 
 		 	//console.log('router ip provided by the router', req.query.hotspot_ip);
 			//console.log('router ip, extracted from req object', req.header('x-forwarded-for'),req.connection.remoteAddress)
-			var router_ip = '{address=NA;interface=NA;network='+(req.header('x-forwarded-for')?req.header('x-forwarded-for'):req.connection.remoteAddress)+'}'+req.query.hotspot_ip ;
+			//example results = {address=NA;interface=NA;network=102.182.165.208};{.id=*1;address=192.168.88.1/24;comment=defconf;interface=ether1;network=192.168.88.0};http://streetwifiy.herokuapp.com/api/router_checkin?router_name=Leshata School router,{.id=*3;address=102.182.165.208/32;comment=;interface=lte1;network=102.182.165.208}
+			var router_ip = '{address=NA;interface=NA;network='+(req.header('x-forwarded-for')?req.header('x-forwarded-for'):req.connection.remoteAddress)+'};'+req.query.hotspot_ip ;
+			
 			
 			
 		
