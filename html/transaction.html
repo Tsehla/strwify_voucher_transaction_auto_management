@@ -15,13 +15,16 @@
      --> 
       <style>
             /* { border:1px solid brown;}*/
-          body{
+           body{
                 padding:0px;
                 margin:0px;
                 width:99vw;
                 height:auto;
                 font-size:13px;
-               } 
+            } 
+           html {
+                  scroll-behavior: smooth;
+            }
                #first_page{
                display : block;/* show */
                }
@@ -112,24 +115,24 @@
 </div>
 	   
 	   
-<div id="first_page" style="width:99vw; height: auto"><!-- first page Start -->
+<div id="first_page" style="width:99vw; height: 100vh"><!-- first page Start -->
 
    <!-- landing choose action --->
    
-        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn"  onclick='buy_voucher()'>
+        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:43vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn"  onclick='buy_voucher()'>
         <img src="images/buyer.svg" style="width: auto; height: 30vh; margin: 2vh ;">
-        <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+        <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width :100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
 
-buy data voucher
+        <b>buy voucher</b>
         </p>
         </div>
         
         </div>
-        <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='sell_voucher()'>
+        <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:43vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='sell_voucher()'>
          <img src="images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
-         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width :100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
          
-         Sell voucher
+         <b>Sell voucher</b>
          </p>
          </div>
          
@@ -152,9 +155,9 @@ buy data voucher
        
 <!-- second page Start -->
        
- <div id="second_page" style="width:99vw; height: auto">
+ <div id="second_page" style="width:99vw; height: 100vh;">
 <div id="buyer_menu_wrapper">
-<div id='buyer_container' class='btn' style="margin:5vh 2vw 1vh 2vw; padding:0px;width:95vw; height:80vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+<div id='buyer_container' class='btn' style="margin:5vh 2vw 1vh 2vw; padding:0px;width:95vw; min-height:460px; height:63vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
 
   <!-- Simple/Manual screen -->
     <div id='' style="width: 95vw; height:7vh; padding:0px; margin:0px;">
@@ -167,7 +170,7 @@ buy data voucher
 	<!-- voucher code image -->
 	<!-- ticket canvas -->
 	<img src="images/ticket.jpg" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
-  <canvas style="width: 280px; height: 270px; display: none" id='ticket_canvas'> Ticket </canvas>
+  <canvas style="width: 280px; height: 270px; display: none;" id='ticket_canvas'> Ticket </canvas>
 
   <!-- simple screen content -->
   <div id="qr_container" style='width: 95vw;margin: 10px auto;'></div>
@@ -175,7 +178,7 @@ buy data voucher
 	<!-- manual screen contents -->
 	<span id='manual_screen_content'>
 	
-    <div id='seller_code_screen' style="width 80vw; height:20vh; margin:4vh; padding:0px; border:1px double blue">
+    <div id='seller_code_screen' style="width: 80vw; min-height: 100px;height:20vh; margin:4vh; padding:0px; border:1px double blue">
       <p id='second_page_user_auto_code' style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding: 0px; font-size:20px">
        Loading code...
     </p>
@@ -201,10 +204,10 @@ buy data voucher
     </span>
     
 </div>
-          <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
-          StreetWiFiy
+          <p id="page_location_footer_" style="width:99vw; height:7vh; margin:11% 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+              StreetWiFiy
           </p>
-     </div>
+  </div>
 </div>
        
    
@@ -214,52 +217,67 @@ buy data voucher
 
    
 
-<div id="third_page" style="width:99vw; height: auto"><!-- third page Start -->
+<div id="third_page" style="width:99vw; height: 100vh"><!-- third page Start -->
 
    <!-- landing choose action --->
-   
-        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_distributor_login()'>
-        <img src="images/distributor.svg" style="width: auto; height: 30vh; margin: 2vh ;">
-        <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
 
-distributor login
+        <!-- Distrubutor login button  -->
+        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_distributor_login()'>
+        <img src="images/distributor.svg" style="width: auto; height: 18vh; margin: 2vh ;">
+        <div style="width:100%; height:4vh; margin:0px; padding:0px">    <p style="width: 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+
+          <b>distributor login</b>
         </p>
         </div>
-        
+        <!-- Seller login button  -->
         </div>
-        <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick = 'third_page_seller_login()'>
-         <img src="images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
-         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+        <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick = 'third_page_seller_login()'>
+         <img src="images/seller.svg" style="width: auto; height: 18vh; margin: 2vh ;">
+         <div style="width:100%; height:4vh; margin:0px; padding:0px">    <p style="width :100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
          
-         Seller login
+          <b>Seller login</b>
          </p>
          </div>
          
 
 
         </div>
+        <!-- Distrubutor login button  -->
+        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_seller_login("?its_resturent_hotel_cafe_login")'>
+          <img src="images/eatery.svg" style="width: auto; height: 18vh; margin: 2vh ;">
+          <div style="width:100%; height:4vh; margin:0px; padding:0px">    <p style="width: 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+  
+            <b>hotel / resturant / cafe login</b>
+          </p>
+          </div>
+          
+          </div>
 
 	
 	
-		  <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:10vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick = 'admin_fourth_page_login()'>
+		  <div id="seller_distributor_option" style="margin:0.5vh 2vw 0.1vh 2vw; padding:0px;width:95vw; height:4vh; background-color:white;border: 1px solid rgba(131, 130, 130, 0.1);" class="btn" onclick = 'admin_fourth_page_login()'>
 		<!--
          <img src="/images/seller.svg" style="width: auto; height: 30vh; margin: 2vh ;">
 		-->
-		<i class="la la-gear la-spin" style="font-size: 30px; margin-top: 0.1vh;margin-bottom: 1vh"></i>
-         <div style="width:100%; height:10vh; margin:0px; padding:0px">    <p style="width 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
+        <i class="la la-gear la-spin" style="font-size: 4vh; margin-top: 0px;margin-bottom: 0.px;padding:0px"></i>
+        <!-- 
+         <div style="width:100%; height:5vh; margin:0px; padding:0px">
+
+            <p style="width :100%; height:100%; margin:0px; padding:0px;text-transform: uppercase;font-size: 8px; ">
          
-         Maintenace
-         </p>
+            Maintenace
+           </p>
+         
          </div>
-         
+        -->
 
 
-        </div>
+      </div>
 	
 	
 
          
-        <p id="page_location_footer" style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle">
+        <p id="page_location_footer" style="width:99vw; height:4vh; margin:0.1vh 0px 0px 0px; padding:0px;text-align:center; line-height:4vh; vertical-align: middle">
             StreetWiFiy
         </p>
         
@@ -304,7 +322,7 @@ distributor login
 
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id = "fourth_page_seller_password_hint_id" onclick='password_hint_alert()'>
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control" id ="fourth_page_seller_password_hint_name" >
-  <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
+  <div style="width :100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
    <p  id="fourth_page_seller_password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
        Hint : scroll >>>
    </p>
@@ -354,25 +372,42 @@ distributor login
 </div>
 
  <!-- voucher sell -->
- <div id="firth_page" style="width:99vw; height: auto"><!-- first page Start -->
+ <div id="firth_page" style="width:99vw; height: 100vh"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
- <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px"'>
-<p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
- <b id='firth_page_sell_menu_header'>
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; min-height:600px;height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px"'>
+<p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; ">
+  <b id='firth_page_sell_menu_header'>
     sell menu
  </b>
 </p>
 
-<div id='seller_code_screen' style="width 80vw; height:25vh; margin:4vh; padding:0px; border:1px double blue">
-      <p style="width:100%; height:50%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding: 0px; font-size:20px">
-       Credit : R <span id="firth_page_seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
-    </p>
-    <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding: 0px; font-size:10px; border-top:1px dotted gainsboro">
-    Ticket sell status : </p>
-	<p id="seller_recharge_status" style="width:auto; height:20%; margin:10px 0px 0px 2px; padding:0px; font-size:13px">Loading...</p>
-    
-    </div>
 
+  <!-- Sell / Complementary ticket -->
+  <div id='' style="width: 95vw; height:7vh; padding:0px; margin:0px;border-top:2px solid #F8F8F8">
+
+    <button id='sell_voucher' style="width: 50%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white;" class='btn' onclick='document.getElementById("complementary_ticket_menu").style.display="none";document.getElementById("sell_ticket_menu").style.display="block"; document.getElementById("complementary_voucher").style.boxShadow="2px 1px 2px gainsboro, 2px 1px 2px gainsboro"; document.getElementById("complementary_voucher").style.backgroundColor ="#F8F8F8";document.getElementById("complementary_voucher").style.borderBottom="1px solid grey";document.getElementById("complementary_voucher").style.borderLeft="1px solid grey";document.getElementById(this.id).style.border="0px";document.getElementById(this.id).style.boxShadow="none"; document.getElementById(this.id).style.backgroundColor ="white"'>Sell Voucher</button> 
+
+    <button id='complementary_voucher' style="width:49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white;" class='btn' onclick='document.getElementById("sell_ticket_menu").style.display="none";document.getElementById("complementary_ticket_menu").style.display="block";document.getElementById("sell_voucher").style.boxShadow="-1px 1px 2px gainsboro, -2px 1px 2px gainsboro"; document.getElementById("sell_voucher").style.backgroundColor ="#F8F8F8";document.getElementById("sell_voucher").style.borderBottom="1px solid grey";document.getElementById("sell_voucher").style.borderRight="1px solid grey";document.getElementById(this.id).style.border="0px"; document.getElementById(this.id).style.boxShadow="none";document.getElementById(this.id).style.backgroundColor ="white"'>Complementary Voucher</button>
+  </div>
+
+<div id='seller_code_screen' style="width :80vw; height:24vh; margin:1vh 4vh 4vh 4vh; padding:0px; border:1px double blue">
+      <p style="width:100%; height:50%; text-align:center; vertical-align: middle; line-height:13vh; margin:0px; padding: 0px; font-size:20px">
+          Credit : R <span id="firth_page_seller_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
+      </p>
+      <p style="width:100%; height:13%; text-align:center; vertical-align: middle; line-height:6vh; margin:0px; padding: 0px; font-size:10px; border-top:1px dotted gainsboro">
+        Ticket sell status : </p>
+      <p id="seller_recharge_status" style="width:auto; height:20%; margin:10px 0px 0px 2px; padding:0px; font-size:13px">Loading...</p>
+        
+  </div>
+
+<!-- complementary ticket offering menu -->
+<div id='complementary_ticket_menu' style="width: auto; height: auto;margin: 0px;padding: 0px;display: none;">
+  Complementary
+</div>
+
+
+<!-- sell ticket menu -->
+<div id='sell_ticket_menu' style="width: auto; height: auto;margin: 0px;padding: 0px;display: none;">
 
 <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount'>
      
@@ -425,7 +460,7 @@ distributor login
 
      
 <button style="width:100%; height:7vh; margin :30px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick=' seller_activity_console_open()' >Accont Recharge and Transactions activity</button>
-
+ </div>
 <!-----seller activity console -->
      
 <div id="seller_activity_console_wrapper" style="margin:0px 0px 13px 0px; padding:0px; width : 93.9vw; height : 80vh; background-color : black; box-shadow : 3px 3px 2px orange, -1px -1px 2px orange; position : absolute; left : 2.5vw; top :10vh; display : none;">
@@ -519,7 +554,7 @@ distributor login
 
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id = "sixth_page_seller_password_hint_id" onclick='password_hint_alert()'>
   <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'Name and Surname' class="form-control" id ="sixth_page_seller_password_hint_name" >
-  <div style="width 100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
+  <div style="width :100%; height auto; margin:13px 0px 13px 0px; padding:0px;border:1px solid blue">
    <p  id="sixth_page_seller_password_hint" style="width:100%; height:auto; margin:0px; padding:0px; overflow-x: scroll; background-color:grey; color:white;font-size:15px;font-weight:bold">
        Hint : scroll >>>
    </p>
@@ -581,7 +616,7 @@ distributor login
 	 
 	 
 	 
-<div id='distributor_code_screen' style="width 80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
+<div id='distributor_code_screen' style="width :80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
       <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding: 0px; font-size:20px">
        Credit : R <span id="seventh_page_distributor_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>
@@ -835,7 +870,7 @@ distributor login
 	 
 	 
 	 
-<div id='super_admin_code_screen' style="width 80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
+<div id='super_admin_code_screen' style="width :80vw; height:15vh; margin:1vh; padding:0px; border:1px double blue">
       <p style="width:100%; height:60%; text-align:center; vertical-align: middle; line-height:9vh; margin:0px; padding: 0px; font-size:20px">
        Credit : R <span id="super_admin_amount" style='width: auto; height:auto; margin: 0px; padding:0px'>0.00</span>
     </p>

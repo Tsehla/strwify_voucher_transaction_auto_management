@@ -1,13 +1,61 @@
 
-/*_____________________________________________________________________________________________________________________________________________________
-
-app routes
-
-_______________________________________________________________________________________________________________________________________________________*/
 
 /*=====================================================================================================================================================
- external URL link to internal routing
-=====================================================================================================================================================*/
+    repeated functions
+======================================================================================================================================================*/
+
+/* change dom [innerHTML] */
+
+function dom_innerHtml(div, value){
+	document.getElementById(div).innerHTML=value;
+  }
+  
+  
+  
+  
+  /*=====================================================================================================================================================
+	  functions/process to destroy when user leaves a page
+  =======================================================================================================================================================*/
+  
+	  function process_destroyer(){
+		  
+		  clearInterval(router_auto_loader);
+		  
+		  
+	  }
+  
+  /*=====================================================================================================================================================
+	 
+	 global vars
+	 seller login
+	  
+  =====================================================================================================================================================*/
+  /*seller & ||  user login details collcetor */
+  var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false};
+  
+  
+  /* auto generated code from the user */
+  var unique_code = null;
+  
+  /*=====================================================================================================================================================
+	 
+	 global vars
+	 distributor login
+	  
+  =====================================================================================================================================================*/
+  
+  var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+  
+  /*=====================================================================================================================================================
+   
+	 
+	 global vars
+	 admin login
+	  
+  ========================================================================================================================*/
+  
+  var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+  
 
 //store url of hotspsot login link
 var hot_spot_url;
@@ -94,6 +142,16 @@ function text_line_break(input_string){
 
 
 
+/*_____________________________________________________________________________________________________________________________________________________
+
+app routes
+
+_______________________________________________________________________________________________________________________________________________________*/
+
+/*=====================================================================================================================================================
+ external URL link to internal routing
+=====================================================================================================================================================*/
+
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++ home auto run function ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -132,6 +190,12 @@ if(current_url == '/buy_voucher'){
 if(current_url == '/sell_voucher'){
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('show','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page');
+
+   
+   	//set if tye of seller is hotel / resturant/cafe //look for query in url
+	if((document.location.search)=='?its_resturent_hotel_cafe_login'){
+			seller_login.resturent_hotel_cafe_login = true; //default set to false
+	}
  
  }
 if(current_url == '/seller_login'){
@@ -237,9 +301,9 @@ function sell_voucher(){
 	process_destroyer();
 }
 
-function third_page_seller_login(){
+function third_page_seller_login(is_cafe_hotel_resturent =''){//is its not cafe resturant or hotel login dont add query to url
   
- window.open('/seller_login', '_self');
+ window.open('/seller_login'+ is_cafe_hotel_resturent, '_self');
 	process_destroyer();
 }
 
@@ -252,63 +316,7 @@ function admin_fourth_page_login(){
     
  window.open('/admin_login', '_self');
 	process_destroyer();
-}
-/*=====================================================================================================================================================
-    repeated functions
-======================================================================================================================================================*/
-
-/* change dom [innerHTML] */
-
-function dom_innerHtml(div, value){
-  document.getElementById(div).innerHTML=value;
-}
-
-
-
-
-/*=====================================================================================================================================================
-    functions/process to destroy when user leaves a page
-=======================================================================================================================================================*/
-
-    function process_destroyer(){
-        
-        clearInterval(router_auto_loader);
-        
-        
-    }
-
-/*=====================================================================================================================================================
-   
-   global vars
-   seller login
-    
-=====================================================================================================================================================*/
-/*seller & ||  user login details collcetor */
-var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
-
-
-/* auto generated code from the user */
-var unique_code = null;
-
-/*=====================================================================================================================================================
-   
-   global vars
-   distributor login
-    
-=====================================================================================================================================================*/
-
-var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
-
-/*=====================================================================================================================================================
- 
-   
-   global vars
-   admin login
-    
-========================================================================================================================*/
-
-var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
-/*_____________________________________________________________________________________________________________________________________________________
+}/*_____________________________________________________________________________________________________________________________________________________
 
 buy data page
 _______________________________________________________________________________________________________________________________________________________*/
@@ -1273,12 +1281,11 @@ function sixth_page_seller_change_password(){
     
 =====================================================================================================================================================*/
 
-//var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:''};
+//var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false};
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++ account login +++++++++++++++++++++++++++++++++++++++++++++*/
 function fourth_page_seller_login(){
     
-
     
         var seller_id = document.getElementById('fourth_page_id_input');
         var seller_password = document.getElementById('fourth_page_password_input');
@@ -4075,6 +4082,9 @@ function simple_or_manual_view(div){
 
 		document.getElementById('manualViewButton').disabled = false;//enable non clicked button	
 
+		document.getElementById('buyer_container').style.height = '63vh';//for the looks/apperance 
+		document.getElementById('page_location_footer_').style.marginTop = '11%';//for the looks/apperance 
+
 		dom_hide_show('hide', 'manual_screen_content')//hide	
 		dom_hide_show('show', 'qr_container')//show	
 
@@ -4090,6 +4100,9 @@ function simple_or_manual_view(div){
 		document.getElementById('manualViewButton').style.backgroundColor = '#FfFfFf';	
 
 		document.getElementById('simpleViewButton').disabled = false;//enable non clicked button	
+
+		document.getElementById('buyer_container').style.height = '80vh';//for the looks/apperance
+		document.getElementById('page_location_footer_').style.marginTop = '3%';//for the looks/apperance 
 
 		dom_hide_show('hide', 'qr_container')//show	
 		dom_hide_show('show', 'manual_screen_content')//hide	
