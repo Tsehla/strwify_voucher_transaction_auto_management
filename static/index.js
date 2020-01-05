@@ -191,12 +191,6 @@ if(current_url == '/sell_voucher'){
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('show','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page');
 
-   
-   	//set if tye of seller is hotel / resturant/cafe //look for query in url
-	if((document.location.search)=='?its_resturent_hotel_cafe_login'){
-			seller_login.resturent_hotel_cafe_login = true; //default set to false
-	}
- 
  }
 if(current_url == '/seller_login'){
    
@@ -225,9 +219,37 @@ if(current_url == '/admin_login'){
         
 ====================================================================================================================================================*/
 function seller_sell_menu(){
-       dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('show','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');dom_hide_show('show','outer_menu_open_overlay');
-		menu_button_sever();
-    	process_destroyer();
+
+		//check url to see if menu to show is for voucher sell or complimentary vucher
+		if(document.location.search.indexOf('?its_resturent_hotel_cafe_login')> -1){
+
+			seller_login.resturent_hotel_cafe_login = true; //default set to false
+		}
+	
+	
+	   dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('show','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page'); dom_hide_show('show','outer_menu_open_overlay');
+	   menu_button_sever();
+	   process_destroyer();
+	   
+
+
+	   //select which menu to show first//sell voucher or complementary voucher menu
+		if(seller_login.resturent_hotel_cafe_login){//show complementary menu
+			document.getElementById("sell_voucher").style.boxShadow="-1px 1px 2px gainsboro, -2px 1px 2px gainsboro"; 
+			document.getElementById("sell_voucher").style.backgroundColor ="#F8F8F8";
+			document.getElementById("sell_voucher").style.borderBottom="1px solid grey";
+			document.getElementById("sell_voucher").style.borderRight="1px solid grey";
+			dom_hide_show('show','complementary_ticket_menu');
+
+		}
+		if(!seller_login.resturent_hotel_cafe_login){//shoe sell menu
+			document.getElementById("complementary_voucher").style.boxShadow="2px 1px 2px gainsboro, 2px 1px 2px gainsboro"; 
+			document.getElementById("complementary_voucher").style.backgroundColor ="#F8F8F8";
+			document.getElementById("complementary_voucher").style.borderBottom="1px solid grey";
+			document.getElementById("complementary_voucher").style.borderLeft="1px solid grey";
+			dom_hide_show('show','sell_ticket_menu');
+		}
+
 }
 
 function distributor_works_menu(){
