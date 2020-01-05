@@ -5,3 +5,6 @@ body{
 .btn_normal_whiteSpace{
     white-space: normal;
 }
+button {
+    outline: none !important;
+  }

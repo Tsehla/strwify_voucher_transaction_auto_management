@@ -235,18 +235,14 @@ function seller_sell_menu(){
 
 	   //select which menu to show first//sell voucher or complementary voucher menu
 		if(seller_login.resturent_hotel_cafe_login){//show complementary menu
-			document.getElementById("sell_voucher").style.boxShadow="-1px 1px 2px gainsboro, -2px 1px 2px gainsboro"; 
-			document.getElementById("sell_voucher").style.backgroundColor ="#F8F8F8";
-			document.getElementById("sell_voucher").style.borderBottom="1px solid grey";
-			document.getElementById("sell_voucher").style.borderRight="1px solid grey";
+			document.getElementById("sell_voucher").style.boxShadow="2px 1px 2px grey"; 
+			document.getElementById("sell_voucher").style.backgroundColor ="snow";
 			dom_hide_show('show','complementary_ticket_menu');
 
 		}
 		if(!seller_login.resturent_hotel_cafe_login){//shoe sell menu
-			document.getElementById("complementary_voucher").style.boxShadow="2px 1px 2px gainsboro, 2px 1px 2px gainsboro"; 
-			document.getElementById("complementary_voucher").style.backgroundColor ="#F8F8F8";
-			document.getElementById("complementary_voucher").style.borderBottom="1px solid grey";
-			document.getElementById("complementary_voucher").style.borderLeft="1px solid grey";
+			document.getElementById("complementary_voucher").style.boxShadow="-2px 1px 2px grey"; 
+			document.getElementById("complementary_voucher").style.backgroundColor ="snow";
 			dom_hide_show('show','sell_ticket_menu');
 		}
 
