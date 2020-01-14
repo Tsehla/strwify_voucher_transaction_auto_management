@@ -391,11 +391,272 @@ seller or distributor console, credt auto_voucher_check
         
     });
     
-    
 
 //==============================================================
-// sell voucher to user
-//==============================================================    
+// vouchers
+//==============================================================  
+
+  /*=======================================
+    get all available voucher types and costs
+	=======================================*/
+
+	app.get('/api/voucher_types', function(req, res){
+
+		keystone.list('Voucher Types').model.find()
+		//.where(voucher_count != '0')
+		.exec( function(error, response){
+		if(error){
+			   return res.jsonp('Error retrieving available vouchers, please contact administrator');
+		}
+		 if(response == null){
+
+			//call function to scrape db and attemp to rebuld voucher types list
+			update_or_gather_voucher_types_list();
+			
+			 
+			return res.jsonp('No vouchers to sell available at the moment, please try gain later or contact administrator');
+		   
+		}
+		   // console.log(response);
+			return res.jsonp(response);
+		});
+	});
+		
+ 	 /* =======================================
+		Update available vouchers data/create new/
+				qeury/send alert when low
+	    ======================================= */
+
+	//call function to create new vouchers automatically for vouchers that are zero or low/send alert if vouchers are low after scraping
+
+	function update_or_gather_voucher_types_list(res = null){//passsing http respond object if available//will be available if function is called by via a route not by function nam from another function or method
+
+		var time_sorted_and_flattern_vouchers = []//store processed/flatterned/summarised data for time vouchers
+		var data_sorted_and_flattern_vouchers = []//store processed/flatterned/summarised data for data vouchers
+
+		keystone.list('Voucher Codes').model.find({voucherstate : 'new' })
+		.exec( function(error, response){
+			if(error){
+
+				return (res?res.jsonp('Problem finding Voucher'): 'Problem finding Voucher');//if called by http use [ jsonp() ] else use [ return ] for functions
+			}
+			if(response == null){
+				return (res?res.jsonp('No un-used vouchers found'): 'No un-used vouchers found'); //if called by http use [ jsonp() ] else use [ return ] for functions
+			}
+			
+			response.forEach(function(data, index, array){
+
+
+				//find if voucher is for time of data by looking if its [ voucherprofile ] porpulated or not
+				var type_of_voucher =(data.voucherprofile != 'N/A')?'data':'time';
+
+				//find if voucher data or by looking if its [ voucherprofile ] porpulated or not
+				var profile_of_voucher =(data.voucherprofile != 'N/A')?data.voucherprofile : data.voucherprofile_time;
+
+				let temporarly_voucher_object = {voucher_cost: data.voucheramount, voucher_profile : profile_of_voucher , voucher_type : type_of_voucher ,voucher_count: 1}
+
+
+				if(data.voucherprofile != 'N/A'){//work with data voucher array
+					
+
+					//if [ data_sorted_and_flattern_vouchers ] array is empty add first data voucher in it
+					if(data_sorted_and_flattern_vouchers.length == 0){
+						return data_sorted_and_flattern_vouchers.push(temporarly_voucher_object);
+					}
+
+					data_sorted_and_flattern_vouchers.forEach(function(voucher, index){
+						
+
+						//let temporarly_voucher_object = {voucher_cost: data.voucheramount, voucher_profile : profile_of_voucher , voucher_type : type_of_voucher ,voucher_count: 1}
+
+						let matching_found = false;//tracks if a match was found
+
+						// 1) test for same voucher cost
+						//if(temporarly_voucher_object.voucher_cost == voucher.voucher_cost){
+						if(temporarly_voucher_object.voucher_cost){	
+							//2nd check
+							//test for voucher profile
+							if(temporarly_voucher_object.voucher_profile == voucher.voucher_profile){
+
+								//if therez a match 
+								//increment number of that voucher [ voucher_count ]
+								data_sorted_and_flattern_vouchers[index].voucher_count = Number(data_sorted_and_flattern_vouchers[index].voucher_count) + 1; 
+								
+								//set match to have been found
+								matching_found = true;
+							}
+
+							//if array at end and no match found, add voucher as part of array
+							if(data_sorted_and_flattern_vouchers.length -1 == index){
+								if(matching_found == false){//add item to array
+									data_sorted_and_flattern_vouchers.push(temporarly_voucher_object);
+								}
+
+							}
+						}
+
+					});
+
+
+				}
+
+				
+				else{//work with data voucher array//work with time voucher array
+
+					//if [ data_sorted_and_flattern_vouchers ] array is empty add first time voucher in it
+					if(time_sorted_and_flattern_vouchers.length == 0){
+							return time_sorted_and_flattern_vouchers.push(temporarly_voucher_object);
+					}
+
+					time_sorted_and_flattern_vouchers.forEach(function(voucher, index){
+											
+						
+						//let temporarly_voucher_object = {voucher_cost: data.voucheramount, voucher_profile : profile_of_voucher , voucher_type : type_of_voucher ,voucher_count: 1}
+
+						let matching_found = false;//tracks if a match was found
+
+						// 1) test for same voucher cost
+						//if(temporarly_voucher_object.voucher_cost == voucher.voucher_cost){
+						if(temporarly_voucher_object.voucher_cost){
+							//2nd check
+							//test for voucher profile
+							
+							if(temporarly_voucher_object.voucher_profile == voucher.voucher_profile){
+
+								//if therez a match 
+								//increment number of that voucher [ voucher_count ]
+								time_sorted_and_flattern_vouchers[index].voucher_count = Number(time_sorted_and_flattern_vouchers[index].voucher_count) + 1; 
+								
+								//set match to have been found
+								matching_found = true;
+							}
+
+							//if array at end and no match found, add voucher as part of array
+							if(time_sorted_and_flattern_vouchers.length -1 == index){
+								if(matching_found == false){//add item to array
+									time_sorted_and_flattern_vouchers.push(temporarly_voucher_object);
+								}
+
+							}
+						}						
+
+
+
+
+					});
+
+
+				}
+
+
+
+			});
+
+			
+
+			// +++++ save scrapping results 
+
+			//delete all already saved voucher types list
+			keystone.list('Voucher Types').model.remove()
+			.exec( function(error, response){
+				if(error){
+					console.log('Error retrieving available vouchers types, please contact administrator');
+				}
+				if(response == null){
+					console.log('voucher type list already empty, please contact administrator');
+				}
+				//console.log('all voucher types removed');
+
+
+			//save newly created voucher type list	
+			keystone.createItems({//add items to db//user details
+					
+				'Voucher Types' : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)
+				
+				
+			}, function(err, results){
+				if(err){
+					console.log('Error adding voucher types list to db');
+					return;
+				}
+				
+				//console.log(results);
+			});
+			
+
+			//reurn response 
+			return (res?res.jsonp(data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)) : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers));//if called by http use [ jsonp() ] else use [ return ] for functions
+
+		
+		});
+
+
+
+
+
+
+
+	})
+
+	}
+
+
+//link to invoke update_or_gather_voucher_types_list() function
+app.get('/api/voucher_types_add', function(req, res){
+	update_or_gather_voucher_types_list(res);//pass http respond object on function call/invoke
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	///AUROMATIC VOUCHER ADDING SPACE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+  /*=======================================
+    sell voucher to user
+	=======================================*/  
     
   app.get('/api/sell', function(req, res){
       
@@ -406,7 +667,7 @@ seller or distributor console, credt auto_voucher_check
              
         //http://127.0.0.1:4100/api/sell?code=get_voucher&unique_code=xyz;//api query link
             
-        //'http://127.0.0.1:4100/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;
+        //'http://127.0.0.1:4100/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker;
            
             
         var date = new Date();
@@ -462,8 +723,16 @@ seller or distributor console, credt auto_voucher_check
             
         /* find doc contains [seach_code=] */
         function write_sell_toDB(){
+		
+		let voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile_time : 'N/A' } // search for data vouchers by default
+		
+		//decide if to search voucher of time or of data
+		if(req.query.ticket_type == 'time'){
+			voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : 'N/A' }
+		}
+
         keystone.list('Voucher Codes').model.findOne()
-            .where({voucheramount : seller_voucher_amount_, voucherstate : 'new'})
+            .where(voucher_type_to_search_for)
             .exec( function(error, response){
             if(error){
                return res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
@@ -675,6 +944,8 @@ seller or distributor console, credt auto_voucher_check
      
       
   });  
+
+
 /*=======================================
 
     Seller subtract points & update function
@@ -2215,8 +2486,7 @@ app.get('/api/hotspot_data', function(req, res){
 
 	}
 	
-	
-	
+		
 	
 	
 	

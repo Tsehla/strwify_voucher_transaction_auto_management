@@ -36,6 +36,11 @@ function dom_innerHtml(div, value){
   
   /* auto generated code from the user */
   var unique_code = null;
+
+
+  /* tracks if button pressed is for time voucher of data voucher */
+  //related to function [ add_sell_ticket_pop_contents() ] && [ ]
+  var data_or_time_ticket_pressed_tracker = 'data'; //defaults to data
   
   /*=====================================================================================================================================================
 	 
@@ -538,7 +543,7 @@ function voucher_print(response){
 						voucher_pin = response.voucher_username;
 					}
 
-				var voucher_profile = response.voucherprofile;
+				var voucher_profile = (response.voucherprofile == 'N/A')?response.voucherprofile_time:response.voucherprofile;//if its not data profile, print time profile value
 				var voucher_expiry_days = response.voucherexpiry;
 				var voucher_amount_cost = response.voucheramount;
 
@@ -605,7 +610,7 @@ function sell_ticket(button_id){
     
     
         
-        var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id;//change '' + current_domain + '' to live domain
+        var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -672,6 +677,149 @@ function sell_ticket(button_id){
     dom_innerHtml('firth_page_sell_menu_header', 'Please recharge your account'); 
     
 }
+
+
+/* ==========================================================
+	Select ticket amount
+   ========================================================= */
+//http://127.0.0.1:3100/api/voucher_types //get voucher types list with cost
+//http://127.0.0.1:3100/api/voucher_types_add  //create/update voucher type list, with new one
+
+
+function add_sell_ticket_pop_contents(){ //porpulate div with available ticket choices
+
+	//clear div of old data
+	document.getElementById("data_or_time_select_box").innerHTML="";
+	document.getElementById("data_or_time_select_box_time").innerHTML="";
+
+	//add manual voucher amound input button
+	document.getElementById("data_or_time_select_box").innerHTML=`<button id='enter_data_ticket_amount_button' class='btn btn-warning' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById(this.id).style.display="none";document.getElementById("data_ticket_manual_input").style.display="block"'>enter Data Ticket amount</button>
+
+	<div id ='data_ticket_manual_input' style='width: 94%; min-height: 80px;height:15vh;margin:3% 3% 10px 3%; border:2px solid green;border-radius:5px;display:none'>
+		<input type='number' placeholder='type amount for Data ticket' style='height:47%;width:100%' class='form-control' id='data_ticket_manual_input_input_box'>
+		<button class='btn btn-primary' style='display: block; height:47%;width:100%' onclick='data_or_time_ticket_pressed_tracker="data";	document.getElementById("seller_ticket_amount").value = document.getElementById("data_ticket_manual_input_input_box").value;document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Okay</button>
+	</div>
+	
+	`;
+
+	document.getElementById("data_or_time_select_box_time").innerHTML=`<button id='enter_time_ticket_amount_button' class='btn btn-warning' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById(this.id).style.display="none";document.getElementById("time_ticket_manual_input").style.display="block"'>enter Time Ticket amount </button>
+	
+	<div id ='time_ticket_manual_input' style='width: 94%; min-height: 80px;height:15vh;margin:3% 3% 10px 3%; border:2px solid green;border-radius:5px;display:none;'>
+		<input type='number' placeholder='type amount for Time ticket' style='height:47%;width:100%' class='form-control' id='time_ticket_manual_input_input_box'>
+		<button class='btn btn-primary' style='display: block; height:47%;width:100%' onclick='data_or_time_ticket_pressed_tracker="time";
+		document.getElementById("seller_ticket_amount").value = document.getElementById("time_ticket_manual_input_input_box").value;document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Okay</button>
+	</div>
+	`;
+
+
+
+
+	//get list of ticket
+	let vouchers_types_link = http_https + current_domain + '/api/voucher_types';
+
+	$.get(vouchers_types_link, function(response, status){
+
+		//console.log(response.length == 0);
+
+		if(response.length == 0){//empty response//no vouchers data list generated
+
+			//give user error
+			$('#data_or_time_select_box_time').append(`<p><br/>Error, no Vouchers details found, <br> please type amount manually,<br /> close and re-open this menu<br />or refresh page.<br> Or contact administrator</p>`);
+			$('#data_or_time_select_box').append(`<p><br/>Error, no Vouchers details found, <br> please type amount manually,<br /> close and re-open this menu<br />or refresh page.<br> Or contact administrator</p>`);
+			
+			//try to cause the system to auto generate voucher list :
+			let vouchers_types_link_generate_link = http_https + current_domain + '/api/voucher_types_add';
+			$.get(vouchers_types_link_generate_link, function(response, status){});
+
+			//show voucher types selection box
+			document.getElementById("sell_ticket_enter_amount_popup").style.display="block";
+
+			return 0;
+
+
+		}
+		
+
+		if(status == 'success'){
+
+			//console.log(typeof response)
+
+			if(typeof response == 'object'){
+
+				
+				//show div with newly acquired data each time
+				document.getElementById("sell_ticket_enter_amount_popup").style.display="block";
+
+				return response.forEach(function(data){
+
+					//give alert to admin/ start auto voucher add function if voucher count is less than 50 vouhers of that type
+					//++++++++++++++++++++++++ CODE HERE +++++++++++++++++++++++++++
+
+
+					if(data.voucher_cost > 0 & data.voucher_count > 25 ){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type
+						
+						if(data.voucher_type == 'time'){
+							$('#data_or_time_select_box_time').append(`
+							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("seller_ticket_amount").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+							
+							`);
+						}
+
+						if(data.voucher_type == 'data'){
+
+							$('#data_or_time_select_box').append(`
+							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("seller_ticket_amount").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+							
+							`);
+						}
+					}
+
+				});
+				
+				
+
+			}
+		
+
+			//server error response
+			//console.log('not array',response);
+			$('#data_or_time_select_box_time').append(response);
+			$('#data_or_time_select_box').append(response);
+
+			
+
+		}
+
+		
+
+
+
+
+
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 /*______________________________________________________________________________________________________________________________________________________
@@ -3257,15 +3405,99 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 	
 }
 
-//uploads/advertiment	
-if(transaction_type == 'upload'){	
+	//uploads/advertiment	
+	if(transaction_type == 'upload'){	
+		document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup, not nedded
 
-	window.open('http://' + current_domain +'/upload', '_blank');	
-	return;	
-}
-	
+		window.open(http_https + current_domain +'/upload', '_blank');	
+		return;	
+	}
+		
+	//greate/update/view voucher types list 
+	if(transaction_type == 'voucher_types_list'){
+		
+		document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
+
+		//http://127.0.0.1:3100/api/voucher_types //get voucher types list with cost
+		//http://127.0.0.1:3100/api/voucher_types_add  //create/update voucher type list, with new one
 
 
+		let choose_what_to_do = confirm('To see list of currently available Voucher types on offer press Cancel button\n\rTo delete current Voucher list and automatically create new, press Ok button')
+
+		if(choose_what_to_do){
+			let vouchers_types_link_generate_link = http_https + current_domain + '/api/voucher_types_add';//link to update/re-create voucher types list
+
+			$.get(vouchers_types_link_generate_link, function(response, status){//reset/update voucher type list
+
+				
+				if(response.length == 0){//check if any data was recieved in response
+					alert('Error no data recieved from server, about Voucher types, when trying to reset/update');
+					return 0;
+				}
+
+				if(status == 'success'){
+					alert('Changes made, if you have added new type of voucher, it should appear on Voucher types for all users.');//give success alert
+					
+					if(typeof response == 'object'){//check if whats recieved is object array
+						document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
+						document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
+						document.getElementById('transactions_and_voucher_header').innerHTML='Voucher Types list';//set header for div
+
+						response.forEach(function(data, index){//add voucher data to div 
+
+							$('#transactions_and_voucher_viewer').append(`<p>${index + 1})<br/> Voucher Amount : R${data.voucher_cost},  Voucher Type : ${data.voucher_type}, <br/>Voucher Profile : ${data.voucher_profile}, Available vouchers : ${data.voucher_count}</p><hr>`);
+						});
+					}
+
+					return 0;
+
+				}
+
+				alert('An error occured trying to update Voucher types list, please try again later or contact administrator');//if error give alert
+			});
+		}
+
+
+		else{//if cancell button//show currently available menu types
+
+			alert('To see this results better, please login as a seller, and click enter ticket amount box.\n\rNote: Closing and opening ticket amount box will give you new results/updated results if any changes where done;\r\nSome of the info you see here you may not see in seller menu, i.e some will be displayed in complimentary ticket menu');//im lazy to get this working nicely like it thoes for seller right now
+
+			
+			//add_sell_ticket_pop_contents();//show current voucher types menu
+			let vouchers_types_link_view_link = http_https + current_domain + '/api/voucher_types';//link to update/re-create voucher types list
+
+			$.get(vouchers_types_link_view_link, function(response, status){//make api call to get data
+
+				if(response.length == 0){//check if any data was recieved in response
+					alert('Error no data recieved from server, about Voucher types, please try to update/re-create menu option');
+					return 0;
+				}
+
+				if(status == 'success'){
+					
+					if(typeof response == 'object'){//check if whats recieved is object array
+						document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
+						document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
+						document.getElementById('transactions_and_voucher_header').innerHTML='Voucher Types list';//set header for div
+
+						response.forEach(function(data, index){//add voucher data to div 
+
+							$('#transactions_and_voucher_viewer').append(`<p>${index + 1})<br/> Voucher Amount : R${data.voucher_cost},  Voucher Type : ${data.voucher_type}, <br/>Voucher Profile : ${data.voucher_profile}, Available vouchers : ${data.voucher_count}</p><hr>`);
+						});
+					}
+
+					return 0;
+				}
+
+				alert('An error occured trying to update Voucher types list, please try again later or contact administrator');//if error give alert
+			});
+
+
+
+
+		}
+
+	}
 	
 }
 

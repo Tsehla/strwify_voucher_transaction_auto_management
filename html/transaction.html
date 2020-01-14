@@ -109,6 +109,7 @@
 	 <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='alert("This is Admin Page")'>Admin</button>
    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('messages')">Messages</button>
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('upload')">Advertisment</button>
+   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('voucher_types_list')">Voucher Types</button>
 	 
 </div>
 
@@ -456,7 +457,41 @@
 <!-- sell ticket menu -->
 <div id='sell_ticket_menu' style="width: auto; height: auto;margin: 0px;padding: 0px;display: none;">
 
-<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount'>
+<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount' onclick='add_sell_ticket_pop_contents()'>
+
+<!--  ticket amount pop up  -->
+  <div id='sell_ticket_enter_amount_popup' style='position: absolute;top:10vh; left:10vw; background-color: white; width: 80vw; height: 80vh; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro; display: none;'>
+   <!--
+    <div id='' style='width:100%;min-height: 30px; height:5vh'>
+      <button class='btn btn-primary' style='width: 100%; height:100%;'>Closes</button>
+    </div>
+  -->
+    <div id='' style='width: 100%; height: 10vh; text-align: center;'>
+
+      <button  id='data_select_box_button' class='btn' style='width:49%; height:100%;display: inline-block; background-color: white;' onclick="document.getElementById('data_or_time_select_box_time').style.display='none';document.getElementById('data_or_time_select_box').style.display='block';document.getElementById(this.id).style.backgroundColor='white';document.getElementById('time_select_box_button').style.backgroundColor='lightgrey'">Data</button>
+      
+      <button id='time_select_box_button' class='btn' style='width:49%; height:100%;display: inline-block;' onclick="document.getElementById('data_or_time_select_box').style.display='none';document.getElementById('data_or_time_select_box_time').style.display='block';document.getElementById(this.id).style.backgroundColor='white';document.getElementById('data_select_box_button').style.backgroundColor='lightgrey'" >Time</button>
+
+    </div>
+    
+    <!-- voucher type and cost select box -->
+    <div id='data_or_time_select_box' style='width:100%; height: 65vh;'></div><!-- data box -->
+
+    <div id='data_or_time_select_box_time' style='width:100%; height: 65vh; display: none;'></div><!-- time box -->
+    
+    <div id='' style='width:100%;min-height: 30px; height:5vh'>
+      <button class='btn btn-primary' style='width: 100%; height:100%;' onclick='document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Close</button>
+    </div>
+
+
+
+
+
+
+
+
+
+  </div>
      
 <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control" id ='seller_ticket_unique_code'>
 

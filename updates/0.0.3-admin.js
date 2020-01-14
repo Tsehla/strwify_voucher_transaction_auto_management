@@ -26,10 +26,52 @@ exports.create={
         },
         {
         voucheramount : 1,
-        vouchercode : '456asdf',
+        vouchercode : '4561asdf',
         voucherstate : 'new',
 		voucherprofile : '150 MB',
 		voucherexpiry : '2 DAYS'
+        },
+        {
+        voucheramount : 1,
+        vouchercode : '4562asdf',
+        voucherstate : 'new',
+		voucherprofile_time : '15 min',
+		voucherexpiry : '2 DAYS'
+        },
+        {
+            voucheramount : 1,
+            vouchercode : '45621asdf',
+            voucherstate : 'new',
+            voucherprofile_time : '15 min',
+            voucherexpiry : '2 DAYS'
+        },
+        {
+                voucheramount : 1,
+                vouchercode : '45622asdf',
+                voucherstate : 'new',
+                voucherprofile_time : '15 min',
+                voucherexpiry : '2 DAYS'
+        },
+        {
+            voucheramount : 1,
+            vouchercode : '4563asdf',
+            voucherstate : 'new',
+            voucherprofile_time : '30 min',
+            voucherexpiry : '2 DAYS'
+        },
+        {
+            voucheramount : 1,
+            vouchercode : '4564asdf',
+            voucherstate : 'new',
+            voucherprofile_time : '15 hr',
+            voucherexpiry : '2 DAYS'
+        },
+        {
+            voucheramount : 1,
+            vouchercode : '45648asdf',
+            voucherstate : 'new',
+            voucherprofile_time : '15 hr',
+            voucherexpiry : '2 DAYS'
         },
         {
         vouchercode : '789asdf',
@@ -170,6 +212,13 @@ exports.create={
 		'Router Monitoring':[
 			{routername : 'Orange farm mall', routerlocation:'Orange farm', routerdetails:'Contact tsehla if issue on 0719000000'},
 			{routername : 'Home', routerlocation:'Orange farm', routerdetails:'My home router'}
-		]
+        ],
+        'Voucher Types' : [
+            {voucher_type : 'data', voucher_cost : 3, voucher_profile : '30 MB', voucher_count : 51},
+            {voucher_type : 'data', voucher_cost : 5, voucher_profile : '50 MB', voucher_count : 26},
+            {voucher_type : 'time', voucher_cost : 5, voucher_profile : '30 min', voucher_count : 100},
+            {voucher_type : 'time', voucher_cost : 10, voucher_profile : '45 min', voucher_count : 26},
+            {voucher_type : 'data', voucher_cost : 15, voucher_profile : '1 hr', voucher_count : 60}
+        ]   
     
 };

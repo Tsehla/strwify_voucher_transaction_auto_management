@@ -72,6 +72,7 @@ voucher_model.add(
 		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
 		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
 		voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
+		voucherprofile_time : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Time'},
 		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
 		voucherstate : {type : types.Select, options: "used, new", default:'new', label :'Voucher State'},
 		soldby : {type : String, label :'Sold By'},
@@ -191,7 +192,26 @@ messages_model.add(
 
 messages_model.register();
 
+//---------------------------------------------------------
+    
+//vouchers on sale model/voucher tracker
+//----------------------------------------------------------
+var voucher_track = 'Voucher Types';
+var voucher_track_model = new keystone.List(voucher_track);
 
+voucher_track_model.add(
+    
+    {
+		voucher_type : {type : types.Select, options: "time, data", default:'data', label :'Voucher Type', initial:true},
+		voucher_cost : {type:String, default:'', label :'Voucher cost'},
+		voucher_profile : {type:String, default:'', label :'Voucher Time/Data'},
+		voucher_count: {type:String, default:'', label :'Available Vouchers'}
+		
+	}
+
+);
+
+voucher_track_model.register();
 
 
 
