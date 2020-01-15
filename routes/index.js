@@ -453,7 +453,7 @@ seller or distributor console, credt auto_voucher_check
 				//find if voucher data or by looking if its [ voucherprofile ] porpulated or not
 				var profile_of_voucher =(data.voucherprofile != 'N/A')?data.voucherprofile : data.voucherprofile_time;
 
-				let temporarly_voucher_object = {voucher_cost: data.voucheramount, voucher_profile : profile_of_voucher , voucher_type : type_of_voucher ,voucher_count: 1}
+				let temporarly_voucher_object = {voucher_cost: data.voucheramount, voucher_profile : profile_of_voucher.toLowerCase() , voucher_type : type_of_voucher ,voucher_count: 1}
 
 
 				if(data.voucherprofile != 'N/A'){//work with data voucher array
@@ -472,7 +472,7 @@ seller or distributor console, credt auto_voucher_check
 						let matching_found = false;//tracks if a match was found
 
 						// 1) test for same voucher cost
-						//if(temporarly_voucher_object.voucher_cost == voucher.voucher_cost){
+						//if(temporarly_voucher_object.voucher_cost == voucher.voucher_cost){//issue, this give false, always in this code
 						if(temporarly_voucher_object.voucher_cost){	
 							//2nd check
 							//test for voucher profile
@@ -516,7 +516,7 @@ seller or distributor console, credt auto_voucher_check
 						let matching_found = false;//tracks if a match was found
 
 						// 1) test for same voucher cost
-						//if(temporarly_voucher_object.voucher_cost == voucher.voucher_cost){
+						//if(temporarly_voucher_object.voucher_cost == voucher.voucher_cost){//issue, this give false, always in this code
 						if(temporarly_voucher_object.voucher_cost){
 							//2nd check
 							//test for voucher profile
@@ -566,6 +566,7 @@ seller or distributor console, credt auto_voucher_check
 					console.log('voucher type list already empty, please contact administrator');
 				}
 				//console.log('all voucher types removed');
+				
 
 
 			//save newly created voucher type list	
@@ -724,12 +725,14 @@ app.get('/api/voucher_types_add', function(req, res){
         /* find doc contains [seach_code=] */
         function write_sell_toDB(){
 		
-		let voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile_time : 'N/A' } // search for data vouchers by default
+		let voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'} } // search for data vouchers by default, where voucher profile does ot have value of [ not aplicable ]
 		
 		//decide if to search voucher of time or of data
 		if(req.query.ticket_type == 'time'){
-			voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : 'N/A' }
+			voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile_time : {$ne : 'N/A'} }
 		}
+
+		//console.log(voucher_type_to_search_for);
 
         keystone.list('Voucher Codes').model.findOne()
             .where(voucher_type_to_search_for)
