@@ -686,9 +686,9 @@ app.get('/api/voucher_types_add', function(req, res){
         //amount for voucher    
         var seller_voucher_amount_ =req.query.voucher_amount.toString().replace(/' '/g, '').trim();
               
-//        console.log('-----------------------');
-//        console.log(req.query);
-//        console.log('-----------------------');   
+        // console.log('-----------------------');
+        // console.log(req.query);
+        // console.log('-----------------------');   
             
         //var seller = req.query.seller;//add seller in db making---use as stats
         //var amount = req.query.amount--use as stats;
@@ -1195,9 +1195,30 @@ app.get('/api/voucher_types_add', function(req, res){
 						}
 
 						if(response == null || response == undefined || response == ''){//user not found on system//add to [ codes_not_on_system ]
-
-							codes_not_on_system.push({vouchercode:voucher_codes[voucher_counter].password ,voucheramount:voucher_codes[voucher_counter].cost ,voucherprofile:voucher_codes[voucher_counter].profile ,voucherexpiry:voucher_codes[voucher_counter].expiery ,voucherstate:'new' ,loadedby:req.query.added_by });//add to list to be added to system
 							
+
+							var codes_to_add_to_system = { //voucher data details object
+								vouchercode:voucher_codes[voucher_counter].password,
+								voucheramount:voucher_codes[voucher_counter].cost,
+								voucherexpiry:voucher_codes[voucher_counter].expiery,
+								voucherstate:'new' ,loadedby:req.query.added_by,
+							}
+
+
+							//check if its data or time voucher being loaded							
+							if(voucher_codes[voucher_counter].profile.toLowerCase().search('mb') > -1 || voucher_codes[voucher_counter].profile.toLowerCase().search('meg') > -1 ||  voucher_codes[voucher_counter].profile.toLowerCase().search('gb') > -1 ||  voucher_codes[voucher_counter].profile.toLowerCase().search('gig') > -1){ //if its data voucher
+
+								codes_to_add_to_system.voucherprofile = voucher_codes[voucher_counter].profile;//add time voucher info
+							}
+
+							else{//else add data voucher info
+								codes_to_add_to_system.voucherprofile_time = voucher_codes[voucher_counter].profile;
+							}
+
+							//add voucher to list to be added to system
+							codes_not_on_system.push(codes_to_add_to_system);
+							
+
 							voucher_counter = voucher_counter +1; //increment counter
 							voucher_vailabilty_serach();//call the function again
 							return;

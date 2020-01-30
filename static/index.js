@@ -2601,7 +2601,7 @@ function admin_voucher_upload(){//send voucher to db
     //console.log(url);
     
        $.get(url, function(response, status){
-           console.log(response);
+           //console.log(response);
             
            
            if(status == 'success'){
