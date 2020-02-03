@@ -725,14 +725,21 @@ app.get('/api/voucher_types_add', function(req, res){
         /* find doc contains [seach_code=] */
         function write_sell_toDB(){
 		
-		let voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'} } // search for data vouchers by default, where voucher profile does ot have value of [ not aplicable ]
-		
-		//decide if to search voucher of time or of data
-		if(req.query.ticket_type == 'time'){
-			voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile_time : {$ne : 'N/A'} }
-		}
 
-		//console.log(voucher_type_to_search_for);
+			/* theres an issue using [ voucherprofile_time ] in query;
+				{voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile_time : {$ne : 'N/A'} }
+			*/
+			if(req.query.ticket_type == 'data'){
+				
+				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'} } 
+			}
+		
+			//decide if to search voucher of time or of data
+			if(req.query.ticket_type == 'time'){
+				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : 'N/A' } // search for data vouchers by default, where voucher profile does ot have value of [ not aplicable ]	
+			}
+
+		console.log(voucher_type_to_search_for);
 
         keystone.list('Voucher Codes').model.findOne()
             .where(voucher_type_to_search_for)
