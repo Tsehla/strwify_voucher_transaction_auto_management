@@ -375,7 +375,7 @@
  <!-- voucher sell -->
  <div id="firth_page" style="width:99vw; height: 100vh"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
- <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; min-height:500px;height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px"'>
+ <div id="seller_distributor_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; min-height:500px;height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='document.getElementById("side_menu_container").style.right="12px";'>
 <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; ">
   <b id='firth_page_sell_menu_header'>
     sell menu
@@ -386,9 +386,9 @@
   <!-- Sell / Complementary ticket -->
   <div id='' style="width: 95vw; height:7vh; padding:0px; margin:0px;border-top:2px solid snow">
 
-    <button id='sell_voucher' style="width: 50%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;" class='btn' onclick='document.getElementById("complementary_ticket_menu").style.display="none";document.getElementById("sell_ticket_menu").style.display="block"; document.getElementById("complementary_voucher").style.boxShadow="-2px 1px 2px lightgrey"; document.getElementById("complementary_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none"; document.getElementById(this.id).style.backgroundColor ="white"'>Sell Voucher</button> 
+    <button id='sell_voucher' style="width: 50%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;" class='btn' onclick='document.getElementById("complementary_ticket_menu").style.display="none";document.getElementById("sell_ticket_menu").style.display="block"; document.getElementById("complementary_voucher").style.boxShadow="-2px 1px 2px lightgrey"; document.getElementById("complementary_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none"; document.getElementById(this.id).style.backgroundColor ="white"; seller_login.resturent_hotel_cafe_login=false;'>Sell Voucher</button> 
 
-    <button id='complementary_voucher' style="width:49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;font-size: 13px;" class='btn' onclick='document.getElementById("sell_ticket_menu").style.display="none";document.getElementById("complementary_ticket_menu").style.display="block";document.getElementById("sell_voucher").style.boxShadow="2px 1px 2px lightgrey"; document.getElementById("sell_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none";document.getElementById(this.id).style.backgroundColor ="white"'>Complementary<br/>Voucher</button>
+    <button id='complementary_voucher' style="width:49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;font-size: 13px;" class='btn' onclick='document.getElementById("sell_ticket_menu").style.display="none";document.getElementById("complementary_ticket_menu").style.display="block";document.getElementById("sell_voucher").style.boxShadow="2px 1px 2px lightgrey"; document.getElementById("sell_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none";document.getElementById(this.id).style.backgroundColor ="white";seller_login.resturent_hotel_cafe_login=true;'>Complementary<br/>Voucher</button>
   </div>
 
 <div id='seller_code_screen' style="width :80vw; height:21vh; margin:2vh 4vh 4vh 4vh; padding:0px; border:1px double blue">
@@ -404,7 +404,7 @@
 <!-- complementary ticket offering menu -->
 <div id='complementary_ticket_menu' style="width: auto; height: auto;margin: 0px;padding: 0px;display: none;">
 
-  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='complimentary Voucher amount' class="form-control" id ='seller_cpmlimentary_ticket_amount'>
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='complimentary Voucher amount' class="form-control" id ='seller_cpmlimentary_ticket_amount' onclick='add_sell_ticket_pop_contents()' readonly>
      
   <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control" id ='seller_complimentary_ticket_unique_code'>
 
@@ -459,39 +459,6 @@
 
 <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount' onclick='add_sell_ticket_pop_contents()' readonly>
 
-<!--  ticket amount pop up  -->
-  <div id='sell_ticket_enter_amount_popup' style='position: absolute;top:10vh; left:10vw; background-color: white; width: 80vw; height: 80vh; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro; display: none;'>
-   <!--
-    <div id='' style='width:100%;min-height: 30px; height:5vh'>
-      <button class='btn btn-primary' style='width: 100%; height:100%;'>Closes</button>
-    </div>
-  -->
-    <div id='' style='width: 100%; height: 10vh; text-align: center;'>
-
-      <button  id='data_select_box_button' class='btn' style='width:49%; height:100%;display: inline-block; background-color: white;' onclick="document.getElementById('data_or_time_select_box_time').style.display='none';document.getElementById('data_or_time_select_box').style.display='block';document.getElementById(this.id).style.backgroundColor='white';document.getElementById('time_select_box_button').style.backgroundColor='lightgrey'">Data</button>
-      
-      <button id='time_select_box_button' class='btn' style='width:49%; height:100%;display: inline-block;' onclick="document.getElementById('data_or_time_select_box').style.display='none';document.getElementById('data_or_time_select_box_time').style.display='block';document.getElementById(this.id).style.backgroundColor='white';document.getElementById('data_select_box_button').style.backgroundColor='lightgrey'" >Time</button>
-
-    </div>
-    
-    <!-- voucher type and cost select box -->
-    <div id='data_or_time_select_box' style='width:100%; height: 65vh;'></div><!-- data box -->
-
-    <div id='data_or_time_select_box_time' style='width:100%; height: 65vh; display: none;'></div><!-- time box -->
-    
-    <div id='' style='width:100%;min-height: 30px; height:5vh'>
-      <button class='btn btn-primary' style='width: 100%; height:100%;' onclick='document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Close</button>
-    </div>
-
-
-
-
-
-
-
-
-
-  </div>
      
 <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control" id ='seller_ticket_unique_code'>
 
@@ -520,6 +487,34 @@
     
 <button style="width:100%; height:7vh; margin :30px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick=' seller_activity_console_open()' >Accont Recharge and Transactions activity</button>
  </div>
+
+ <!--  ticket amount pop up  -->
+ <div id='sell_ticket_enter_amount_popup' style='position: absolute;top:10vh; left:10vw; background-color: white; width: 80vw; height: 80vh; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro; display: none;'>
+  <!--
+   <div id='' style='width:100%;min-height: 30px; height:5vh'>
+     <button class='btn btn-primary' style='width: 100%; height:100%;'>Closes</button>
+   </div>
+ -->
+   <div id='' style='width: 100%; height: 10vh; text-align: center;'>
+
+     <button  id='data_select_box_button' class='btn' style='width:49%; height:100%;display: inline-block; background-color: white;' onclick="document.getElementById('data_or_time_select_box_time').style.display='none';document.getElementById('data_or_time_select_box').style.display='block';document.getElementById(this.id).style.backgroundColor='white';document.getElementById('time_select_box_button').style.backgroundColor='lightgrey'">Data</button>
+     
+     <button id='time_select_box_button' class='btn' style='width:49%; height:100%;display: inline-block;' onclick="document.getElementById('data_or_time_select_box').style.display='none';document.getElementById('data_or_time_select_box_time').style.display='block';document.getElementById(this.id).style.backgroundColor='white';document.getElementById('data_select_box_button').style.backgroundColor='lightgrey'" >Time</button>
+
+   </div>
+   
+   <!-- voucher type and cost select box -->
+   <div id='data_or_time_select_box' style='width:100%; height: 65vh;'></div><!-- data box -->
+
+   <div id='data_or_time_select_box_time' style='width:100%; height: 65vh; display: none;'></div><!-- time box -->
+   
+   <div id='' style='width:100%;min-height: 30px; height:5vh'>
+     <button class='btn btn-primary' style='width: 100%; height:100%;' onclick='document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Close</button>
+   </div>
+
+ </div>
+
+
    <!-- qr scan div -->
 
    <div id='qr_scan_div' style="font-family: 'Ropa Sans', sans-serif;color: #333; width: 95vw;margin: 0 auto; position: fixed;top:10vh; display: none;">

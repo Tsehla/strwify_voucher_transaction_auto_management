@@ -71,6 +71,8 @@ voucher_model.add(
 		voucher_username : {type: String, default:'N/A', label :'Voucher User Name'},
 		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
 		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
+		voucher_complimentary : {type : types.Boolean, default:false, label :'Voucher Complimentary'},
+		voucher_complimentary_reject : {type : types.Boolean, default:false, label :'Voucher Complimentary reject'},
 		voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
 		voucherprofile_time : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Time'},
 		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},

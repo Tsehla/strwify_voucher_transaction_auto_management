@@ -601,20 +601,36 @@ sell ticket, seller menu
 =====================================================================================================================================================*/
 
 function sell_ticket(button_id){
-    
+
+	var ticket_complementary = false;//set is ticket complimentary to false
+	
     //voucher code
     var seller_code_input = document.getElementById('seller_ticket_unique_code');
     
     //voucher amount
     var seller_voucher_amount_input = document.getElementById('seller_ticket_amount');
+	
+
+	//if complimentary voucher menu
+	if(seller_login.resturent_hotel_cafe_login){//true
+
+		//voucher code
+		seller_code_input = document.getElementById('seller_complimentary_ticket_unique_code');
     
-    
+		//voucher amount
+		seller_voucher_amount_input = document.getElementById('seller_cpmlimentary_ticket_amount');
+
+		ticket_complementary = true;//set ticket as complimentary true
+	}
+	
+	//console.log(ticket_complementary);
         
-        var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker;//change '' + current_domain + '' to live domain
+    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
     if(seller_code_input.value.length < 8 || seller_code_input.value.length > 9){
+	
     return dom_innerHtml('firth_page_sell_menu_header', 'Please re-check "Code from buyer"'); 
     }    
     
@@ -688,6 +704,17 @@ function sell_ticket(button_id){
 
 function add_sell_ticket_pop_contents(){ //porpulate div with available ticket choices
 
+	//div to add value on
+	
+	var voucher_amount_div_to_add_value_on = "seller_ticket_amount"; //default div
+
+	if(seller_login.resturent_hotel_cafe_login){//if complimentary ticket menu
+
+		voucher_amount_div_to_add_value_on = "seller_cpmlimentary_ticket_amount";//change div
+
+	}
+	
+	//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on )
 	//clear div of old data
 	document.getElementById("data_or_time_select_box").innerHTML="";
 	document.getElementById("data_or_time_select_box_time").innerHTML="";
@@ -697,7 +724,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 	<div id ='data_ticket_manual_input' style='width: 94%; min-height: 80px;height:15vh;margin:3% 3% 10px 3%; border:2px solid green;border-radius:5px;display:none'>
 		<input type='number' placeholder='type amount for Data ticket' style='height:47%;width:100%' class='form-control' id='data_ticket_manual_input_input_box'>
-		<button class='btn btn-primary' style='display: block; height:47%;width:100%' onclick='data_or_time_ticket_pressed_tracker="data";	document.getElementById("seller_ticket_amount").value = document.getElementById("data_ticket_manual_input_input_box").value;document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Okay</button>
+		<button class='btn btn-primary' style='display: block; height:47%;width:100%' onclick='data_or_time_ticket_pressed_tracker="data";	document.getElementById("${voucher_amount_div_to_add_value_on}").value = document.getElementById("data_ticket_manual_input_input_box").value;document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Okay</button>
 	</div>
 	
 	`;
@@ -707,7 +734,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 	<div id ='time_ticket_manual_input' style='width: 94%; min-height: 80px;height:15vh;margin:3% 3% 10px 3%; border:2px solid green;border-radius:5px;display:none;'>
 		<input type='number' placeholder='type amount for Time ticket' style='height:47%;width:100%' class='form-control' id='time_ticket_manual_input_input_box'>
 		<button class='btn btn-primary' style='display: block; height:47%;width:100%' onclick='data_or_time_ticket_pressed_tracker="time";
-		document.getElementById("seller_ticket_amount").value = document.getElementById("time_ticket_manual_input_input_box").value;document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Okay</button>
+		document.getElementById("${voucher_amount_div_to_add_value_on}").value = document.getElementById("time_ticket_manual_input_input_box").value;document.getElementById("sell_ticket_enter_amount_popup").style.display="none"'>Okay</button>
 	</div>
 	`;
 
@@ -757,10 +784,11 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 
 					if(data.voucher_cost > 0 & data.voucher_count > 25 ){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type
-						
+
+						//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
 						if(data.voucher_type == 'time'){
 							$('#data_or_time_select_box_time').append(`
-							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("seller_ticket_amount").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 							
 							`);
 						}
@@ -768,7 +796,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 						if(data.voucher_type == 'data'){
 
 							$('#data_or_time_select_box').append(`
-							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("seller_ticket_amount").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 							
 							`);
 						}

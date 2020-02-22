@@ -663,7 +663,8 @@ app.get('/api/voucher_types_add', function(req, res){
       
         
         if(req.query.code == 'sell_voucher'){
-            
+			
+			
 
              
         //http://127.0.0.1:4100/api/sell?code=get_voucher&unique_code=xyz;//api query link
@@ -731,15 +732,15 @@ app.get('/api/voucher_types_add', function(req, res){
 			*/
 			if(req.query.ticket_type == 'data'){
 				
-				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'} } 
+				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'},voucher_complimentary : (JSON.parse(req.query.is_complementary)?true:{$ne : true}) } 
 			}
 		
 			//decide if to search voucher of time or of data
 			if(req.query.ticket_type == 'time'){
-				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : 'N/A' } // search for data vouchers by default, where voucher profile does ot have value of [ not aplicable ]	
+				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : 'N/A',voucher_complimentary : (JSON.parse(req.query.is_complementary)?true:{$ne : true}) } // search for data vouchers by default, where voucher profile does ot have value of [ not aplicable ]	
 			}
 
-		console.log(voucher_type_to_search_for);
+		//console.log(voucher_type_to_search_for);
 
         keystone.list('Voucher Codes').model.findOne()
             .where(voucher_type_to_search_for)
