@@ -88,7 +88,24 @@ if(location.protocol === 'http:'){
 // console.log(current_domain);
 // console.log(http_https);
 
+//get url parms and return results as object array
+function url_parms_object(){
 
+	var url_query_string = window.location.search.replace('?','').split('&');//clean string and turn to array
+	var url_query_string_object_array = {};
+
+	url_query_string.forEach(function(array){
+		var temp_array = array.split('=');//break array item to sub array
+		url_query_string_object_array[temp_array[0]]=temp_array[1];//save as object array
+
+
+	});
+
+	return url_query_string_object_array;//return object array as function
+
+//console.log(url_query_string);
+//console.log(url_query_string_object_array);
+}
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++ hide or show other pages div +++++++++++++++++++++++++++++++++++++++*/
 function dom_hide_show(option, ...argument){	
@@ -181,9 +198,15 @@ if(current_url == '/buy_voucher'){
 	//set hot spot login link for router//enable auto login after voucher sold//handles both free login request or paid voucher request
 	 var url_params = document.location.search.indexOf('?hotspot_link=') > -1 ?document.location.search.indexOf('?hotspot_link=') : document.location.search.indexOf('?free_login&hotspot_link=');
 
-	//++++++ check if hotspot link is available in main Url, extract link if so ++++=+
-	 url_params != -1 ?hot_spot_url=document.location.search.replace('?free_login&hotspot_link=','').replace('?hotspot_link=',''):hot_spot_url=undefined;
+	//++++++ check if hotspot link is available in main Url, use link if so ++++=+
+	
+	var url_params_array = url_parms_object();//get/return url parameters as objects
+
+	//url_params != -1 ?hot_spot_url=document.location.search.replace('?free_login&hotspot_link=','').replace('?hotspot_link=',''):hot_spot_url=undefined;
+	url_params != -1 ?hot_spot_url=url_params_array['hotspot_link']:hot_spot_url=undefined;
 	//console.log(hot_spot_url);
+	//console.log(url_params_array)
+
 
 	//if free voucher login/show manual view page menu
 	if(document.location.search.indexOf('?free_login&hotspot_link=') > -1){
@@ -388,9 +411,10 @@ var free_voucher_login = false;//allow unattended login if free voucher
 
 function auto_voucher_check(uniqueCode){
 		unique_code = uniqueCode;
+		var url_params_array = url_parms_object();//get/return url parameters as objects
 		
 		//+++++++++++ default url for voucher finding +++++++++++++
-		var url= http_https + current_domain + '/api/buy?code=get_voucher&unique_code='+uniqueCode;//change '' + current_domain + '' to live domain
+		var url= http_https + current_domain + '/api/buy?code=get_voucher&unique_code=' + uniqueCode + '&mac=' + url_params_array['mac'];//change '' + current_domain + '' to live domain
 		
 
 		//+++++++++++++++ search link params to see if this page was called by free voucher button click ++++++++++
@@ -462,9 +486,11 @@ manual voucher check/download
 
 
 function manual_voucher_init(button_id){
-        
+		
+		var url_params_array = url_parms_object();//get/return url parameters as objects
+
 		//+++++++++++ default url for voucher finding +++++++++++++	
-		var url= http_https + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code;
+		var url= http_https + current_domain + '/api/buy?code=get_voucher&unique_code='+ unique_code + '&mac=' + url_params_array['mac'];
 		
 
 		//+++++++++++++++ search link params to see if this page was called by free voucher button click ++++++++++
@@ -684,8 +710,9 @@ function sell_ticket(button_id){
 			   return;
            }
        });  
-           return null; 
+           
 		   document.getElementById(button_id).disabled=false;//enable sell button
+		   return null; 
 }
     
 //

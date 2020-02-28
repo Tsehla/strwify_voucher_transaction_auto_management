@@ -72,7 +72,6 @@ voucher_model.add(
 		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
 		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
 		voucher_complimentary : {type : types.Boolean, default:false, label :'Voucher Complimentary'},
-		voucher_complimentary_reject : {type : types.Boolean, default:false, label :'Voucher Complimentary reject'},
 		voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
 		voucherprofile_time : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Time'},
 		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
@@ -87,6 +86,36 @@ voucher_model.add(
 );
 
 voucher_model.register();
+
+//---------------------------------------------------------
+    
+//Complemenatry voucher tracker
+
+//----------------------------------------------------------
+
+var complementary_voucher_track = 'Complementary Voucher';
+var complementary_voucher_track_model = new keystone.List(complementary_voucher_track);
+
+complementary_voucher_track_model.add(
+    
+    {
+		complementary_voucher_username_or_voucher : {type: String, default:'N/A', label :'Voucher User Name'},
+		complementary_voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
+		complementary_voucher_reject : {type : types.Boolean, default:false, label :'Voucher Complimentary rejected'},
+		complementary_voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data/Time'},
+		complementary_soldby_id : {type : String, label :'Sold By'},
+		complementary_soldto_uniquecode : {type: String, default:'', label :'Sold To'},
+		complementary_soldto_device_mac : {type: String, default:'', label :'Device Mac'},
+		complementary_voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'}
+		
+	}
+
+);
+
+complementary_voucher_track_model.register();
+
+
+
 //---------------------------------------------------------
     
 //Router monitoring

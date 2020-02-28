@@ -1234,7 +1234,7 @@
 		} 
 		function buy(){
 			
-			window.open(hotspot_transaction_server_url + '/transaction?hotspot_link=' + router_variables_array["link-login-only"]);
+			window.open(hotspot_transaction_server_url + '/transaction?hotspot_link=' + router_variables_array["link-login-only"] + '&mac='+router_variables_array["mac-esc"]);
 		} 
 		function search(){
 			window.open('https://www.google.com/search?q='+document.getElementById('search').value);
@@ -1264,7 +1264,7 @@
 
                         window.open(wall_link_description[current_image_content_tracker].image_status_link, '_blank');
 
-                        window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + router_variables_array["link-login-only"], '_self');
+                        window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + router_variables_array["link-login-only"]+ '&mac='+router_variables_array["mac-esc"], '_self');
 
                         return true;
                     }
