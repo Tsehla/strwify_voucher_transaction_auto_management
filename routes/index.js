@@ -337,9 +337,48 @@ seller or distributor console, credt auto_voucher_check
             if(error){
                 res.jsonp('Problem finding Voucher');
             }
-            if(response == null){
-                res.jsonp('Voucher Not found')
-                }
+			if(response == null){//if voucher not found in normal vouchers/search complimentary
+				
+
+				//++++++++ search for code in complenmetary vouchers ++++++++++
+
+				keystone.list('Complementary Voucher').model.findOne()
+				.where({soldto : seach_code_,voucherprinted : false})
+				.exec( function(error, complementary_response){
+				if(error){
+					res.jsonp('Problem finding Voucher');
+				}
+				
+				if(complementary_response == null){//if voucher not found in normal vouchers/search complimentary
+			
+				   res.jsonp('Voucher Not found');
+				}
+				
+				else{
+						res.jsonp(complementary_response); 
+						//++++++++++++++++++++save voucher as printed+++++++++++++++++
+							
+						complementary_response.voucherprinted = true;//set voucher as printed (yes)
+						complementary_response.complementary_soldto_device_mac = req.query.mac
+						complementary_response.save(function(err, success){
+
+							if(err){
+								console.log('Error, updating complementary tickets tracking details when printed : '+err);
+							   	return;
+				   			}
+						});
+							
+					}
+				   
+						
+				});
+
+
+
+			   // res.jsonp('Voucher Not found');
+			   return;
+			}
+			
             else{
                 res.jsonp(response); 
 				//++++++++++++++++++++save voucher as printed+++++++++++++++++
@@ -365,6 +404,7 @@ seller or distributor console, credt auto_voucher_check
 		}
 		
 		/////free voucher code request
+		
 		if(req.query.code == 'free_voucher'){
 		
 			keystone.list('Voucher Codes').model.findOne({voucheramount : 0 })
@@ -386,6 +426,8 @@ seller or distributor console, credt auto_voucher_check
 
 
 		}
+
+		//search complementary voucher if not found in normal voucher
 
         
         
@@ -757,15 +799,141 @@ app.get('/api/voucher_types_add', function(req, res){
             
              // res.jsonp('voucher sold for R'+seller_voucher_amount_); 
 			
+			//+++++ if voucher is complementary +++++
+			if(response.voucher_complimentary){
+
+
+
+				/* 
+							
+							
+					/////free voucher code request
+					
+					if(req.query.code == 'free_voucher'){
+					
+						keystone.list('Voucher Codes').model.findOne({voucheramount : 0 })
+						.exec( function(error, response){
+						if(error){
+							res.jsonp('Problem finding Voucher');
+						}
+						if(response == null){
+							res.jsonp('Voucher Not found')
+							}
+						else{
+							res.jsonp(response); 
+							
+						}
+					
+						
+						});
+
+
+
+					}
+
+					
+
+					//complementary voucher find
+
+
+					//complementary voucher make
+					function complementary_voucher_request_record_save(){
+
+						console.log('this is cmpementary record save')
+
+
+
+
+
+
+						return null;
+					}
+
+							
+							
+							
+							
+							
+							
+							
+				*/
+				//+++++++ create complimentary voucher +++++
+
+				//check if voucher already exist in complemntary tickets
+
+				keystone.list('Complementary Voucher').model.findOne()
+
+				.where({soldto : seach_code_})
+				
+				.exec( function(error, complementary_response){
+
+					if(error){
+						return res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});
+					}
+					
+					if(complementary_response == null){ //if voucher not found/not yet created
+
+
+						keystone.createItems({//create new complimentary voucher
+				
+							'Complementary Voucher' : [
+								{
+									vouchercode : response.vouchercode,
+									voucher_username : response.voucher_username,
+									voucher_password : response.voucher_password ,
+									voucheramount : response.voucheramount,
+									voucherprofile : response.voucherprofile ,
+									voucherprofile_time : response.voucherprofile_time,
+									voucherexpiry : response.voucherexpiry,
+									soldby : req.query.seller_id,
+									soldto : seach_code_,
+									voucherproducedday : day,//day of month voucher was printed, to be used as to calculate amount of time before point cant be recouped by the seller
+									loadedby : response.loadedby,
+									
+								}
+							]
+							
+							
+						}, function(err, results){
+							if(err){
+								console.log('Error creating new complementary ticket');
+								return res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});
+							}	
+						});			
+						
+					
+					}
+
+					else{
+						// console.log(response);
+						//if voucher found/voucher already created
+						return res.jsonp({status : 'this code is used, Try a new code..', new_credit : 'no_value_change'});
+					}
+				});
+
+			}
+
+
+
+			//++++++ non complementary vouchers
+
+			if(!response.voucher_complimentary){
+
                 response.voucherstate = 'used';
                 response.soldby = req.query.seller_id;
                 response.soldto = seach_code_;
 				response.voucherproducedday = day;//day of month voucher was printed, to be used as to calculate amount of time before point cant be recouped by the seller
-                response.save();
-            
-                var seller_id = req.query.seller_id;
-               // var seller_voucher_amount  = seller_voucher_amount_;
-                voucher_sell_subtract_amount(seller_id, seller_voucher_amount_, res);
+				response.save();
+
+			}
+
+
+			//++++++ do accounting and update account +++++++++
+			 
+            var seller_id = req.query.seller_id;
+            // var seller_voucher_amount  = seller_voucher_amount_;
+			voucher_sell_subtract_amount(seller_id, seller_voucher_amount_, res);
+			
 				
         });
         //on error throw error
@@ -774,7 +942,9 @@ app.get('/api/voucher_types_add', function(req, res){
              
             
             }
-        }
+	}
+		
+
 	  
 	if(req.query.code == 'sell_recharge'){// +++++++++++++++distributor rechage seller
 		  
@@ -865,7 +1035,7 @@ app.get('/api/voucher_types_add', function(req, res){
 									
 											
 									 //add transaction
-										var date = new Date();
+									var date = new Date();
 				
 									var hour = date.getHours();
 									var minutes = date.getMinutes();
@@ -940,16 +1110,10 @@ app.get('/api/voucher_types_add', function(req, res){
 						});
 					
 					
-					
-					
-					
-					   
-					
-
+				
 				});
 
 		
-
 
 			 }
      

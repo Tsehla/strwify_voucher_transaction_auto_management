@@ -4334,9 +4334,14 @@ function distributor_superadmin_acc_help(type_of_user){
 
 function auto_login(vocher_code, voucher_username, voucher_password){
 	//hot_spot_url
-	
-	if(free_voucher_login){//if free login auto log in
 
+	if(!hot_spot_url){return}//if url for router not available
+	
+
+	// +++++++ free voucher or complemenary auto voucher login  ++++++
+
+	//if(free_voucher_login){//if free login auto log in
+	
 
 		if(voucher_username != 'N/A' &&  voucher_password != 'N/A'){//check if username and password is given
 
@@ -4347,16 +4352,17 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 			return;
 		}
 
-		window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
+	// 	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
 
-		return;
-	}
+	// 	return;
+	// }
 
-	if(!hot_spot_url){return}//if url for router not available
+	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	
 	 
-	 var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');
+ 	var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');
 	 
-	 if(!auto_login_confirm ){return}//user refuse auto login
+ 	if(!auto_login_confirm ){return}//user refuse auto login
 	
 	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
 

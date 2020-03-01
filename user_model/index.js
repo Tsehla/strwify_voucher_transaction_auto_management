@@ -67,7 +67,7 @@ var voucher_model = new keystone.List(voucher_code);
 voucher_model.add(
     
     {
-		vouchercode : {type:String, unique:true, initial:true, required:true, default:'N/A', label :'Voucher Code'},
+		vouchercode : {type:String, unique:false, initial:true, required:true, default:'N/A', label :'Voucher Code'},
 		voucher_username : {type: String, default:'N/A', label :'Voucher User Name'},
 		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
 		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
@@ -98,15 +98,21 @@ var complementary_voucher_track_model = new keystone.List(complementary_voucher_
 
 complementary_voucher_track_model.add(
     
-    {
-		complementary_voucher_username_or_voucher : {type: String, default:'N/A', label :'Voucher User Name'},
-		complementary_voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
+    {	
+		vouchercode : {type:String, unique:false, initial:true, required:true, default:'N/A', label :'Voucher Code'},
+		voucher_username : {type: String, default:'N/A', label :'Voucher User Name'},
+		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
+		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
+		voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
+		voucherprofile_time : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Time'},
+		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
+		soldby : {type : String, label :'Sold By'},
+		soldto : {type: String, default:'', label :'Sold To'},
+		loadedby : {type: String, default:'System', label :'Added by'},
+		voucherprinted : {type : types.Boolean, default:false, label :'Voucher Printed'},
+		voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'},
 		complementary_voucher_reject : {type : types.Boolean, default:false, label :'Voucher Complimentary rejected'},
-		complementary_voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data/Time'},
-		complementary_soldby_id : {type : String, label :'Sold By'},
-		complementary_soldto_uniquecode : {type: String, default:'', label :'Sold To'},
 		complementary_soldto_device_mac : {type: String, default:'', label :'Device Mac'},
-		complementary_voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'}
 		
 	}
 
