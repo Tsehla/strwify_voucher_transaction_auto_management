@@ -7,7 +7,7 @@
 			<title>Wifi Hotspot > login</title>
 
 			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-			<link rel="stylesheet" href="bootstrap.min.css">
+            <link rel="stylesheet" href="bootstrap.min.css">
 			<link rel="stylesheet" href="line-awesome/css/line-awesome.css">
 
 
@@ -718,7 +718,9 @@
 		<script type='text/JavaScript' src='jquery-3.3.1.min.js' ></script> 
 		<script type="text/javascript" src="md5.js"></script>
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
-		<script type="text/javascript" src="qs.js"></script>
+        <!-- <script type="text/javascript" src="qs.js"></script> -->
+        
+
         <script type="text/javascript">
 
         var current_url= window.location.pathname;//content after domain 
@@ -755,8 +757,20 @@
 
 		//++++++++++++++++++++++++form processing
 
-		//get varibles from router on link
-		var router_variables_array = qs.get();
+        //get parameters as varibles from router on link
+
+            var url_query_string = window.location.search.replace('?','').split('&');//clean string and turn to array
+            var router_variables_array = {};
+
+            url_query_string.forEach(function(array){
+                var temp_array = array.split('=');//break array item to sub array
+                router_variables_array[temp_array[0]]=temp_array[1];//save as object array
+
+
+            });
+
+       
+		
 		//console.log(router_variables_array);
 			
 		var router_login_link = router_variables_array['link-login-only'];//login link of router
