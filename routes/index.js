@@ -343,7 +343,8 @@ seller or distributor console, credt auto_voucher_check
 				//++++++++ search for code in complenmetary vouchers ++++++++++
 
 				keystone.list('Complementary Voucher').model.findOne()
-				.where({soldto : seach_code_,voucherprinted : false})
+				//.where({soldto : seach_code_,voucherprinted : false})
+				.where({soldto : seach_code_})
 				.exec( function(error, complementary_response){
 				if(error){
 					res.jsonp('Problem finding Voucher');
