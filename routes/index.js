@@ -1911,37 +1911,85 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 	.exec(function(err, response){
 		
 		 var respone_ =[];//filter and send response
+
 		 
-		if(err){
-			console.log('error: finding voucher history for user ID : '+req.query.user_id);
-			return_fn('error');
-			return;
-		}
-		
-		if(response == null || response == undefined || response == ''){//user not found//add user
-			console.log('error: No vouchers found for user ID : '+req.query.user_id);
-			return_fn('error : no vouchers to claim');
-			return;
-		}
-		 
-		
-		 
-		 response.forEach(function(data, index){
-			 var date = new Date();
-			 if(data.voucherprinted != true && data.voucherstate != 'new'){
-				 	var voucher_id = data.soldto.split(':');//give code from buyer back
-					respone_.push({voucher_id:voucher_id[1], voucher_doc_id: data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
+		//complementar unclaimed vouchers find
+
+		keystone.list('Complementary Voucher').model.find()
+
+		.where({soldby : req.query.user_id})
+
+		.exec( function(error, complementary_redeem_response){
+				
+			var temp_complementary_ticket_redeem_array = [];//tem array to save complementary redeem vouchers
+
+			if(error){
+				console.log('Problem finding complementary voucher to redeem');
+				return;
+			}
+					
+			if(complementary_redeem_response == null){//if voucher not found in normal vouchers/search complimentary
+				
+				console.log('No complementary vouchers to redeem');
+				return;
+			}
+
+			complementary_redeem_response.forEach(function(data, index){
+				var date = new Date();
+				if(data.voucherprinted != true){ //this/complementary vouchers are produced on demand, no need to check if they are used or new/not used
+					//console.log(data)
+							
+					var voucher_id = data.soldto.split(':');//give code from buyer back
+					temp_complementary_ticket_redeem_array.push({voucher_id:voucher_id[1], voucher_doc_id: data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
+							
 				}
-			 
-		 });
-		 
-		 if(respone_.length < 1){//if no data match request
-			 
-			 respone_ = 'error : no vouchers to claim';
-		 }
-		return_fn(respone_); 
-		 
-		return;  
+						
+			});
+
+			respone_ = temp_complementary_ticket_redeem_array//tranfer complementary array content to main array
+
+			normal_vouchers_to_redeem_processing();//start processing of normal redeemable vouchers 
+
+		})
+
+
+		function normal_vouchers_to_redeem_processing(){
+			
+			if(err && respone_.length == 0){ //if error and no complementary ticket to redeem send error
+				console.log('error: finding voucher history for user ID : '+req.query.user_id);
+				return_fn('error');
+				return;
+			}
+			
+			if(response == null || response == undefined || response == '' && respone_.length == 0){//user not found and no complementary ticket to redeem send error
+				console.log('error: No vouchers found for user ID : '+req.query.user_id);
+				return_fn('error : no vouchers to claim');
+				return;
+			}
+			
+			
+			if(response){//if there is ticket to be redeemed, (non complementary voucher/normal vouchers)
+
+				response.forEach(function(data, index){
+					var date = new Date();
+					if(data.voucherprinted != true && data.voucherstate != 'new'){
+							var voucher_id = data.soldto.split(':');//give code from buyer back
+							respone_.push({voucher_id:voucher_id[1], voucher_doc_id: data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
+						}
+					
+				});
+
+			}
+			
+			if(respone_.length < 1){//if no data match request//or no ticket to be redeem for this seller account
+				
+				respone_ = 'error : no vouchers to claim';
+			}
+			//console.log(respone_)
+			return_fn(respone_); 
+			
+			return;  
+		}
 							
 	})
 	
