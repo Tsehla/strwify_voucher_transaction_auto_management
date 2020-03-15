@@ -96,6 +96,10 @@ voucher_model.register();
 var complementary_voucher_track = 'Complementary Voucher';
 var complementary_voucher_track_model = new keystone.List(complementary_voucher_track);
 
+//time or date
+var date = new Date();
+
+
 complementary_voucher_track_model.add(
     
     {	
@@ -111,11 +115,14 @@ complementary_voucher_track_model.add(
 		loadedby : {type: String, default:'System', label :'Added by'},
 		voucherprinted : {type : types.Boolean, default:false, label :'Voucher Printed'},
 		voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'},
+		voucherproducedmonth : {type: String, default:date.getMonth(), label :'Voucher Produced Month'},
+		voucherproducedyear : {type: String, default:date.getFullYear(), label :'Voucher Produced Year'},
+		voucherproducedhour : {type: String, default:date.getHours(), label :'Voucher Produced Hour'},
+		voucherproducedminute: {type: String, default:date.getMinutes(), label :'Voucher Produced Minute'},
 		complementary_voucher_reject : {type : types.Boolean, default:false, label :'Voucher Complimentary rejected'},
 		complementary_soldto_device_mac : {type: String, default:'', label :'Device Mac'},
 		
-	}
-
+	} 
 );
 
 complementary_voucher_track_model.register();

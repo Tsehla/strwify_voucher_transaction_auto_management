@@ -775,10 +775,32 @@
 
 
             });
-
-       
 		
-		//console.log(router_variables_array);
+       // console.log(router_variables_array);
+        
+        //check if voucher login reject message is related to complementary ticket
+        //if so, tell server to reverse seller account charge for specific complementary voucher transaction if conditions are met
+        if(router_variables_array['error']){//if error 
+
+           if(router_variables_array['username'].toLowerCase().search('complementary') > -1){//if error is about username that contains complementary
+               
+                var url = http_https + current_domain + '/api/transations?type=rejected_voucher_auto_redeem&device_mac=' + router_variables_array['mac-esc'];//contact server link
+                //console.log(url);
+                $.get(url, function(response, status){  
+                    
+                    if(status == 'success'){//if server responded
+                        console.log(response);
+                    }
+                    else{//if error contacting server
+                        console.log('error, initiating auto voucher redeem, for complementary ticket');
+                    }
+
+                });
+
+           };
+
+        }
+
 			
 		var router_login_link = router_variables_array['link-login-only'];//login link of router
 

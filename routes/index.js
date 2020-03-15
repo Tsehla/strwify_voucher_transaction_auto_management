@@ -890,6 +890,10 @@ app.get('/api/voucher_types_add', function(req, res){
 									soldto : seach_code_,
 									voucherproducedday : day,//day of month voucher was printed, to be used as to calculate amount of time before point cant be recouped by the seller
 									loadedby : response.loadedby,
+									voucherproducedmonth : date.getMonth(),
+									voucherproducedyear : date.getFullYear(),
+									voucherproducedhour : date.getHours(),
+									voucherproducedminute : date.getMinutes(),
 									
 								}
 							]
@@ -1872,7 +1876,7 @@ app.get('/api/transations', function(req, res){
 //http://127.0.0.1:4100/api/transations?type=past_transactions&user_id=8905135852087&usertype=Seller
 //http://127.0.0.1:4100/api/transations?type=messaging&user_id=8905135852087&usertype=Seller
 	
-console.log(req.query.user_id,req.query.usertype,req.query.type );	
+//console.log(req.query.user_id,req.query.usertype,req.query.type );	
 	
 if(req.query.type == 'past_transactions'){	//find transaction made
 	
@@ -2001,31 +2005,155 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 		
 		//http://127.0.0.1:4100/api/transations?type=messages&user_id=8905135852087&usertype=Seller
 	
-	 keystone.list('Messaging').model.find()//hide message that have delete checked
-	.where({$or:[ {message_initiator_id : req.query.user_id,message_initiator_usertype:req.query.usertype,from_delete:false}, {message_parcitipant_id : req.query.user_id,message_parcitipant_usertype:req.query.usertype,to_delete:false} ]})
-	.sort('-last_updated_date')
-	.exec(function(err, response){
-		
-		 
-		if(err){
-			console.log('error: No messages found for user ID : '+req.query.user_id);
-			return_fn('error');
-			return;
-		}
-		
-		if(response == null || response == undefined || response == ''){//user not found//add user
-			console.log('error: No messages found for user ID : '+req.query.user_id);
-			return_fn('error : no messages found');
-			return;
-		}
-		 
-		return_fn(response); 
-		 
-		return;  
-							
-	})
+		keystone.list('Messaging').model.find()//hide message that have delete checked
+		.where({$or:[ {message_initiator_id : req.query.user_id,message_initiator_usertype:req.query.usertype,from_delete:false}, {message_parcitipant_id : req.query.user_id,message_parcitipant_usertype:req.query.usertype,to_delete:false} ]})
+		.sort('-last_updated_date')
+		.exec(function(err, response){
+			
+			
+			if(err){
+				console.log('error: No messages found for user ID : '+req.query.user_id);
+				return_fn('error');
+				return;
+			}
+			
+			if(response == null || response == undefined || response == ''){//user not found//add user
+				console.log('error: No messages found for user ID : '+req.query.user_id);
+				return_fn('error : no messages found');
+				return;
+			}
+			
+			return_fn(response); 
+			
+			return;  
+								
+		})
 	
-}	
+	}	
+
+	//complementary rejected voucher auto redeem
+	//http://127.0.0.1:3100/api/transations?type=rejected_voucher_auto_redeem&device_mac=9G%3A2E%3A4C%3A69%3Ak3%3ABA
+	if(req.query.type == 'rejected_voucher_auto_redeem'){
+
+		//console.log(req.query.type, req.query.device_mac);
+		var date = new Date();
+		 
+		keystone.list('Complementary Voucher').model.find()
+
+		.where({complementary_soldto_device_mac : req.query.device_mac, complementary_voucher_reject : false, voucherproducedyear : date.getFullYear(), voucherproducedmonth : date.getMonth(), voucherproducedday : date.getDate() })
+
+		.exec( function(error, complementary_redeem_response){
+
+			if(error){
+				console.log('Problem finding complementary voucher to redeem');
+				return;
+			}
+					
+			if(!complementary_redeem_response){//if voucher not found in normal vouchers/search complimentary
+				
+				console.log('No complementary vouchers to redeem');
+				return;
+			}
+
+
+			//console.log(complementary_redeem_response);
+
+			complementary_redeem_response.forEach((data, index)=>{
+
+				/* ###
+
+					THIS NEEDS TO BE MORE REFINED, IT HAS LOOP HOLES THAT ALLOW THE USER TO REDEEM VOUCHER IN THE SAME HOUR AND THE NEXT HOUR, SO LONG THE MINUTES CONDITION IS MET, SO THE SECOND HOUR LOOP HOLE NEEDS TO BE RESTRICTED.
+
+				*/
+
+				if( (date.getHours() - data.voucherproducedhour) == 0 || (date.getHours() - data.voucherproducedhour) == 1 || (date.getHours() - data.voucherproducedhour) == -23){//if date is [ same hour ] or [ one hour more ] or [ one hour after midnight ]
+
+					//check minutes
+					//console.log(date.getMinutes(),(date.getMinutes() - data.voucherproducedminute) == 0,(date.getMinutes() - data.voucherproducedminute) == 1,(date.getMinutes() - data.voucherproducedminute) == -59,data.voucherproducedminute)
+
+					if( (date.getMinutes() - data.voucherproducedminute) == 0 || (date.getMinutes() - data.voucherproducedminute) == 1 || (date.getMinutes() - data.voucherproducedminute) == -59){//if date is [ same minute ] or [ one minute more ] or [ first minute after 60 minutes ]
+					
+					//	console.log(complementary_redeem_response[index]);
+
+
+
+
+
+					//get seller and update their account//with amount to reddem
+						
+					keystone.list('seller distributor').model.findOne()
+					.where({idnumber : complementary_redeem_response[index].soldby, usertype: 'Seller'})
+					.exec(function(err, user_data){
+
+							if(err){
+								console.log('error : when finding user when attempting to reedem user  id no : '+complementary_redeem_response[index].soldby);
+								//return_fn('Server or Conection error');
+								return;
+							}
+									
+							if(user_data == null || user_data == undefined || user_data == ''){//user not found//add user
+
+								console.log('error : when finding user when attempting to reedem user  id no : '+complementary_redeem_response[index].soldby+ ' , no response given/response empty.');
+								return_fn('No data found');
+								return;
+							}
+									
+									
+							//add transaction
+							var date = new Date();			
+							var hour = date.getHours();
+							var minutes = date.getMinutes();
+							var day = date.getDay();
+							var month = date.getMonth();
+							var year = date.getFullYear();
+									
+							var new_balance = Number(user_data.credits) + Number(complementary_redeem_response[index].voucheramount);
+									
+							
+							var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Voucher redeemed for : '+' R'+ complementary_redeem_response[index].voucheramount +'+,; Voucher ref _id : '+complementary_redeem_response[index]._id+'; New balance : R'+new_balance ;
+
+							var hour = date.getHours();
+							var new_transactions_array = user_data.transactionhistory;
+
+								new_transactions_array.unshift(new_transaction_record);
+
+							if( new_transactions_array.length > 1000){
+								new_transactions_array.pop();
+									
+							}//if lenght is over that//remove first element
+							
+							user_data.transactionhistory = new_transactions_array;//update transaction history record
+							user_data.credits = new_balance;//update user amount
+									
+										
+							user_data.save();//save changes/edits to accounts					
+						
+						});
+								
+										
+								
+							
+						//edit matching complimentary ticket and save  
+						complementary_redeem_response[index].complementary_voucher_reject = true;
+						complementary_redeem_response[index].save();
+
+					}
+					
+
+				}
+
+			});
+
+
+
+		})
+
+
+		
+		return_fn('');
+
+	}
+
 	
 	
 	function return_fn(data){//send response back
@@ -2035,6 +2163,8 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 	}
 
 });
+
+
 
 /*========================================
 
