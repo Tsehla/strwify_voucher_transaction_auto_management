@@ -1912,9 +1912,7 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 		
 		 var respone_ =[];//filter and send response
 
-		 
 		//complementar unclaimed vouchers find
-
 		keystone.list('Complementary Voucher').model.find()
 
 		.where({soldby : req.query.user_id})
@@ -1925,28 +1923,31 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 
 			if(error){
 				console.log('Problem finding complementary voucher to redeem');
-				return;
+				//return;
 			}
 					
-			if(complementary_redeem_response == null){//if voucher not found in normal vouchers/search complimentary
+			if(!complementary_redeem_response){//if voucher not found in normal vouchers/search complimentary
 				
 				console.log('No complementary vouchers to redeem');
-				return;
+				//return;
 			}
 
-			complementary_redeem_response.forEach(function(data, index){
-				var date = new Date();
-				if(data.voucherprinted != true){ //this/complementary vouchers are produced on demand, no need to check if they are used or new/not used
-					//console.log(data)
-							
-					var voucher_id = data.soldto.split(':');//give code from buyer back
-					temp_complementary_ticket_redeem_array.push({voucher_id:voucher_id[1], voucher_doc_id: data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
-							
-				}
-						
-			});
+			if(complementary_redeem_response){//if redeemable voucher found, add to array
 
-			respone_ = temp_complementary_ticket_redeem_array//tranfer complementary array content to main array
+				complementary_redeem_response.forEach(function(data, index){
+					var date = new Date();
+					if(data.voucherprinted != true){ //this/complementary vouchers are produced on demand, no need to check if they are used or new/not used
+						//console.log(data)
+								
+						var voucher_id = data.soldto.split(':');//give code from buyer back
+						temp_complementary_ticket_redeem_array.push({voucher_id:voucher_id[1], voucher_doc_id: data._id, voucher_amount: data.voucheramount, voucherproducedday:data.voucherproducedday, server_day:date.getDate()});
+								
+					}
+							
+				});
+
+				respone_ = temp_complementary_ticket_redeem_array//tranfer complementary array content to main array
+			}
 
 			normal_vouchers_to_redeem_processing();//start processing of normal redeemable vouchers 
 
@@ -2374,127 +2375,159 @@ app.get('/api/redeem_voucher', function(req, res){
 	
 	
 	
-		//var url= 'http://' + current_domain + '/api/redeem_voucher?voucher_id='+voucher_document_id&user_id=;//redeem voucher link
+	//var url= 'http://' + current_domain + '/api/redeem_voucher?voucher_id='+voucher_document_id&user_id=;//redeem voucher link
 	
 	
 		
-	 keystone.list('Voucher Codes').model.findOne()
+	keystone.list('Voucher Codes').model.findOne()
 	.where({_id : req.query.voucher_id })
 	.exec(function(err, response){
-		 
-		 
-		 
-		if(err){
-			console.log('error: finding voucher voucher to reedem, with document _id : '+req.query.voucher_id);
-			return_fn('Server or Conection error');
-			return;
-		}
-		
-		if(response == null || response == undefined || response == ''){//user not found//add user
-			console.log('error: No voucher found to reedem, with document _id : '+req.query.voucher_id);
-			return_fn('No data found');
-			return;
-		}
-		 
-		
-		 
-		 //get seller and update their account//with amount to reddem
- 
-		 
-	keystone.list('seller distributor').model.findOne()
-	.where({idnumber : req.query.user_id, usertype: 'Seller'})
-	.exec(function(err, user_data){
 
-		if(err){
-			console.log('error : when finding user when attempting to reedem user  id no : '+response.soldby);
-			return_fn('Server or Conection error');
-			return;
-		}
-		
-		if(user_data == null || user_data == undefined || user_data == ''){//user not found//add user
 
-			console.log('error : when finding user when attempting to reedem user  id no : '+response.soldby+ ' , no response given/response empty.');
-			return_fn('No data found');
-			return;
-		}
-		  
-		
-		 //add transaction
+		//search complementary first
+		keystone.list('Complementary Voucher').model.findOne()
 
-		var date = new Date();			
-		var hour = date.getHours();
-		var minutes = date.getMinutes();
-		var day = date.getDay();
-		var month = date.getMonth();
-		var year = date.getFullYear();
-		
-		var new_balance = Number(user_data.credits) + Number(response.voucheramount);
-		
-		
-		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Voucher redeemed for : '+' R'+ response.voucheramount +'+,; Voucher ref _id : '+response._id+'; New balance : R'+new_balance ;
+		.where({_id : req.query.voucher_id})
 
-		var hour = date.getHours();
-		var new_transactions_array = user_data.transactionhistory;
+		.exec( function(error, complementary_redeem_find_response){
+				
 
-			new_transactions_array.unshift(new_transaction_record);
-
-		if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
-		 
-		user_data.transactionhistory = new_transactions_array;//update transaction history record
-		user_data.credits = new_balance;//update user amount
-		
-		
-			 user_data.save(function(err, results){//save changes
-				// console.log(results)
-				// console.log(err)
-				if(err){
-					console.log('error:when attempting to save reedemed money to user account, user document _id : '+ user_data._id +', voucher Code document _id : '+req.query.voucher_id);
+			if(error){//error searching for complementary voucher
+				console.log('error: finding voucher voucher to reedem, with document _id : '+req.query.voucher_id)
+				
+			}
 					
+			if(!complementary_redeem_find_response){//complimentary voucher not found
+				
+				console.log('error: No voucher found to reedem, with document _id : '+req.query.voucher_id);
+				
+			}
+
+			if(complementary_redeem_find_response){
+
+				//if voucher match found/pass local response object to/as main response onject
+				response = complementary_redeem_find_response;
+			}
+
+			normal_vouchers_to_redeem_processing_continue();//continue with processing normal voucher
+
+		});
+		 
+		
+		function normal_vouchers_to_redeem_processing_continue(){
+
+			if(err && !response){//if error en response object is still false/was not influenced/changed by complementary search function, give error/else pass
+				console.log('error: finding voucher voucher to reedem, with document _id : '+req.query.voucher_id);
+				return_fn('Server or Conection error');
+				return;
+			}
+			
+			if(response == null || response == undefined || response == ''){//user not found//add user
+				console.log('error: No voucher found to reedem, with document _id : '+req.query.voucher_id);
+				return_fn('No data found');
+				return;
+			}
+			
+			
+			
+			//get seller and update their account//with amount to reddem
+		
+			keystone.list('seller distributor').model.findOne()
+			.where({idnumber : req.query.user_id, usertype: 'Seller'})
+			.exec(function(err, user_data){
+
+				if(err){
+					console.log('error : when finding user when attempting to reedem user  id no : '+response.soldby);
 					return_fn('Server or Conection error');
 					return;
 				}
+				
+				if(user_data == null || user_data == undefined || user_data == ''){//user not found//add user
 
-				if(results == null || results == undefined || results == ''){//user not found//add user
-					console.log('error:when attempting to save reedemed money to user account, with document _id : '+ user_data._id +', voucher document _id : '+req.query.voucher_id);
+					console.log('error : when finding user when attempting to reedem user  id no : '+response.soldby+ ' , no response given/response empty.');
 					return_fn('No data found');
 					return;
 				}
-		 });					
-	});
-		 
-		 		 
-		 
-		 
-		 //save voucher//and give sucess results
-		response.voucherprinted = true;
-		response.save(function(error, data){
-			
-		if(err){
-			console.log('error: saving when reedeming, with document _id : '+req.query.voucher_id);
-			return_fn('Server or Conection error');
-			return;
-		}
-		
-		if(response == null || response == undefined || response == ''){//user not found//add user
-			console.log('error: No voucher data found when attempting to save reedem, with document _id : '+req.query.voucher_id);
-			return_fn('No data found');
-			return;
-		}
-		 
-			return_fn('Voucher redemption succesfully made and saved');
-			
-		});		 
-		 
+				
+				
+				//add transaction
+
+				var date = new Date();			
+				var hour = date.getHours();
+				var minutes = date.getMinutes();
+				var day = date.getDay();
+				var month = date.getMonth();
+				var year = date.getFullYear();
+				
+				var new_balance = Number(user_data.credits) + Number(response.voucheramount);
+				
+				
+				var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Voucher redeemed for : '+' R'+ response.voucheramount +'+,; Voucher ref _id : '+response._id+'; New balance : R'+new_balance ;
+
+				var hour = date.getHours();
+				var new_transactions_array = user_data.transactionhistory;
+
+					new_transactions_array.unshift(new_transaction_record);
+
+				if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+				
+				user_data.transactionhistory = new_transactions_array;//update transaction history record
+				user_data.credits = new_balance;//update user amount
+				
+				
+					user_data.save(function(err, results){//save changes
+						// console.log(results)
+						// console.log(err)
+						if(err){
+							console.log('error:when attempting to save reedemed money to user account, user document _id : '+ user_data._id +', voucher Code document _id : '+req.query.voucher_id);
 							
+							return_fn('Server or Conection error');
+							return;
+						}
+
+						if(results == null || results == undefined || results == ''){//user not found//add user
+							console.log('error:when attempting to save reedemed money to user account, with document _id : '+ user_data._id +', voucher document _id : '+req.query.voucher_id);
+							return_fn('No data found');
+							return;
+						}
+				});					
+			});
+				
+						
+				
+			
+			//save voucher//and give sucess results
+			response.voucherprinted = true;
+			response.save(function(error, data){
+				
+			if(err){
+				console.log('error: saving when reedeming, with document _id : '+req.query.voucher_id);
+				return_fn('Server or Conection error');
+				return;
+			}
+			
+			if(response == null || response == undefined || response == ''){//user not found//add user
+				console.log('error: No voucher data found when attempting to save reedem, with document _id : '+req.query.voucher_id);
+				return_fn('No data found');
+				return;
+			}
+			
+				return_fn('Voucher redemption succesfully made and saved');
+				
+			});		 
+			
+		}
+								
 	})
 	
-	
+		
+		
 	//respond function 
 	function return_fn(message){//send respondse
-		
+			
 		res.jsonp(message)
-		
-		
+			
+			
 	}
 	
 	
