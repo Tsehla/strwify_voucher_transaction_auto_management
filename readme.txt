@@ -21,4 +21,4 @@ or  use file(s) in hospot_login_page
 
 PS. change url : http://127.0.0.1:4100/ to where yourserver if at && change location=orangefarm [orangefarm] to where your location is at, this used to display ads/images you associate with that location.
 
----------
+-----------
