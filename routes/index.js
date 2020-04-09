@@ -959,6 +959,8 @@ app.get('/api/voucher_types_add', function(req, res){
 
 		//   http://127.0.0.1:4100/api/sell?code=sell_recharge&voucher_recharge_amount=1&seller_id=2222222222222&seller_name_surname=Tsehla*Nkhi&distributor_id=1111111111111 //&userType_to_recharge=Distributor
 
+		//   http://127.0.0.1:4100/api/sell?code=sell_recharge&voucher_recharge_amount=500&seller_id=&seller_name_surname=System&admin_id=8905135800000&userType=&userType_to_recharge=Server%20Admin //administrator account recharge link example
+
 			var userType = req.query.userType;
 			//var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
 			var user_type = userType;
@@ -984,12 +986,89 @@ app.get('/api/voucher_types_add', function(req, res){
 		   // if(user_type == 'seller'){
 		
 		
+		//+++++++++++++++++++++++++++++++ system to admin account recharge +++++++++++++++++++++++++++++++++++++++++++++++++
 		
-		
-		
-				keystone.list('seller distributor').model.findOne().where({idnumber : distributor_id, usertype :  user_type}).exec(
+		if(seller_fullname[0].toLowerCase() == 'system'){
+
+			//console.log(req.query)
+
+			//keystone.list('seller distributor').model.findOne().where({idnumber : req.query.admin_id, usertype : req.query.userType_to_recharge, name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()})
+
+			keystone.list('seller distributor').model.findOne().where({idnumber : req.query.admin_id, usertype : req.query.userType_to_recharge}).exec(
 				  
 				function(error, response){
+
+					if(error){ 
+						console.log('system recharge admin: server error');
+						res.jsonp('Server or Conection error');
+						return;
+					}
+
+					if(response == '' || response == null || response == undefined){
+						console.log('system recharge admin : user Not Exist');
+						res.jsonp('Error finding admin');
+						return;
+					}
+					
+					//add recharge to account
+					
+					
+							
+					 //add transaction
+					var date = new Date();
+
+					var hour = date.getHours();
+					var minutes = date.getMinutes();
+					var day = date.getDay();
+					var month = date.getMonth();
+					var year = date.getFullYear();
+					
+					var new_balance = Number(response.credits) + Number(recharge_amount);
+					var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+'Account Recharged by SYSTEM for'+' R'+recharge_amount+'+; New balance : R'+new_balance;
+
+
+					var new_transactions_array = response.transactionhistory;
+
+						new_transactions_array.unshift(new_transaction_record);
+
+					if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+
+					response.transactionhistory = new_transactions_array;
+					 //adjust credits
+					response.credits =  Number(response.credits) + Number(recharge_amount);
+					
+					response.save(function(err, response){ //save calculation to admin profile
+					if(err){
+						console.log('Connection/server error, please try gain later admin:account Recharge save()');
+						res.jsonp('Server or Conection error');
+						return;
+					};
+					if(response == '' || response == undefined || response == null){
+						console.log('Error user not found : admin Account Recharge');
+						res.jsonp('Server or Conection error');
+						return;
+					}
+					
+					
+					//send response back to user
+
+					//res.jsonp({name : seller_name, lastname  : seller_last_name, id : seller_id, amount : recharge_amount});
+					res.jsonp({amount : recharge_amount});
+				});
+
+
+			});
+
+			return true;
+		}
+
+
+
+		//+++++++++++++++++++++++++++++++ user to user account recharge +++++++++++++++++++++++++++++++++++++++++++++++
+		
+		keystone.list('seller distributor').model.findOne().where({idnumber : distributor_id, usertype :  user_type}).exec(
+				  
+			function(error, response){
 					
 					if(error){
 						console.log('distributor recharge seller: server error');
@@ -1011,15 +1090,15 @@ app.get('/api/voucher_types_add', function(req, res){
 					   	console.log('amount less; to recharge seller');
 						res.jsonp();
 						return;
-					   }
-					 //  console.log('amount enough');
+					}
+					//  console.log('amount enough');
 					 
 					
 					
-						//recharge seller account
+					//recharge seller account
 					
 					
-								keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : user_to_recharge, name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
+							keystone.list('seller distributor').model.findOne().where({idnumber : seller_id, usertype : user_to_recharge, name : seller_name.toLowerCase(), surname : seller_last_name.toLowerCase()}).exec(
 				  
 								function(error, response){
 
@@ -1120,7 +1199,7 @@ app.get('/api/voucher_types_add', function(req, res){
 
 		
 
-			 }
+			}
      
       
   });  

@@ -2292,6 +2292,92 @@ function super_admin_distributor_sell_amount(button_id){
 
 }
 
+//++++++++++++++++++++++++++++++++++++++++++++++++++++  system -> admin account recharge /self recharge
+
+function system_super_admin_account_rechatge(button_id, self_recharge_amount){
+
+	var account_self_recharge_amount = self_recharge_amount || 500; //recharge by R500 as default if no value specified 
+       
+	var self_recharge_confirm = confirm('Are you sure you want to add recharge of R' + account_self_recharge_amount + ' , to user : '  + admin_login.name.trim() + ', of ID no : ' + admin_login.admin_id.trim()+ ' ?.\n\nSelect cancel to choose different amount.'); //send recharge confirm
+
+	
+	if(!self_recharge_confirm){ //if send recharge cancelled
+
+		var new_amount = prompt('Please enter your preferred recharge amount, example : 500');
+		new_amount = parseInt(new_amount);
+		//console.log(typeof new_amount)
+
+		if(new_amount && typeof new_amount == 'number' && Number(new_amount)< 1001){ //if new amount is entered and its a number less that 1000//set as new recharge amount
+
+			account_self_recharge_amount = new_amount; //set new custom recharge amount
+
+		}
+
+		if(typeof new_amount != 'number' || Number(new_amount) > 1001){//if is not a number and is over 1000 give error
+
+			alert('Please make sure new amount entered its a Number not over 1000');
+
+		}
+	}
+	
+	document.getElementById(button_id).disabled=true;//disable send rechar button for now
+	        
+     var url= http_https + current_domain + '/api/sell?code=sell_recharge&voucher_recharge_amount=' + account_self_recharge_amount  + '&seller_id=&seller_name_surname=System&admin_id=' + admin_login.admin_id.trim() + '&userType=&userType_to_recharge=Server Admin';
+	
+	
+	
+   // console.log(url);
+		
+	
+    
+       $.get(url, function(response, status){
+           
+            
+           
+           if(status == 'success'){
+              
+      
+               if(response == 'Server or Conection error'){
+                   
+                
+                dom_innerHtml('super_admin_menu_header', 'Server or Conection error, Please try again later'); 
+				   document.getElementById(button_id).disabled=false;//enable send recharge button
+				   return;
+                   
+               }              
+			   
+			   if(response == 'Error finding admin'){
+                   
+                
+                dom_innerHtml('super_admin_menu_header', 'Error, Please check user details'); 
+				    document.getElementById(button_id).disabled=false;//enable send recharge button
+				   return;
+                   
+               }
+               
+                dom_innerHtml('super_admin_menu_header', 'Account Succesfully Recharged.');//secess message
+			    admin_login.credit = admin_login.credit + Number.parseInt(account_self_recharge_amount);//calculate and set new value
+			    dom_innerHtml('super_admin_amount', admin_login.credit);//set new value for view
+			    dom_innerHtml('super_admin_distributor_recharge_status','<b>Success : System has recharged, Admin ID no:' + admin_login.admin_id.trim() + ', account by R'+response.amount+'</b>');//reacherge sucess status
+			    document.getElementById(button_id).disabled=false;//enable send recharge button
+                return null;
+             
+           }
+           
+           else{
+             dom_innerHtml('super_admin_menu_header', 'System/Connection error, please try again later.'); 
+			    document.getElementById(button_id).disabled=false;//enable send recharge button
+			   return;
+           }
+       });  
+          
+
+}
+
+
+
+
+
 
 
 
