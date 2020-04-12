@@ -199,7 +199,7 @@ router_hotspot_page_model .add({
 	hotspot_how_to_super_admin: {type : String, label :'Hotspot How to Super-admin image', default: '/default_slide_images/4.jpg',},
 	
 	hotspot_logo : {type : String, label :'Hotspot Logo', default: '/images/logo.png',},
-	hotspot_manager : {type : types.TextArray, label :'hotspot Managers'},
+	hotspot_manager : {type : types.TextArray, label :'hotspot Managers', default : ['8905135800000']},
 });
 
 router_hotspot_page_model.register();

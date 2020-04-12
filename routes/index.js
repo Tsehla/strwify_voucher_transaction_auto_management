@@ -2844,7 +2844,7 @@ app.get('/api/hotspot_data', function(req, res){
 	
 
 
-//================================
+	//================================
 	//			upload
 	//================================
 
@@ -2896,7 +2896,9 @@ app.get('/api/hotspot_data', function(req, res){
 	});
 	
 	
-	// show upload contents
+	/*=======================================
+		// show upload contents
+	=======================================*/  
 
 	app.get('/upload', function(req, res) {
 
@@ -2973,21 +2975,116 @@ app.get('/api/hotspot_data', function(req, res){
 
 	}
 	
+
+
+/*=======================================
+    show login hotspot contents
+=======================================*/  
+    
+app.get('/api/get_hotspot', function(req, res){
+	  
+	//console.log(req.query)
+	
+	var user_details; //used to filter hotspot pages to return to user
+	
+	//if admin return all hotspots
+	user_details = "";//for admin dont filter return all hotspots on system
+
+
+	//if user, only return hotspot they own by using their id to filter results
+	if(req.query.user_type != 'Server Admin' ){
+
+		user_details = { hotspot_manager : {$all : [ req.query.user_id.toString() ] } }
+	}
+
+
+
+	keystone.list('Router hotspot page').model.find()
+	.where(user_details)
+	.exec(function(err, user_data){
+
+		if(err){
+			console.log('error : when finding hotspot with user details : Id = '+ req.query.user_id +' ,user type = ' + req.query.user_type + ' ,Server or Conection error');
+			res.jsonp('Server or Conection error');
+			return;
+		}
 		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		if(user_data == null || user_data == undefined || user_data == ''){//user not found//add user
+
+			console.log('error : when finding hotspot with user details : Id = '+ req.query.user_id +' ,user type = ' + req.query.user_type +  ', no response given/response empty.');
+			res.jsonp('No data found');
+			return;
+		}
+
+		//console.log(user_data);
+		res.jsonp(user_data)
+
+
+
+
+
+
+		
+
+	});
+
+
+
+
+
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 });
+
+
+
+
+
+
+

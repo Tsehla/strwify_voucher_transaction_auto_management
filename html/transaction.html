@@ -94,8 +94,8 @@
    </head>
 
    <body >
-   
 
+    
 	<!--- voucher print test
 	   <button onclick="voucher_print({vouchercode:'earnestsofa',voucherprofile:'50mb',voucherexpiry:'3.00 Days',voucheramount:5})">print</button>
 	 -->
@@ -111,6 +111,7 @@
    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('messages')">Messages</button>
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('upload')">Advertisment</button>
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('voucher_types_list')">Voucher Types</button>
+   <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='show_hotspot()' >HotSpot Manage</button>
 	 
 </div>
 
@@ -843,21 +844,6 @@
    </div>
    </div>
 	   
-
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
-	   
 	   
 	<!-- --------login-------- -->
  <!-- sadmin -->
@@ -1288,7 +1274,59 @@
 	   
 	   
 	   
-	   
+   	   
+    <!-- hotspot manage -->
+    
+    <div id="hotspot_manage" style="width:98vw; height: auto; none;position: absolute;top: 0px;left: 0px;display: none;"><!-- first page Start -->
+      <div id="hotspot_manage_menu_wrapper" style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro'>
+        <div id="hotspot_manage_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; min-height: 500px; max-height: none; " class="btn">
+          <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
+            <b style='width: 70%; display: inline-block' id="hotspot_manage_menu_header">
+              Select hotspot to edit
+            </b>
+              <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="dom_hide_show('hide','hotspot_manage')"> CLOSE</button>
+          </p>
+        
+          <!--
+          <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Seller ID number' class="form-control" id='distributor_seller_add_id_input'>
+                     
+            
+          <div  style="width:100%; height:12vh; margin:13px 0px 13px 0px; display:block; "  class="form-control">
+            <p style='width:100%; height: 3vh; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
+                  Temporary password for New Seller :
+              </p>
+              <p style='width:93vw%; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px' id='seller_new_account_default_password'>
+                      street wifiy
+            </p>
+              
+          </div>  
+
+          -->
+          <!-- hotspot edit content -->
+          <div id='hotspot_edit_content' style="height: auto; width: 100%;">
+
+
+
+
+
+          </div>
+
+
+
+
+        </div>
+        <!-- view current page live -->
+        <button id='hotspot_save_button' style="width:100%; height:7vh; margin : 1px 0px 10px 0px; padding:0px; display: none" class="btn btn-success" onclick='alert("mke preview after save")'>View Hotspot</button>
+
+        <!-- save changes -->
+        <button id='hotspot_view_button' style="width:100%; height:7vh; margin : 1px 0px 10px 0px; padding:0px; display: none" class="btn btn-success" onclick='alert("view hotspot")'>Save</button>
+
+
+        <!-- help button -->
+        <button id='hotspot_help_button' style="width:100%; height:7vh; margin : 1px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter ID number of person you want to register\n2) Enter Name of person you want to register\n3) Enter Surname of person you want to register\n\n4) Give them Temporary password below to login with after you have registered their account\n\t\t\tTemporary password :\n\nstreet wifiy\n\n5) Ask them to change this password to the one they want\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>       
+
+     </div>
+    </div>
 	   
 	   
 	   

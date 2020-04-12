@@ -70,7 +70,7 @@ var current_url= window.location.pathname;//content after domain
 var current_domain = window.location.host;//domain en port//use this on live
 
 
-// //change https to http when on localhost
+// //change https to http when on localhost 
 // var http_https = "https://";
 
 // if(current_domain.search('127.0.0.1') > -1 || current_domain.search('localhost') > -1){//match exist
@@ -5258,4 +5258,148 @@ function stop_qr_record(){//stop camera
 
 
 
+/*=====================================================================================================================================================	
+   
+	hotspot management	
+    	
+=====================================================================================================================================================*/	
 
+//seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false};
+//distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+//admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+
+var hot_spot_data_array = []; //store data of hotspot retrived form internet
+
+
+//------------ get hotspot ---------------
+
+
+function show_hotspot(){
+
+	//clean hotspot manage div
+	dom_innerHtml('hotspot_edit_content', '');
+
+	//show hotspot manage div
+	dom_hide_show('show','hotspot_manage');
+
+	//hide save button/view button/show help button
+	dom_hide_show('hide','hotspot_save_button');
+	dom_hide_show('hide','hotspot_view_button');
+	dom_hide_show('show','hotspot_help_button');
+
+	//change edit page title
+	dom_innerHtml('hotspot_manage_menu_header', 'Select hotspot to edit');
+
+
+	//find logged in user //or say 'not_logged_in' if no user is found
+
+	var logged_in_user_user_type = (admin_login.logged_in == true )?admin_login.usertype: (distributor_login.logged_in == true)?distributor_login.usertype: (seller_login.logged_in == true)?seller_login.usertype:'not_logged_in';
+
+	var logged_in_user_user_id = (admin_login.logged_in == true )?admin_login.admin_id: (distributor_login.logged_in == true)?distributor_login.distributor_id: (seller_login.logged_in == true)?seller_login.seller_id:'not_logged_in';
+
+
+
+
+	var url = http_https + current_domain + '/api/get_hotspot?user_type=' + logged_in_user_user_type + '&user_id=' + logged_in_user_user_id;
+	
+	//document.getElementById('save_new_contact').disabled=true;//disable  save button
+
+
+	$.get(url, function(response, status){
+
+		if(status == 'success'){
+
+					if(response == 'Server or Conection error'){
+
+						// dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+
+						// document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+						return;
+
+					}              
+
+					if(response == 'No data found'){
+
+						//	dom_innerHtml('transactions_and_voucher_header', 'Error, Adding Contact, Please try again later');
+						//	document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+						return;
+
+					}
+						//    if(response == 'Save error'){
+
+						// 		dom_innerHtml('transactions_and_voucher_header', 'Error, Adding Contact, please try again later or contact administrator'); 
+						// 		document.getElementById('save_new_contact').disabled=false;//re-enable save button//wen error
+						// 	   return;
+
+						//    }
+
+
+					
+					//console.log(response);
+					
+					hot_spot_data_array = response; //store retrived hotspot details
+
+					//give reponse/ hotspot selection options
+					response.forEach(function(data, index, original_array){
+
+						var selectable_div_hotspot_details = `<div class='btn btn-default' id='hotspot_select_${index}' style='width:100%;height:auto;min-height:20px;border-bottom:1px solid gainsboro ;margin-bottom:10px ;margin-top:10px; font-weight:800' onclick='hotspot_edit(${Number(index)})'>${data.router_location.toUpperCase()}</div> <br> `;
+
+						$('#hotspot_edit_content').append(selectable_div_hotspot_details); //add hotspots to user ui to select
+
+						//set background on every 1st after second hotspot select div
+						var divisable_by_two = index / 2;
+
+						if( divisable_by_two.toString().indexOf(".") == 1 ){ //if true
+
+							document.getElementById(`hotspot_select_${index}`).style.backgroundColor = 'black';//set backround color to this div
+							document.getElementById(`hotspot_select_${index}`).style.color = 'white';
+
+						}
+
+					});
+				}
+
+				else{ //if error
+
+
+		}
+
+	})
+
+
+
+
+
+
+
+
+
+}
+
+//------------ edit hotspot details -------------------
+function hotspot_edit(hot_spot_data){
+
+	console.log(hot_spot_data_array[hot_spot_data]);
+
+	//clean hotspot manage div
+	dom_innerHtml('hotspot_edit_content', '');
+	
+	//show save button/view button/hide help button
+	dom_hide_show('show','hotspot_save_button');
+	dom_hide_show('show','hotspot_view_button');
+	dom_hide_show('hide','hotspot_help_button');
+
+	//change edit page title
+	dom_innerHtml('hotspot_manage_menu_header', 'Edit : '+ hot_spot_data_array[hot_spot_data].router_location);
+
+
+
+
+
+
+
+
+}
+
+
+//------------ save hotspot changes -------------------
