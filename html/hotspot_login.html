@@ -1036,7 +1036,22 @@
                         }
 						
 					
-					});
+                    });
+                    
+                    //if router is under maintenance, put maintenance type notice at front
+                    var maintenance_types = {
+                        'maintenance' : {image_link :"system_state_images/system_under_maintenance.png" , image_status_text : "System undergoing maintenance, <br /> some features may not work", image_status_link: "system_state_images/system_under_maintenance.png", ads_sponsored : true, hidden:false},
+                        'repair' : {image_link :"system_state_images/system_under_repair.png" , image_status_text : "System undergoing Emergency repair,<br /> some features may not work", image_status_link: "system_state_images/system_under_repair.png", ads_sponsored : true, hidden:false},
+                        'upgrade' : {image_link :"system_state_images/system_undergoing_upgrade.png" , image_status_text : "System is being upgradeded,<br /> some features may not work", image_status_link: "system_state_images/system_undergoing_upgrade.png", ads_sponsored : false, hidden:false},
+                        	
+                    };
+
+                    if(data_from_db.system_maintenace != 'functional'){//give alert & insert system state wallpaper
+
+                        alert('System undergoing ' + data_from_db.system_maintenace.toUpperCase()  + '.\n\nSome features may not work or fail or result in loss.\n\nWe apologise for the inconvinience.'); //give maintenance alert
+                        
+                        wall_link_description.unshift(maintenance_types[data_from_db.system_maintenace]); //push type of maintenance wallpaper at fron of others
+                    }
 					
 					//console.log(wall_link_description.length)
 					if(wall_link_description.length == 0){//if wallapers from db

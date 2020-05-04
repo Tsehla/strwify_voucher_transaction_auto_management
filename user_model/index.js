@@ -197,6 +197,8 @@ router_hotspot_page_model .add({
 	hotspot_how_to_sell : {type : String, label :'Hotspot How to sell image', default: '/default_slide_images/2.jpg',},
 	hotspot_how_to_recharge_seller : {type : String, label :'Hotspot How to recharge-seller image', default: '/default_slide_images/3.jpg',},
 	hotspot_how_to_super_admin: {type : String, label :'Hotspot How to Super-admin image', default: '/default_slide_images/4.jpg',},
+
+	system_maintenace : {type : types.Select, options: "functional, maintenance, repair, upgrade", default:'functional', label :'System state'},
 	
 	hotspot_logo : {type : String, label :'Hotspot Logo', default: '/images/logo.png',},
 	hotspot_manager : {type : types.TextArray, label :'hotspot Managers', default : ['8905135800000']},
