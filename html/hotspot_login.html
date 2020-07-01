@@ -936,6 +936,10 @@
         var wall_link_description; //Get wallpaper links data from db
         var sponsore_ads; //store sponsore details for current slide
 
+        //on the fly user account or voucher creation
+        var radius_new_user_account_creater = false;//use wifi-radius [ https://github.com/Tsehla/nodejs_radius_server ]
+        var radius_new_user_account_creater_link = '';//wifiradius link
+
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			

@@ -198,6 +198,9 @@ router_hotspot_page_model .add({
 	hotspot_how_to_recharge_seller : {type : String, label :'Hotspot How to recharge-seller image', default: '/default_slide_images/3.jpg',},
 	hotspot_how_to_super_admin: {type : String, label :'Hotspot How to Super-admin image', default: '/default_slide_images/4.jpg',},
 
+	use_external_radius_user_creation: {type :types.Boolean, default:false, label :'Enable Wifi-Radius auto user creation?' },
+	external_radius_user_creation_link: {type : String, label :'Link to Wifi-radius server.', default: 'Works only with wifi-radius see (https://github.com/Tsehla/nodejs_radius_server)'},
+
 	system_maintenace : {type : types.Select, options: "functional, maintenance, repair, upgrade", default:'functional', label :'System state'},
 	
 	hotspot_logo : {type : String, label :'Hotspot Logo', default: '/images/logo.png',},
