@@ -3674,8 +3674,105 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 		
 		var wifi_radius_server_link = url_parms_object();
 
-		console.log(wifi_radius_server_link )
+		//check if wifi-radius link rpovided
+		if(!wifi_radius_server_link.u_link){ //if not end function
+			return
+		}
+		
+		//get profiles group data from wifi-radius
+		var url = wifi_radius_server_link.u_link + '/saved_profiles'
 
+		$.get(url, function(response, status){
+
+			if(status == 'success'){
+
+				//console.log(response);
+				document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
+				document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
+				document.getElementById('transactions_and_voucher_header').innerHTML='Auto voucher creation Details';//set header for div
+
+				//check if profile group data was retrieved
+				if(response.length == 0){//if nothing retrived from request
+
+					document.getElementById('transactions_and_voucher_viewer').innerHTML= `<p>No data found from server by calling this link : <a href='${url}'>${url}</a></p>`; //give error
+
+					return;//end function
+				}
+
+				var wifi_radius_auto_voucher_details_creation = '';//stores user creation div data
+				response.forEach(function(response, index){
+
+					wifi_radius_auto_voucher_details_creation = wifi_radius_auto_voucher_details_creation + `
+					<div id='wifi_radius_auto_voucher_details_creation_div_${index}' class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: left'>
+
+						<div id='profile_detals_${index}' style='margin-top:24px text-align :center; width:100%'><b>Profile Detals</b><br /> ${response.data[0]}</div>
+
+						<div id='profile_limit_type_${index}' style='margin-top:24px text-align :center; width:100%'><b>Profile Limit type</b><br /> ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.time_or_data_limit:'N/a'}</div>
+
+						<div id='voucher_reset_${index}' style='margin-top:24px text-align :center; width:100%'><b>Voucher Reset</b><br /> ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.when_to_reset:'N/a'}</div>
+
+						<p style='margin-top:24px text-align :center'><b>Fill in : </b></p>
+
+						<p style='color: red;font-size: 15px;font-weight: bolder' class="w3-block">1)</p>
+							<label for='voucher_value'>Voucher Price :  <b style='font-size: 15px'>R</b></label>
+						 	<input type="number" value='0.00' step='0.01' id='voucher_price_${index}' style="width: 20%; display: inline" class="form-control">
+						<br />
+						<!-- data input -->
+						<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
+						<label for='voucher_value'>Voucher Data : </label>
+						 <input type="number" id='voucher_expiery_date' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+						<select class='btn btn-primary' id='voucher_data_${index}'> <!-- input value type --> 
+							<option selected='selected'>Data limit type</option>	
+							<option>KB</option>	
+							<option>MB</option>	
+							<option>GB</option>	
+							<option>TB</option>	
+							<option>ZB</option>	
+						</select>
+												
+						<!-- time input -->
+						<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">3)</p>
+						<label for='voucher_value'>Voucher Expiery : </label>
+						 <input type="number" id='voucher_expiery_date' value='0.00' step='0.01' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+						<select class='btn btn-primary' id='voucher_expiery_${index}'> <!-- input value type --> 
+							<option selected='selected'>Minutes</option>	
+							<option>Hours</option>	
+							<option>Days</option>	
+							<option>Weeks</option>	
+							<option>Months</option>	
+							<option>Years</option>	
+						</select>
+						<br />
+
+						<div style='width:100%; height:auto; margin-bottom : 20px'>
+							<button class='btn btn-warning' style='width:44% margin:10px' onclick='dom_hide_show("hide", "wifi_radius_auto_voucher_details_creation_div_${index}")'>Remove</button>
+							<button class='btn btn-danger' style='width:44% margin:10px'>Save</button>
+						</div>
+					</div>
+					 
+					`
+
+				});
+
+
+
+
+
+
+
+				$('#transactions_and_voucher_viewer').append(wifi_radius_auto_voucher_details_creation );
+
+
+
+
+				return;
+			}
+
+			alert('Error opening wifi-radius link : ' + url + '\nTo retrieve profile data to create vouchers.')
+			
+
+			
+		});
 
 
 		return;
