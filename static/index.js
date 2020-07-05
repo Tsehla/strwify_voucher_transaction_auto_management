@@ -97,6 +97,7 @@ function url_parms_object(){
 	url_query_string.forEach(function(array){
 		var temp_array = array.split('=');//break array item to sub array
 		url_query_string_object_array[temp_array[0]]=temp_array[1];//save as object array
+		
 
 
 	});
@@ -249,7 +250,7 @@ if(current_url == '/admin_login'){
 function seller_sell_menu(){
 
 		//check url to see if menu to show is for voucher sell or complimentary vucher
-		if(document.location.search.indexOf('?its_resturent_hotel_cafe_login')> -1){
+		if(document.location.search.indexOf('?its_resturent_hotel_cafe_login=true')> -1){
 
 			seller_login.resturent_hotel_cafe_login = true; //default set to false
 		}
@@ -333,6 +334,8 @@ function router_page_works_menu_open(input){
     Internal navigation
 =====================================================================================================================================================*/
 
+//get wifi radius link passed from hotspot login page
+var auto_user_creater_wifi_radius_link = url_parms_object();//get/return url parameters as objects
 
 /* voucher buy link */
 function buy_voucher(){
@@ -343,13 +346,13 @@ function buy_voucher(){
 /* voucher sell link */
 function sell_voucher(){
     
- window.open('/sell_voucher', '_self');
+ window.open('/sell_voucher?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
 	process_destroyer();
 }
 
 function third_page_seller_login(is_cafe_hotel_resturent =''){//is its not cafe resturant or hotel login dont add query to url
   
- window.open('/seller_login'+ is_cafe_hotel_resturent, '_self');
+ window.open('/seller_login'+ is_cafe_hotel_resturent + (is_cafe_hotel_resturent.length > 0?'&u_link=':'?u_link=') + auto_user_creater_wifi_radius_link.u_link , '_self');
 	process_destroyer();
 }
 
@@ -360,7 +363,7 @@ function third_page_distributor_login(){
 }
 function admin_fourth_page_login(){
     
- window.open('/admin_login', '_self');
+ window.open('/admin_login?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
 	process_destroyer();
 }/*_____________________________________________________________________________________________________________________________________________________
 
@@ -3579,7 +3582,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 	//greate/update/view voucher types list 
 	if(transaction_type == 'voucher_types_list'){
 		
-		// document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
+		 document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
 		// document.getElementById('transactions_and_voucher_viewer_options_menu').style.display='none';	//close choice menu
 
 		//http://127.0.0.1:3100/api/voucher_types //get voucher types list with cost
@@ -3661,6 +3664,21 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 		}
 
+	}
+
+	//create/update/view { radius Auto ] voucher types list  
+	if(transaction_type == 'voucher_types_list_radius_auto'){
+
+		document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
+		document.getElementById('transactions_and_voucher_viewer_options_menu').style.display='none';	//close choice menu
+		
+		var wifi_radius_server_link = url_parms_object();
+
+		console.log(wifi_radius_server_link )
+
+
+
+		return;
 	}
 	
 }
