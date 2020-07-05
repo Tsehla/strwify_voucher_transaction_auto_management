@@ -110,10 +110,10 @@
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' id="admin_self_recharge" style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='system_super_admin_account_rechatge(this.id)'>Self Recharge</button>
    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('messages')">Messages</button>
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('upload')">Advertisment</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('voucher_types_list')">Voucher Types</button>
+   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="dom_hide_show('show', 'transactions_and_voucher_viewer_options_menu')">Voucher Types</button>
    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='show_hotspot()' >HotSpot Manage</button>
 	 
-</div>
+</div>  
 
 </div>
 	   
@@ -1247,7 +1247,18 @@
 	   
 <!-- transaction fill up -->
 
-  <div id="transactions_and_voucher_page" style="width:99vw; min-height: auto; position: absolute;top: 0px;left: 0px;"><!-- first page Start -->
+  <div id='transactions_and_voucher_viewer_options_menu' style="top:30vh;left:20vw;min-width:330px;width:55vw;min-height: 260px; height:25vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;position: absolute;display: none;">
+
+    <div style="width: 100%;height:30px;"><!-- modal close -->
+      <button style="border-radius: 50%;width: 30px;height: 30px;float: right;text-align: center;" class="btn btn-danger" onclick="document.getElementById('transactions_and_voucher_viewer_options_menu').style.display='none'">X</button>
+    </div>
+
+    <button class='btn btn-warning' style="min-width:130px;width:25vw;min-height: 200px; height:18vh; display: inline-block; display: inline;margin:20px 10px auto 20px" onclick="extra_menu('voucher_types_list')"> View/Update<br /> Manual <br />vouchers details</button>
+    <button class='btn btn-success' style="min-width:130px;width:25vw;min-height: 200px; height:18vh; display: inline-block; display: inline;margin:20px 10px auto 20px; font-size: smaller;" onclick="dom_hide_show('hide','hotspot_manage')"> View/Update/Create <br >vouchers details<br /> [automatic/Radius]<br /> user creations</button>
+
+  </div>
+
+  <div id="transactions_and_voucher_page" style="width:99vw; min-height: auto; position: absolute;top: 0px;left: 0px;"><!-- vouchers info display -->
  <div id="transactions_and_voucher_wrapper" style="height: auto;width: auto">
  <div id="transactions_and_voucher_menu" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -1261,7 +1272,7 @@
  
 <!--transactions and voucher viewwer -->
 
-<div id='transactions_and_voucher_viewer' style="width: 100%;min-height: 70vh"></div>
+<div id='transactions_and_voucher_viewer' style="width: 100%;min-height: 70vh"></div><!-- view current available vouchers and stats-->
 <div id='transactions_and_voucher_viewer_alert_button' style="width: auto;height: auto"></div><!-- menu alert button -->
 	  
  

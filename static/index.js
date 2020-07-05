@@ -3579,7 +3579,8 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 	//greate/update/view voucher types list 
 	if(transaction_type == 'voucher_types_list'){
 		
-		document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
+		// document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
+		// document.getElementById('transactions_and_voucher_viewer_options_menu').style.display='none';	//close choice menu
 
 		//http://127.0.0.1:3100/api/voucher_types //get voucher types list with cost
 		//http://127.0.0.1:3100/api/voucher_types_add  //create/update voucher type list, with new one
