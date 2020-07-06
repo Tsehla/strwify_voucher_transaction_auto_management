@@ -3674,8 +3674,26 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 		
 		var wifi_radius_server_link = url_parms_object();
 
+		//give option to view and manage auto vouxher types list or create them
+		var auto_voucher_types_list = confirm('Press "OK"\nto VIEW and MANAGE auto voucher types list.\nPress "CANCEL"\nto CREATE new voucher types.');//give choice of action
+
+		if(auto_voucher_types_list){//if okay pressed, show list of voucher types
+
+			document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
+			document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
+			document.getElementById('transactions_and_voucher_header').innerHTML='Auto voucher creation Details';//set header for div
+
+			alert('loading')
+
+
+
+
+			return;//end fntion
+		}
+
 		//check if wifi-radius link rpovided
 		if(!wifi_radius_server_link.u_link){ //if not end function
+			alert('No link to [Wifi-Radius] server provided.');//give error alert
 			return
 		}
 		
