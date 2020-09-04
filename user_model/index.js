@@ -254,7 +254,10 @@ voucher_track_model.add(
 		voucher_type : {type : types.Select, options: "time, data", default:'data', label :'Voucher Type', initial:true},
 		voucher_cost : {type:String, default:'', label :'Voucher cost'},
 		voucher_profile : {type:String, default:'', label :'Voucher Time/Data'},
-		voucher_count: {type:String, default:'', label :'Available Vouchers'}
+		voucher_count: {type:String, default:'', label :'Available Vouchers'},
+		voucher_creation_method : {type : types.Select, options: "manual, automatic", default:'manual', label :'For vouchers created'},
+		voucher_active : {type :types.Boolean, default:true, label :'Active' }
+
 		
 	}
 
