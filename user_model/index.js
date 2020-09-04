@@ -258,7 +258,6 @@ voucher_track_model.add(
 		voucher_creation_method : {type : types.Select, options: "manual, automatic", default:'manual', label :'For vouchers created'},
 		voucher_active : {type :types.Boolean, default:true, label :'Active' }
 
-		
 	}
 
 );
