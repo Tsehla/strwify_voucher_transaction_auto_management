@@ -3666,7 +3666,9 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 	}
 
-	//create/update/view { radius Auto ] voucher types list  
+	// --------------------
+	//create/update/view { radius Auto ] voucher types list 
+	//---------------------
 	if(transaction_type == 'voucher_types_list_radius_auto'){
 
 		document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
@@ -3687,13 +3689,22 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 
 
+			document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
+			<br>
+				<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This vouchers are defined templates used to automatically create a Voucher of the shown amount and data or time limit with unique Voucher code to access the internet.\nThe vouher code will be produced on request by a [ RADIUS COMPUTER ]')">
+					Help
+				</button>
+
+			`;
+
+
 
 			return;//end fntion
 		}
 
 		//check if wifi-radius link rpovided
 		if(!wifi_radius_server_link.u_link){ //if not end function
-			alert('No link to [Wifi-Radius] server provided.');//give error alert
+			alert('No link to [Wifi-Radius] server provided.\nPlease add in "HotSpot Manage" option.');//give error alert
 			return
 		}
 		
@@ -3779,6 +3790,15 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 
 				$('#transactions_and_voucher_viewer').append(wifi_radius_auto_voucher_details_creation );
+
+				//add help data
+				document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
+					<br>
+					<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This are voucher profiles retrived from [ Radius Computer ]\\nThey are used to create Vouchers of shown data/time limit.\\n1) Specify voucher : Cost/Price, data/time limit, and expiery.\\n2) Save changes\\n3) If what you save already exist, save will be rejected.\\nInfo: this process differ from manual way of uploading [ csv ] file with vouchers exported from [ radiusdesk ], as vouchers are produced only when requested automatically.')">
+					Help
+				</button>
+
+			`;
 
 
 
