@@ -3775,7 +3775,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 						<div style='width:100%; height:auto; margin-bottom : 20px'>
 							<button class='btn btn-warning' style='width:44% margin:10px' onclick='dom_hide_show("hide", "wifi_radius_auto_voucher_details_creation_div_${index}")'>Remove</button>
-							<button class='btn btn-danger' style='width:44% margin:10px'>Save</button>
+							<button class='btn btn-danger' style='width:44% margin:10px' onclick='alert("container div index =  ${index}")'>Save</button>
 						</div>
 					</div>
 					 
