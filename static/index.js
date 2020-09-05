@@ -3730,14 +3730,16 @@ function extra_menu(transaction_type){ //extra menu initiator
 				var wifi_radius_auto_voucher_details_creation = '';//stores user creation div data
 				response.forEach(function(response, index){
 
+					radius_voucher_profile_limit_type = response.profile_group_attributes_properties?response.profile_group_attributes_properties.time_or_data_limit:'N/a';
+
 					wifi_radius_auto_voucher_details_creation = wifi_radius_auto_voucher_details_creation + `
-					<div id='wifi_radius_auto_voucher_details_creation_div_${index}' class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: left'>
+					<div id='wifi_radius_auto_voucher_details_creation_div_${index}' data-wifi_radius_auto_voucher_details_${index}=${JSON.stringify(response['_id'])}   class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: left'>
 
-						<div id='profile_detals_${index}' style='margin-top:24px text-align :center; width:100%'><b>Profile Detals</b><br /> ${response.data[0]}</div>
+						<div style='margin-top:24px text-align :center; width:100%'><b>Profile Detals</b><br /> <span id='profile_detals_${index}'>${response.data[0]}</span></div>
 
-						<div id='profile_limit_type_${index}' style='margin-top:24px text-align :center; width:100%'><b>Profile Limit type</b><br /> ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.time_or_data_limit:'N/a'}</div>
+						<div style='margin-top:24px text-align :center; width:100%'><b>Profile Limit type</b><br /> <span id='profile_limit_type_${index}'> ${radius_voucher_profile_limit_type} </span></div>
 
-						<div id='voucher_reset_${index}' style='margin-top:24px text-align :center; width:100%'><b>Voucher Reset</b><br /> ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.when_to_reset:'N/a'}</div>
+						<div style='margin-top:24px text-align :center; width:100%'><b>Voucher Reset</b><br /> <span id='voucher_reset_${index}'>  ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.when_to_reset:'N/a'} </span></div>
 
 						<p style='margin-top:24px text-align :center'><b>Fill in : </b></p>
 
@@ -3746,24 +3748,49 @@ function extra_menu(transaction_type){ //extra menu initiator
 						 	<input type="number" value='0.00' step='0.01' id='voucher_price_${index}' style="width: 20%; display: inline" class="form-control">
 						<br />
 						<!-- data input -->
+						<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"block":"none"}'>
+
+							<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
+							<label for='voucher_value'>Voucher Data : </label>
+							<input type="number" id='voucher_data_value_${index}' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+							<select class='btn btn-primary' id='voucher_data_limit_type_${index}'> <!-- input value type --> 
+								<option selected'>Data limit type</option>	
+								<option>KB</option>	
+								<option>MB</option>	
+								<option>GB</option>	
+								<option>TB</option>	
+								<option>ZB</option>	
+							</select>
+
+						</div>
+						
+						<!-- time input -->
+						<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"none":"block"}'>
+
 						<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
-						<label for='voucher_value'>Voucher Data : </label>
-						 <input type="number" id='voucher_expiery_date' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
-						<select class='btn btn-primary' id='voucher_data_${index}'> <!-- input value type --> 
-							<option selected='selected'>Data limit type</option>	
-							<option>KB</option>	
-							<option>MB</option>	
-							<option>GB</option>	
-							<option>TB</option>	
-							<option>ZB</option>	
+						<label for='voucher_value'>Voucher Time : </label>
+						<input type="number" id='voucher_time_value_${index}' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+						<select class='btn btn-primary' id='voucher_time_limit_type_${index}'> <!-- input value type --> 
+							<option selected>Time limit type</option>	
+							<option>Minutes</option>	
+							<option>Hours</option>	
+							<option>Days</option>	
+							<option>Weeks</option>	
+							<option>Months</option>
+							<option>Years</option>
 						</select>
-												
+
+
+
+						</div>
+
 						<!-- time input -->
 						<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">3)</p>
 						<label for='voucher_value'>Voucher Expiery : </label>
-						 <input type="number" id='voucher_expiery_date' value='0.00' step='0.01' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
-						<select class='btn btn-primary' id='voucher_expiery_${index}'> <!-- input value type --> 
-							<option selected='selected'>Minutes</option>	
+						 <input type="number" id='voucher_expiery_date_value_${index}' value='0.00' step='0.01' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+						<select class='btn btn-primary' id='voucher_expiery_type_${index}'> <!-- input value type --> 
+							<option selected>Select</option>
+							<option>Minutes</option>	
 							<option>Hours</option>	
 							<option>Days</option>	
 							<option>Weeks</option>	
@@ -3774,7 +3801,7 @@ function extra_menu(transaction_type){ //extra menu initiator
 
 						<div style='width:100%; height:auto; margin-bottom : 20px'>
 							<button class='btn btn-warning' style='width:44% margin:10px' onclick='dom_hide_show("hide", "wifi_radius_auto_voucher_details_creation_div_${index}")'>Remove</button>
-							<button class='btn btn-danger' style='width:44% margin:10px' onclick='alert("container div index =  ${index}")'>Save</button>
+							<button class='btn btn-danger' style='width:44% margin:10px' onclick='auto_voucher_create("${index}")'>Save</button>
 						</div>
 					</div>
 					 
@@ -3821,8 +3848,89 @@ function extra_menu(transaction_type){ //extra menu initiator
 //auto voucher types
 //+++++++++++++
 
+// [radius server api ]
+/*
+	 $.get('/create_user', {'user_id' : vouchercode_username_password, 'data_profile' : data_profile_group, 'total_account' : batch_total, 'account_group_name' : batch_name, 'voucher_username_suffix': vouchercode_username_password_suffix, account_type : type_of_user }, function(data, success){
+*/
 
 //------------ save/create
+function auto_voucher_create(voucher_details_div_index){
+	//alert(voucher_details_div_index);
+
+	var wifi_radius_auto_voucher_details_id = document.getElementById('wifi_radius_auto_voucher_details_creation_div_' + voucher_details_div_index).getAttribute('data-wifi_radius_auto_voucher_details_' + voucher_details_div_index);
+
+	var profile_detals = document.getElementById('profile_detals_' + voucher_details_div_index).textContent.trim();
+	
+	var profile_limit_type = document.getElementById('profile_limit_type_' + voucher_details_div_index).textContent.trim();
+
+	var voucher_reset = document.getElementById('voucher_reset_' + voucher_details_div_index).textContent.trim();
+
+	//user inputs
+	//voucher cost
+	var voucher_price = document.getElementById('voucher_price_' + voucher_details_div_index).value;
+
+	//voucher data 
+		//data value
+	var voucher_data_value = document.getElementById('voucher_data_value_' + voucher_details_div_index).value;
+		// data limit type
+	var voucher_data_limit_type  = document.getElementById('voucher_data_limit_type_' + voucher_details_div_index).value;
+
+	// voucher time
+		//data value
+	var voucher_time_value = document.getElementById('voucher_time_value_' + voucher_details_div_index).value;
+		//time limit type
+	var voucher_time_limit_type = document.getElementById('voucher_time_limit_type_' + voucher_details_div_index).value;
+
+	// voucher expiery
+		//expiery value
+	var voucher_expiery_date_value = document.getElementById('voucher_expiery_date_value_' + voucher_details_div_index).value;
+		//expiery type
+	var voucher_expiery_type = document.getElementById('voucher_expiery_type_' + voucher_details_div_index).value;
+
+
+	//check inputs filled
+	var voucher_price_is_zero = true;
+	if(Number(voucher_price) < 1){
+
+		voucher_price_is_zero = confirm('Voucher is priced at : 0\nContinue?')
+
+	}
+	if(voucher_price_is_zero == false){//if voucher price value, confirm cancelled, end function
+		return;
+	}
+
+
+	//check if [values ] types are specified
+	if(voucher_expiery_type == 'Select' ){
+
+		alert('Please specifiy all voucher [ value types ] to continue. ')
+		return;
+	}
+	if(voucher_data_limit_type == 'Data limit type' &&  profile_limit_type == 'data_limited'){
+
+		alert('Please specifiy all voucher [ value types ] to continue. ')
+		return;
+	}
+	if(voucher_time_limit_type == 'Time limit type' && profile_limit_type == 'time_limited'){
+
+		alert('Please specifiy all voucher [ value types ] to continue. ')
+		return;
+	}
+
+	//voucher data
+	var auto_voucher_payload = `
+		wifi_radius_auto_voucher_details_id=${wifi_radius_auto_voucher_details_id}&profile_detals=${profile_detals}&profile_limit_type=${profile_limit_type}&voucher_reset=${voucher_reset}&voucher_price=${voucher_price}&voucher_data_value=${voucher_data_value}&voucher_data_limit_type=${voucher_data_limit_type}&voucher_time_value=${voucher_time_value}&voucher_time_limit_type=${voucher_time_limit_type}&voucher_expiery_date_value=${voucher_expiery_date_value}&voucher_expiery_type=${voucher_expiery_type}
+
+	`;
+
+	//send voucher type data to sever
+	
+	$.get('/api/auto_voucher_types_add?' + auto_voucher_payload, function(response, success){
+
+
+	});
+
+}
 
 //------------ view
 

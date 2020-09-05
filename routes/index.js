@@ -689,7 +689,7 @@ app.get('/api/voucher_types_add', function(req, res){
 
 //++++++++++++++++++++++++++++++
 
-app.get('/api/voucher_types_add', function(req, res){
+app.get('/api/auto_voucher_types_add', function(req, res){
 
 	//auto voucher processing response
 	function auto_voucher_processing_response(reply){
@@ -701,7 +701,7 @@ app.get('/api/voucher_types_add', function(req, res){
 	}
 
 
-	console.log(res);
+	console.log(req.query);
 
 
 
