@@ -3209,367 +3209,366 @@ function menu_button_sever(typeOfUser){
 //++++++++++++++++++++ extra menu content ++++++++++++++++++++
 
 
-
 function extra_menu(transaction_type){ //extra menu initiator
 	
-//show menu window
-	
-document.getElementById('transactions_and_voucher_page').style.display='block';	
-	
-if(admin_login.admin_id){//if admin logged in
-	
-	var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+admin_login.admin_id+'&usertype='+admin_login.usertype;
-}
-	
-if(seller_login.seller_id){// if seller logged in
-	
-	var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+seller_login.seller_id+'&usertype='+seller_login.usertype;
-}
-
-if(distributor_login.distributor_id){// if distributor logged in
-	
-	var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+distributor_login.distributor_id+'&usertype='+distributor_login.usertype
-}
-	
-	
-	
-//console.log(url);
+	//show menu window
 		
-if(transaction_type == 'past_transactions'){//++++++++++++++++++++++++++++ transacton record menu
-	
-
-	var alert_button = `<br />
-						<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of transactions made in the past. (a) [ - ] means money out. (b) [ + ] means money in.')">Help</button>`; 
-	
-	  $.get(url, function(response, status){
-           
-            
-           
-           if(status == 'success'){
-              
-      
-               if(response == 'error'){
-                   
-                
-                dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later');
-				 
-				//add alert button
-				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-				   
-				   return;
-                   
-               }              
-			   
-			   if(response == 'error : no transations history stored'){
-                   
-                
-                dom_innerHtml('transactions_and_voucher_header', 'Error, no Transations found'); 
-				   
-				//add alert button
-				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-				   return;
-                   
-               }
-
-			   //console.log(response);
-			   
-			   
-			   //clear div current contents
-			  document.getElementById('transactions_and_voucher_viewer').innerHTML='';
-			  document.getElementById('transactions_and_voucher_header').innerHTML='Transactions History';
+	document.getElementById('transactions_and_voucher_page').style.display='block';	
 		
-			   response.forEach(function(data, index){//add contents
-				   
-				   var styling_for_other_users = '';
-				   
-				   if(!seller_login.logged_in){//if seller is not logged in apply
-					   styling_for_other_users = '<br />';
-				   }
-				   
-				   var history_record = data.split(';');
-				   var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word; font-size:12px;">'+history_record[0]+'<br />'+history_record[1]+styling_for_other_users+history_record[2]+'</p><hr>';
-				   
-				   //if record has three items//i.e voucher reedem record
-				   
-				   if(history_record.length > 3){
-					   
-					   transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word; font-size:12px;">'+history_record[0]+'<br />'+history_record[1]+'<br />'+history_record[2]+'<br />'+history_record[3]+'</p><hr>';
-					   
-				   }
-				   
-				   $('#transactions_and_voucher_viewer').append(transaction_record);
-				   
-				   
-				   //add help button at end o adding items
-				   
-				   if(index  == response.length - 1){
+	if(admin_login.admin_id){//if admin logged in
+		
+		var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+admin_login.admin_id+'&usertype='+admin_login.usertype;
+	}
+		
+	if(seller_login.seller_id){// if seller logged in
+		
+		var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+seller_login.seller_id+'&usertype='+seller_login.usertype;
+	}
+
+	if(distributor_login.distributor_id){// if distributor logged in
+		
+		var url= http_https + current_domain + '/api/transations?type='+ transaction_type +'&user_id='+distributor_login.distributor_id+'&usertype='+distributor_login.usertype
+	}
+		
+		
+		
+	//console.log(url);
+			
+	if(transaction_type == 'past_transactions'){//++++++++++++++++++++++++++++ transacton record menu
+		
+
+		var alert_button = `<br />
+							<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of transactions made in the past. (a) [ - ] means money out. (b) [ + ] means money in.')">Help</button>`; 
+		
+		$.get(url, function(response, status){
+			
+				
+			
+			if(status == 'success'){
+				
+		
+				if(response == 'error'){
 					
-
-					   //add alert button
-					   	dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-					  }
-			   });
-			   
-			   
-				return;
-
-		   }
-	
-		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
-		  
-		  //add alert button
-		  dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-		 return;
-	  });
-	
-}
-	
-if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher reedem menu
-	
-	
-	dom_innerHtml('transactions_and_voucher_viewer', '');//clean div for new content 
-	
-	//add help button contents
-	var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button>`;
-	
-	  $.get(url, function(response, status){
-           
-            
-           
-           if(status == 'success'){
-              
-      
-               if(response == 'error'){
-                   
-                
-                dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
-				   
-				//add alert button
-				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-				   return;
-                   
-               }              
-			   
-			   if(response == 'error : no vouchers to claim'){
-                   
-                
-                dom_innerHtml('transactions_and_voucher_header', 'Error, No Voucher to claim found');
-				 
-				//add alert button
-				dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-				   
-				   
-				   return;
-                   
-               }
-
-			  // console.log(response);
-			   
-			   //clear div current contents
-			  document.getElementById('transactions_and_voucher_viewer').innerHTML='';
-			  document.getElementById('transactions_and_voucher_header').innerHTML='Voucher never sold';
-		
-			   response.forEach(function(data, index){//add contents
-				   	
-				 var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data.voucher_doc_id.toString()+','+ data.voucher_amount+"',this.id)\" id='redeem_button_"+index+"'>Redeem Voucher Cash</button>";//show redeem button
-				   
-				   if(Number(data.voucherproducedday) == Number(data.server_day)){//if ticket was produced in same day// dont allow download: //wannet to have voucher claimed after 30 days, well implementing that is annoying//so will use next day
-					   claim_button = "<b style='color:red'>You can only get money back for this ticket next day</b> ";
-				   }
-				   
-				   //give sense to date/day
-				   var simple_date='';
-				   
-				   if(data.voucherproducedday==1){simple_date='<sup>st</sup>'}//1st
-				   if(data.voucherproducedday==2){simple_date='<sup>nd</sup>'}//2nd
-				   if(data.voucherproducedday==3){simple_date='<sup>rd</sup>'}//3rd
-				   if(data.voucherproducedday>3){simple_date='<sup>th</sup>'}//4th....
-	
-				   if(data.voucherproducedday==21){simple_date='<sup>st</sup>'}//21st
-				   if(data.voucherproducedday==22){simple_date='<sup>nd</sup>'}//22nd
-				   if(data.voucherproducedday==23){simple_date='<sup>rd</sup>'}//23rd
-				     
-				   if(data.voucherproducedday==31){simple_date='<sup>st</sup>'}//31st
-				   if(data.voucherproducedday==32){simple_date='<sup>nd</sup>'}//32nd//haha incase
-				   
-				   
-				   var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border' ><p>Voucher Not used/created by Mistake : <br /> Code from User : "+data.voucher_id+"<br /> Voucher amount : R"+data.voucher_amount+", <br />Produced on the "+data.voucherproducedday+simple_date+",<br /> "+claim_button+"</p></div><br ><hr><br>";
-				   
-				   
-				   $('#transactions_and_voucher_viewer').append(content_div);
-				   
-				   
-				   
-				   //add help button at end o adding items
-				   
-				   if(index == response.length -1){
 					
-					   //add alert button
-					   	dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-
-					   
-					  }
-				   
-							
-				   
-			   });
-			   
-				return;
-
-		   }
-	
-		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
-		  //add alert button
-		dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-		 return;
-	  });
-	
-}
-	
-	
-	
-if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
-	
-	var new_message_available = false;//check if theres a nww 
-	
-	dom_innerHtml('transactions_and_voucher_viewer', '');//clean div for new content 
-	
-	//add help button contents
-	var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
-	
-	  $.get(url, function(response, status){
-           
-            
-           
-           if(status == 'success'){
-              
-      
-               if(response == 'error'){  
-				   
-					dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+					dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later');
+					
 					//add alert button
 					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-				   return;
-                   
-               }              
-			   
-			   if(response == 'error : no messages found'){
-					dom_innerHtml('transactions_and_voucher_header', 'Error, No Messages found');
+					
+					return;
+					
+				}              
+				
+				if(response == 'error : no transations history stored'){
+					
+					
+					dom_innerHtml('transactions_and_voucher_header', 'Error, no Transations found'); 
+					
 					//add alert button
-					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);			   			   
-				 return;                 
-               }
+					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+					return;
+					
+				}
 
-			  // console.log(response);
-			   
-			   //clear div current contents
-			  document.getElementById('transactions_and_voucher_viewer').innerHTML='';
-			  document.getElementById('transactions_and_voucher_header').innerHTML='Messages';
-		
-			   response.forEach(function(data,index){
-				   
-				   var document_id = data._id;//id of current document
-				   
-				  data.messages_array.forEach(function(message_item,index){
-					  
+				//console.log(response);
 				
-					  if(index == 0){//control divs for message
-						//add opening div tag for this message//container used for deleting whole thing
-						  
-						$('#transactions_and_voucher_viewer').append(`<hr><div id="`+document_id+`_container" style="width:auto;height:auto; margin:0px;padding:0px">`);
-						  
-						//message container div opening tag
-					   $('#'+document_id+'_container').append(`<div id="`+document_id+`message_container" style="width:auto;height:auto; margin:0px;padding:0px">`);
-						 }
-					  //vars 
-					  var message_item = JSON.parse(message_item);
-					  var message_fron_to;//message to or from
-					  
-					  message_item['from']?message_fron_to=message_item['from']:message_fron_to=message_item['to'];//message to or from
-					  
-								   
-					   var content_div = "<div id='' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span><br /><i> "+message_item.date+"</i><br />"+ text_line_break(message_item.message)+"</div><br>";
 				
-					  
-					  //message
-					   $('#'+document_id+'message_container').append(content_div);
-					  
-					  
-					   if(index == data.messages_array.length -1){
-						   
-						   //find user logged in id
-						   var logged_in_user_id = '';
-						   
-						   if(admin_login.admin_id){//is admin logged in
-							  	logged_in_user_id = admin_login.admin_id;
-							  }
-						   
-						   if(distributor_login.distributor_id){ //is didtributor logged in
-							  	logged_in_user_id =distributor_login.distributor_id;
-							  }
-						   
-						   if(seller_login.seller_id){// is seller logged in
-							  	logged_in_user_id = seller_login.seller_id;
-							  }
-							  
-								
-								
-
-						   
-						   //is logged in user message initiator or reciever//to find out whom to delete/hide message for
-						   var is_message_initiator_or_not;
-						   
-						   if(data.message_initiator_id.toString() == logged_in_user_id.toString()){
-							  	is_message_initiator_or_not = 'from_delete';//user is initiator of this message
-							  }
-						   		
-						   if(data.message_parcitipant_id.toString() == logged_in_user_id.toString()){
-							  	is_message_initiator_or_not = 'to_delete';//user is participant of this message
-							  }
-						   
-						   
-						   //message container closing tag
-					   		$('#'+document_id+'message_container').append(`</div>`);
-						   
-						   //add conversation parties//usefull if message has not reply yet
-						  // console.log(data);
-						   $('#'+document_id+'_container').append(`<div id='' style='width:100%;height:20px;font-size:10px;font-weight:bold;color:blue'>[ `+data.message_initiator_names+` : `+data.message_initiator_usertype+` << >> `+data.message_parcitipant_names+` : `+data.message_parcitipant_usertype+` ]</div>`);
-						   
-						   
-						   //add reply or delete button
-						   	
-						   $('#'+document_id+'_container').append('<button class="btn btn-danger" id="' + document_id + '_delete" style="margin:10px;width:95%;height:30px" onclick="messaging_send(\''+document_id+'\',\''+is_message_initiator_or_not+'\')">Delete</button><br />');
-						   $('#'+document_id+'_container').append('<input type="text" id="'+document_id+'_reply" placeholder="Your response..." class="form-control" style="height:30px;text-align:center;margin:2px"><button style="width:95%;height:30px" class="btn btn-success" id="'+document_id+'_input"  onclick="messaging_send(\''+document_id+'\',\'input\')">Reply</button><br><hr>');
+				//clear div current contents
+				document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+				document.getElementById('transactions_and_voucher_header').innerHTML='Transactions History';
+			
+				response.forEach(function(data, index){//add contents
+					
+					var styling_for_other_users = '';
+					
+					if(!seller_login.logged_in){//if seller is not logged in apply
+						styling_for_other_users = '<br />';
+					}
+					
+					var history_record = data.split(';');
+					var transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word; font-size:12px;">'+history_record[0]+'<br />'+history_record[1]+styling_for_other_users+history_record[2]+'</p><hr>';
+					
+					//if record has three items//i.e voucher reedem record
+					
+					if(history_record.length > 3){
 						
-						   //add main div container closing tag
-						   $('#'+document_id+'_container').append(`</div>`);
-						   
-						  }	
-				   
-				   });
-				   
+						transaction_record = '<p id="" class="w3-border w3-margin" style="width:80%;height:auto;margin:auto 10px auto 10px;overflow:break-word; font-size:12px;">'+history_record[0]+'<br />'+history_record[1]+'<br />'+history_record[2]+'<br />'+history_record[3]+'</p><hr>';
+						
+					}
+					
+					$('#transactions_and_voucher_viewer').append(transaction_record);
+					
+					
+					//add help button at end o adding items
+					
+					if(index  == response.length - 1){
+						
 
-					   //add help button at end o adding items
+						//add alert button
+							dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+						}
+				});
+				
+				
+					return;
 
-					   if(index == response.length -1){
+			}
+		
+			dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+			
+			//add alert button
+			dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+			return;
+		});
+		
+	}
+		
+	if(transaction_type == 'to_reddem_voucher'){//++++++++++++++++++++++ voucher reedem menu
+		
+		
+		dom_innerHtml('transactions_and_voucher_viewer', '');//clean div for new content 
+		
+		//add help button contents
+		var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button>`;
+		
+		$.get(url, function(response, status){
+			
+				
+			
+			if(status == 'success'){
+				
+		
+				if(response == 'error'){
+					
+					
+					dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+					
+					//add alert button
+					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+					return;
+					
+				}              
+				
+				if(response == 'error : no vouchers to claim'){
+					
+					
+					dom_innerHtml('transactions_and_voucher_header', 'Error, No Voucher to claim found');
+					
+					//add alert button
+					dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+					
+					
+					return;
+					
+				}
 
-						   //add alert button
+				// console.log(response);
+				
+				//clear div current contents
+				document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+				document.getElementById('transactions_and_voucher_header').innerHTML='Voucher never sold';
+			
+				response.forEach(function(data, index){//add contents
+						
+					var claim_button = "<button class='btn btn-primary' onclick=\"voucher_redeem('"+data.voucher_doc_id.toString()+','+ data.voucher_amount+"',this.id)\" id='redeem_button_"+index+"'>Redeem Voucher Cash</button>";//show redeem button
+					
+					if(Number(data.voucherproducedday) == Number(data.server_day)){//if ticket was produced in same day// dont allow download: //wannet to have voucher claimed after 30 days, well implementing that is annoying//so will use next day
+						claim_button = "<b style='color:red'>You can only get money back for this ticket next day</b> ";
+					}
+					
+					//give sense to date/day
+					var simple_date='';
+					
+					if(data.voucherproducedday==1){simple_date='<sup>st</sup>'}//1st
+					if(data.voucherproducedday==2){simple_date='<sup>nd</sup>'}//2nd
+					if(data.voucherproducedday==3){simple_date='<sup>rd</sup>'}//3rd
+					if(data.voucherproducedday>3){simple_date='<sup>th</sup>'}//4th....
+		
+					if(data.voucherproducedday==21){simple_date='<sup>st</sup>'}//21st
+					if(data.voucherproducedday==22){simple_date='<sup>nd</sup>'}//22nd
+					if(data.voucherproducedday==23){simple_date='<sup>rd</sup>'}//23rd
+						
+					if(data.voucherproducedday==31){simple_date='<sup>st</sup>'}//31st
+					if(data.voucherproducedday==32){simple_date='<sup>nd</sup>'}//32nd//haha incase
+					
+					
+					var content_div = "<div id='"+data.voucher_id+"' class='w3-margin w3-border' ><p>Voucher Not used/created by Mistake : <br /> Code from User : "+data.voucher_id+"<br /> Voucher amount : R"+data.voucher_amount+", <br />Produced on the "+data.voucherproducedday+simple_date+",<br /> "+claim_button+"</p></div><br ><hr><br>";
+					
+					
+					$('#transactions_and_voucher_viewer').append(content_div);
+					
+					
+					
+					//add help button at end o adding items
+					
+					if(index == response.length -1){
+						
+						//add alert button
 							dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
 
-						  }		
+						
+						}
+					
+								
+					
 				});
-			   
-				return;
+				
+					return;
 
-		   }
+			}
+		
+			dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+			//add alert button
+			dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+			return;
+		});
+		
+	}
+		
 	
-		 dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
-		  //add alert button
-		dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
-		 return;
-	  });
 	
-}
+	if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
+		
+		var new_message_available = false;//check if theres a nww 
+		
+		dom_innerHtml('transactions_and_voucher_viewer', '');//clean div for new content 
+		
+		//add help button contents
+		var alert_button = `<br /><button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('List of vouchers that were not used by user : Possible Cause = Incorect code was entered from the buyer. This voucher money can be refunded by clicking [ Redeem Voucher Cash ] Button. ')">Help</button><div id='' style='position:fixed;width:80px;height:50px;right:40px;bottom:150px;font-size:50px;font-weight:bold;box-shadow:3px 3px green;'><i class='la la-envelope' style='text-shadow:2px 2px grey' onclick='message_creation()'></i></div>`;
+		
+		$.get(url, function(response, status){
+			
+				
+			
+			if(status == 'success'){
+				
+		
+				if(response == 'error'){  
+					
+						dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+						//add alert button
+						dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+					return;
+					
+				}              
+				
+				if(response == 'error : no messages found'){
+						dom_innerHtml('transactions_and_voucher_header', 'Error, No Messages found');
+						//add alert button
+						dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);			   			   
+					return;                 
+				}
+
+				// console.log(response);
+				
+				//clear div current contents
+				document.getElementById('transactions_and_voucher_viewer').innerHTML='';
+				document.getElementById('transactions_and_voucher_header').innerHTML='Messages';
+			
+				response.forEach(function(data,index){
+					
+					var document_id = data._id;//id of current document
+					
+					data.messages_array.forEach(function(message_item,index){
+						
+					
+						if(index == 0){//control divs for message
+							//add opening div tag for this message//container used for deleting whole thing
+							
+							$('#transactions_and_voucher_viewer').append(`<hr><div id="`+document_id+`_container" style="width:auto;height:auto; margin:0px;padding:0px">`);
+							
+							//message container div opening tag
+						$('#'+document_id+'_container').append(`<div id="`+document_id+`message_container" style="width:auto;height:auto; margin:0px;padding:0px">`);
+							}
+						//vars 
+						var message_item = JSON.parse(message_item);
+						var message_fron_to;//message to or from
+						
+						message_item['from']?message_fron_to=message_item['from']:message_fron_to=message_item['to'];//message to or from
+						
+									
+						var content_div = "<div id='' class='w3-margin w3-border'><span style='text-decoration: underline;font-weight:bold;'>"+message_fron_to+"</span><br /><i> "+message_item.date+"</i><br />"+ text_line_break(message_item.message)+"</div><br>";
+					
+						
+						//message
+						$('#'+document_id+'message_container').append(content_div);
+						
+						
+						if(index == data.messages_array.length -1){
+							
+							//find user logged in id
+							var logged_in_user_id = '';
+							
+							if(admin_login.admin_id){//is admin logged in
+									logged_in_user_id = admin_login.admin_id;
+								}
+							
+							if(distributor_login.distributor_id){ //is didtributor logged in
+									logged_in_user_id =distributor_login.distributor_id;
+								}
+							
+							if(seller_login.seller_id){// is seller logged in
+									logged_in_user_id = seller_login.seller_id;
+								}
+								
+									
+									
+
+							
+							//is logged in user message initiator or reciever//to find out whom to delete/hide message for
+							var is_message_initiator_or_not;
+							
+							if(data.message_initiator_id.toString() == logged_in_user_id.toString()){
+									is_message_initiator_or_not = 'from_delete';//user is initiator of this message
+								}
+									
+							if(data.message_parcitipant_id.toString() == logged_in_user_id.toString()){
+									is_message_initiator_or_not = 'to_delete';//user is participant of this message
+								}
+							
+							
+							//message container closing tag
+								$('#'+document_id+'message_container').append(`</div>`);
+							
+							//add conversation parties//usefull if message has not reply yet
+							// console.log(data);
+							$('#'+document_id+'_container').append(`<div id='' style='width:100%;height:20px;font-size:10px;font-weight:bold;color:blue'>[ `+data.message_initiator_names+` : `+data.message_initiator_usertype+` << >> `+data.message_parcitipant_names+` : `+data.message_parcitipant_usertype+` ]</div>`);
+							
+							
+							//add reply or delete button
+								
+							$('#'+document_id+'_container').append('<button class="btn btn-danger" id="' + document_id + '_delete" style="margin:10px;width:95%;height:30px" onclick="messaging_send(\''+document_id+'\',\''+is_message_initiator_or_not+'\')">Delete</button><br />');
+							$('#'+document_id+'_container').append('<input type="text" id="'+document_id+'_reply" placeholder="Your response..." class="form-control" style="height:30px;text-align:center;margin:2px"><button style="width:95%;height:30px" class="btn btn-success" id="'+document_id+'_input"  onclick="messaging_send(\''+document_id+'\',\'input\')">Reply</button><br><hr>');
+							
+							//add main div container closing tag
+							$('#'+document_id+'_container').append(`</div>`);
+							
+							}	
+					
+					});
+					
+
+						//add help button at end o adding items
+
+						if(index == response.length -1){
+
+							//add alert button
+								dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+
+							}		
+					});
+				
+					return;
+
+			}
+		
+			dom_innerHtml('transactions_and_voucher_header', 'Server or Conection error, Please try again later'); 
+			//add alert button
+			dom_innerHtml('transactions_and_voucher_viewer_alert_button',alert_button);
+			return;
+		});
+		
+	}
 
 	//uploads/advertiment	
 	if(transaction_type == 'upload'){	
@@ -3806,7 +3805,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 				return;
 			}
 
-			alert('Error opening wifi-radius link : ' + url + '\nTo retrieve profile data to create vouchers.')
+			alert('Error opening wifi-radius link : ' + url + '\nTo retrieve profile data to create vouchers.');
 			
 
 			
@@ -3817,6 +3816,27 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 	}
 	
 }
+
+//+++++++++++++
+//auto voucher types
+//+++++++++++++
+
+
+//------------ save/create
+
+//------------ view
+
+
+//------------- delete
+
+
+
+
+
+
+
+
+
 
 
 // ++++++++++++++++++++ voucher redeem +++++++++++++++++
@@ -3888,7 +3908,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 	 
 	 
 	 
- }
+}
 
 // +++++++++++++++++++++++++++++ send message +++++++++++++++++++++++++++++
 
@@ -4010,7 +4030,7 @@ function messaging_send(messaging_document_id, action_type){
 	}
 
 
-//	alert(messaging_document_id+', '+action_type+' ,not input');
+	//	alert(messaging_document_id+', '+action_type+' ,not input');
 
 	
 	var confirm_delete = confirm("Are you sure you want to delete this message?");//give alert
@@ -4076,9 +4096,9 @@ function messaging_send(messaging_document_id, action_type){
 
 function message_creation(){//gives user ability to add contacts and send message
 	
-//	var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
-//	var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
-//	var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+	//	var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+	//	var distributor_login = {logged_in : false, distributor_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+	//	var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
 	
 		var my_users_contact = [{"name":"No contacts found.","type_of_user":"","id_no":""}];//default usr list {"name":"tsehla nkhi","type_of_user":"Seller","id_no":"89051"}
 		
@@ -4350,7 +4370,7 @@ function new_contact_save(){
 
 	
 	
-	//check if user dont have contact saved already-------------------
+		//check if user dont have contact saved already-------------------
 	
 		//logged in user
 		var logged_in_user_name;

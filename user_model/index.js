@@ -76,6 +76,7 @@ voucher_model.add(
 		voucherprofile_time : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Time'},
 		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
 		voucherstate : {type : types.Select, options: "used, new", default:'new', label :'Voucher State'},
+		voucher_created : {type : types.Select, options: "manual, automatic", default:'manual', label :'Voucher creation method'},
 		soldby : {type : String, label :'Sold By'},
 		soldto : {type: String, default:'', label :'Sold To'},
 		loadedby : {type: String, default:'', label :'Added by'},

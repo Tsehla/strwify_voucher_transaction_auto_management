@@ -477,7 +477,7 @@ seller or distributor console, credt auto_voucher_check
 		var time_sorted_and_flattern_vouchers = []//store processed/flatterned/summarised data for time vouchers
 		var data_sorted_and_flattern_vouchers = []//store processed/flatterned/summarised data for data vouchers
 
-		keystone.list('Voucher Codes').model.find({voucherstate : 'new' })
+		keystone.list('Voucher Codes').model.find().where({voucherstate : 'new', voucher_created : {$ne : 'automatic' }})
 		.exec( function(error, response){
 			if(error){
 
@@ -599,9 +599,45 @@ seller or distributor console, credt auto_voucher_check
 
 			// +++++ save scrapping results 
 
-			//delete all already saved voucher types list
-			keystone.list('Voucher Types').model.remove()
-			.exec( function(error, response){
+		// 	//delete all already saved voucher types list
+		// 	keystone.list('Voucher Types').model.remove()
+		// 	.exec( function(error, response){
+		// 		if(error){
+		// 			console.log('Error retrieving available vouchers types, please contact administrator');
+		// 		}
+		// 		if(response == null){
+		// 			console.log('voucher type list already empty, please contact administrator');
+		// 		}
+		// 		//console.log('all voucher types removed');
+				
+
+
+		// 	//save newly created voucher type list	
+		// 	keystone.createItems({//add items to db//user details
+					
+		// 		'Voucher Types' : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)
+				
+				
+		// 	}, function(err, results){
+		// 		if(err){
+		// 			console.log('Error adding voucher types list to db');
+		// 			return;
+		// 		}
+				
+		// 		//console.log(results);
+		// 	});
+			
+
+		// 	//reurn response 
+		// 	return (res?res.jsonp(data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)) : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers));//if called by http use [ jsonp() ] else use [ return ] for functions
+
+		
+		// });
+
+			//delete all [manual created ] already saved voucher types list
+			keystone.list('Voucher Types').model.remove({voucher_creation_method : 'manual'}, function(error, response){
+				
+
 				if(error){
 					console.log('Error retrieving available vouchers types, please contact administrator');
 				}
@@ -609,32 +645,28 @@ seller or distributor console, credt auto_voucher_check
 					console.log('voucher type list already empty, please contact administrator');
 				}
 				//console.log('all voucher types removed');
-				
 
-
-			//save newly created voucher type list	
-			keystone.createItems({//add items to db//user details
+				//save newly created voucher type list	
+				keystone.createItems({//add items to db//user details
+						
+					'Voucher Types' : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)
 					
-				'Voucher Types' : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)
+					
+				}, function(err, results){
+					if(err){
+						console.log('Error adding voucher types list to db');
+						return;
+					}
+					
+					//console.log(results);
+				});
 				
-				
-			}, function(err, results){
-				if(err){
-					console.log('Error adding voucher types list to db');
-					return;
-				}
-				
-				//console.log(results);
-			});
+
+				//reurn response 
+				return (res?res.jsonp(data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)) : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers));//if called by http use [ jsonp() ] else use [ return ] for functions
+
 			
-
-			//reurn response 
-			return (res?res.jsonp(data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers)) : data_sorted_and_flattern_vouchers.concat(time_sorted_and_flattern_vouchers));//if called by http use [ jsonp() ] else use [ return ] for functions
-
-		
 		});
-
-
 
 
 
@@ -651,25 +683,31 @@ app.get('/api/voucher_types_add', function(req, res){
 });
 
 
+//++++++++++++++++++++++++++++++
+
+// automatic voucher types creation/viewing/deleting
+
+//++++++++++++++++++++++++++++++
+
+app.get('/api/voucher_types_add', function(req, res){
+
+	//auto voucher processing response
+	function auto_voucher_processing_response(reply){
+
+		//send reply
+		res.stringify(reply);
+
+		return;
+	}
+
+
+	console.log(res);
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-	///AUROMATIC VOUCHER ADDING SPACE
-
+});
 
 
 
