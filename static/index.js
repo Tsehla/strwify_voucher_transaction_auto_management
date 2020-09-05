@@ -3688,7 +3688,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 			alert('loading')
 
 
-
+			//menu help button : add help data
 			document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
 			<br>
 				<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This vouchers are defined templates used to automatically create a Voucher of the shown amount and data or time limit with unique Voucher code to access the internet.\\nThe vouher code will be produced on request by a [ RADIUS COMPUTER ]')">
@@ -3791,7 +3791,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 				$('#transactions_and_voucher_viewer').append(wifi_radius_auto_voucher_details_creation );
 
-				//add help data
+				//menu help button : add help data
 				document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
 					<br>
 					<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This are voucher profiles retrived from [ Radius Computer ]\\nThey are used to create Vouchers of shown data/time limit.\\n1) Specify voucher : Cost/Price, data/time limit, and expiery.\\n2) Save changes\\n3) If what you save already exist, save will be rejected.\\nInfo: this process differ from manual way of uploading [ csv ] file with vouchers exported from [ radiusdesk ], as vouchers are produced only when requested automatically.')">
