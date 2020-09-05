@@ -3691,7 +3691,7 @@ if(transaction_type == 'messages'){//++++++++++++++++++++++ messages
 
 			document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
 			<br>
-				<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This vouchers are defined templates used to automatically create a Voucher of the shown amount and data or time limit with unique Voucher code to access the internet.\nThe vouher code will be produced on request by a [ RADIUS COMPUTER ]')">
+				<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This vouchers are defined templates used to automatically create a Voucher of the shown amount and data or time limit with unique Voucher code to access the internet.\\nThe vouher code will be produced on request by a [ RADIUS COMPUTER ]')">
 					Help
 				</button>
 
