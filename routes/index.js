@@ -693,7 +693,7 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 
 	//auto voucher processing response
 	function auto_voucher_processing_response(reply){
-
+		
 		//send reply
 		res.jsonp(reply);
 
@@ -726,10 +726,45 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 
 			//check for duplicate voucher type
 
-
-
 			
 
+			var voucher_match_found = false;
+			response.forEach(function(data, index){
+
+			
+				//check for matching data/time
+				var voucher_or_data_profile = (req.query.profile_limit_type == 'data_limited'? req.query.voucher_data_value + ' '+ req.query.voucher_data_limit_type : req.query.voucher_time_value + ' '+ req.query.voucher_time_limit_type);
+
+				if(data.voucher_profile == voucher_or_data_profile){ //if match
+					
+					//check if amount match
+					if(Number(data.voucher_cost) == Number(req.query.voucher_price) ){//if match
+
+						voucher_match_found = true; //set match to found
+						
+					}
+
+
+				}
+
+			});
+
+			
+			if(voucher_match_found){//if voucher match was found
+			
+				//give duplicate error
+				auto_voucher_processing_response('Error, duplicate found');
+				//console.log('Error, duplicate found');
+				return;
+
+			}
+			if(!voucher_match_found){//if voucher match not found
+				
+				//create new voucher type
+				create_auto_voucher_type();
+				return;
+
+			}
 
 
 
@@ -740,7 +775,7 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 
 	//store new voucher types
 	function create_auto_voucher_type(){
-
+		
 		keystone.createItems({//add items to db//user details
 						
 			'Voucher Types' : [
@@ -772,11 +807,6 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 
 
 	}
-
-
-
-
-
 
 
 });

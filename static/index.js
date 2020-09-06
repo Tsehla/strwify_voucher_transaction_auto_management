@@ -3945,10 +3945,18 @@ function auto_voucher_create(voucher_details_div_index){
 
 			}
 
-			return
+			//if respons is duplicate message
+			if(response == 'Error, duplicate found'){
+
+				alert('Error, voucher profile already created.\n\nTip\nDelete in [ View ] menu.');
+				return
+
+			}
+
+			
 		}
 
-		
+
 		else{
 
 			alert('Error when attempting to connect to [ voucher types ] server, Please try again later ');
