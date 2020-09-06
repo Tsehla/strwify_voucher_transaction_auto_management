@@ -4041,7 +4041,7 @@ function defined_auto_vouchers_retrieve(){
 						<br />
 
 						<div style='width:100%; height:auto; margin-bottom : 20px'>
-							<button class='btn btn-danger' style='width:100% margin:10px' onclick='auto_voucher_delete("${data._id}", "${data.voucher_profile}", "${data.voucher_cost})'>Delete</button>
+							<button class='btn btn-danger' style='width:100% margin:10px' onclick='auto_voucher_delete("${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Delete</button>
 						</div>
 					</div>
 				`
@@ -4071,7 +4071,7 @@ function defined_auto_vouchers_retrieve(){
 
 function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 
-	console.log(delete_db_id, voucher_value, voucher_cost);
+	//console.log(delete_db_id, voucher_value, voucher_cost);
 
 
 	//give delete notice
@@ -4085,7 +4085,7 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 
 
 	//contact server
-	$.get('/api/auto_voucher_types_delete', function(response, status){
+	$.get('/api/auto_voucher_types_delete?_id=' + delete_db_id, function(response, status){
 		
 		if(status == 'success'){
 
@@ -4113,7 +4113,10 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 				alert('Success, specified [ Voucher Type ] deleted');
 
 				//reload [ auto voucher type ] view
-				defined_auto_vouchers_retrieve();
+				document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
+				defined_auto_vouchers_retrieve();//reload [ auto voucher type ] view menu
+
+				return;
 
 			}
 

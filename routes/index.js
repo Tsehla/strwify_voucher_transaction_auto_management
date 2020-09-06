@@ -853,8 +853,10 @@ app.get('/api/auto_voucher_types_view', function(req, res){
 //---- auto voucher delete
 app.get('/api/auto_voucher_types_delete', function(req, res){
 
-	keystone.list('Voucher Types').model.find().where({voucher_creation_method : {$ne : 'manual' }})
-	.exec( function(error, response){
+	console.log(req.query._id)
+
+	keystone.list('Voucher Types').model.findById(req.query._id)
+	.remove( function(error, response){
 
 		if(error){
 
