@@ -695,13 +695,85 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 	function auto_voucher_processing_response(reply){
 
 		//send reply
-		res.stringify(reply);
+		res.jsonp(reply);
 
 		return;
 	}
 
 
-	console.log(req.query);
+	//console.log(req.query);
+
+
+	//find and filter db stored auto vouchers types
+	keystone.list('Voucher Types').model.find().where({voucher_creation_method : {$ne : 'manual' }})
+		.exec( function(error, response){
+
+			if(error){
+
+				//give error response
+				auto_voucher_processing_response('db query connection error');
+				console.log('Error, when attempting to query [ voucher tpes ] database.');
+
+				return;
+			}
+
+			if(response == null || response == ''){//if no automatic voucher types stored, create new voucher types
+
+				create_auto_voucher_type();//create new voucher type
+				
+				return;
+			}
+
+			//check for duplicate voucher type
+
+
+
+			
+
+
+
+
+
+		}
+	);
+
+
+	//store new voucher types
+	function create_auto_voucher_type(){
+
+		keystone.createItems({//add items to db//user details
+						
+			'Voucher Types' : [
+				{
+
+				voucher_type : (req.query.profile_limit_type == 'data_limited'? 'data' : 'time'),
+				voucher_cost : req.query.voucher_price,
+				voucher_profile :(req.query.profile_limit_type == 'data_limited'? req.query.voucher_data_value + ' '+ req.query.voucher_data_limit_type : req.query.voucher_time_value + ' '+ req.query.voucher_time_limit_type),
+				radius_server_voucher_profile : req.query.profile_detals,
+				wifi_radius_auto_voucher_details :JSON.stringify({expiery : req.query.voucher_expiery_date_value + ' ' + req.query. voucher_expiery_type, voucher_reset : req.query.voucher_reset}),
+				voucher_count: 'N/A',
+				voucher_creation_method : 'automatic',
+														
+			}
+		],
+			
+			
+		}, function(err, results){
+			if(err){
+
+				auto_voucher_processing_response('db query connection error');
+				console.log('Error, when attempting to create new [ voucher tpes ] on database.');
+				return;
+			}
+			
+			//console.log(results);
+			auto_voucher_processing_response('success : new auto voucher type created');
+		});
+
+
+	}
+
+
 
 
 

@@ -255,10 +255,12 @@ voucher_track_model.add(
 		voucher_type : {type : types.Select, options: "time, data", default:'data', label :'Voucher Type', initial:true},
 		voucher_cost : {type:String, default:'', label :'Voucher cost'},
 		voucher_profile : {type:String, default:'', label :'Voucher Time/Data'},
-		radius_server_voucher_profile : {type:String, default:'N/A', label :'Radius server data profile'},
+		radius_server_voucher_profile : {type:String, default:'N/A', label :'wifi Radius auto data profile'},
+		wifi_radius_auto_voucher_details : {type:String, default:'N/A', label :'wifi Radius auto voucher details'},
 		voucher_count: {type:String, default:'', label :'Available Vouchers'},
 		voucher_creation_method : {type : types.Select, options: "manual, automatic", default:'manual', label :'For vouchers created'},
-		voucher_active : {type :types.Boolean, default:true, label :'Active' }
+		voucher_active : {type :types.Boolean, default:true, label :'Active' },
+		
 
 	}
 

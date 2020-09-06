@@ -3925,7 +3925,37 @@ function auto_voucher_create(voucher_details_div_index){
 
 	//send voucher type data to sever
 	
-	$.get('/api/auto_voucher_types_add?' + auto_voucher_payload, function(response, success){
+	$.get('/api/auto_voucher_types_add?' + auto_voucher_payload, function(response, status){
+
+		if(status == 'success'){//if response recieved from server
+
+			//if response is error message 
+			if(response == 'db query connection error'){
+
+				alert('Error, when attempting to query [ voucher tpes ] database.')
+				return;
+
+			}
+
+			//if response is success message 
+			if(response == 'success : new auto voucher type created'){
+
+				alert('Success : new auto voucher type created.\nView created [ voucher types ] list menu to verify.')
+				return;
+
+			}
+
+			return
+		}
+
+		
+		else{
+
+			alert('Error when attempting to connect to [ voucher types ] server, Please try again later ');
+
+		}
+
+
 
 
 	});
