@@ -689,6 +689,8 @@ app.get('/api/voucher_types_add', function(req, res){
 
 //++++++++++++++++++++++++++++++
 
+//---- auto voucher creation 
+
 app.get('/api/auto_voucher_types_add', function(req, res){
 
 	//auto voucher processing response
@@ -767,8 +769,6 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 			}
 
 
-
-
 		}
 	);
 
@@ -812,8 +812,75 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 });
 
 
+//---- auto voucher view
+
+app.get('/api/auto_voucher_types_view', function(req, res){
+
+	
+	keystone.list('Voucher Types').model.find().where({voucher_creation_method : {$ne : 'manual' }})
+	.exec( function(error, response){
+
+		if(error){
+
+			//give error response
+			res.jsonp('db [auto voucher types ] query connection error');
+			console.log('Error, when attempting to query db for [ auto voucher tpes ].');
+
+			return;
+		}
+
+		if(response == null || response == ''){//if no automatic voucher types stored
+
+			//give error response
+			res.jsonp('Error, no [ auto voucher type ] have been created yet');
+			console.log('Error, no [ auto voucher tpes ] found on db.');
+			
+			return;
+		}
+
+		//send data
+		res.jsonp(response);
+
+	});
 
 
+
+});
+
+
+
+
+//---- auto voucher delete
+app.get('/api/auto_voucher_types_delete', function(req, res){
+
+	keystone.list('Voucher Types').model.find().where({voucher_creation_method : {$ne : 'manual' }})
+	.exec( function(error, response){
+
+		if(error){
+
+			//give error response
+			res.jsonp('db [auto voucher types ] delete connection error');
+			console.log('Error, when attempting to delete [ auto voucher type ] on db.');
+
+			return;
+		}
+
+		if(response == null || response == ''){//if no automatic voucher types stored
+
+			//give error response
+			res.jsonp('Error, specified [ auto voucher type ] to delete not found');
+			console.log('Error, specified [ auto voucher type ] to delete not found on db.');
+			
+			return;
+		}
+
+		//send data
+		res.jsonp('Success, specified [ Voucher Type ] deleted');
+
+	});
+
+
+});
 
 
 

@@ -3682,9 +3682,10 @@ function extra_menu(transaction_type){ //extra menu initiator
 
 			document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
 			document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
-			document.getElementById('transactions_and_voucher_header').innerHTML='Auto voucher creation Details';//set header for div
+			document.getElementById('transactions_and_voucher_header').innerHTML='Auto voucher Details';//set header for div
 
-			alert('loading')
+			//get saved vouchers
+			defined_auto_vouchers_retrieve();
 
 
 			//menu help button : add help data
@@ -3957,7 +3958,7 @@ function auto_voucher_create(voucher_details_div_index){
 		}
 
 
-		else{
+		else{//give error
 
 			alert('Error when attempting to connect to [ voucher types ] server, Please try again later ');
 
@@ -3972,16 +3973,161 @@ function auto_voucher_create(voucher_details_div_index){
 
 //------------ view
 
+function defined_auto_vouchers_retrieve(){
+
+	
+	$.get('/api/auto_voucher_types_view', function(response, status){
+
+		if(status == 'success'){//if response recieved from server
+
+
+			//if error
+			if(response == 'db [auto voucher types ] query connection error'){
+
+				alert(response);
+				return;
+			}
+
+			//if no data available
+			if(response == 'Error, no [ auto voucher type ] have been created yet'){
+
+				//give error
+				alert('Error, no [ auto voucher type ] have been created yet.\nUse creation menu to define some.');
+				return;
+
+			}
+
+			//show stored data
+			//console.log(response)
+
+
+
+			response.forEach(function(data, index){
+
+
+				var auto_voucher_div =  `
+					<div class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: center'>
+
+						
+
+						<div id='' style=''>
+							<span>Voucher type : <b> ${data.voucher_type} </b> <span>
+						</div>
+
+						<div id='' style=''>
+							<span>Voucher profile : <b> ${data.voucher_profile} </b> </span>
+						</div>
+
+						<div id='' style=''>
+						<span>Voucher profile cost : <b> ${data.voucher_cost} </b>  <span>
+
+						</div>
+
+
+						<div id='' style=''>
+							<span>Wifi radius Voucher template name : <b> ${data.radius_server_voucher_profile} </b> <span>
+						</div>
+
+						<div id='' style=''>
+							<span>Voucher expiery after first activation : <b> ${JSON.parse(data.wifi_radius_auto_voucher_details).expiery} </b> <span>
+						</div>
+
+						<div id='' style=''>
+							<span>Voucher usage type : <b> ${JSON.parse(data.wifi_radius_auto_voucher_details).voucher_reset} </b> <span>
+						</div>
+
+
+
+						<br />
+
+						<div style='width:100%; height:auto; margin-bottom : 20px'>
+							<button class='btn btn-danger' style='width:100% margin:10px' onclick='auto_voucher_delete("${data._id}", "${data.voucher_profile}", "${data.voucher_cost})'>Delete</button>
+						</div>
+					</div>
+				`
+
+
+
+				$('#transactions_and_voucher_viewer').append(auto_voucher_div);
+			})
+
+
+
+
+
+
+			return;
+		}
+
+	//give error
+	alert('Error, requesting created, [ Auto voucher types ] from server. Please try again later');
+
+	});
+
+}
+
 
 //------------- delete
 
+function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
+
+	console.log(delete_db_id, voucher_value, voucher_cost);
+
+
+	//give delete notice
+	var delete_confirm = confirm('You are about to delete : ' + voucher_value + ', that cost : ' + voucher_cost + '\nContinue?');
+
+	if(!delete_confirm){//if cancell pressed
+
+		//end function
+		return;
+	}
+
+
+	//contact server
+	$.get('/api/auto_voucher_types_delete', function(response, status){
+		
+		if(status == 'success'){
+
+			//if error message recieved
+			if(response == 'db [auto voucher types ] delete connection error'){
+
+				//give alert
+				alert('Error, when attempting to delete [ auto voucher type ] on db.');
+				return;
+			}
+
+			//if voucher to delete not found
+			if(response == 'Error, specified [ auto voucher type ] to delete not found'){
+
+				//give alert
+				alert('Error, specified [ auto voucher type ] to delete not found on db.');
+				return;
+
+			}
+
+			//if sucess message 
+			if(response == 'Success, specified [ Voucher Type ] deleted'){
+
+				//give notification
+				alert('Success, specified [ Voucher Type ] deleted');
+
+				//reload [ auto voucher type ] view
+				defined_auto_vouchers_retrieve();
+
+			}
+
+
+		}
+
+		//give error
+		alert('Error, when attempting to contact server and delete [ auto voucher ]. Please try again later.');
+
+	})
 
 
 
-
-
-
-
+}
 
 
 
