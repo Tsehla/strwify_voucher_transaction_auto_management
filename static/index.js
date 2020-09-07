@@ -734,6 +734,7 @@ function sell_ticket(button_id){
 
 function add_sell_ticket_pop_contents(){ //porpulate div with available ticket choices
 
+
 	//div to add value on
 	
 	var voucher_amount_div_to_add_value_on = "seller_ticket_amount"; //default div
@@ -771,14 +772,32 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 
 
-	//get list of ticket
+	//get list of ticket for 
+	// ------- manual created vouchers
 	let vouchers_types_link = http_https + current_domain + '/api/voucher_types';
+
+	// ------- automatic created vouchers
+	//if auto voucher link is avalable
+	if(auto_user_creater_wifi_radius_link.u_link.length > 6){ //and is bigger than six letters
+
+		//changes link to server
+		vouchers_types_link = http_https + current_domain + '/api/auto_voucher_types';	
+	}
+
 
 	$.get(vouchers_types_link, function(response, status){
 
 		//console.log(response.length == 0);
 
 		if(response.length == 0){//empty response//no vouchers data list generated
+
+			//give error if auto vouchers link is provided but no auto vouchers available
+			if(auto_user_creater_wifi_radius_link.u_link.length > 6){
+
+				//give error notofication
+				alert('Error getting Auto vouchers templates, Please try again later or contact administrator.');
+				return;
+			}
 
 			//give user error
 			$('#data_or_time_select_box_time').append(`<p><br/>Error, no Vouchers details found, <br> please type amount manually,<br /> close and re-open this menu<br />or refresh page.<br> Or contact administrator</p>`);
@@ -813,7 +832,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 					//++++++++++++++++++++++++ CODE HERE +++++++++++++++++++++++++++
 
 
-					if(data.voucher_cost > 0 & data.voucher_count > 25 ){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type
+					if(data.voucher_cost > 0 & data.voucher_count > 25 || auto_user_creater_wifi_radius_link.u_link.length > 6){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type //but let Auto voucher through if [ wifi radus server ] link provided
 
 						//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
 						if(data.voucher_type == 'time'){
@@ -848,23 +867,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 		}
 
-		
-
-
-
-
-
 	});
-
-
-
-
-
-
-
-
-
-
 
 
 }

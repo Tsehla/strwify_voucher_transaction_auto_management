@@ -443,9 +443,11 @@ seller or distributor console, credt auto_voucher_check
     get all available voucher types and costs
 	=======================================*/
 
+	// --------- manual voucher types
+
 	app.get('/api/voucher_types', function(req, res){
 
-		keystone.list('Voucher Types').model.find()
+		keystone.list('Voucher Types').model.find().where({voucher_creation_method : {$ne : 'automatic' }})
 		//.where(voucher_count != '0')
 		.exec( function(error, response){
 		if(error){
@@ -464,6 +466,32 @@ seller or distributor console, credt auto_voucher_check
 			return res.jsonp(response);
 		});
 	});
+
+	// --------- automatic voucher types
+
+	app.get('/api/auto_voucher_types', function(req, res){
+
+		keystone.list('Voucher Types').model.find().where({voucher_creation_method : {$ne : 'manual' }})
+		.exec( function(error, response){
+		if(error){
+			   return res.jsonp('Error retrieving available vouchers, please contact administrator');
+		}
+		 if(response == null){
+
+			//call function to scrape db and attemp to rebuld voucher types list
+			update_or_gather_voucher_types_list();
+			
+			 
+			return res.jsonp('No vouchers to sell available at the moment, please try gain later or contact administrator');
+		   
+		}
+		   // console.log(response);
+			return res.jsonp(response);
+		});
+	});
+
+
+
 		
  	 /* =======================================
 		Update available vouchers data/create new/
@@ -885,26 +913,6 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
   /*=======================================
