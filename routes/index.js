@@ -970,9 +970,11 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
             .where({soldto : seach_code_, voucherstate : 'used'})
             .exec( function(error, response){
             if(error){
-                   return res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});
+
+                return res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
-             if(response == null){
+			
+			if(response == null){
 
 
 				//catch auto vouchers
@@ -1010,7 +1012,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 							//vouchercode:data[0].password,
 							voucheramount:req.query.voucher_amount,
 							voucherexpiry:req.query.voucher_expiery,
-							voucherstate:'new' ,
+							voucherstate:'new',
 							loadedby:req.query.seller_id,
 							voucher_created : 'automatic',
 
@@ -1037,50 +1039,46 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 							
 							'Voucher Codes' :[ voucher_to_add_to_system ],
 							
-							
 						}, function(err, results){
+							
 							if(err){
-								console.log('Error saving new auto vouchers to db ');
-								//res.jsonp(['Server or Conection error',[]]);
+
+								//give error
+								//res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
+								console.log('Error, new [ Auto voucher ] creation.');
 								return;
 							}
 							
-							console.log(results)
+							
 							//console.log('Success, new auto voucher saved to db');
 							
+							//write sell to database // provide newly created voucher voucher code
+							write_sell_toDB(JSON.parse(data)[0].name,);
 
 							return;
 						});
-									
 
-
-
-
-
-						//write sell to database // provide newly created voucher database id
-						//write_sell_toDB();
-						return;
-
+						
 					});
 
 					}).on("error", (err) => {
 
 						//give error
-						res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
+						//res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
 						console.log("Error: contacting wifi radius, on address : " + req.query.u_link + ", to request for a new voucher" + err.message);
-						return;
+						//return;
 
 					});
 
 
 				}
 
-				else{
+				
 				
 					//write sell to database
 					write_sell_toDB();
 					return;
-				}
+				
                
             }
                // console.log(response);
@@ -1090,27 +1088,50 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
             
             
         /* find doc contains [seach_code=] */
-        function write_sell_toDB(auto_voucher_id = 'none'){
+        function write_sell_toDB(auto_voucher_username = 'none'){
 		
 
-			/* theres an issue using [ voucherprofile_time ] in query;
-				{voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile_time : {$ne : 'N/A'} }
-			*/
-			if(req.query.ticket_type == 'data'){
-				
-				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'},voucher_complimentary : (JSON.parse(req.query.is_complementary)?true:{$ne : true}) }
-			}
+		//voucher query for [ data ] 
+
+		if(req.query.ticket_type == 'time'){
+
+			var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucher_created : 'manual' };
+			//var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucher_complimentary : {$ne : true}, voucher_created : {$ne : 'automatic'} };
+
+		}
 		
-			//decide if to search voucher of time or of data
-			if(req.query.ticket_type == 'time'){
-				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : 'N/A',voucher_complimentary : (JSON.parse(req.query.is_complementary)?true:{$ne : true}) } // search for data vouchers by default, where voucher profile does ot have value of [ not aplicable ]	
-			}
+		//voucher query for [ time ] 
+		if(req.query.ticket_type == 'data'){
+
+			var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucher_created : 'manual'  };
+			//var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile : {$ne : 'N/A'}, voucher_complimentary : {$ne : true}, voucher_created : {$ne : 'automatic'} };
+
+		}
+
+		//if voucher complementary 
+		if(req.query.is_complementary){
+
+			var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new' };
+			//var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucher_complimentary : {$ne : false} };
+			
+		}
+
+		//for automatic created vouchers
+		if(auto_voucher_username != 'none' ){//if [ auto_voucher_username  ] is provided
+
+			var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', vouchercode : auto_voucher_username };
+			//var voucher_type_to_search_for =  {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucher_created : {$ne : 'manual'}, vouchercode : auto_voucher_username };
+			
+		}
+
 
 		//console.log(voucher_type_to_search_for);
+
 
         keystone.list('Voucher Codes').model.findOne()
             .where(voucher_type_to_search_for)
             .exec( function(error, response){
+				
             if(error){
                return res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
