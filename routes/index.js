@@ -973,8 +973,31 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
                    return res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
              if(response == null){
-                 
-                 return write_sell_toDB()
+
+
+				//catch auto vouchers
+				if(req.query.u_link.length > 6){//if wifi radius server link is grether than 6 characters
+
+					/*
+
+						http://127.0.0.1:3000/create_user?user_id%5Buser_name%5D=&data_profile=4.9%20gig
+%20total%20data&total_account=1&account_group_name=&voucher_username_suffix=&acc
+ount_type=voucher
+
+
+
+					*/
+
+
+
+
+
+				}
+
+
+				//write sell to database
+				write_sell_toDB();
+				return;
                
             }
                // console.log(response);
@@ -984,7 +1007,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
             
             
         /* find doc contains [seach_code=] */
-        function write_sell_toDB(){
+        function write_sell_toDB(auto_voucher_id = 'none'){
 		
 
 			/* theres an issue using [ voucherprofile_time ] in query;
@@ -992,7 +1015,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 			*/
 			if(req.query.ticket_type == 'data'){
 				
-				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'},voucher_complimentary : (JSON.parse(req.query.is_complementary)?true:{$ne : true}) } 
+				var voucher_type_to_search_for = {voucheramount : seller_voucher_amount_, voucherstate : 'new', voucherprofile :  {$ne : 'N/A'},voucher_complimentary : (JSON.parse(req.query.is_complementary)?true:{$ne : true}) }
 			}
 		
 			//decide if to search voucher of time or of data

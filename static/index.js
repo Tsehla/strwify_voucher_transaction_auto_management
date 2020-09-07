@@ -637,7 +637,10 @@ function sell_ticket(button_id){
     var seller_code_input = document.getElementById('seller_ticket_unique_code');
     
     //voucher amount
-    var seller_voucher_amount_input = document.getElementById('seller_ticket_amount');
+	var seller_voucher_amount_input = document.getElementById('seller_ticket_amount');
+	
+	//wifi radius voucher profile name
+	var auto_voucher_radius_profile = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-profile');
 	
 
 	//if complimentary voucher menu
@@ -654,7 +657,7 @@ function sell_ticket(button_id){
 	
 	//console.log(ticket_complementary);
         
-    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary;//change '' + current_domain + '' to live domain
+    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary+'&u_link='+auto_user_creater_wifi_radius_link.u_link+'&radius_profile='+auto_voucher_radius_profile;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -703,7 +706,6 @@ function sell_ticket(button_id){
 			   	dom_innerHtml('seller_recharge_status','<span style="color:red">Failure, Voucher not sold for ticket no :'+seller_code_input.value+'</span>');
 			   	document.getElementById(button_id).disabled=false;//enable sell button
                 return null;
-             
            }
            
            else{
@@ -828,8 +830,11 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 				return response.forEach(function(data){
 
+
 					//give alert to admin/ start auto voucher add function if voucher count is less than 50 vouhers of that type
 					//++++++++++++++++++++++++ CODE HERE +++++++++++++++++++++++++++
+
+					// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
 					if(data.voucher_cost > 0 & data.voucher_count > 25 || auto_user_creater_wifi_radius_link.u_link.length > 6){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type //but let Auto voucher through if [ wifi radus server ] link provided
@@ -837,7 +842,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 						//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
 						if(data.voucher_type == 'time'){
 							$('#data_or_time_select_box_time').append(`
-							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 							
 							`);
 						}
@@ -845,7 +850,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 						if(data.voucher_type == 'data'){
 
 							$('#data_or_time_select_box').append(`
-							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+							<button id='' class='btn btn-default' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 							
 							`);
 						}

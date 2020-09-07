@@ -13,6 +13,10 @@ distributor can preview router page before saving ( call function that fill data
 	})
 
 --------
+
+give alert to admin/ start auto voucher add function if voucher count is less than 50 vouhers of that type
+
+----------
 Hotspot connection stats, number of people connecting to Hotspot x new or returning, number of people adding voucher for first time on Hotspot x, used to calculate Hotspot x owner renunciation, as percentage of all other owners : total number of new user voucher for all Hotspot divide by total number of hotspot owner x, multiply by 100%, that will be percentage of profit due
 ________
 
