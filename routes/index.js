@@ -979,25 +979,108 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 				if(req.query.u_link.length > 6){//if wifi radius server link is grether than 6 characters
 
 					/*
+						external wifi radius simple create single voucher api
 
-						http://127.0.0.1:3000/create_user?user_id%5Buser_name%5D=&data_profile=4.9%20gig
-%20total%20data&total_account=1&account_group_name=&voucher_username_suffix=&acc
-ount_type=voucher
-
-
+						http://127.0.0.1:3000/create_user?user_id%5Buser_name%5D=&data_profile=200Mb%20max%20data&total_account=1&account_group_name=&voucher_username_suffix=&account_type=voucher&external_api_request=true
 
 					*/
 
+					var wifi_radius_api = req.query.u_link + `/create_user?user_id%5Buser_name%5D=&data_profile=${req.query.radius_profile}&total_account=1&account_group_name=&voucher_username_suffix=&account_t
+					ype=voucher&external_api_request=true`;
+
+					//get nodejs http library
+					var standard_http_library = require('http');
+
+					//make http call to [ wifi radius server ]
+					standard_http_library.get(wifi_radius_api, (resp) => {
+
+					let data = '';
+
+					// A chunk of data has been recieved.
+					resp.on('data', (chunk) => {
+						data += chunk;
+					});
+
+					// The whole response has been received. Print out the result.
+					resp.on('end', () => {
+
+						//creade ticket to add to db
+						var voucher_to_add_to_system = { //voucher data details object
+							vouchercode:JSON.parse(data)[0].name,
+							//vouchercode:data[0].password,
+							voucheramount:req.query.voucher_amount,
+							voucherexpiry:req.query.voucher_expiery,
+							voucherstate:'new' ,
+							loadedby:req.query.seller_id,
+							voucher_created : 'automatic',
+
+						}
+
+						//if time or data
+						if(req.query.ticket_type == 'time'){//if time, 
+
+							//save voucher time
+							voucher_to_add_to_system.voucherprofile_time = req.query.new_voucher_profile;
+						}
+
+						if(req.query.ticket_type == 'data'){//if data
+
+							//save voucher data
+							voucher_to_add_to_system.voucherprofile = req.query.new_voucher_profile;
+						}
+						
 
 
+						//add voucher to db
+						//----- add codes not on the system to the database --
+						keystone.createItems({//add items to db//user details
+							
+							'Voucher Codes' :[ voucher_to_add_to_system ],
+							
+							
+						}, function(err, results){
+							if(err){
+								console.log('Error saving new auto vouchers to db ');
+								//res.jsonp(['Server or Conection error',[]]);
+								return;
+							}
+							
+							console.log(results)
+							//console.log('Success, new auto voucher saved to db');
+							
+
+							return;
+						});
+									
+
+
+
+
+
+						//write sell to database // provide newly created voucher database id
+						//write_sell_toDB();
+						return;
+
+					});
+
+					}).on("error", (err) => {
+
+						//give error
+						res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
+						console.log("Error: contacting wifi radius, on address : " + req.query.u_link + ", to request for a new voucher" + err.message);
+						return;
+
+					});
 
 
 				}
 
-
-				//write sell to database
-				write_sell_toDB();
-				return;
+				else{
+				
+					//write sell to database
+					write_sell_toDB();
+					return;
+				}
                
             }
                // console.log(response);
