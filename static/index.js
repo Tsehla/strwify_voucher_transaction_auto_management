@@ -3765,7 +3765,7 @@ function extra_menu(transaction_type){ //extra menu initiator
 
 						<p style='color: red;font-size: 15px;font-weight: bolder' class="w3-block">1)</p>
 							<label for='voucher_value'>Voucher Price :  <b style='font-size: 15px'>R</b></label>
-						 	<input type="number" value='0.00' step='0.01' id='voucher_price_${index}' style="width: 20%; display: inline" class="form-control">
+						 	<input type="number" value='0' step='0.1' id='voucher_price_${index}' style="width: 20%; display: inline" class="form-control">
 						<br />
 						<!-- data input -->
 						<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"block":"none"}'>
