@@ -4023,51 +4023,54 @@ function defined_auto_vouchers_retrieve(){
 
 			response.forEach(function(data, index){
 
+				if(data.voucher_creation_method != 'manual'){//filter auto voucher to show//show non manual created only
 
-				var auto_voucher_div =  `
-					<div class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: center'>
 
-						
+					var auto_voucher_div =  `
+						<div class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: center'>
 
-						<div id='' style=''>
-							<span>Voucher type : <b> ${data.voucher_type} </b> <span>
+							
+
+							<div id='' style=''>
+								<span>Voucher type : <b> ${data.voucher_type} </b> <span>
+							</div>
+
+							<div id='' style=''>
+								<span>Voucher profile : <b> ${data.voucher_profile} </b> </span>
+							</div>
+
+							<div id='' style=''>
+							<span>Voucher profile cost : <b> ${data.voucher_cost} </b>  <span>
+
+							</div>
+
+
+							<div id='' style=''>
+								<span>Wifi radius Voucher template name : <b> ${data.radius_server_voucher_profile} </b> <span>
+							</div>
+
+							<div id='' style=''>
+								<span>Voucher expiery after first activation : <b> ${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'} </b> <span>
+							</div>
+
+							<div id='' style=''>
+								<span>Voucher usage type : <b> ${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).voucher_reset:'N/A'} </b> <span>
+							</div>
+
+							
+
+							<br />
+
+							<div style='width:100%; height:auto; margin-bottom : 20px'>
+								<button class='btn btn-danger' style='width:100% margin:10px' onclick='auto_voucher_delete("${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Delete</button>
+							</div>
 						</div>
-
-						<div id='' style=''>
-							<span>Voucher profile : <b> ${data.voucher_profile} </b> </span>
-						</div>
-
-						<div id='' style=''>
-						<span>Voucher profile cost : <b> ${data.voucher_cost} </b>  <span>
-
-						</div>
-
-
-						<div id='' style=''>
-							<span>Wifi radius Voucher template name : <b> ${data.radius_server_voucher_profile} </b> <span>
-						</div>
-
-						<div id='' style=''>
-							<span>Voucher expiery after first activation : <b> ${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'} </b> <span>
-						</div>
-
-						<div id='' style=''>
-							<span>Voucher usage type : <b> ${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).voucher_reset:'N/A'} </b> <span>
-						</div>
-
-						
-
-						<br />
-
-						<div style='width:100%; height:auto; margin-bottom : 20px'>
-							<button class='btn btn-danger' style='width:100% margin:10px' onclick='auto_voucher_delete("${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Delete</button>
-						</div>
-					</div>
-				`
+					`
 
 
 
-				$('#transactions_and_voucher_viewer').append(auto_voucher_div);
+					$('#transactions_and_voucher_viewer').append(auto_voucher_div);
+				}
 			})
 
 
