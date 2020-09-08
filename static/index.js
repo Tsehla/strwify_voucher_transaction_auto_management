@@ -606,7 +606,7 @@ function voucher_print(response){
 				//picture storing
 				
 				var download_link = document.createElement('a');
-				download_link.download = 'Ticket _ '+ voucher_profile +' _  ' + voucher_pin + ' _ ' + 'R' + voucher_amount_cost + ' _';
+				download_link.download = 'Ticket _ '+ voucher_profile +' _  ' + voucher_pin + ' _ ' + 'R' + voucher_amount_cost + ' _.png';
 				download_link.href = ticket_canvas.toDataURL('image/jpg').replace('image/jpg', 'image/octed-stream');
 				download_link.click()
 				//download_link.clicked();

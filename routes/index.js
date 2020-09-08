@@ -1066,7 +1066,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 						//give error
 						//res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
 						console.log("Error: contacting wifi radius, on address : " + req.query.u_link + ", to request for a new voucher" + err.message);
-						//return;
+						return;
 
 					});
 
@@ -1074,12 +1074,12 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 				}
 
 				
-				
+				else{
 					//write sell to database
 					write_sell_toDB();
 					return;
-				
-               
+				}
+               return;
             }
                // console.log(response);
                 return res.jsonp({status : 'this code is used, Try a new code..', new_credit : 'no_value_change'});
@@ -1124,14 +1124,15 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 			
 		}
 
-
-		//console.log(voucher_type_to_search_for);
+		// console.log(auto_voucher_username);
+		// console.log(voucher_type_to_search_for);
 
 
         keystone.list('Voucher Codes').model.findOne()
             .where(voucher_type_to_search_for)
             .exec( function(error, response){
 				
+	
             if(error){
                return res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
             }
