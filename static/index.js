@@ -553,14 +553,20 @@ voucher printing
 //set voucher template according to hotspot name
 
 
-//--- get router hotspot id;//used to identifiy hotspot owner and here used to identifiy branded ticket voucher
+//--- get router hotspot id on page/script load;//used to identifiy hotspot owner and here used to identifiy branded ticket voucher
 //console.log(auto_user_creater_wifi_radius_link.hotspot_id)
 
 //set default voucher ticket template
-var ticket_template_selector = "images/images/default_ticket_template.jpg";
+var ticket_template_selector = "images/default_ticket_template.jpg";
+
+//if hotspot_id is ot provided
+if(!auto_user_creater_wifi_radius_link.hotspot_id && auto_user_creater_wifi_radius_link.hotspot_id == 'undefined'){
+	selected_voucher_ticket_template_append();//call voucher div createer function
+}
 
 
-if(auto_user_creater_wifi_radius_link.hotspot_id){ //if hotspot_id provided
+//if hotspot_id provided
+if(auto_user_creater_wifi_radius_link.hotspot_id && auto_user_creater_wifi_radius_link.hotspot_id != 'undefined'){ 
 	
 	//set new image link
 	ticket_template_selector = "images/"+auto_user_creater_wifi_radius_link.hotspot_id.trim()+".jpg";
@@ -574,6 +580,7 @@ if(auto_user_creater_wifi_radius_link.hotspot_id){ //if hotspot_id provided
 
 				//console.log(response.status);
 				//if found, change default link//keep link as is
+				selected_voucher_ticket_template_append();//call voucher div createer function
 				
 			}
 		}).catch(function(err){//if file not exist
@@ -589,13 +596,16 @@ if(auto_user_creater_wifi_radius_link.hotspot_id){ //if hotspot_id provided
 			
 						//console.log(response.status);
 						//if found, change default link//keep link as is
-						
+						selected_voucher_ticket_template_append();//call voucher div createer function
+
+												
 					}
 				}).catch(function(err){//if file not exist
 	
 					//add div with default ticket template
 					//console.log('error trying to find new [ ticket ] template image, default ticket to be used');
 					ticket_template_selector = "images/default_ticket_template.jpg";//set default template
+					selected_voucher_ticket_template_append();//call voucher div createer function
 			});
 
 		
@@ -603,17 +613,6 @@ if(auto_user_creater_wifi_radius_link.hotspot_id){ //if hotspot_id provided
 
 
 }
-
-
-
-	//add ticket image template to html div body
-	$('#buyer_container').append(`
-
-		<img src="${ ticket_template_selector }" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
-		<canvas style="width: 280px; height: 270px; display: none;" id='ticket_canvas'> Ticket </canvas>
-
-	`);
-	
 
 
 
@@ -635,6 +634,19 @@ if(auto_user_creater_wifi_radius_link.hotspot_id){ //if hotspot_id provided
 // 	//add div with default ticket template
 // 	$('#buyer_container').append(ticket_template_selector);
 // });
+
+
+function selected_voucher_ticket_template_append(){
+
+	//add ticket image template to html div body
+	$('#buyer_container').append(`
+
+		<img src="${ ticket_template_selector }" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
+		<canvas style="width: 280px; height: 270px; display: none;" id='ticket_canvas'> Ticket </canvas>
+
+	`);
+	
+}
 
 
 
