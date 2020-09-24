@@ -550,6 +550,94 @@ voucher printing
 
 =========================================================================================================================================================*/
 
+//set voucher template according to hotspot name
+
+
+//--- get router hotspot id;//used to identifiy hotspot owner and here used to identifiy branded ticket voucher
+//console.log(auto_user_creater_wifi_radius_link.hotspot_id)
+
+//set default voucher ticket template
+var ticket_template_selector = "images/images/default_ticket_template.jpg";
+
+
+if(auto_user_creater_wifi_radius_link.hotspot_id){ //if hotspot_id provided
+	
+	//set new image link
+	ticket_template_selector = "images/"+auto_user_creater_wifi_radius_link.hotspot_id.trim()+".jpg";
+
+	//check if image with extention [ .jpg ] exist, then return headers not the image as results
+	$.ajax({
+		type: "HEAD",
+		async: true,
+		url: ticket_template_selector,
+		success: function(message, text, response) {
+
+				//console.log(response.status);
+				//if found, change default link//keep link as is
+				
+			}
+		}).catch(function(err){//if file not exist
+
+			//do another call for [ .png ] this time
+			ticket_template_selector = "images/"+auto_user_creater_wifi_radius_link.hotspot_id.trim()+".png";
+			
+			$.ajax({
+				type: "HEAD",
+				async: true,
+				url: ticket_template_selector,
+				success: function(message, text, response) {
+			
+						//console.log(response.status);
+						//if found, change default link//keep link as is
+						
+					}
+				}).catch(function(err){//if file not exist
+	
+					//add div with default ticket template
+					//console.log('error trying to find new [ ticket ] template image, default ticket to be used');
+					ticket_template_selector = "images/default_ticket_template.jpg";//set default template
+			});
+
+		
+		});
+
+
+}
+
+
+
+	//add ticket image template to html div body
+	$('#buyer_container').append(`
+
+		<img src="${ ticket_template_selector }" id='ticket_outline' style="width: 300px; height: 270px; display:none" alt="ticket img" />
+		<canvas style="width: 280px; height: 270px; display: none;" id='ticket_canvas'> Ticket </canvas>
+
+	`);
+	
+
+
+
+// $.get('images/ticket.jpg', function(result, status){//check if file exist
+
+
+// 	if(status == 'success'){//if file found
+// 		//add div with selected ticket template
+// 		$('#buyer_container').append(ticket_template_selector);
+// 	}
+
+// 	else{
+// 		//add div with default ticket template
+// 		$('#buyer_container').append(ticket_template_selector);
+// 	}
+
+// }).catch(function(err){//if file not exist
+
+// 	//add div with default ticket template
+// 	$('#buyer_container').append(ticket_template_selector);
+// });
+
+
+
 function voucher_print(response){
    // alert('voucher print fn');
 				var month_text = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
