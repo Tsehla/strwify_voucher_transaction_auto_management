@@ -185,14 +185,16 @@ var auto_user_creater_wifi_radius_link = {
 
 		   // add hotspot id
 		   auto_user_creater_wifi_radius_link.hotspot_id = response.router_id;
-		   return;
+
 	   }
 
 	   else{
-			console.log('Error retrieving hotspot data from db to extracts details') ;
 
-			return;
-	   }         
+			console.log('Error retrieving hotspot data from db to extracts details') ;
+	   }      
+	   
+	   	//check if voucher template image with rouder id as a name exists
+		hotspot_voucher_template_selector();
    });
 
    //console.log(auto_user_creater_wifi_radius_link);
@@ -589,6 +591,8 @@ voucher printing
 //set default voucher ticket template
 var ticket_template_selector = "images/default_ticket_template.jpg";
 
+function hotspot_voucher_template_selector(){
+
 //if hotspot_id is not provided
 if(!auto_user_creater_wifi_radius_link.hotspot_id){
 	selected_voucher_ticket_template_append();//call voucher div createer function
@@ -644,7 +648,7 @@ if(auto_user_creater_wifi_radius_link.hotspot_id ){
 
 }
 
-
+}
 
 // $.get('images/ticket.jpg', function(result, status){//check if file exist
 
