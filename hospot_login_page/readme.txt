@@ -26,18 +26,21 @@ for [ login.html ]
 
 for [ logout.html ] 
 	
-	current link [ window.open('http://streetwifiy.herokuapp.com/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)', '_self'); ]
+	current link [ window.open('http://streetwifiy.herokuapp.com/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)&location=', '_self'); ]
 
 	fill in with you desired details : [ http://myAppLocation.com ] :: change to where you hotspot app is at
+	fill in : [ location=] :: add you location example  : [ location=orange farm ], used for showing customized hotspot login page for the location, 
 
 	copy link and replace the one in [ logout.html ], then copy file to router
 
 
 for [ status.html ] 
 
-	current link [ window.open('http://streetwifiy.herokuapp.com/hotspot_status?status=true&refresh_timeout_seconds=$(refresh-timeout-secs)&advert_link=$(link-advert)&logout_link=$(link-logout)&user_name=$(username)&ip_address=$(ip)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&connection_time_used=$(uptime)&connection_time_left=$(session-time-left)&up_time=$(uptime)&refresh_time=$(refresh-timeout)&data_available=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)','_self'); ]
+	current link [ window.open('http://streetwifiy.herokuapp.com/hotspot_status?status=true&refresh_timeout_seconds=$(refresh-timeout-secs)&advert_link=$(link-advert)&logout_link=$(link-logout)&user_name=$(username)&ip_address=$(ip)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&connection_time_used=$(uptime)&connection_time_left=$(session-time-left)&up_time=$(uptime)&refresh_time=$(refresh-timeout)&data_available=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)&location=','_self'); ]
 
 	fill in with you desired details : [ http://myAppLocation.com ] :: change to where you hotspot app is at
+	
+	fill in : [ location=] :: add you location example  : [ location=orange farm ], used for showing customized hotspot login page for the location, 
 
 	copy link and replace the one in [ status.html ], then copy file to router
 
