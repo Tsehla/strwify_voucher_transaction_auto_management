@@ -8,7 +8,10 @@
 <meta http-equiv="expires" content="-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 <style type="text/css">
-body {color: #737373; font-size: 10px; font-family: verdana;}
+body {color: #737373; font-size: 10px; font-family: verdana; width: 100%;height: 100%;}
+#body_container{
+	display: none;
+}
 
 textarea,input,select {
 background-color: #FDFBFB;
@@ -29,7 +32,11 @@ td { font-size: 14px; color: #7A7A7A; }
 
 </head>
 
-<body onclick="remove_delay()">
+<body onload="abc()">
+
+<div id="body_container" onclick="remove_delay()" >
+
+
 $(if chap-id)
 	<form name="sendin" action="$(link-login-only)" method="post">
 		<input type="hidden" name="username" />
@@ -40,14 +47,14 @@ $(if chap-id)
 	
 	<script type="text/javascript" src="/md5.js"></script>
 	<script type="text/javascript">
-	<!--
+
 	    function doLogin() {
 		document.sendin.username.value = document.login.username.value;
 		document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
 		document.sendin.submit();
 		return false;
 	    }
-	//-->
+
 	</script>
 $(endif)
 
@@ -83,7 +90,7 @@ $(endif)
 			</tr>
 
 			
-			<tr><td align="center"><a href="" target="_blank" style="border: none;"><img src="" alt="streetWifiy" /></a></td></tr>
+			<tr><td align="center"><a href="https://github.com/tsehla" target="_blank" style="border: none;">streetWifiy</a></td></tr>
 			
 		</table>
 	
@@ -94,14 +101,14 @@ $(endif)
 </table>
 
 
-
-//--- +++++++++++++ CHANGE HERE ++++++++++ ---
+</div>
+<button id='diagnose_button' onclick="remove_delay()" style="width: 99vw;height:95vh;background-color: inherit;">...</button>
+<!--- +++++++++++++ CHANGE HERE ++++++++++ --->
 <script type="text/javascript">//checks for internet connection//en if available show external login//if not available show default mikrotik
 
 	
-		
-var redirect_delay = setTimeout(function(){//time before loading external login page
-		console.log(':chap_challenge $(chap-challenge) :chap_id $(chap-id)');
+function abc(){	
+redirect_delay = setTimeout(function(){//time before loading external login page
 		
 		//--- +++++++++++++ CHANGE +++++++++ ---
 		/*
@@ -113,11 +120,29 @@ var redirect_delay = setTimeout(function(){//time before loading external login 
 		window.location= 'http://streetwifiy.herokuapp.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&location=orangefarm';//open link where hotspot is at  
 
 	
-},900);//2 miliseconds before redirect
+},1000);//2 miliseconds before redirect
+
+}
+
+function remove_delay(){
+
+	var diagnose_confirm = confirm('Continue to hotSpot?');
+
+	if(!diagnose_confirm){//if no pressed
+
+		clearTimeout(redirect_delay);//stop redirect timer
+		document.getElementById('diagnose_button').style.display = 'none';//hide diadnose button
+		document.getElementById("body_container").style.display = 'block';//show default router login
+
+	}
+
+	if(diagnose_confirm){//if okay pressed
+		
+		abc();//open external hotspot link
+	}
 
 
-function remove_delay (){
-	clearTimeout(redirect_delay);
+
 }//stop timer for external login page
 
 </script>
