@@ -164,7 +164,38 @@ function text_line_break(input_string){
 }
 
 
+// +++++++++++++ get defined hotspot data +++++++++++++
 
+//get wifi radius link passed from hotspot login page//extract hotspot details
+var auto_user_creater_wifi_radius_link = {
+	u_link : '',
+	hotspot_id : undefined,
+	
+};
+
+	
+ $.get('/api/hotspot_data?location='+ (url_parms_object()['hotspot_location']?url_parms_object()['hotspot_location']:''), function(response, status){
+	 
+	   if(status == 'success'){//if success
+	
+		//console.log(response)
+
+		   //add u link
+		   auto_user_creater_wifi_radius_link.u_link = response.external_radius_user_creation_link;
+
+		   // add hotspot id
+		   auto_user_creater_wifi_radius_link.hotspot_id = response.router_id;
+		   return;
+	   }
+
+	   else{
+			console.log('Error retrieving hotspot data from db to extracts details') ;
+
+			return;
+	   }         
+   });
+
+   //console.log(auto_user_creater_wifi_radius_link);
 /*_____________________________________________________________________________________________________________________________________________________
 
 app routes
@@ -334,8 +365,7 @@ function router_page_works_menu_open(input){
     Internal navigation
 =====================================================================================================================================================*/
 
-//get wifi radius link passed from hotspot login page
-var auto_user_creater_wifi_radius_link = url_parms_object();//get/return url parameters as objects
+
 
 /* voucher buy link */
 function buy_voucher(){
@@ -559,14 +589,14 @@ voucher printing
 //set default voucher ticket template
 var ticket_template_selector = "images/default_ticket_template.jpg";
 
-//if hotspot_id is ot provided
-if(!auto_user_creater_wifi_radius_link.hotspot_id && auto_user_creater_wifi_radius_link.hotspot_id == 'undefined'){
+//if hotspot_id is not provided
+if(!auto_user_creater_wifi_radius_link.hotspot_id){
 	selected_voucher_ticket_template_append();//call voucher div createer function
 }
 
 
 //if hotspot_id provided
-if(auto_user_creater_wifi_radius_link.hotspot_id && auto_user_creater_wifi_radius_link.hotspot_id != 'undefined'){ 
+if(auto_user_creater_wifi_radius_link.hotspot_id ){ 
 	
 	//set new image link
 	ticket_template_selector = "images/"+auto_user_creater_wifi_radius_link.hotspot_id.trim()+".jpg";
