@@ -170,6 +170,7 @@ function text_line_break(input_string){
 var auto_user_creater_wifi_radius_link = {
 	u_link : '',
 	hotspot_id : undefined,
+	hotspot_voucher_template_link : undefined,
 	
 };
 
@@ -185,6 +186,9 @@ var auto_user_creater_wifi_radius_link = {
 
 		   // add hotspot id
 		   auto_user_creater_wifi_radius_link.hotspot_id = response.router_id;
+
+		   //add hotspot voucher template link
+		   auto_user_creater_wifi_radius_link.hotspot_voucher_template_link = response.hotspot_voucher_template_link;
 
 	   }
 
@@ -378,13 +382,15 @@ function buy_voucher(){
 /* voucher sell link */
 function sell_voucher(){
     
- window.open('/sell_voucher?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
+ //window.open('/sell_voucher?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
+ window.open('/sell_voucher', '_self');
 	process_destroyer();
 }
 
 function third_page_seller_login(is_cafe_hotel_resturent =''){//is its not cafe resturant or hotel login dont add query to url
   
- window.open('/seller_login'+ is_cafe_hotel_resturent + (is_cafe_hotel_resturent.length > 0?'&u_link=':'?u_link=') + auto_user_creater_wifi_radius_link.u_link , '_self');
+ //window.open('/seller_login'+ is_cafe_hotel_resturent + (is_cafe_hotel_resturent.length > 0?'&u_link=':'?u_link=') + auto_user_creater_wifi_radius_link.u_link , '_self');
+ window.open('/seller_login'+ is_cafe_hotel_resturent, '_self');
 	process_destroyer();
 }
 
@@ -395,7 +401,8 @@ function third_page_distributor_login(){
 }
 function admin_fourth_page_login(){
     
- window.open('/admin_login?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
+ //window.open('/admin_login?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
+ window.open('/admin_login', '_self');
 	process_destroyer();
 }/*_____________________________________________________________________________________________________________________________________________________
 
@@ -589,21 +596,21 @@ voucher printing
 //console.log(auto_user_creater_wifi_radius_link.hotspot_id)
 
 //set default voucher ticket template
-var ticket_template_selector = "images/default_ticket_template.jpg";
+var ticket_template_selector = "images/default_ticket_template_not_specified.jpg";
 
 function hotspot_voucher_template_selector(){
 
-//if hotspot_id is not provided
-if(!auto_user_creater_wifi_radius_link.hotspot_id){
+//if hotspot_voucher_template_link is not provided
+if(!auto_user_creater_wifi_radius_link.hotspot_voucher_template_link){
 	selected_voucher_ticket_template_append();//call voucher div createer function
 }
 
 
-//if hotspot_id provided
-if(auto_user_creater_wifi_radius_link.hotspot_id ){ 
+//if hotspot_voucher_template_link provided
+if(auto_user_creater_wifi_radius_link.hotspot_voucher_template_link){ 
 	
 	//set new image link
-	ticket_template_selector = "images/"+auto_user_creater_wifi_radius_link.hotspot_id.trim()+".jpg";
+	ticket_template_selector = auto_user_creater_wifi_radius_link.hotspot_voucher_template_link.trim();
 
 	//check if image with extention [ .jpg ] exist, then return headers not the image as results
 	$.ajax({
@@ -613,36 +620,16 @@ if(auto_user_creater_wifi_radius_link.hotspot_id ){
 		success: function(message, text, response) {
 
 				//console.log(response.status);
-				//if found, change default link//keep link as is
+				//if found, keep link as is
 				selected_voucher_ticket_template_append();//call voucher div createer function
 				
 			}
 		}).catch(function(err){//if file not exist
 
-			//do another call for [ .png ] this time
-			ticket_template_selector = "images/"+auto_user_creater_wifi_radius_link.hotspot_id.trim()+".png";
-			
-			$.ajax({
-				type: "HEAD",
-				async: true,
-				url: ticket_template_selector,
-				success: function(message, text, response) {
-			
-						//console.log(response.status);
-						//if found, change default link//keep link as is
-						selected_voucher_ticket_template_append();//call voucher div createer function
-
-												
-					}
-				}).catch(function(err){//if file not exist
-	
-					//add div with default ticket template
-					//console.log('error trying to find new [ ticket ] template image, default ticket to be used');
-					ticket_template_selector = "images/default_ticket_template.jpg";//set default template
-					selected_voucher_ticket_template_append();//call voucher div createer function
-			});
-
-		
+			//set template back to default image
+			ticket_template_selector = "images/default_ticket_template_not_specified.jpg";//set default template
+			selected_voucher_ticket_template_append();//call voucher div createer function
+					
 		});
 
 
@@ -722,12 +709,35 @@ function voucher_print(response){
 				canvas_type.fillText(voucher_profile, 55, 50);
 				canvas_type.font= '13px Arial';
 				canvas_type.fillText(voucher_expiry_days, 65, 65);
-				canvas_type.font= '39px Arial';
-				canvas_type.fillText('R' + voucher_amount_cost, 25, 100);
+
+				if(response.voucher_hospitality_menu){//for hote/cafe menu produced tickets
+
+					//if hotspot id is provided
+					if(auto_user_creater_wifi_radius_link.hotspot_id){
+
+						canvas_type.font= '18px Arial';
+						canvas_type.fillText( auto_user_creater_wifi_radius_link.hotspot_id, 20, 90);
+
+					}
+					if(!auto_user_creater_wifi_radius_link.hotspot_id){//if not provided//show voucher cost
+
+						canvas_type.font= '39px Arial';
+						canvas_type.fillText('R' + voucher_amount_cost, 25, 100);
+
+					}
+
+				}
+
+				if(!response.voucher_hospitality_menu){//for normalticket sell menu produced tickets
+					canvas_type.font= '39px Arial';
+					canvas_type.fillText('R' + voucher_amount_cost, 25, 100);
+				}
+
 				canvas_type.font= '9px Arial';
 				canvas_type.fillText('PRINT '+ print_date, 9, 110);
 				canvas_type.font= '7px Arial';
 				canvas_type.fillText('T/C : service provided as is, use at own risk.',155,112);
+			
 			
 
 		
@@ -763,9 +773,9 @@ sell ticket, seller menu
 
 =====================================================================================================================================================*/
 
-function sell_ticket(button_id){
+function sell_ticket(button_id, req_complementary_voucher = false, hotel_or_cafe_ticket_requster = false){
 
-	var ticket_complementary = false;//set is ticket complimentary to false
+	var ticket_complementary = req_complementary_voucher;//set is ticket complimentary to false/true
 	
     //voucher code
     var seller_code_input = document.getElementById('seller_ticket_unique_code');
@@ -791,12 +801,19 @@ function sell_ticket(button_id){
 		//voucher amount
 		seller_voucher_amount_input = document.getElementById('seller_cpmlimentary_ticket_amount');
 
-		ticket_complementary = true;//set ticket as complimentary true
+		
+
+		//Wifi-radius abilitity to handle hourly/daily/weekly account usage reset still in development and not ready for use
+		//so end this request en give error
+		if(req_complementary_voucher){
+			alert("Notice :\nThis feature is being upgraded, and not available right now");
+			return;
+		}
 	}
 	
 	//console.log(ticket_complementary);
         
-    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary+'&u_link='+auto_user_creater_wifi_radius_link.u_link+'&radius_profile='+auto_voucher_radius_profile+'&voucher_expiery='+auto_voucher_expiery+'&new_voucher_profile='+new_voucher_profile;//change '' + current_domain + '' to live domain
+    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary+'&u_link='+auto_user_creater_wifi_radius_link.u_link+'&radius_profile='+auto_voucher_radius_profile+'&voucher_expiery='+auto_voucher_expiery+'&new_voucher_profile='+new_voucher_profile + '&voucher_requester_is_hotel_or_cafe=' + hotel_or_cafe_ticket_requster;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -3828,7 +3845,7 @@ function extra_menu(transaction_type){ //extra menu initiator
 		document.getElementById('transactions_and_voucher_page').style.display='none';	//close popup,
 		document.getElementById('transactions_and_voucher_viewer_options_menu').style.display='none';	//close choice menu
 		
-		var wifi_radius_server_link = url_parms_object();
+		//var wifi_radius_server_link = url_parms_object();
 
 		//give option to view and manage auto vouxher types list or create them
 		var auto_voucher_types_list = confirm('Press "OK"\nto VIEW and MANAGE auto voucher types list.\nPress "CANCEL"\nto CREATE new voucher types.');//give choice of action
@@ -3858,13 +3875,15 @@ function extra_menu(transaction_type){ //extra menu initiator
 		}
 
 		//check if wifi-radius link rpovided
-		if(!wifi_radius_server_link.u_link){ //if not end function
+		//if(!wifi_radius_server_link.u_link){ //if not end function
+		if(!auto_user_creater_wifi_radius_link.u_link){ //if not end function
+			
 			alert('No link to [Wifi-Radius] server provided.\nPlease add in "HotSpot Manage" option.');//give error alert
 			return
 		}
 		
 		//get profiles group data from wifi-radius
-		var url = wifi_radius_server_link.u_link + '/saved_profiles'
+		var url = auto_user_creater_wifi_radius_link.u_link + '/saved_profiles'
 
 		$.get(url, function(response, status){
 
@@ -5031,7 +5050,7 @@ function distributor_superadmin_acc_help(type_of_user){
 			return;
 		}
 		
-		alert(`1) Enter amount of data to sell.\n\t\tExample :\n\t\t\tFor R5.00 Enter 5\n\t\t\tFor R10.00, Enter 10\n\t\t\tFor R100.00, Enter 100\n\n2) Get the Temporary code from the buyer\n3) Enter the temporary code to the second input box\n5) Press sell ticket button\n4) Wait few second and ask buyer to press get ticket button in their cellphone\n\nNB\nMake sure buyer does not close the app or change the code until transaction is complete`);
+		alert(`1) Enter amount of data to sell.\n\t\tExample :\n\t\t\tFor R5.00 Enter 5\n\t\t\tFor R10.00, Enter 10\n\t\t\tFor R100.00, Enter 100\n\n2) Get the Temporary code from the buyer\n3) Enter the temporary code to the second input box\n5) Press sell ticket button\n4) Wait few second and ask buyer to press get ticket button in their cellphone\n\nNB\nMake sure buyer does not close the app or change the code until transaction is complete\n\nTip :\na) Complementary vouchers are meant to be offered to users once per hour/day/week/etc and will reject login until their usage is reset per person if the already used it\nb) [ Hote/Resturant/etc ] menu printed vouchers will not show voucher amount but resturant/hotel/etc name or any message`);
 		return;
 		
 	}

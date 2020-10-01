@@ -72,6 +72,7 @@ voucher_model.add(
 		voucher_password : {type: String, default:'N/A', label :'Voucher User Password'},
 		voucheramount : {type:Number, initial:true, required:true, default:0.00, label :'Voucher Cost'},
 		voucher_complimentary : {type : types.Boolean, default:false, label :'Voucher Complimentary'},
+		voucher_hospitality_menu : {type : types.Boolean, default:false, label :'Sold by resturant/similar'},
 		voucherprofile : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Data'},
 		voucherprofile_time : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Time'},
 		voucherexpiry : {type:String, initial:true, required:true, default:'N/A', label :'Voucher Expiery Date'},
@@ -93,6 +94,10 @@ voucher_model.register();
 //Complemenatry voucher tracker
 
 //----------------------------------------------------------
+//complementary vouchers are voucher which radius limit the device onnected using the user account per day by device Mac 
+//unlike disposable vouchers they use same account username and or password for every device that conects, so for this system i needed to track them mainly for accounting pourpose as the radius is used then  [ 'RadiusDesk' ] would track the usage and reject users that have used their slot for the day or time
+//Think of it as keeping record of trial like users, but unlike trials the vouchers are charged on seller account as some resturant wanted to give out complementary ticket once per day to whom ever bought item xyz,
+//The complementary of main voucher [ checkbox ] only mark to differentitate the voucher as complimentary voucher and not single use or disposable voucher
 
 var complementary_voucher_track = 'Complementary Voucher';
 var complementary_voucher_track_model = new keystone.List(complementary_voucher_track);
@@ -183,7 +188,8 @@ var router_hotspot_page_model = new keystone.List(router_hotspot_page);
 
 router_hotspot_page_model .add({
 	router_location : {type :String, initial:true, required:true, default:'default', label : 'Router location' },
-	router_id : {type :String, default:'', label : 'Router hotspot identification name' },
+	router_id : {type :String, default:'Happy surfing !!! ;-)', label : 'Router hotspot identification name' },
+	hotspot_voucher_template_link : {type :String, default:'images/uploads/ads/16-5-53PM,%203-8-2020%20streetwifiy_ticket_template.jpg', label : 'Hotspot voucher image template link' },
 	hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored ": true, "hidden" : false}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Image 3", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Image 5", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Image 6", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Image 7", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Image 8", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Image 9", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Image 10", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true}'], label :'Wallpaper data' },
         
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},

@@ -1017,6 +1017,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 							voucher_created : 'automatic',
 
 						}
+					
 
 						//if time or data
 						if(req.query.ticket_type == 'time'){//if time, 
@@ -1075,7 +1076,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 
 				
 				else{
-					//write sell to database
+					//write sell to database//for non auto produced vouchers
 					write_sell_toDB();
 					return;
 				}
@@ -1087,7 +1088,10 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
             
             
             
-        /* find doc contains [seach_code=] */
+		/*
+			NON AUTO VOUCHERS
+		 find doc contains [seach_code=] 
+		 */
         function write_sell_toDB(auto_voucher_username = 'none'){
 		
 
@@ -1268,6 +1272,13 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 			//++++++ non complementary vouchers
 
 			if(!response.voucher_complimentary){
+
+				//if voucher created using hotel/resturent menu
+				if(req.query.voucher_requester_is_hotel_or_cafe.toString() == 'true'){//if true
+
+					//set voucher hospitality menu checkbox to true
+					response.voucher_hospitality_menu = true;
+				}
 
                 response.voucherstate = 'used';
                 response.soldby = req.query.seller_id;
@@ -3274,7 +3285,7 @@ app.get('/api/hotspot_data', function(req, res){
 				<link rel="stylesheet" href="/index.css">
 			</head>
 				<body>
-					<div style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:45vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
+					<div style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:55vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
 						
 						<form action="upload" method="post" enctype="multipart/form-data" style='margin:30px'>
 						<br/>
@@ -3284,7 +3295,9 @@ app.get('/api/hotspot_data', function(req, res){
 						</form>
 						<hr>
 						<br />
-						<p style='text-align:center'> Recommended image size is : width = 802px , height = 1285px. <br /> Have your image have 30% empty space on sides, Example <a href="#" onclick='show_example()'>Click on me..</a>.
+						<p style='text-align:center'><b>For Wallpaper Advertisement :</b><br> Recommended image size is : width = 802px , height = 1285px. <br /> Have your image have 30% empty space on sides, Example <a href="#" onclick='show_example()'>Click on me..</a>.
+						<br >
+						<p style='text-align:center'><b>For Voucher Advertisement :</b><br> Recommended image size is : width = 301px , height = 117px. <br /> Only add a logo within the box as shown, Example template <a href="#" onclick='show_example("voucher")'>Click on me..</a>.
 						<br >
 						<!-- show uploaded file link if successful -->
 						${ ((uploadImageLink)? `<p>Image added <br /><a href="#" onclick="show_file('${uploadImageLink}')">${uploadImageLink}</a></p>` :'<br />Give your image descriptive name. Example <i>Orange-Farm, creativeXminds advertisment june 2019</i>..') }
@@ -3301,8 +3314,14 @@ app.get('/api/hotspot_data', function(req, res){
 						function show_file(file){
 							window.open('http://' + current_domain +'/images/uploads/ads/' + file );
 						}
-						function show_example(){
-							window.open('http://' + current_domain +'/images/background%20example.png');
+						function show_example(type='none'){
+							if(type == 'none'){
+								window.open('http://' + current_domain +'/images/background%20example.png');
+							}
+							else{
+								window.open('http://' + current_domain +'/images/default_ticket_template_streetwifiy.jpg');
+							}
+							
 						}
 					</script>
 				</body>

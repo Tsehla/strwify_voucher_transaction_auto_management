@@ -250,7 +250,7 @@
 
         </div>
         <!-- Distrubutor login button  -->
-        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='alert("Notice :\nThis menu is being upgraded, Using it may result in loss of data or finance.\nYou are adviced to wait for upgrade to finish before using it.");third_page_seller_login("?its_resturent_hotel_cafe_login=true")'>
+        <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_seller_login("?its_resturent_hotel_cafe_login=true")'>
           <img src="images/eatery.svg" style="width: auto; height: 18vh; margin: 2vh ;">
           <div style="width:100%; height:4vh; margin:0px; padding:0px">    <p style="width: 100%; height:100%; margin:0px; padding:0px;text-transform: uppercase; ">
   
@@ -394,7 +394,7 @@
 
     <button id='sell_voucher' style="width: 50%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;" class='btn' onclick='document.getElementById("complementary_ticket_menu").style.display="none";document.getElementById("sell_ticket_menu").style.display="block"; document.getElementById("complementary_voucher").style.boxShadow="-2px 1px 2px lightgrey"; document.getElementById("complementary_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none"; document.getElementById(this.id).style.backgroundColor ="white"; seller_login.resturent_hotel_cafe_login=false;'>Sell Voucher</button> 
 
-    <button id='complementary_voucher' style="width:49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;font-size: 13px;" class='btn' onclick='document.getElementById("sell_ticket_menu").style.display="none";document.getElementById("complementary_ticket_menu").style.display="block";document.getElementById("sell_voucher").style.boxShadow="2px 1px 2px lightgrey"; document.getElementById("sell_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none";document.getElementById(this.id).style.backgroundColor ="white";seller_login.resturent_hotel_cafe_login=true;alert("Notice :\nThis menu is being upgraded, Using it may result in loss of data or finance.\nYou are adviced to wait for upgrade to finish before using it.")'>Complementary<br/>Voucher</button>
+    <button id='complementary_voucher' style="width:49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white; border-top: 1px solid snow;font-size: 13px;" class='btn' onclick='document.getElementById("sell_ticket_menu").style.display="none";document.getElementById("complementary_ticket_menu").style.display="block";document.getElementById("sell_voucher").style.boxShadow="2px 1px 2px lightgrey"; document.getElementById("sell_voucher").style.backgroundColor ="snow";document.getElementById(this.id).style.boxShadow="none";document.getElementById(this.id).style.backgroundColor ="white";seller_login.resturent_hotel_cafe_login=true'>Complementary<br/>Voucher</button>
   </div>
 
 <div id='seller_code_screen' style="width :80vw; height:21vh; margin:2vh 4vh 4vh 4vh; padding:0px; border:1px double blue">
@@ -417,15 +417,19 @@
 
   <div style="padding: 0px;margin: 0px;width: 95vw; height: auto"> 
 
-    <div style="padding: 0px;margin: 0px;width: 44vw;display: inline-block;height: 16vh;">
+    <div style="padding: 0px;margin: 0px;width: 33vw;display: inline-block;height: 16vh; float:left; margin-left : 10px ">
 
-        <button style="width:100%; height:100%; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success" onclick ='sell_ticket(this.id)' id='sell_complimentary_ticket_id_button'>Offer <br /> Complimentary <br /> voucher</button>
-
-     
+      <button style="width:100%; height:100%; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success" onclick ='sell_ticket(this.id,false,true)' id='sell_complimentary_ticket_id_button'>Offer Voucher</button>
 
     </div>
 
-    <div style="padding: 0px;width: 44vw;height: 16vh; float: right; margin : 10px 7px 10px 0px;"  onclick="qr_code_read()" class='btn btn-warning'>
+    <div style="padding: 0px;margin: 0px;width: 29vw;display: inline-block;height: 16vh;">
+
+        <button style="width:100%; height:100%; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick ='sell_ticket(this.id,true,true)' id='sell_complimentary_ticket_id_button'>Offer <br /> Complimentary <br /> voucher</button>
+
+    </div>
+
+    <div style="padding: 0px;width: 25vw;height: 16vh; float: right; margin : 10px 7px 10px 0px;"  onclick="qr_code_read()" class='btn btn-warning'>
 
           <span style="margin :0.5;display:block">Scan</span>
         
