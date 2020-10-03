@@ -932,7 +932,14 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 	</div>
 	`;
 
+	//if auto voucher link is provided//disable manual voucher amount input # or give a nice alert\\instead of removing it or hiding
+	if(auto_user_creater_wifi_radius_link.u_link.length > 6){
 
+		document.getElementById("data_or_time_select_box").innerHTML=`<button id='enter_time_ticket_amount_button' class='btn btn-warning' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='alert("This menu is not usable under current system setup.\nDisable [ Auto voucher ] production and have vouchers manualy loaded to the system to allow this menu option.\n");document.getElementById(this.id).style.display="none";'>enter Time Ticket amount </button>`;
+
+		document.getElementById("data_or_time_select_box_time").innerHTML=`<button id='enter_time_ticket_amount_button' class='btn btn-warning' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='alert("This menu is not usable under current system setup.\nDisable [ Auto voucher ] production and have vouchers manualy loaded to the system to allow this menu option.\n");document.getElementById(this.id).style.display="none";'>enter Time Ticket amount </button>`;
+
+	};
 
 
 	//get list of ticket for 
