@@ -995,28 +995,34 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 					
 					
 
-					if(data.voucher_cost > 0 & data.voucher_count > 25 || auto_user_creater_wifi_radius_link.u_link.length > 6){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type //but let Auto voucher through if [ wifi radus server ] link provided
+					if(data.voucher_cost > 0 || auto_user_creater_wifi_radius_link.u_link.length > 6){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type //but let Auto voucher through if [ wifi radus server ] link provided
 
-						//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
-						if(data.voucher_type == 'time'){
+						//if avalable manual produced or uploaded vouchers codes are more than 25 or :
+						//for automatically produced vouchers : if radius profile data is missing// for whaterver cause, dont show this ticket value//this error will cause [ wifi radius ] to proceduce unlimited voucher account if it passes through
+						if(data.voucher_count > 25 || data.radius_server_voucher_profile && data.radius_server_voucher_profile != 'null' || data.radius_server_voucher_profile != 'undefined'){
+								
 
-							//data to be passed to server for ticket creation
-							//let voucher_creation_extra_data = JSON.stringify({'profile': data.radius_server_voucher_profile,'expiery': JSON.parse(data.wifi_radius_auto_voucher_details).expiery });
+							//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
+							if(data.voucher_type == 'time'){
 
-							$('#data_or_time_select_box_time').append(`
-							<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
-							
-							`);
-						}
+								//data to be passed to server for ticket creation
+								//let voucher_creation_extra_data = JSON.stringify({'profile': data.radius_server_voucher_profile,'expiery': JSON.parse(data.wifi_radius_auto_voucher_details).expiery });
+
+								$('#data_or_time_select_box_time').append(`
+								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+								
+								`);
+							}
 						
 
-						if(data.voucher_type == 'data'){
+							if(data.voucher_type == 'data'){
 
 
-							$('#data_or_time_select_box').append(`
-							<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
-							
-							`);
+								$('#data_or_time_select_box').append(`
+								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+								
+								`);
+							}
 						}
 					}
 
