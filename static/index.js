@@ -784,14 +784,14 @@ function sell_ticket(button_id, req_complementary_voucher = false, hotel_or_cafe
     //voucher amount
 	var seller_voucher_amount_input = document.getElementById('seller_ticket_amount');
 	
-	//wifi radius voucher profile name
-	var auto_voucher_radius_profile = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-profile' + current_sell_menu_distinguisher);
+	//wifi radius voucher profile name # for id all had to do was to duplicate getAttribute on complementary menu below, lol realised too late after intgrating [ current_sell_menu_distinguisher ], undoing require more enenergy done just adding shorthand if else { hahaha [ embarrassed laugh]}
+	var auto_voucher_radius_profile = document.getElementById((current_sell_menu_distinguisher.length == 0?'seller_ticket_amount':"seller_cpmlimentary_ticket_amount")).getAttribute('data-auto-voucher-profile' + current_sell_menu_distinguisher);
 
-	//auto voucher expiery
-	var auto_voucher_expiery = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-expiery' + current_sell_menu_distinguisher);
+	//auto voucher expiery  # for id all had to do was to duplicate getAttribute on complementary menu below, lol realised too late after intgrating [ current_sell_menu_distinguisher ], undoing require more enenergy done just adding shorthand if else { hahaha [ embarrassed laugh]}
+	var auto_voucher_expiery = document.getElementById((current_sell_menu_distinguisher.length == 0?'seller_ticket_amount':"seller_cpmlimentary_ticket_amount")).getAttribute('data-auto-voucher-expiery' + current_sell_menu_distinguisher);
 
-	//new voucher profile
-	var new_voucher_profile = document.getElementById('seller_ticket_amount').getAttribute('data-voucher-profile' + current_sell_menu_distinguisher);
+	//new voucher profile  # for id all had to do was to duplicate getAttribute on complementary menu below, lol realised too late after intgrating [ current_sell_menu_distinguisher ], undoing require more enenergy done just adding shorthand if else { hahaha [ embarrassed laugh]}
+	var new_voucher_profile = document.getElementById((current_sell_menu_distinguisher.length == 0?'seller_ticket_amount':"seller_cpmlimentary_ticket_amount")).getAttribute('data-voucher-profile' + current_sell_menu_distinguisher);
 
 	//if complimentary voucher menu
 	if(seller_login.resturent_hotel_cafe_login){//true
