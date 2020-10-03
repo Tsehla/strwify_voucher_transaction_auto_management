@@ -303,6 +303,7 @@ function seller_sell_menu(){
 		if(seller_login.resturent_hotel_cafe_login){//show complementary menu
 			document.getElementById("sell_voucher").style.boxShadow="2px 1px 2px lightgrey"; 
 			document.getElementById("sell_voucher").style.backgroundColor ="snow";
+			current_sell_menu_distinguisher ="-hotel-cafe";//set hotel cafe varible
 			dom_hide_show('show','complementary_ticket_menu');
 
 		}
@@ -784,13 +785,13 @@ function sell_ticket(button_id, req_complementary_voucher = false, hotel_or_cafe
 	var seller_voucher_amount_input = document.getElementById('seller_ticket_amount');
 	
 	//wifi radius voucher profile name
-	var auto_voucher_radius_profile = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-profile');
+	var auto_voucher_radius_profile = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-profile' + current_sell_menu_distinguisher);
 
 	//auto voucher expiery
-	var auto_voucher_expiery = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-expiery');
+	var auto_voucher_expiery = document.getElementById('seller_ticket_amount').getAttribute('data-auto-voucher-expiery' + current_sell_menu_distinguisher);
 
 	//new voucher profile
-	var new_voucher_profile = document.getElementById('seller_ticket_amount').getAttribute('data-voucher-profile');
+	var new_voucher_profile = document.getElementById('seller_ticket_amount').getAttribute('data-voucher-profile' + current_sell_menu_distinguisher);
 
 	//if complimentary voucher menu
 	if(seller_login.resturent_hotel_cafe_login){//true
@@ -888,6 +889,10 @@ function sell_ticket(button_id, req_complementary_voucher = false, hotel_or_cafe
    ========================================================= */
 //http://127.0.0.1:3100/api/voucher_types //get voucher types list with cost
 //http://127.0.0.1:3100/api/voucher_types_add  //create/update voucher type list, with new one
+
+//normal sell menu or hotel/cafe sell menu selector
+//# keeps record on which menu the seller is currently using to sell//it will help distinguish when calling getAtrributes(), to produce voucher
+var current_sell_menu_distinguisher = ''; //default is = ''; hotel/cafe = '-hotel-cafe';
 
 
 function add_sell_ticket_pop_contents(){ //porpulate div with available ticket choices
@@ -1009,7 +1014,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 								//let voucher_creation_extra_data = JSON.stringify({'profile': data.radius_server_voucher_profile,'expiery': JSON.parse(data.wifi_radius_auto_voucher_details).expiery });
 
 								$('#data_or_time_select_box_time').append(`
-								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery"${current_sell_menu_distinguisher},"${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile"${current_sell_menu_distinguisher},"${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 								
 								`);
 							}
@@ -1019,7 +1024,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 
 								$('#data_or_time_select_box').append(`
-								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile"${current_sell_menu_distinguisher},"${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery"${current_sell_menu_distinguisher},"${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile"${current_sell_menu_distinguisher},"${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 								
 								`);
 							}
