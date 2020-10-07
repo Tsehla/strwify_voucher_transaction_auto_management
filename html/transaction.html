@@ -101,8 +101,8 @@
 	 -->
    
 <!-- extra side menu --->
-<div id='outer_menu_open_overlay' onclick='document.getElementById("side_menu_container").style.right="140px"' style='height: 100vh; width: 5vw; position: fixed;right:0px;'>
- <div id='side_menu_container' style="height: auto;width: 100px;position: relative;right: 12px;background: auto" onfocusout='document.getElementById("side_menu_container").style.right="12px"'>
+<div id='outer_menu_open_overlay' onclick='document.getElementById("side_menu_container").style.right="140px"' style='height: 100vh; width: 8vw; position: fixed;right:0px;'>
+ <div id='side_menu_container' style="height: auto;min-height:100vh;width: 100px;position: relative;right: 12px;background: auto" onfocusout='document.getElementById("side_menu_container").style.right="12px"'>
 
 	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:10px 10px 10px 10px" onclick="extra_menu('past_transactions'), document.getElementById('side_menu_container').style.right='12px'">Transactions</button>
 	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('to_reddem_voucher'), document.getElementById('side_menu_container').style.right='12px'">Vouchers</button>
@@ -1247,8 +1247,8 @@
       <button style="border-radius: 50%;width: 30px;height: 30px;float: right;text-align: center;" class="btn btn-danger" onclick="document.getElementById('transactions_and_voucher_viewer_options_menu').style.display='none'">X</button>
     </div>
 
-    <button class='btn btn-warning' style="min-width:130px;width:42.5%;min-height: 200px; height:18vh; display: inline-block; display: inline;margin:20px 10px auto 20px" onclick="extra_menu('voucher_types_list')"> View/Update<br /> Manual <br />vouchers details</button>
-    <button class='btn btn-success' style="min-width:130px;width:42.5%;min-height: 200px; height:18vh; display: inline-block; display: inline;margin:20px 10px auto 20px; font-size: smaller;" onclick="extra_menu('voucher_types_list_radius_auto')"> View/Update/Create <br >vouchers details<br /> [automatic/Radius]<br /> user creations</button>
+    <button class='btn btn-warning' style="min-width:130px;width:40.5%;min-height: 200px; height:18vh; display: inline-block; display: inline;margin:20px 10px auto 20px" onclick="extra_menu('voucher_types_list')"> View/Update<br /> Manual <br />vouchers details</button>
+    <button class='btn btn-success' style="min-width:130px;width:40.5%;min-height: 200px; height:18vh; display: inline-block; display: inline;margin:20px 10px auto 17px; font-size: smaller;" onclick="extra_menu('voucher_types_list_radius_auto')"> View/Update/Create <br >vouchers details<br /> [automatic/Radius]<br /> user creations</button>
     
   </div>
 

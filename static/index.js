@@ -1015,7 +1015,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 								
 
 							//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
-							if(data.voucher_type == 'time'){
+							if(data.voucher_type == 'time' && data.voucher_active ){//if time end voucher active, add to selection
 
 								//data to be passed to server for ticket creation
 								//let voucher_creation_extra_data = JSON.stringify({'profile': data.radius_server_voucher_profile,'expiery': JSON.parse(data.wifi_radius_auto_voucher_details).expiery });
@@ -1027,7 +1027,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 							}
 						
 
-							if(data.voucher_type == 'data'){
+							if(data.voucher_type == 'data' && data.voucher_active){//if time end voucher active, add to selection
 
 
 								$('#data_or_time_select_box').append(`
@@ -4235,7 +4235,13 @@ function defined_auto_vouchers_retrieve(){
 							<br />
 
 							<div style='width:100%; height:auto; margin-bottom : 20px'>
-								<button class='btn btn-danger' style='width:100% margin:10px' onclick='auto_voucher_delete("${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Delete</button>
+
+								<button class='btn btn-danger' style='width:98%;margin:10px' onclick='auto_voucher_delete("delete","${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Delete</button>
+
+								<button class='btn btn-success' style='width:98%;margin:10px;display:${data.voucher_active?'none':'block'}' onclick='auto_voucher_delete("enable","${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Enable</button>
+
+								<button class='btn btn-warning' style='width:98%;margin:10px;display:${data.voucher_active?'block':'none'}' onclick='auto_voucher_delete("disable","${data._id}", "${data.voucher_profile}", "${data.voucher_cost}")'>Disable</button>
+
 							</div>
 						</div>
 					`
@@ -4262,15 +4268,16 @@ function defined_auto_vouchers_retrieve(){
 }
 
 
-//------------- delete
+//-------------auto voucher types delete/enable/disable
 
-function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
+function auto_voucher_delete(action=null, delete_db_id, voucher_value, voucher_cost){//function repurposed to do more than just delete later on..
 
 	//console.log(delete_db_id, voucher_value, voucher_cost);
 
 
+
 	//give delete notice
-	var delete_confirm = confirm('You are about to delete : ' + voucher_value + ', that cost : ' + voucher_cost + '\nContinue?');
+	var delete_confirm = confirm('You are about to ' + action + ' : ' + voucher_value + ', that cost : ' + voucher_cost + '\nContinue?');
 
 	if(!delete_confirm){//if cancell pressed
 
@@ -4280,7 +4287,7 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 
 
 	//contact server
-	$.get('/api/auto_voucher_types_delete?_id=' + delete_db_id, function(response, status){
+	$.get('/api/auto_voucher_types_delete?_id=' + delete_db_id + '&action=' + action, function(response, status){
 		
 		if(status == 'success'){
 
@@ -4288,7 +4295,7 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 			if(response == 'db [auto voucher types ] delete connection error'){
 
 				//give alert
-				alert('Error, when attempting to delete [ auto voucher type ] on db.');
+				alert('Error, when attempting to ' + action + ' [ auto voucher type ] on db.');
 				return;
 			}
 
@@ -4296,7 +4303,7 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 			if(response == 'Error, specified [ auto voucher type ] to delete not found'){
 
 				//give alert
-				alert('Error, specified [ auto voucher type ] to delete not found on db.');
+				alert('Error, specified [ auto voucher type ] to ' + action  + '  not found on db.');
 				return;
 
 			}
@@ -4305,7 +4312,7 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 			if(response == 'Success, specified [ Voucher Type ] deleted'){
 
 				//give notification
-				alert('Success, specified [ Voucher Type ] deleted');
+				alert('Success, specified [ Voucher Type ] ' + action + 'd.');
 
 				//reload [ auto voucher type ] view
 				document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
@@ -4319,7 +4326,7 @@ function auto_voucher_delete(delete_db_id, voucher_value, voucher_cost){
 		}
 
 		//give error
-		alert('Error, when attempting to contact server and delete [ auto voucher ]. Please try again later.');
+		alert('Error, when attempting to contact server and ' + action + ' [ auto voucher ]. Please try again later.');
 
 	})
 

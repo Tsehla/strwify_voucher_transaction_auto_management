@@ -881,33 +881,82 @@ app.get('/api/auto_voucher_types_view', function(req, res){
 //---- auto voucher delete
 app.get('/api/auto_voucher_types_delete', function(req, res){
 
-	console.log(req.query._id)
+	//console.log(req.query._id)
 
-	keystone.list('Voucher Types').model.findById(req.query._id)
-	.remove( function(error, response){
 
-		if(error){
+	//if action is delete
+	if(req.query.action == 'delete'){
 
-			//give error response
-			res.jsonp('db [auto voucher types ] delete connection error');
-			console.log('Error, when attempting to delete [ auto voucher type ] on db.');
+		keystone.list('Voucher Types').model.findById(req.query._id)
+		.remove( function(error, response){
 
-			return;
-		}
+			if(error){
 
-		if(response == null || response == ''){//if no automatic voucher types stored
+				//give error response
+				res.jsonp('db [auto voucher types ] delete connection error');
+				console.log('Error, when attempting to delete [ auto voucher type ] on db.');
 
-			//give error response
-			res.jsonp('Error, specified [ auto voucher type ] to delete not found');
-			console.log('Error, specified [ auto voucher type ] to delete not found on db.');
-			
-			return;
-		}
+				return;
+			}
 
-		//send data
-		res.jsonp('Success, specified [ Voucher Type ] deleted');
+			if(response == null || response == ''){//if no automatic voucher types stored
 
-	});
+				//give error response
+				res.jsonp('Error, specified [ auto voucher type ] to delete not found');
+				console.log('Error, specified [ auto voucher type ] to delete not found on db.');
+				
+				return;
+			}
+
+			//send data
+			res.jsonp('Success, specified [ Voucher Type ] deleted');
+
+		});
+	}
+
+	//if action is enable or disable
+	if(req.query.action == 'enable' || req.query.action == 'disable'){
+
+		keystone.list('Voucher Types').model.findById(req.query._id)
+		.exec(function(error, response){
+
+			if(error){
+
+				//give error response
+				res.jsonp('db [auto voucher types ] delete connection error');
+				console.log('Error, when attempting to delete [ auto voucher type ] on db.');
+
+				return;
+			}
+
+			if(response == null || response == ''){//if no automatic voucher types stored
+
+				//give error response
+				res.jsonp('Error, specified [ auto voucher type ] to delete not found');
+				console.log('Error, specified [ auto voucher type ] to delete not found on db.');
+				
+				return;
+			}
+
+
+			//make changes and save
+
+			response.voucher_active = (req.query.action == 'enable'?true:false); //set to true or false depending on what actioin is set to be
+			response.save();//save changes, no need to capture resuslts, user/admin voucher menu will be auto updated when response is recived and if changes happened it wil show// writing this seem to have cost almost equal amount of energy it would have cost to write call back function whin save()
+			//send data
+			res.jsonp('Success, specified [ Voucher Type ] deleted');
+
+		});
+
+
+
+	}
+
+	// else{
+
+	// 	//give error response
+	// 	res.jsonp('Error, specified [ auto voucher type ] to delete not found');
+	// }
 
 
 });
