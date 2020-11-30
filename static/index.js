@@ -168,13 +168,15 @@ function text_line_break(input_string){
 
 //get wifi radius link passed from hotspot login page//extract hotspot details
 var auto_user_creater_wifi_radius_link = {
+
 	u_link : '',
 	hotspot_id : undefined,
 	hotspot_voucher_template_link : undefined,
+	router_hotspot_location : 'default',
 	
 };
 
-	
+
  $.get('/api/hotspot_data?location='+ (url_parms_object()['hotspot_location']?url_parms_object()['hotspot_location']:''), function(response, status){
 	 
 	   if(status == 'success'){//if success
@@ -189,6 +191,10 @@ var auto_user_creater_wifi_radius_link = {
 
 		   //add hotspot voucher template link
 		   auto_user_creater_wifi_radius_link.hotspot_voucher_template_link = response.hotspot_voucher_template_link;
+
+		   //hotspot location
+		   auto_user_creater_wifi_radius_link.router_hotspot_location = response.router_location;
+		   console.log('lkjhgfghk ',response.router_location)
 
 	   }
 
@@ -384,14 +390,14 @@ function buy_voucher(){
 function sell_voucher(){
     
  //window.open('/sell_voucher?u_link=' + auto_user_creater_wifi_radius_link.u_link, '_self');
- window.open('/sell_voucher', '_self');
+ window.open('/sell_voucher' + (hot_spot_url?hot_spot_url:''), '_self');
 	process_destroyer();
 }
 
 function third_page_seller_login(is_cafe_hotel_resturent =''){//is its not cafe resturant or hotel login dont add query to url
-  
+
  //window.open('/seller_login'+ is_cafe_hotel_resturent + (is_cafe_hotel_resturent.length > 0?'&u_link=':'?u_link=') + auto_user_creater_wifi_radius_link.u_link , '_self');
- window.open('/seller_login'+ is_cafe_hotel_resturent, '_self');
+ window.open('/seller_login'+(document.location.search?document.location.search + '&':'?') + is_cafe_hotel_resturent, '_self');
 	process_destroyer();
 }
 
@@ -974,6 +980,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 			$('#data_or_time_select_box').append(`<p><br/>Error, no Vouchers details found, <br> please type amount manually,<br /> close and re-open this menu<br />or refresh page.<br> Or contact administrator</p>`);
 			
 			//try to cause the system to auto generate voucher list :
+			//this works only for manual uploaded vouchers, and auto voucher link not provided since it will check db for available vouchers and create available voucher types list
 			let vouchers_types_link_generate_link = http_https + current_domain + '/api/voucher_types_add';
 			$.get(vouchers_types_link_generate_link, function(response, status){});
 
@@ -1011,29 +1018,34 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 						//if avalable manual produced or uploaded vouchers codes are more than 25 or :
 						//for automatically produced vouchers : if radius profile data is missing// for whaterver cause, dont show this ticket value//this error will cause [ wifi radius ] to proceduce unlimited voucher account if it passes through
-						if(data.voucher_count > 25 || data.radius_server_voucher_profile && data.radius_server_voucher_profile != 'null' || data.radius_server_voucher_profile != 'undefined'){
-								
-
+						
+						if(data.voucher_count > 25 || data.radius_server_voucher_profile && data.radius_server_voucher_profile != 'null' || data.radius_server_voucher_profile != 'undefined' ){
+								console.log(auto_user_creater_wifi_radius_link.router_hotspot_location)
 							//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
 							if(data.voucher_type == 'time' && data.voucher_active ){//if time end voucher active, add to selection
 
 								//data to be passed to server for ticket creation
 								//let voucher_creation_extra_data = JSON.stringify({'profile': data.radius_server_voucher_profile,'expiery': JSON.parse(data.wifi_radius_auto_voucher_details).expiery });
 
-								$('#data_or_time_select_box_time').append(`
-								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
-								
-								`);
+								if(data.voucher_authorized_location[0] == 'All' || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location
+
+									$('#data_or_time_select_box_time').append(`
+									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+									
+									`);
+								}
 							}
 						
 
 							if(data.voucher_type == 'data' && data.voucher_active){//if time end voucher active, add to selection
 
+								if(data.voucher_authorized_location[0] == 'All' || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location
 
-								$('#data_or_time_select_box').append(`
-								<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
-								
-								`);
+									$('#data_or_time_select_box').append(`
+									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+									
+									`);
+								}
 							}
 						}
 					}
@@ -3899,139 +3911,161 @@ function extra_menu(transaction_type){ //extra menu initiator
 			alert('No link to [Wifi-Radius] server provided.\nPlease add in "HotSpot Manage" option.');//give error alert
 			return
 		}
-		
-		//get profiles group data from wifi-radius
-		var url = auto_user_creater_wifi_radius_link.u_link + '/saved_profiles'
 
-		$.get(url, function(response, status){
+		//get created hotspots locations
+		var retrieved_hotspot_location_data = '';
+		$.get('/api/hotspot_location_data', function(response, status){ //connect to server and request data
 
-			if(status == 'success'){
-
-				//console.log(response);
-				document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
-				document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
-				document.getElementById('transactions_and_voucher_header').innerHTML='Auto voucher creation Details';//set header for div
-
-				//check if profile group data was retrieved
-				if(response.length == 0){//if nothing retrived from request
-
-					document.getElementById('transactions_and_voucher_viewer').innerHTML= `<p>No data found from server by calling this link : <a href='${url}'>${url}</a></p>`; //give error
-
-					return;//end function
-				}
-
-				var wifi_radius_auto_voucher_details_creation = '';//stores user creation div data
-				response.forEach(function(response, index){
-
-					radius_voucher_profile_limit_type = response.profile_group_attributes_properties?response.profile_group_attributes_properties.time_or_data_limit:'N/a';
-
-					wifi_radius_auto_voucher_details_creation = wifi_radius_auto_voucher_details_creation + `
-					<div id='wifi_radius_auto_voucher_details_creation_div_${index}' data-wifi_radius_auto_voucher_details_${index}=${JSON.stringify(response['_id'])}   class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: left'>
-
-						<div style='margin-top:24px text-align :center; width:100%'><b>Profile Detals</b><br /> <span id='profile_detals_${index}'>${response.data[0]}</span></div>
-
-						<div style='margin-top:24px text-align :center; width:100%'><b>Profile Limit type</b><br /> <span id='profile_limit_type_${index}'> ${radius_voucher_profile_limit_type} </span></div>
-
-						<div style='margin-top:24px text-align :center; width:100%'><b>Voucher Reset</b><br /> <span id='voucher_reset_${index}'>  ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.when_to_reset:'N/A'} </span></div>
-
-						<p style='margin-top:24px text-align :center'><b>Fill in : </b></p>
-
-						<p style='color: red;font-size: 15px;font-weight: bolder' class="w3-block">1)</p>
-							<label for='voucher_value'>Voucher Price :  <b style='font-size: 15px'>R</b></label>
-						 	<input type="number" value='0' step='0.1' id='voucher_price_${index}' style="width: 20%; display: inline" class="form-control">
-						<br />
-						<!-- data input -->
-						<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"block":"none"}'>
-
-							<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
-							<label for='voucher_value'>Voucher Data : </label>
-							<input type="number" id='voucher_data_value_${index}' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
-							<select class='btn btn-primary' id='voucher_data_limit_type_${index}'> <!-- input value type --> 
-								<option selected'>Data limit type</option>	
-								<option>KB</option>	
-								<option>MB</option>	
-								<option>GB</option>	
-								<option>TB</option>	
-								<option>ZB</option>	
-							</select>
-
-						</div>
-						
-						<!-- time input -->
-						<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"none":"block"}'>
-
-						<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
-						<label for='voucher_value'>Voucher Time : </label>
-						<input type="number" id='voucher_time_value_${index}' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
-						<select class='btn btn-primary' id='voucher_time_limit_type_${index}'> <!-- input value type --> 
-							<option selected>Time limit type</option>	
-							<option>Minutes</option>	
-							<option>Hours</option>	
-							<option>Days</option>	
-							<option>Weeks</option>	
-							<option>Months</option>
-							<option>Years</option>
-						</select>
-
-
-
-						</div>
-
-						<!-- time input -->
-						<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">3)</p>
-						<label for='voucher_value'>Voucher Expiery : </label>
-						 <input type="number" id='voucher_expiery_date_value_${index}' value='0.00' step='0.01' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
-						<select class='btn btn-primary' id='voucher_expiery_type_${index}'> <!-- input value type --> 
-							<option selected>Select</option>
-							<option>Minutes</option>	
-							<option>Hours</option>	
-							<option>Days</option>	
-							<option>Weeks</option>	
-							<option>Months</option>	
-							<option>Years</option>	
-						</select>
-						<br />
-
-						<div style='width:100%; height:auto; margin-bottom : 20px'>
-							<button class='btn btn-warning' style='width:44% margin:10px' onclick='dom_hide_show("hide", "wifi_radius_auto_voucher_details_creation_div_${index}")'>Remove</button>
-							<button class='btn btn-danger' style='width:44% margin:10px' onclick='auto_voucher_create("${index}")'>Save</button>
-						</div>
-					</div>
-					 
-					`
-
-				});
-
-
-
-
-
-
-
-				$('#transactions_and_voucher_viewer').append(wifi_radius_auto_voucher_details_creation );
-
-				//menu help button : add help data
-				document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
-					<br>
-					<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This are voucher profiles retrived from [ Radius Computer ]\\nThey are used to create Vouchers of shown data/time limit.\\n1) Specify voucher : Cost/Price, data/time limit, and expiery.\\n2) Save changes\\n3) If what you save already exist, save will be rejected.\\nInfo: this process differ from manual way of uploading [ csv ] file with vouchers exported from [ radiusdesk ], as vouchers are produced only when requested automatically.')">
-					Help
-				</button>
-
-			`;
-
-
-
-
-				return;
+			if(status == 'success'){//if result recived 
+				retrieved_hotspot_location_data = response.location; //save result to local variable
 			}
 
-			alert('Error opening wifi-radius link : ' + url + '\nTo retrieve profile data to create vouchers.');
-			
-
-			
+			voucher_type_production();
 		});
+		
+		//connect and get profiles group data from wifi-radius server
+		function voucher_type_production(){
+
+			var url = auto_user_creater_wifi_radius_link.u_link + '/saved_profiles'
+		
+			$.get(url, function(response, status){
+
+				if(status == 'success'){
+
+					//console.log(response);
+					document.getElementById('transactions_and_voucher_page').style.display='block';	//show popup,
+					document.getElementById('transactions_and_voucher_viewer').innerHTML= ''; //clean div of old data
+					document.getElementById('transactions_and_voucher_header').innerHTML='Auto voucher creation Details';//set header for div
+
+					//check if profile group data was retrieved
+					if(response.length == 0){//if nothing retrived from request
+
+						document.getElementById('transactions_and_voucher_viewer').innerHTML= `<p>No data found from server by calling this link : <a href='${url}'>${url}</a></p>`; //give error
+
+						return;//end function
+					}
+
+					var wifi_radius_auto_voucher_details_creation = '';//stores user creation div data
+					response.forEach(function(response, index){
+
+						radius_voucher_profile_limit_type = response.profile_group_attributes_properties?response.profile_group_attributes_properties.time_or_data_limit:'N/a';
+
+						wifi_radius_auto_voucher_details_creation = wifi_radius_auto_voucher_details_creation + `
+						<div id='wifi_radius_auto_voucher_details_creation_div_${index}' data-wifi_radius_auto_voucher_details_${index}=${JSON.stringify(response['_id'])}   class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: left'>
+
+							<div style='margin-top:24px text-align :center; width:100%'><b>Profile Detals</b><br /> <span id='profile_detals_${index}'>${response.data[0]}</span></div>
+
+							<div style='margin-top:24px text-align :center; width:100%'><b>Profile Limit type</b><br /> <span id='profile_limit_type_${index}'> ${radius_voucher_profile_limit_type} </span></div>
+
+							<div style='margin-top:24px text-align :center; width:100%'><b>Voucher Reset</b><br /> <span id='voucher_reset_${index}'>  ${response.profile_group_attributes_properties?response.profile_group_attributes_properties.when_to_reset:'N/A'} </span></div>
+
+							<p style='margin-top:24px text-align :center'><b>Fill in : </b></p>
+
+							<p style='color: red;font-size: 15px;font-weight: bolder' class="w3-block">1)</p>
+								<label for='voucher_value'>Voucher Price :  <b style='font-size: 15px'>R</b></label>
+								<input type="number" value='0' step='0.1' id='voucher_price_${index}' style="width: 20%; display: inline" class="form-control">
+							<br />
+							<!-- data input -->
+							<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"block":"none"}'>
+
+								<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
+								<label for='voucher_value'>Voucher Data : </label>
+								<input type="number" id='voucher_data_value_${index}' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+								<select class='btn btn-primary' id='voucher_data_limit_type_${index}'> <!-- input value type --> 
+									<option selected'>Data limit type</option>	
+									<option>KB</option>	
+									<option>MB</option>	
+									<option>GB</option>	
+									<option>TB</option>	
+									<option>ZB</option>	
+								</select>
+
+							</div>
+							
+							<!-- time input -->
+							<div style='display:${radius_voucher_profile_limit_type == "data_limited"?"none":"block"}'>
+
+							<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">2)</p>
+							<label for='voucher_value'>Voucher Time : </label>
+							<input type="number" id='voucher_time_value_${index}' value='0.00' step='1' style="width: 20%; display: inline" class="form-control"> <!-- input time value -->
+							<select class='btn btn-primary' id='voucher_time_limit_type_${index}'> <!-- input value type --> 
+								<option selected>Time limit type</option>	
+								<option>Minutes</option>	
+								<option>Hours</option>	
+								<option>Days</option>	
+								<option>Weeks</option>	
+								<option>Months</option>
+								<option>Years</option>
+							</select>
 
 
+
+							</div>
+
+							<!-- voucher expiery input -->
+							<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">3)</p>
+							<label for='voucher_value'>Voucher Expiery : </label>
+							<input type="number" id='voucher_expiery_date_value_${index}' value='0.00' step='0.01' style="width: 20%; display: inline" class="form-control"> <!-- expiery value -->
+							<select class='btn btn-primary' id='voucher_expiery_type_${index}'> <!-- input value type --> 
+								<option selected>Select</option>
+								<option>Minutes</option>	
+								<option>Hours</option>	
+								<option>Days</option>	
+								<option>Weeks</option>	
+								<option>Months</option>	
+								<option>Years</option>	
+							</select>
+							<br />
+
+							<!-- voucher hotspot limit -->
+							<p style='color: red; font-size: 15px;font-weight: bolder' class="w3-block ">3)</p>
+							<label for='voucher_value'>Voucher Hotspot location limit : </label>
+							<select class='btn btn-primary' id='voucher_hotspot_location_limit_${index}'> <!-- voucher location value --> 
+								<option selected>All</option>
+								${retrieved_hotspot_location_data}	
+							</select>
+							<br />
+
+							<div style='width:100%; height:auto; margin-bottom : 20px'>
+								<button class='btn btn-warning' style='width:44% margin:10px' onclick='dom_hide_show("hide", "wifi_radius_auto_voucher_details_creation_div_${index}")'>Remove</button>
+								<button class='btn btn-danger' style='width:44% margin:10px' onclick='auto_voucher_create("${index}")'>Save</button>
+							</div>
+						</div>
+						
+						`
+
+					});
+
+
+
+
+
+
+
+					$('#transactions_and_voucher_viewer').append(wifi_radius_auto_voucher_details_creation );
+
+					//menu help button : add help data
+					document.getElementById('transactions_and_voucher_viewer_alert_button').innerHTML = `
+						<br>
+						<button style="width:100%; height:7vh; margin 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('This are voucher profiles retrived from [ Radius Computer ]\\nThey are used to create Vouchers of shown data/time limit.\\n1) Specify voucher : Cost/Price, data/time limit, and expiery.\\n2) Save changes\\n3) If what you save already exist, save will be rejected.\\nInfo: this process differ from manual way of uploading [ csv ] file with vouchers exported from [ radiusdesk ], as vouchers are produced only when requested automatically.')">
+						Help
+					</button>
+
+				`;
+
+
+
+
+					return;
+				}
+
+				alert('Error opening wifi-radius link : ' + url + '\nTo retrieve profile data to create vouchers.');
+				
+
+				
+			});
+
+		}
 		return;
 	}
 	
@@ -4080,6 +4114,9 @@ function auto_voucher_create(voucher_details_div_index){
 		//expiery type
 	var voucher_expiery_type = document.getElementById('voucher_expiery_type_' + voucher_details_div_index).value;
 
+		//voucher location limit
+	var voucher_location_limit = document.getElementById('voucher_hotspot_location_limit_' + voucher_details_div_index).value;
+	
 
 	//check inputs filled
 	var voucher_price_is_zero = true;
@@ -4112,7 +4149,7 @@ function auto_voucher_create(voucher_details_div_index){
 
 	//voucher data
 	var auto_voucher_payload = `
-		wifi_radius_auto_voucher_details_id=${wifi_radius_auto_voucher_details_id}&profile_detals=${profile_detals}&profile_limit_type=${profile_limit_type}&voucher_reset=${voucher_reset}&voucher_price=${voucher_price}&voucher_data_value=${voucher_data_value}&voucher_data_limit_type=${voucher_data_limit_type}&voucher_time_value=${voucher_time_value}&voucher_time_limit_type=${voucher_time_limit_type}&voucher_expiery_date_value=${voucher_expiery_date_value}&voucher_expiery_type=${voucher_expiery_type}
+		wifi_radius_auto_voucher_details_id=${wifi_radius_auto_voucher_details_id}&profile_detals=${profile_detals}&profile_limit_type=${profile_limit_type}&voucher_reset=${voucher_reset}&voucher_price=${voucher_price}&voucher_data_value=${voucher_data_value}&voucher_data_limit_type=${voucher_data_limit_type}&voucher_time_value=${voucher_time_value}&voucher_time_limit_type=${voucher_time_limit_type}&voucher_expiery_date_value=${voucher_expiery_date_value}&voucher_expiery_type=${voucher_expiery_type}&voucher_hotspot_location=${voucher_location_limit}
 
 	`;
 

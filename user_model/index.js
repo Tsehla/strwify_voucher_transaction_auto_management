@@ -52,6 +52,7 @@ seller_distributor_model.add({
 	added_customers_partners : {type : types.TextArray, label :'My Customers/Partners',},//customers invited to system//{'name':'tsehla','type_of_user':'seller','id_no':'1111111111111'}
 	transactionhistory : {type : types.TextArray, label :'Transactions'},//keep record of all transactions on account
 	manage_router : {type : types.Boolean, default:false, label :'Manage Router?'}, 
+	account_recharge_bonus : {type : types.TextArray, label :'Account recharge bonus', default : ["{'Router Manager':'75%'}","{Seller:'25%'}", "{Distributor:'12%'}", "{'Server Admin':'0%'}", "{Buyer:'0%'}"]},//will add auto bonus on account recharge depending on [ usertype ] selected above, if [ manage_router ] is set to true, then 'Router Manager" recharge value will be used.//for streetwifiy router managers are those who only use out wifiy transact software and provide their own internet connection to router we provided
 });
 
 
@@ -267,6 +268,7 @@ voucher_track_model.add(
 		voucher_count: {type:String, default:'', label :'Available Vouchers'},
 		voucher_creation_method : {type : types.Select, options: "manual, automatic", default:'manual', label :'For vouchers created'},
 		voucher_active : {type :types.Boolean, default:true, label :'Active' },
+		voucher_authorized_location : {type : types.TextArray, label :'Voucher Allow Location', default : ['All']},
 		
 
 	}

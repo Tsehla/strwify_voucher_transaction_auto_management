@@ -816,6 +816,7 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 				wifi_radius_auto_voucher_details :JSON.stringify({expiery : req.query.voucher_expiery_date_value + ' ' + req.query. voucher_expiery_type, voucher_reset : req.query.voucher_reset}),
 				voucher_count: 'N/A',
 				voucher_creation_method : 'automatic',
+				voucher_authorized_location : req.query.voucher_hotspot_location,
 														
 			}
 		],
@@ -3247,6 +3248,52 @@ app.get('/api/hotspot_data', function(req, res){
 	
 });
 	
+
+
+	app.get('/api/hotspot_location_data', function(req, res){	
+
+
+		keystone.list('Router hotspot page').model.find()
+		.exec(function(err, response){
+
+
+			if(err){
+				console.log('Error finding router with location');
+				res.jsonp({location : '<option>All</option>'});//send default location as [ all ]
+				return;
+			}
+
+			if(response == null || response == undefined || response == ''){//user not found//add user
+				console.log('No router with location found');//
+				res.jsonp({location : '<option>All</option>'});//send default location as [ all ]
+				return;
+			}
+			
+
+			//extract router location
+			var reply = {
+				location : ''
+			}
+			response.forEach(function(data){
+
+				reply.location = reply.location + '<option>' + data.router_location + '</option>'
+
+			})
+
+
+			res.jsonp(reply)
+			return;
+
+		});
+	
+
+
+
+
+	});
+
+
+
 
 
 	//================================
