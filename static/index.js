@@ -4266,6 +4266,9 @@ function defined_auto_vouchers_retrieve(){
 							<div id='' style=''>
 								<span>Voucher usage type : <b> ${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).voucher_reset:'N/A'} </b> <span>
 							</div>
+							<div id='' style=''>
+								<span>Voucher hotspot location limit : <b> ${ data.voucher_authorized_location } </b> <span>
+							</div>
 
 							
 
