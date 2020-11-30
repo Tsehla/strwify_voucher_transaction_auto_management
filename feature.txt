@@ -22,3 +22,4 @@ ________
 
 +++++++ urgent +++++
 add ability to print many vouchers of x value at once to an a4 size image/pdf or export to csv
+add ability to restrict sellable voucher types to hotspots
