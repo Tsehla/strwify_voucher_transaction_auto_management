@@ -173,6 +173,8 @@ var auto_user_creater_wifi_radius_link = {
 	hotspot_id : undefined,
 	hotspot_voucher_template_link : undefined,
 	router_hotspot_location : 'default',
+	allow_hotspot_universal_vouchers : true,
+
 	
 };
 
@@ -194,7 +196,10 @@ var auto_user_creater_wifi_radius_link = {
 
 		   //hotspot location
 		   auto_user_creater_wifi_radius_link.router_hotspot_location = response.router_location;
-		   console.log('lkjhgfghk ',response.router_location)
+		   //console.log('hotspot location ',response.router_location)
+
+		   //allow default market vouchers to be shown
+		   auto_user_creater_wifi_radius_link.allow_hotspot_universal_vouchers = response.allow_hotspot_all_location_marked_vouchers;
 
 	   }
 
@@ -1020,14 +1025,15 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 						//for automatically produced vouchers : if radius profile data is missing// for whaterver cause, dont show this ticket value//this error will cause [ wifi radius ] to proceduce unlimited voucher account if it passes through
 						
 						if(data.voucher_count > 25 || data.radius_server_voucher_profile && data.radius_server_voucher_profile != 'null' || data.radius_server_voucher_profile != 'undefined' ){
-								console.log(auto_user_creater_wifi_radius_link.router_hotspot_location)
+								
+
 							//console.log(seller_login.resturent_hotel_cafe_login,voucher_amount_div_to_add_value_on)
 							if(data.voucher_type == 'time' && data.voucher_active ){//if time end voucher active, add to selection
 
 								//data to be passed to server for ticket creation
 								//let voucher_creation_extra_data = JSON.stringify({'profile': data.radius_server_voucher_profile,'expiery': JSON.parse(data.wifi_radius_auto_voucher_details).expiery });
 
-								if(data.voucher_authorized_location[0] == 'All' || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location
+								if(data.voucher_authorized_location[0] == 'All' && auto_user_creater_wifi_radius_link.allow_hotspot_universal_vouchers || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location and [ allow_hotspot_universal_vouchers ] is true
 
 									$('#data_or_time_select_box_time').append(`
 									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
@@ -1039,7 +1045,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 							if(data.voucher_type == 'data' && data.voucher_active){//if time end voucher active, add to selection
 
-								if(data.voucher_authorized_location[0] == 'All' || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location
+								if(data.voucher_authorized_location[0] == 'All' && auto_user_creater_wifi_radius_link.allow_hotspot_universal_vouchers || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location and [ allow_hotspot_universal_vouchers ] is true
 
 									$('#data_or_time_select_box').append(`
 									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
