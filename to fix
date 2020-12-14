@@ -1,2 +1,4 @@
 1) complementary voucher sort/selection seem broken [ seller menu]
 2) voucher of cost zero and or complementary are calculated in voucher types , [ {manual vouchers} voucher tracking], if they are the only left of same attributes/properties : dont remember if i intended this to be when was creating it, but reasonably shouldnt be there, but in greater scale of things it will only confuse system admin {when manually updating voucher types or checking for available non used voucher of different types} but never the seller due to filter restriction placed in the seller menu when retriving voucher types to sell unless over fifty of same such vouchers are manually created by admin
+3) allow creation of same vouchers with different hotspot location restrictions, or complete development of single voucher being able to have multiple applicable hotspot locations
+4) issue with voucher branding from external link

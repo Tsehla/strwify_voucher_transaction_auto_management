@@ -1065,10 +1065,32 @@
 						
 					}
 					
-					if(wall_link_description.length > 0){			
+					if(wall_link_description.length > 0){
+                        
+                     
+
 						//add wallpaper and link on page load// plus sponsore details
 						document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
                         document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
+                        document.getElementById('page_body').style.backgroundColor = 'black';
+
+                       
+
+
+                        //handle image display correcting for desktops computers
+                        let screen_height = screen.height;
+                        let screen_width = screen.width;
+
+                        if( screen_height >= 1285 ||  screen_width >= 802 ){
+
+                            //document.getElementById('page_body').style.backgroundSize =  (screen_width) + 'px ' + (screen_height) + 'px';
+                            document.getElementById('page_body').style.backgroundSize= 'auto 100vh'
+                            document.getElementById('page_body').style.backgroundRepeat='no-repeat';
+                            document.getElementById('page_body').style.backgroundPosition='center';
+
+                            
+
+                        }
                         
                        // current slide sponsore details/on page load
                        sponsore_ads = wall_link_description[0];

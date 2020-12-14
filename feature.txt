@@ -25,3 +25,5 @@ add ability to print many vouchers of x value at once to an a4 size image/pdf or
 add ability to restrict sellable voucher types to hotspots { added }
 add ability to redirect successful login to a specific website { more important for sponsored hotspots }
 add (1) ability to restrict or not show all vouchers created and market as default [i.e they have no hotspot location limited ] (2) have option to filter the default market voucher and decide which to allow on hotspot locaton etc and which not to as alternative to option (1)
+add ability to allow forced advertisment { i.e user required to scroll through advertisment to reach hotspot login menu }
+add ability to change logo image on voucher or username and password typing menu
