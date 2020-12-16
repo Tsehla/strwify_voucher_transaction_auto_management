@@ -1285,6 +1285,8 @@
 			
 		//wallpaper size	
         document.getElementById('page_body').style.backgroundSize = '100vw 100vh';
+
+        var forced_ads_auto_exit = false; //will auto close forced ads when all wallpapers have been scrolled
         
         function walp_changer(){//slideshow
 			
@@ -1309,13 +1311,22 @@
                 forced_ads_scrolling_skip_button_show = wall_link_description.length -1;//set skip show on the last wallpaper available
             }
             
-            if(forced_ads_scrolling_skip_button_show == current_image_content_tracker){//if current wallpaper interval number is equal to skip button show interval
+
+            if(current_image_content_tracker >= forced_ads_scrolling_skip_button_show ){//if current wallpaper interval number is equal to skip button show interval
                    document.getElementById('adverstisment_skip_button').style.display = 'block'; // then sow skip button
             }
+           
 
-            if(current_image_content_tracker + 1 == wall_link_description.length){//if all images have been scrolled
+            if(forced_ads_auto_exit){//if all walpaper have been scrolled through
 
                 forced_ads_hide ();//auto exit forced ads mode
+
+            }
+
+            if(current_image_content_tracker + 1  == wall_link_description.length ){//if all images have been scrolled
+
+                forced_ads_auto_exit = true;//set all wallpapers scrolled to true
+                
             }
        
         };
