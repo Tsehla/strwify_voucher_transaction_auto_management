@@ -1259,6 +1259,9 @@
             document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
             document.getElementById('forced_advertisement_navigation').style.display = 'none';//hide  forced ads navigation
 
+            //start auto wallpaper changer//incase its stopped
+            walp_interval =  setInterval(walp_changer, 6000);
+
         }
 
 
@@ -1306,7 +1309,7 @@
                 forced_ads_scrolling_skip_button_show = wall_link_description.length -1;//set skip show on the last wallpaper available
             }
             
-            if(forced_ads_scrolling_skip_button_show == current_image_content_tracker ){//if current wallpaper interval number is equal to skip button show interval
+            if(forced_ads_scrolling_skip_button_show == current_image_content_tracker - 1){//if current wallpaper interval number is equal to skip button show interval
                    document.getElementById('adverstisment_skip_button').style.display = 'block'; // then sow skip button
             }
 
