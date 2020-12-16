@@ -12,7 +12,7 @@
 
 
 			<style type="text/css">
-				body {color: #737373; font-size: 12px; font-family: verdana;min-height: 500px}
+				body {color: #737373; font-size: 12px; font-family: verdana;height: 100vh;min-height: 500px;}
 
 				img {border: none;}
 				input{
@@ -36,6 +36,8 @@
 		</head>
 
 	<body id='page_body'>
+
+        <div id='page_body_menu_contents' style="width: auto;height: auto;margin: 0px;">
     
 		<!-- login input forms -->
 		<div style="width: 60vw;height: auto; position: absolute; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
@@ -72,7 +74,7 @@
 				<button style="min-height: 20px; max-height: 15%; width: 100%; margin-top:4%;margin-bottom:4%" class="btn btn-primary" onclick='form_sender_decider(null)'>Log in</button>
 
 			 </div>    
-
+           
 		</div>
 
 		<br />
@@ -712,14 +714,26 @@
 
         </div>
         
-      
-   
+    </div>
+
+        <!-- forced ads navigation -->
+        <div id="forced_advertisement_navigation" style="display: none;width:100%; min-height: 54px; max-height:auto ;  background: rgba(192,192,192,0.2); position: fixed; bottom: 3%; text-align: center;">
+
+            <a href="#" onclick="prev_wallpaper_ads()" class="btn btn-primary" role="button" style="margin-left: 20vw; border-bottom-right-radius:0px;border-top-right-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%; ">BACK</a>
+
+            <button class="btn btn-info" style="border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%;" onclick="window.open(wall_link_description[current_image_content_tracker].image_status_link)">OPEN</button>
+
+            <a href="#" onclick="next_wallpaper_ads()" class="btn btn-primary" role="button" style="border-bottom-left-radius:0px;border-top-left-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%;">NEXT</a>
+
+            <a id='adverstisment_skip_button' onclick="forced_ads_hide()" class="btn btn-danger" role="button" style="border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%;display: none;">SKIP</a>
+        </div> 
 		
 		<script type='text/JavaScript' src='jquery-3.3.1.min.js' ></script> 
 		<script type="text/javascript" src="md5.js"></script>
 		<!-- +++++++ get variable from router encoded on link  +++++++ -->
         <!-- <script type="text/javascript" src="qs.js"></script> -->
         
+      
 
         <script type="text/javascript">
 
@@ -939,7 +953,8 @@
         //on the fly user account or voucher creation
         var radius_new_user_account_creater = false;//use wifi-radius [ https://github.com/Tsehla/nodejs_radius_server ]
 
-
+        //forced ads scrolling skip button show on picture number
+        var forced_ads_scrolling_skip_button_show = 10;//show skip button on tenth wallpaper
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
@@ -1072,7 +1087,12 @@
 						//add wallpaper and link on page load// plus sponsore details
 						document.getElementById('walp_links').innerHTML = wall_link_description[0].image_status_text;
                         document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
-                        document.getElementById('page_body').style.backgroundColor = 'black';
+
+                        if(wall_link_description[0].image_link.length > 0 ){//if wallpaper is available
+
+                            document.getElementById('page_body').style.backgroundColor = 'black';
+                        }
+                        
 
                        
 
@@ -1216,9 +1236,32 @@
             }
                 
 
+            //forced ads show
 
+            
+            if(data_from_db.allow_forced_advertisement_scrolling && wall_link_description.length > 0 && wall_link_description[0].image_link.length > 0){//if forced ads show is true and wallpaper links are provided
+
+                
+
+                document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+                document.getElementById('forced_advertisement_navigation').style.display = 'block';//show forced ads navigation
+                
+            }
+
+            forced_ads_scrolling_skip_button_show = (Number(data_from_db.forced_advertisement_scrolling_exit_number)?Number(data_from_db.forced_advertisement_scrolling_exit_number):10 );//forced scrolling skip show button on interval
 			
-		}
+        }
+        
+
+        //forced advertisement hide
+        function forced_ads_hide (){
+
+            document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
+            document.getElementById('forced_advertisement_navigation').style.display = 'none';//hide  forced ads navigation
+
+        }
+
+
 //		fill_data_from_db();//start function	
 
 			
@@ -1256,7 +1299,21 @@
             
             // current slide sponsore details
             sponsore_ads = wall_link_description[current_image_content_tracker];
-			
+
+            //forced advertisement skip button show
+            if(forced_ads_scrolling_skip_button_show  > wall_link_description.length -1){//if skip show on interval number is bigger than wallpaper number
+
+                forced_ads_scrolling_skip_button_show = wall_link_description.length -1;//set skip show on the last wallpaper available
+            }
+            
+            if(forced_ads_scrolling_skip_button_show == current_image_content_tracker ){//if current wallpaper interval number is equal to skip button show interval
+                   document.getElementById('adverstisment_skip_button').style.display = 'block'; // then sow skip button
+            }
+
+            if(current_image_content_tracker == wall_link_description.length -1){//if all images have been scrolled
+
+                forced_ads_hide ();//auto exit forced ads mode
+            }
        
         };
         
@@ -1267,6 +1324,12 @@
         
         document.getElementById('right_arrow_1').onclick = function (){//next image
 			clearInterval(walp_interval);
+			walp_changer();
+        }
+
+        function next_wallpaper_ads(){ //next wallaper changer navigation
+
+            clearInterval(walp_interval);
 			walp_changer();
         }
         
@@ -1284,7 +1347,22 @@
 
         } 
         
+        function prev_wallpaper_ads(){//previous walpaper changer navigation
+
+            clearInterval(walp_interval);
+			
+			current_image_content_tracker = current_image_content_tracker - 2;
+			
+			if(current_image_content_tracker < 0){
+				
+				current_image_content_tracker = wall_link_description.length -2 ;
+			}
+			
+			walp_changer();
+        }
+
         
+
          document.getElementById('walp_links_container').onclick=function (){
 			//alert(wall_link_description[current_image_content_tracker].image_status_link)
 			 var image_text_link = wall_link_description[current_image_content_tracker].image_status_link;
