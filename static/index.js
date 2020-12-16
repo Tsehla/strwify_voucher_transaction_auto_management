@@ -494,8 +494,11 @@ function auto_voucher_check(uniqueCode){
                 dom_innerHtml('second_page_user_auto_code', 'Voucher Ready');
                var show_code = "<p style='color:green;margin:0px;padding:0px;height:0px;width:0px'>Please Enter This Voucher Code : <span style='color:red; margin:0px;padding:0px;height:auto;width:auto'>" + JSON.stringify((response.vouchercode == 'N/A')?response.voucher_username:response.vouchercode) +"</span></p>";
                dom_innerHtml('second_page_ticket_status', show_code);
-                stop_auto_voucher_check();//timer stop
-                voucher_print(response);//print voucher
+				stop_auto_voucher_check();//timer stop
+				
+				//voucher_print(response);//print voucher
+				auto_login(response);//give auto login prompt
+
                }
            }
            
@@ -579,7 +582,9 @@ function manual_voucher_init(button_id){
 				
 					dom_innerHtml('second_page_ticket_status', show_code);
 					
-					voucher_print(response);//print voucher
+					//voucher_print(response);//print voucher
+					auto_login(response);//give auto login prompt
+
 					document.getElementById(button_id).disabled = false;//enable mabual voucher download
                }
            }
@@ -772,7 +777,7 @@ function voucher_print(response){
 				var voucher_username = response.voucher_username;
 				var voucher_password = response.voucher_password;
 				
-				auto_login(voucher_pin, voucher_username, voucher_password);
+				// auto_login(voucher_pin, voucher_username, voucher_password);  /* issue on iphone safari, the ticket is downloaded by opening the image in current browser page, this stops presentation of auto voucher login prompt, so ticket production function will be called after [ auto login prompt ] may cause ticket not to be downloaded at all on iphone, but so long users can log in  */
 	
 	
 	
@@ -5157,10 +5162,26 @@ function distributor_superadmin_acc_help(type_of_user){
 
 //trick for next time, make ajax to router, get response link extract variable to see if it http-pap or chap then use corrcet way to login//using this nw im gettng allow origin issue
 
-function auto_login(vocher_code, voucher_username, voucher_password){
+function auto_login(response){
 	//hot_spot_url
 
-	if(!hot_spot_url){return}//if url for router not available
+	var vocher_code = response.vouchercode;
+
+	if(vocher_code == 'N/A'){
+		
+		vocher_code = response.voucher_username;
+	}
+
+	var voucher_username = response.voucher_username;
+	var voucher_password = response.voucher_password;
+
+
+	if(!hot_spot_url){
+
+		voucher_print(response)//call voucher image/ticket production function
+		return; //if url for router not available
+	
+	}
 	
 
 	// +++++++ free voucher or complemenary auto voucher login  ++++++
@@ -5168,14 +5189,17 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 	//if(free_voucher_login){//if free login auto log in
 	
 
-		if(voucher_username != 'N/A' &&  voucher_password != 'N/A'){//check if username and password is given
+	if(voucher_username != 'N/A' &&  voucher_password != 'N/A'){//check if username and password is given//this is mostly was expected to be used for free voucher, password is meant to remain hidden so user is auto logged in without confirmation need
 
-			//http://streetwifiy.co.za/login?username=free&password=vouchr&dst=&popup=true
-
-			window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_self');
-
-			return;
-		}
+		//http://streetwifiy.co.za/login?username=free&password=vouchr&dst=&popup=true
+			
+		
+		//window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_self');
+		window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_blank');
+		voucher_print(response)//call voucher image/ticket production function
+			
+		return;
+	}
 
 	// 	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
 
@@ -5187,10 +5211,16 @@ function auto_login(vocher_code, voucher_username, voucher_password){
 	 
  	var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');
 	 
- 	if(!auto_login_confirm ){return}//user refuse auto login
-	
-	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_self');
+ 	if(!auto_login_confirm ){
 
+		voucher_print(response)//call voucher image/ticket production function
+		return
+	}//user refuse auto login
+	
+
+	
+	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_blank');
+	voucher_print(response)//call voucher image/ticket production function
 }
 
 
