@@ -1028,7 +1028,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 
 
 				//catch auto vouchers
-				if(req.query.u_link.length > 6){//if wifi radius server link is grether than 6 characters
+				if(req.query.u_link.length > 6 && req.query.u_link_allowed){//if wifi radius server link is grether than 6 characters
 
 					/*
 						external wifi radius simple create single voucher api
@@ -1117,6 +1117,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 						//give error
 						//res.jsonp({status: 'sorry Please try again, later', new_credit : 'no_value_change'});
 						console.log("Error: contacting wifi radius, on address : " + req.query.u_link + ", to request for a new voucher" + err.message);
+						res.jsonp({status : 'sorry Please try again, later', new_credit : 'no_value_change'});//give error response to user
 						return;
 
 					});

@@ -170,6 +170,7 @@ function text_line_break(input_string){
 var auto_user_creater_wifi_radius_link = {
 
 	u_link : '',
+	u_link_allow : false,
 	hotspot_id : undefined,
 	hotspot_voucher_template_link : undefined,
 	router_hotspot_location : 'default',
@@ -187,6 +188,9 @@ var auto_user_creater_wifi_radius_link = {
 
 		   //add u link
 		   auto_user_creater_wifi_radius_link.u_link = response.external_radius_user_creation_link;
+
+			//track if u link is enabled
+		   auto_user_creater_wifi_radius_link.u_link_allow = response.use_external_radius_user_creation;
 
 		   // add hotspot id
 		   auto_user_creater_wifi_radius_link.hotspot_id = response.router_id;
@@ -772,12 +776,14 @@ function voucher_print(response){
 				download_link.click()
 				//download_link.clicked();
 				
+
 	
 				//auto voucher adding//login
-				var voucher_username = response.voucher_username;
-				var voucher_password = response.voucher_password;
+				// var voucher_username = response.voucher_username;
+				// var voucher_password = response.voucher_password;
 				
 				// auto_login(voucher_pin, voucher_username, voucher_password);  /* issue on iphone safari, the ticket is downloaded by opening the image in current browser page, this stops presentation of auto voucher login prompt, so ticket production function will be called after [ auto login prompt ] may cause ticket not to be downloaded at all on iphone, but so long users can log in  */
+
 	
 	
 	
@@ -830,7 +836,7 @@ function sell_ticket(button_id, req_complementary_voucher = false, hotel_or_cafe
 	
 	//console.log(ticket_complementary);
         
-    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary+'&u_link='+auto_user_creater_wifi_radius_link.u_link+'&radius_profile='+auto_voucher_radius_profile+'&voucher_expiery='+auto_voucher_expiery+'&new_voucher_profile='+new_voucher_profile + '&voucher_requester_is_hotel_or_cafe=' + hotel_or_cafe_ticket_requster;//change '' + current_domain + '' to live domain
+    var url= http_https + current_domain + '/api/sell?code=sell_voucher&unique_code='+seller_code_input.value+'&voucher_amount='+seller_voucher_amount_input.value+'&seller_id='+seller_login.seller_id + '&ticket_type=' + data_or_time_ticket_pressed_tracker+'&is_complementary='+ticket_complementary+'&u_link='+auto_user_creater_wifi_radius_link.u_link+'&u_link_allowed='+auto_user_creater_wifi_radius_link.u_link_allow+'&radius_profile='+auto_voucher_radius_profile+'&voucher_expiery='+auto_voucher_expiery+'&new_voucher_profile='+new_voucher_profile + '&voucher_requester_is_hotel_or_cafe=' + hotel_or_cafe_ticket_requster;//change '' + current_domain + '' to live domain
     
     //console.log(url);
     //check voucher input length
@@ -948,8 +954,8 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 	</div>
 	`;
 
-	//if auto voucher link is provided//disable manual voucher amount input # or give a nice alert\\instead of removing it or hiding
-	if(auto_user_creater_wifi_radius_link.u_link.length > 6){
+	//if auto voucher link is provided and enabled//disable manual voucher amount input # or give a nice alert\\instead of removing it or hiding
+	if(auto_user_creater_wifi_radius_link.u_link.length > 6 && auto_user_creater_wifi_radius_link.u_link_allow ){
 
 		document.getElementById("data_or_time_select_box").innerHTML=`<button id='enter_time_ticket_amount_button' class='btn btn-warning' style='width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: block' onclick='alert("This menu is not usable under current system setup.\\n[ Auto Voucher Ondemand ] production is Active")'>enter Time Ticket amount </button>`;
 
@@ -963,8 +969,8 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 	let vouchers_types_link = http_https + current_domain + '/api/voucher_types';
 
 	// ------- automatic created vouchers
-	//if auto voucher link is avalable
-	if(auto_user_creater_wifi_radius_link.u_link.length > 6){ //and is bigger than six letters
+	//if auto voucher link is avalable, enabled
+	if(auto_user_creater_wifi_radius_link.u_link.length > 6 && auto_user_creater_wifi_radius_link.u_link_allow ){ //and is bigger than six letters
 
 		//changes link to server
 		vouchers_types_link = http_https + current_domain + '/api/auto_voucher_types';	
@@ -977,8 +983,8 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 		if(response.length == 0){//empty response//no vouchers data list generated
 
-			//give error if auto vouchers link is provided but no auto vouchers available
-			if(auto_user_creater_wifi_radius_link.u_link.length > 6){
+			//give error if auto vouchers link is provided, enabled but no auto vouchers available
+			if(auto_user_creater_wifi_radius_link.u_link.length > 6 && auto_user_creater_wifi_radius_link.u_link_allow){
 
 				//give error notofication
 				alert('Error getting Auto vouchers templates, Please try again later or contact administrator.');
@@ -1017,14 +1023,14 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 
 					
 
-					//give alert to admin/ start auto voucher add function if voucher count is less than 50 vouhers of that type
+					//give alert to admin/ start auto voucher add function if voucher count is less than 50 vouhers of that type//this is for manual uploaded vouchers
 					//++++++++++++++++++++++++ CODE HERE +++++++++++++++++++++++++++
 
 					// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 					
 					
 
-					if(data.voucher_cost > 0 || auto_user_creater_wifi_radius_link.u_link.length > 6){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type //but let Auto voucher through if [ wifi radus server ] link provided
+					if(data.voucher_cost > 0 || auto_user_creater_wifi_radius_link.u_link.length > 6 && auto_user_creater_wifi_radius_link.u_link_allow){//show vouchers with cost greater than zero, and with voucher count more than 50 vouchers of same type //but let Auto voucher through if [ wifi radus server ] link provided
 
 						//if avalable manual produced or uploaded vouchers codes are more than 25 or :
 						//for automatically produced vouchers : if radius profile data is missing// for whaterver cause, dont show this ticket value//this error will cause [ wifi radius ] to proceduce unlimited voucher account if it passes through
@@ -1041,7 +1047,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 								if(data.voucher_authorized_location[0] == 'All' && auto_user_creater_wifi_radius_link.allow_hotspot_universal_vouchers || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location and [ allow_hotspot_universal_vouchers ] is true
 
 									$('#data_or_time_select_box_time').append(`
-									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 && auto_user_creater_wifi_radius_link.u_link_allow?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="time"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 									
 									`);
 								}
@@ -1053,7 +1059,7 @@ function add_sell_ticket_pop_contents(){ //porpulate div with available ticket c
 								if(data.voucher_authorized_location[0] == 'All' && auto_user_creater_wifi_radius_link.allow_hotspot_universal_vouchers || data.voucher_authorized_location[0] == auto_user_creater_wifi_radius_link.router_hotspot_location ){//filter voucher sellable to be shown by [ All ] or matching location and [ allow_hotspot_universal_vouchers ] is true
 
 									$('#data_or_time_select_box').append(`
-									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 ?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
+									<button id='' class='btn btn-default' style="width: 94%; min-height: 30px;height:5vh;margin:3% 3% 0px 3%; display: ${( auto_user_creater_wifi_radius_link.u_link.length > 6 && auto_user_creater_wifi_radius_link.u_link_allow?data.voucher_creation_method == 'manual'? 'none' : 'block' : 'block')}" onclick='document.getElementById("${voucher_amount_div_to_add_value_on}").value="${data.voucher_cost}";document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-profile${current_sell_menu_distinguisher}","${data.radius_server_voucher_profile}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-auto-voucher-expiery${current_sell_menu_distinguisher}","${data.wifi_radius_auto_voucher_details.length > 5 ?JSON.parse(data.wifi_radius_auto_voucher_details).expiery:'N/A'}");document.getElementById("${voucher_amount_div_to_add_value_on}").setAttribute("data-voucher-profile${current_sell_menu_distinguisher}","${data.voucher_profile}");document.getElementById("sell_ticket_enter_amount_popup").style.display="none"; data_or_time_ticket_pressed_tracker="data"'>${data.voucher_profile + ' R'+ data.voucher_cost}</button>
 									
 									`);
 								}
