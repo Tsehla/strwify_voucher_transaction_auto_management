@@ -1259,7 +1259,8 @@
             document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
             document.getElementById('forced_advertisement_navigation').style.display = 'none';//hide  forced ads navigation
 
-            //start auto wallpaper changer//incase its stopped
+            //restart auto wallpaper changer//incase its stopped
+            clearInterval(walp_interval);
             walp_interval =  setInterval(walp_changer, 6000);
 
         }
