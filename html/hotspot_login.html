@@ -1161,10 +1161,10 @@
 			//free sites -- bottom text
 			document.getElementById('notification_bottom_text').innerHTML = notification_bottom_text ;
 			//how to link image/sell -- buy
-			document.getElementById('help_picture_video_buy').innerHTML = "<a href="+help_picture_video_buy+" style='margin:0px;padding:0px;'>Click Here</a>"  ;
+			document.getElementById('help_picture_video_buy').innerHTML = "<a href="+help_picture_video_buy+" style='margin:0px;padding:0px;' target='_blank'>Click Here</a>"  ;
 				
 			//how to link image  /video -- sell
-			document.getElementById('help_picture_video_sell').innerHTML = "<a href="+help_picture_video_sell+" style='margin:0px;padding:0px;'>Click Here</a>"  ;
+			document.getElementById('help_picture_video_sell').innerHTML = "<a href="+help_picture_video_sell+" style='margin:0px;padding:0px;' target='_blank'>Click Here</a>"  ;
 			
 			
 			//++++++++++++++++++++ free links ++++++++++
@@ -1173,7 +1173,7 @@
 			if(education_free_links){
 			   	education_free_links.forEach(function(data){
 					var data=JSON.parse(data);
-					$('#education_free_links').append('<a href="'+data.link+'">'+data.text+'</a>');
+					$('#education_free_links').append('<a href="'+data.link+'" target="_blank">'+data.text+'</a>');
 				});
 			   }
 			
@@ -1183,7 +1183,7 @@
 								
 			   	jobs_free_links.forEach(function(data){
 					var data=JSON.parse(data);
-					$('#jobs_free_links').append('<a href="'+data.link+'">'+data.text+'</a>');
+					$('#jobs_free_links').append('<a href="'+data.link+'" target="_blank">'+data.text+'</a>');
 				});
 			}
 			
