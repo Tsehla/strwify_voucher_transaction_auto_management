@@ -122,7 +122,7 @@
                 font-size: 18px;
             }
             
-           {border: 1px solid blue}
+           /* {border: 1px solid blue} */
         
         </style>
 
@@ -167,7 +167,7 @@
         </style>
     	<!-- top arrow -->
         <div id='top_arrow_container' onclick='document.getElementById("free_sites_container").style.display="block"'>
-            <div id='top_arrow_1' role="button" class='btn btn-default'>&#8679;</div>
+            <div id='top_arrow_1' role="button" class='btn btn-default la la-chevron-circle-up'></div>
         </div>
         <style>
             #top_arrow_container{
@@ -200,10 +200,10 @@
     	<!-- arrow center -->
         <div id='center_arrow_container'>
             <div id='left_arrow'>
-                <div id='left_arrow_1' role="button" class='btn btn-default'>&#8678;</div>
+                <div id='left_arrow_1' role="button" class='btn btn-default la la-chevron-circle-left'></div>
             </div>
             <div id='right_arrow'>
-                <div id='right_arrow_1' role="button" class='btn btn-default'>&#8680;</div>
+                <div id='right_arrow_1' role="button" class='btn btn-default la la-chevron-circle-right'></div>
             </div>
         </div>
             
@@ -265,7 +265,7 @@
 
 		            <!-- down arrow -->
              <div id='down_arrow_container' onclick='document.getElementById("notification_container").style.display="block"'>
-                <div id='down_arrow_1' role="button" class='btn btn-default'>&#8681;</div>
+                <div id='down_arrow_1' role="button" class='btn btn-default la la-chevron-circle-down'></div>
 				 <i class="la la-bullhorn" id='notification_alert_icon' aria-hidden="true" style="text-shadow:3px 3px 3px red, 3px 3px 3px blue;font-size: 35px;color: white "></i>
             </div>
             <style>
@@ -314,7 +314,8 @@
                 width: 100vw;
                 height:100px;
                 border: 0px;
-                background: rgba(192,192,192,0.2);
+                /*background: rgba(192,192,192,0.2); */
+                background-color: rgba(15, 1, 1, 0.775);
                 text-align: center;
                 overflow: auto;
             }
@@ -717,16 +718,80 @@
     </div>
 
         <!-- forced ads navigation -->
-        <div id="forced_advertisement_navigation" style="display: none;width:100%; min-height: 54px; max-height:auto ;  background: rgba(192,192,192,0.2); position: fixed; bottom: 3%; text-align: center;">
+ 
+        <div id='forced_advertisement_navigation_three_button' style="display: none;width:100%; min-height: 54px; max-height:auto ; position: fixed; bottom: 3%; text-align: center;"> <!-- chnage href with you link -->
+            <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -4px auto auto; font-size: 28px;min-width: 65px; width: 20vw;'></a>
 
-            <a href="#" onclick="prev_wallpaper_ads()" class="btn btn-primary" role="button" style="margin-left: 20vw; border-bottom-right-radius:0px;border-top-right-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%; ">BACK</a>
+            <button class='btn btn-info la la-eye la-5x' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px;min-width: 65px; width: 20vw;' onclick='window.open(wall_link_description[current_image_content_tracker].image_status_link, "_blank")'></button>
 
-            <button class="btn btn-info" style="border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%;" onclick="window.open(wall_link_description[current_image_content_tracker].image_status_link)">OPEN</button>
+            <a href='#' onclick='next_wallpaper_ads()' class='btn btn-primary la la-arrow-right ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-4px; font-size: 28px;min-width: 65px; width: 20vw;'></a>
+            
+        </div>
 
-            <a href="#" onclick="next_wallpaper_ads()" class="btn btn-primary" role="button" style="border-bottom-left-radius:0px;border-top-left-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%;">NEXT</a>
+        <div id='forced_advertisement_navigation_four_button' style="display: none;width:100%; min-height: 54px; max-height:auto ; position: fixed; bottom: 3%; text-align: center;"> <!-- chnage href with you link -->
+            <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -4px auto auto; font-size: 28px;min-width: 65px; width: 20vw;'></a>
 
-            <a id='adverstisment_skip_button' onclick="forced_ads_hide()" class="btn btn-danger" role="button" style="border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px;min-width: 95px; height:45px;; margin: 4.5px 2.5%;display: none;">SKIP</a>
-        </div> 
+            <button class='btn btn-info la la-eye la-5x' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px;min-width: 65px; width: 20vw;' onclick='window.open(wall_link_description[current_image_content_tracker].image_status_link, "_blank")'></button>
+
+            <button id='' class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-1px;min-width: 65px; width: 20vw;font-size: 15px;' onclick='forced_ads_hide()'>CLOSE</button>
+
+            <a href='#' onclick='next_wallpaper_ads()' class='btn btn-primary la la-arrow-right ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-4px; font-size: 28px;min-width: 65px; width: 20vw;'></a>
+            
+        </div>
+        <style>  
+            #forced_advertisement_navigation_three_button{
+				min-width: 200px;
+                width: 100vw;
+                height: 70px;
+                display: flex;
+                position: fixed;
+                bottom: 50px;
+            
+            }
+            #forced_advertisement_navigation_three_button a{
+				min-width: 50px;
+                width: 20vw;
+                height: 60px;
+                text-align :center;
+                line-height: 45px;
+                font-size: 0.9em;
+            }
+            #forced_advertisement_navigation_three_button button{
+			    height: 60px;
+                text-align :center;
+                line-height: 45px;
+                font-size: 18px;
+            }
+            
+            #forced_advertisement_navigation_four_button{
+				min-width: 200px;
+                width: 100vw;
+                height: 70px;
+                display: flex;
+                position: fixed;
+                bottom: 50px;
+            
+            }
+            #forced_advertisement_navigation_four_button a{
+				min-width: 50px;
+                width: 20vw;
+                height: 60px;
+                text-align :center;
+                line-height: 45px;
+                font-size: 0.9em;
+            }
+            #forced_advertisement_navigation_four_button button{
+			    height: 60px;
+                text-align :center;
+                line-height: 45px;
+                font-size: 18px;
+            }
+           /* {border: 1px solid blue} */
+        
+        </style>
+
+
+
 		
 		<script type='text/JavaScript' src='jquery-3.3.1.min.js' ></script> 
 		<script type="text/javascript" src="md5.js"></script>
@@ -1244,7 +1309,7 @@
                 
 
                 document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
-                document.getElementById('forced_advertisement_navigation').style.display = 'block';//show forced ads navigation
+                document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
                 
             }
 
@@ -1257,7 +1322,7 @@
         function forced_ads_hide (){
 
             document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
-            document.getElementById('forced_advertisement_navigation').style.display = 'none';//hide  forced ads navigation
+            document.getElementById('forced_advertisement_navigation_four_button').style.display = 'none';//hide  forced ads navigation
 
             //restart auto wallpaper changer//incase its stopped
             clearInterval(walp_interval);
@@ -1314,7 +1379,10 @@
             
 
             if(current_image_content_tracker >= forced_ads_scrolling_skip_button_show ){//if current wallpaper interval number is equal to skip button show interval
-                   document.getElementById('adverstisment_skip_button').style.display = 'block'; // then sow skip button
+                document.getElementById('forced_advertisement_navigation_three_button').style.display = 'none'; // then sow skip button
+                document.getElementById('forced_advertisement_navigation_four_button').style.display = 'block'; // then sow skip button
+
+                  
             }
            
 
