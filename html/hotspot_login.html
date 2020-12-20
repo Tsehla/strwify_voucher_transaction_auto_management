@@ -1020,6 +1020,7 @@
 
         //forced ads scrolling skip button show on picture number
         var forced_ads_scrolling_skip_button_show = 10;//show skip button on tenth wallpaper
+        var forced_ads_allowed = false; //set forced ads allowed tracking to false
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
@@ -1142,7 +1143,7 @@
 						
 						wall_link_description.push({"image_link" :"" , "image_status_text" : "Welcome", "image_status_link": ""});
                         wall_link_description.push({"image_link" :"" , "image_status_text" : "O amo hetswe", "image_status_link": ""});
-                        document.getElementById('walp_links_container').style.backgroundColor = 'rgba(192,192,192,0.2)';
+                        document.getElementById('walp_links_container').style.backgroundColor = 'rgba(192,192,192,0.2)';//change wallpaper description text
 						
 					}
 					
@@ -1308,7 +1309,7 @@
             if(data_from_db.allow_forced_advertisement_scrolling && wall_link_description.length > 0 && wall_link_description[0].image_link.length > 0){//if forced ads show is true and wallpaper links are provided
 
                 
-
+                forced_ads_allowed = true; //set forced ads allowed to true
                 document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
                 document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
                 
@@ -1379,7 +1380,7 @@
             }
             
 
-            if(current_image_content_tracker >= forced_ads_scrolling_skip_button_show ){//if current wallpaper interval number is equal to skip button show interval
+            if(current_image_content_tracker >= forced_ads_scrolling_skip_button_show && forced_ads_allowed){//if current wallpaper interval number is equal to skip button show interval
                 document.getElementById('forced_advertisement_navigation_three_button').style.display = 'none'; // then sow skip button
                 document.getElementById('forced_advertisement_navigation_four_button').style.display = 'block'; // then sow skip button
 
