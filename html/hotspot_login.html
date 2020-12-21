@@ -105,6 +105,8 @@
                 width: 100vw;
                 height: 70px;
                 display: flex;
+               
+
             
             }
             #nav_container a{
@@ -142,6 +144,7 @@
 				line-height: 45px;
 				text-align: center;
                 display: flex;
+               
             }
             #navi_container input {
                 width: 40%;
@@ -168,7 +171,7 @@
             
         </style>
                 <!-- ads provided layout change -->
-                <div id='ads_provide_layout' style=" display: none; width:100%; min-height: 54px; max-height:auto ; text-align: center; min-width: 300px;"> <!-- chnage href with you link -->
+                <div id='ads_provide_layout' style=" display: none; width:100%; min-height: 54px; max-height:auto ; text-align: center; min-width: 300px;position: fixed;top:5vh;"> <!-- chnage href with you link -->
                     <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -4px auto auto; font-size: 28px;min-width: 65px; width: 20vw;'></a>
         
                     <button class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px;min-width: 65px; width: 20vw;' onclick='buy()'>BUY</button>
@@ -185,6 +188,7 @@
                 width: 100vw;
                 height: 70px;
                 display: flex;
+                
                
             
             }
@@ -208,7 +212,7 @@
     	<!-- top arrow -->
         <div id='top_arrow_container' onclick='document.getElementById("free_sites_container").style.display="block"'>
             <div id='top_arrow_1' role="button" class='btn btn-default la la-chevron-circle-up'></div>
-            <div id='top_arrow_2' style="display:none">
+            <div id='top_arrow_2' style="display:none;position: fixed;top:20vh;">
                 <i role="button" class='btn btn-primary la la-arrow-up' style="width: auto;height:auto;font-size: 40px; "></i>
             </div>
         </div>
@@ -220,6 +224,7 @@
                 margin-top: 4%;
                 margin-top: 4%;
                 text-align: center;
+                
                 
             }
     
@@ -260,6 +265,7 @@
                     padding: 0px;
                     display: flex;
                     text-align: center;
+                  
                 }
                 /* left arrow */
                 #left_arrow {
@@ -314,7 +320,7 @@
              <div id='down_arrow_container' onclick='document.getElementById("notification_container").style.display="block"'>
                 <div id='down_arrow_1' role="button" class='btn btn-default la la-chevron-circle-down'></div>
                 
-                <div id='down_arrow_2' style="display:none">
+                <div id='down_arrow_2' style="display:none;position: fixed;top:40vh;">
                     <i role="button" class='btn btn-primary la la-arrow-down' style="width: auto;height:auto;font-size: 40px; "></i>
                 </div>
 				 <!-- <i class="la la-bullhorn" id='notification_alert_icon' aria-hidden="true" style="text-shadow:3px 3px 3px red, 3px 3px 3px blue;font-size: 35px;color: white "></i> -->
@@ -326,6 +332,7 @@
                     height: 50px;
                     margin-top: 1%;
                     text-align: center;
+                    
                 
                 }
                 #down_arrow_container div:active {
@@ -370,6 +377,8 @@
                 background-color: rgba(15, 1, 1, 0.775);
                 text-align: center;
                 overflow: auto;
+                position: fixed;
+                top:70vh;
             }
             #walp_links_container p{
                 width: 100%;
