@@ -366,8 +366,9 @@
 		
         <style>
             #walp_links_container {
-                margin-top: 1vh;
+                /*margin-top: 1vh;
                 margin-bottom: 100px;
+                */
 				min-width: 200px;
                 width: 100vw;
                 min-height:60px;
@@ -378,7 +379,7 @@
                 text-align: center;
                 overflow: auto;
                 position: fixed;
-                top:65vh;
+                bottom:15%;
             }
             #walp_links_container p{
                 width: 100%;
@@ -1347,7 +1348,7 @@
 
                     //if wallpaper is provided//show new ui announcement button
                     if(wall_link_description[0].image_link.length > 0 ){
-                        document.getElementById('down_arrow_container').innerHTML = `<div id='down_arrow_1'></div><div id='down_arrow_2'></div><div><i role="button" class='btn btn-primary la la-bullhorn' style="width: auto;height:auto;font-size: 40px; "></i></div>`;
+                        document.getElementById('down_arrow_container').innerHTML = `<div id='down_arrow_1'></div><div id='down_arrow_2'></div><div><i role="button" class='btn btn-primary la la-bullhorn' style="width: auto;height:auto;font-size: 40px; position: fixed; bottom:30%;left:41% "></i></div>`;
 
                     }
 
