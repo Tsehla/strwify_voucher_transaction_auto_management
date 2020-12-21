@@ -42,7 +42,7 @@
         <div id='page_body_menu_contents' style="width: auto;height: auto;margin: 0px;">
     
 		<!-- login input forms -->
-		<div style="width: 60vw;height: auto; position: absolute; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
+		<div style="width: 60vw;height: auto; position: fixed;z-index: 1; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
 
 			<!-- close button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='block',login_hide()" style="width: 40px; height: 40px; font-size: 1.5em; position: absolute;right: 1%; border: 0px" class="btn btn-info">&times;</button>
@@ -374,8 +374,8 @@
                 min-height:60px;
                 height: auto;
                 border: 0px;
-                /*background: rgba(192,192,192,0.2); */
-                background-color: rgba(15, 1, 1, 0.775);
+                background: rgba(192,192,192,0.2);
+                /* background-color: rgba(15, 1, 1, 0.775); */
                 text-align: center;
                 overflow: auto;
                 position: fixed;
@@ -1208,7 +1208,7 @@
 						
 						wall_link_description.push({"image_link" :"" , "image_status_text" : "Welcome", "image_status_link": ""});
                         wall_link_description.push({"image_link" :"" , "image_status_text" : "O amo hetswe", "image_status_link": ""});
-                        document.getElementById('walp_links_container').style.backgroundColor = 'rgba(192,192,192,0.2)';//change wallpaper description text
+                        //document.getElementById('walp_links_container').style.backgroundColor = 'rgba(192,192,192,0.2)';//change wallpaper description text color
 						
 					}
 					
@@ -1236,6 +1236,9 @@
                             document.getElementById('nav_container').style.display = 'none';
                             document.getElementById('navi_container').style.display = 'none';
                             document.getElementById('ads_provide_layout').style.display = 'block';
+
+                            
+                            document.getElementById('walp_links_container').style.backgroundColor = 'rgba(15, 1, 1, 0.775)'; //change wallpaper description text color
                         }
                         
 
