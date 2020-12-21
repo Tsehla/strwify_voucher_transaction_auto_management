@@ -255,7 +255,7 @@
 					min-width: 200px;
                     width: 100vw;
                     min-height: 50px;
-                    height: 40vh;
+                    height: 30vh;
                     margin: 1vh 0px 0px 0px;
                     padding: 0px;
                     display: flex;
@@ -1213,6 +1213,19 @@
                         if(wall_link_description[0].image_link.length > 0 ){//if wallpaper is available
 
                             document.getElementById('page_body').style.backgroundColor = 'black';
+
+                            //change login menu ui
+                            document.getElementById('right_arrow_1').style.display = 'none';//hide right arrow
+                            document.getElementById('left_arrow_1').style.display = 'none'; //hide left arrow
+                            document.getElementById('top_arrow_1').style.display='none'; //hide arrows
+                            document.getElementById('down_arrow_1').style.display='none'; //hide arrows
+                            document.getElementById('top_arrow_2').style.display='block'; //show arrows
+                            document.getElementById('down_arrow_2').style.display='block'; //show arrows
+
+                            //login ui menu change
+                            document.getElementById('nav_container').style.display = 'none';
+                            document.getElementById('navi_container').style.display = 'none';
+                            document.getElementById('ads_provide_layout').style.display = 'block';
                         }
                         
 
@@ -1319,9 +1332,18 @@
                     //document.getElementById('down_arrow_1').style.display='none';//hide arrows
                     //document.getElementById('down_arrow_2').style.display='none'; //hide arrows
                     //document.getElementById('notification_alert_icon').style.display='block';//show loud speaker
-                    //document.getElementById('down_arrow_container').innerHTML = "<div id='down_arrow_1'><div id='down_arrow_2'></div></div><i class='la la-bullhorn' id='notification_alert_icon' aria-hidden='true' style='text-shadow:3px 3px 3px red, 3px 3px 3px blue;font-size: 35px;color: white ''></i>";
 
-                    document.getElementById('down_arrow_container').innerHTML = `<div id='down_arrow_1'></div><div id='down_arrow_2'></div><div><i role="button" class='btn btn-primary la la-bullhorn' style="width: auto;height:auto;font-size: 40px; "></i></div>`;
+                    document.getElementById('down_arrow_container').innerHTML = "<div id='down_arrow_1'><div id='down_arrow_2'></div></div><i class='la la-bullhorn' id='notification_alert_icon' aria-hidden='true' style='text-shadow:3px 3px 3px red, 3px 3px 3px blue;font-size: 35px;color: white ''></i>";
+
+
+                    //if wallpaper is provided//show new ui announcement button
+                    if(wall_link_description[0].image_link.length > 0 ){
+                        document.getElementById('down_arrow_container').innerHTML = `<div id='down_arrow_1'></div><div id='down_arrow_2'></div><div><i role="button" class='btn btn-primary la la-bullhorn' style="width: auto;height:auto;font-size: 40px; "></i></div>`;
+
+                    }
+
+
+                    
 
                     
                     
@@ -1387,18 +1409,6 @@
             //show login ui
             document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
             document.getElementById('forced_advertisement_navigation_four_button').style.display = 'none';//hide  forced ads navigation
-            document.getElementById('right_arrow_1').style.display = 'none';//hide right arrow
-            document.getElementById('left_arrow_1').style.display = 'none'; //hide left arrow
-            document.getElementById('top_arrow_1').style.display='none'; //hide arrows
-            document.getElementById('down_arrow_1').style.display='none'; //hide arrows
-            document.getElementById('top_arrow_2').style.display='block'; //show arrows
-            document.getElementById('down_arrow_2').style.display='block'; //show arrows
-
-            //login ui menu change
-            document.getElementById('nav_container').style.display = 'none';
-            document.getElementById('navi_container').style.display = 'none';
-            document.getElementById('ads_provide_layout').style.display = 'block';
-
 
             //restart auto wallpaper changer//incase its stopped
             clearInterval(walp_interval);
