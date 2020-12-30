@@ -32,6 +32,8 @@
 					color: blue;
 				}
 
+                {border: 1px solid grey}
+
 
 			</style>
 
@@ -171,14 +173,30 @@
             
         </style>
                 <!-- ads provided layout change -->
-                <div id='ads_provide_layout' style=" display: none; width:100%; min-height: 54px; max-height:auto ; text-align: center; min-width: 300px;position: fixed;top:5vh;"> <!-- chnage href with you link -->
-                    <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -4px auto auto; font-size: 28px;min-width: 65px; width: 20vw;'></a>
+                <div id='ads_provide_layout' style=" display: none; width:100vw; min-height: 54px; max-height:auto ; text-align: center; min-width: 329px;position: fixed;top:0px;margin:-30px 0px 0px 0px"> <!-- chnage href with you link -->
+
+                    <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -5px auto auto; font-size: 28px;min-width: 60px; width: 19vw;'></a>
         
-                    <button class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px;min-width: 65px; width: 20vw;' onclick='buy()'>BUY</button>
+                    <button class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px 0px 0px;min-width: 60px; width: 19vw;' onclick='buy()'>BUY</button>
+                    
+                    <span class='' style='min-width: 65px; width: auto;min-height:100px; height: auto; display: inline-block; position: relative ;top:40px;' >
+                        
+                        <!-- arrow up -->
+                        <!-- <i onclick='' class='btn btn-primary la la-arrow-up ' role='button' style='margin:0px; font-size: 28px;min-width: 65px; width: inherit; display: block;'></i> -->
+                        <i role="button" class="btn btn-primary la la-arrow-up" style="width: auto;height:auto;font-size: 40px; display: block; margin-bottom: 10px;" onclick='document.getElementById("free_sites_container").style.display="block"'></i>
+
+                        <!-- arrow down -->
+                        <!-- <i onclick='' class='btn btn-primary la la-arrow-down ' role='button' style='margin:0px; font-size: 28px;min-width: 65px; width: inherit;display: block'></i> -->
+                        <i id='ads_down_arrow' role="button" class="btn btn-primary la la-arrow-down" style="width: auto;height:auto;font-size: 40px; display: block" onclick='document.getElementById("notification_container").style.display="block"'></i>
+
+                        <!-- notification -->
+                        <i id='notification_down_arrow' role="button" class="btn btn-primary la la-bullhorn" style="width: auto;height:auto;font-size: 40px; display: none"></i>
+
+                    </span>
+
+                    <button id='' class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-1px;min-width: 60px; width: 18vw;font-size: 15px;' onclick='document.getElementById("help_container").style.display="block"'>HELP</button>
         
-                    <button id='' class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-1px;min-width: 65px; width: 20vw;font-size: 15px;' onclick='document.getElementById("help_container").style.display="block"'>HELP</button>
-        
-                    <a href='#' onclick='next_wallpaper_ads()' class='btn btn-primary la la-arrow-right ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-4px; font-size: 28px;min-width: 65px; width: 20vw;'></a>
+                    <a href='#' onclick='next_wallpaper_ads()' class='btn btn-primary la la-arrow-right ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-4px; font-size: 28px;min-width: 60px; width: 18vw;'></a>
                     
                 </div>
         <style>
@@ -212,9 +230,11 @@
     	<!-- top arrow -->
         <div id='top_arrow_container' onclick='document.getElementById("free_sites_container").style.display="block"'>
             <div id='top_arrow_1' role="button" class='btn btn-default'>&#8679;</div>
+            <!--
             <div id='top_arrow_2' style="display:none;position: fixed;top:20vh;">
                 <i role="button" class='btn btn-primary la la-arrow-up' style="width: auto;height:auto;font-size: 40px; "></i>
             </div>
+            -->
         </div>
         <style>
             #top_arrow_container{
@@ -321,7 +341,7 @@
                 <div id='down_arrow_1' role="button" class='btn btn-default'>&#8681;</div>
                 
                 <div id='down_arrow_2' style="display:none;position: fixed;bottom:30%;">
-                    <i role="button" class='btn btn-primary la la-arrow-down' style="width: auto;height:auto;font-size: 40px; "></i>
+                   <!--  <i role="button" class='btn btn-primary la la-arrow-down' style="width: auto;height:auto;font-size: 40px; "></i> -->
                 </div>
 				 <!-- <i class="la la-bullhorn" id='notification_alert_icon' aria-hidden="true" style="text-shadow:3px 3px 3px red, 3px 3px 3px blue;font-size: 35px;color: white "></i> -->
             </div>
@@ -362,6 +382,15 @@
         
         <div id='walp_links_container' role='button' class='btn btn-primary'>
             <p id='walp_links' >Welcome</p>
+
+            <!-- view image icon -->
+            <!-- show when opening a weblink to different page/ i.e wallaper link different from description link -->
+            <!-- <i class='la la-search' style=' color: snow;font-size: 30px;text-shadow : 1px 1px 12px black;margin:0px;'></i>  --> 
+            <i id='walp_link_eye' class='la la-eye' style=' color: snow;font-size: 30px;text-shadow : 1px 1px 12px black;margin:0px; display:none'></i>
+
+             <!--show magnify when wallpaper link same as link on description  -->
+            <i id='walp_link_magnify' class='la la-search-plus' style=' color: snow;font-size: 30px;text-shadow : 1px 1px 12px black;margin:0px;'></i>
+
         </div>		
 		
         <style>
@@ -384,7 +413,7 @@
             #walp_links_container p{
                 width: 100%;
                 height: auto;
-                padding: 15px 1vw 1vh 1vw;
+                padding: 15px 1vw 0px 1vw;
                 background-color: transparent;
                 color: snow;
                 font-size: 20px;
@@ -767,6 +796,7 @@
 
 		<!-- Connection buttons -->   
         <div id="bottom_bar" style="width:100%; min-height: 54px; max-height:auto ; background-color: #3498db; position: fixed; bottom: 3%" >
+        <!-- <div id="bottom_bar" style="width:100%; min-height: 54px; max-height:auto ; background-color: #3498db; position: fixed; bottom: 3%" > -->
 
               <!-- Free data button -->
             <button id='free_data_login_button' onclick="free_login()" class="btn btn" style="min-width: 95px; height:45px; margin: 4.5px 2.5%; display: none;background: rebeccapurple; color: whitesmoke; float: left;">Free Data Voucher</button>
@@ -1229,7 +1259,7 @@
                             document.getElementById('left_arrow_1').style.display = 'none'; //hide left arrow
                             document.getElementById('top_arrow_1').style.display='none'; //hide arrows
                             document.getElementById('down_arrow_1').style.display='none'; //hide arrows
-                            document.getElementById('top_arrow_2').style.display='block'; //show arrows
+                            //document.getElementById('top_arrow_2').style.display='block'; //show arrows
                             document.getElementById('down_arrow_2').style.display='block'; //show arrows
 
                             //login ui menu change
@@ -1237,8 +1267,12 @@
                             document.getElementById('navi_container').style.display = 'none';
                             document.getElementById('ads_provide_layout').style.display = 'block';
 
+                            //move "Enter Voucher Code" bar to bottom
+                            document.getElementById('bottom_bar').style.bottom = '1px';
+
+
                             
-                            document.getElementById('walp_links_container').style.backgroundColor = 'rgba(15, 1, 1, 0.775)'; //change wallpaper description text color
+                            document.getElementById('walp_links_container').style.backgroundColor = 'rgba(15, 1, 1, 0.523)'; //change wallpaper description text color
                         }
                         
 
@@ -1351,7 +1385,14 @@
 
                     //if wallpaper is provided//show new ui announcement button
                     if(wall_link_description[0].image_link.length > 0 ){
-                        document.getElementById('down_arrow_container').innerHTML = `<div id='down_arrow_1'></div><div id='down_arrow_2'></div><div><i role="button" class='btn btn-primary la la-bullhorn' style="width: auto;height:auto;font-size: 40px; position: fixed; bottom:30%;left:41% "></i></div>`;
+                        document.getElementById('down_arrow_container').innerHTML = `<div id='down_arrow_1'></div><div id='down_arrow_2'></div>`;
+
+
+                        //hide advertisement ui arrow down
+                        document.getElementById('ads_down_arrow').style.display = 'none';
+
+                        //show advertisment ui notification
+                        document.getElementById('notification_down_arrow').style.display = 'block';
 
                     }
 
@@ -1427,6 +1468,20 @@
             clearInterval(walp_interval);
             walp_interval =  setInterval(walp_changer, 6000);
 
+            //change wallpaper height on login screen
+            document.getElementById('page_body').style.backgroundSize= '100% 95vh';
+            document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
+
+            //handle image display correcting for desktops computers
+            let screen_height = screen.height;
+            let screen_width = screen.width;
+
+            if( screen_height >= 1285 ||  screen_width >= 802 ){//for desktop limit wallpaper width
+
+                document.getElementById('page_body').style.backgroundSize= 'auto 85vh';             
+
+            }
+
         }
 
 
@@ -1466,7 +1521,28 @@
 			document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
 
             document.getElementById('walp_links').innerHTML = wall_link_description[current_image_content_tracker].image_status_text;
-            
+
+            //change [ wallpaper links text ] link action type icon .ie link opens current wallaper = show magnify; link open a different resources= show eye icon         
+            if(wall_link_description[current_image_content_tracker].image_link && wall_link_description[current_image_content_tracker].image_status_link){//if links provided
+                
+                
+                if(  wall_link_description[current_image_content_tracker].image_link.trim().toLowerCase() == wall_link_description[current_image_content_tracker].image_status_link.trim().toLowerCase() ){//if links are same
+
+                    document.getElementById('walp_link_eye').style.display = 'none'; //hide eye icon
+                    document.getElementById('walp_link_magnify').style.display = 'block'; //show magnify icon
+
+                }
+
+                if(  wall_link_description[current_image_content_tracker].image_link.trim().toLowerCase() != wall_link_description[current_image_content_tracker].image_status_link.trim().toLowerCase() ){//if links are not same
+
+                    document.getElementById('walp_link_magnify').style.display = 'none'; //hide magnify icon
+                    document.getElementById('walp_link_eye').style.display = 'block'; //show eye icon    
+
+                }
+                
+
+            }
+
             // current slide sponsore details
             sponsore_ads = wall_link_description[current_image_content_tracker];
 
