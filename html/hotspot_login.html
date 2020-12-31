@@ -172,6 +172,14 @@
             }
             
         </style>
+
+                <!-- ads_menu bar -->
+                
+                <button onclick='ads_provided_menu_content_show()' id='ads_menu_bar_icon' class=' btn btn-primary ' style='position: fixed; top:2vh; left:2vw;display: none;'>
+                    <i class='la la-bars' style=" font-size: 20px;font-weight: 900;"></i>
+                    <span style=" font-size: 18px;font-weight: 600;">Menu</span>
+                </button>
+
                 <!-- ads provided layout change -->
                 <div id='ads_provide_layout' style=" display: none; width:100vw; min-height: 54px; max-height:auto ; text-align: center; min-width: 329px;position: fixed;top:0px;margin:-30px 0px 0px 0px"> <!-- chnage href with you link -->
 
@@ -269,9 +277,11 @@
         <div id='center_arrow_container'>
             <div id='left_arrow'>
                 <div id='left_arrow_1' role="button" class='btn btn-default'>&#8678;</div>
+                <div id='left_arrow_2' onclick='prev_wallpaper_ads()' style='display:none; font-size: 50px; text-align: left;text-shadow : 2px 2px 1px snow; position:fixed;top:40vh;left:5vw' role="button" class='btn la la-caret-left'></div>
             </div>
             <div id='right_arrow'>
                 <div id='right_arrow_1' role="button" class='btn btn-default'>&#8680;</div>
+                <div id='right_arrow_2' onclick='next_wallpaper_ads()' style='display:none; font-size: 50px; text-align: right;text-shadow : 2px 2px 1px snow;position:fixed;top:40vh;right:5vw;color:black' role="button" class='btn la la-caret-right'></div>
             </div>
         </div>
             
@@ -292,6 +302,9 @@
                     width: 50%;
                     height: 100%;
                     margin-top: 13vh;
+                }
+                #left_arrow div:active {
+                /* background-color :grey; */
                 }
                 #left_arrow div{
                     height: 100%;
@@ -316,7 +329,7 @@
                     margin-top: 13vh;
                 }
                 #right_arrow div:active {
-                background-color :grey;
+                /* background-color :grey; */
                 }
                 #right_arrow div{
                     height: 100%;
@@ -1265,7 +1278,14 @@
                             //login ui menu change
                             document.getElementById('nav_container').style.display = 'none';
                             document.getElementById('navi_container').style.display = 'none';
-                            document.getElementById('ads_provide_layout').style.display = 'block';
+
+                            // //show ads navigation bars
+                            document.getElementById('left_arrow_2').style.display ='block';
+                            document.getElementById('right_arrow_2').style.display ='block';
+
+                            document.getElementById('bottom_bar').style.display = 'none'; //hide bottom bar
+                            document.getElementById('ads_menu_bar_icon').style.display = 'block'; //hide bottom bar
+                            
 
                             //move "Enter Voucher Code" bar to bottom
                             document.getElementById('bottom_bar').style.bottom = '1px';
@@ -1467,6 +1487,21 @@
             //restart auto wallpaper changer//incase its stopped
             clearInterval(walp_interval);
             walp_interval =  setInterval(walp_changer, 6000);
+
+        }
+
+
+        //show login menu contents
+        function ads_provided_menu_content_show(){
+
+            //hide menu and navigation bar
+            document.getElementById('left_arrow_2').style.display ='none';
+            document.getElementById('right_arrow_2').style.display ='none';
+            document.getElementById('ads_menu_bar_icon').style.display = 'none';
+
+            //show
+            document.getElementById('ads_provide_layout').style.display = 'block';//show top menu contents
+            document.getElementById('bottom_bar').style.display = 'block'; //show bottom bar 
 
             //change wallpaper height on login screen
             document.getElementById('page_body').style.backgroundSize= '100% 95vh';
