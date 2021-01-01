@@ -181,6 +181,7 @@
                 </button>
 
                 <!-- ads provided layout change -->
+                <!-- layout version 3 -->
                 <div id='ads_provide_layout' style=" display: none; width:100vw; min-height: 54px; max-height:auto ; text-align: center; min-width: 329px;position: fixed;top:0px;margin:-30px 0px 0px 0px"> <!-- chnage href with you link -->
 
                     <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -5px auto auto; font-size: 28px;min-width: 60px; width: 19vw;'></a>
@@ -234,6 +235,59 @@
             }
 
         </style>
+
+         <!-- layout version 2 -->
+        <div id='ads_provide_layout_2' style=" display: none; width:100vw; min-height: 54px; max-height:auto ; text-align: center; min-width: 329px;position: fixed;top:0px;margin:10px 0px 0px 0px"> <!-- chnage href with you link -->
+
+            <a href='#' onclick='document.getElementById("notification_container").style.display="block"' class='btn btn-primary la la-envelope' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -5px auto auto; font-size: 38px;min-width: 60px; width: 19vw;'>
+                <span id='announcements_total' style='font-size: 10px;margin: -63px 0px 0px 0px ;display: block;color:red'>0</span>
+                <span style='font-size: 10px;margin: -5px 0px 0px 0px ;display: block;font-weight: 900'>Message</span>
+                
+            
+            </a>
+
+            <button class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px 0px 0px;min-width: 60px; width: 19vw;' onclick='buy()'>BUY</button>
+
+            
+            <a href='#' onclick='ads_provided_menu_content_show("return")' class='btn btn-primary la la-bars ' role='button' style='border-radius:2px; margin:0px; font-size: 28px;min-width: 60px; width: 18vw;'>
+                <span style='font-size: 10px;margin: -23px 0px 0px 0px ;display: block;font-weight: 900;'>Menu</span>
+            </a>
+
+            <button id='' class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-1px;min-width: 60px; width: 18vw;font-size: 15px;' onclick='document.getElementById("help_container").style.display="block"'>HELP</button>
+
+            <a href='#' onclick='document.getElementById("free_sites_container").style.display="block"' class='btn btn-primary la la-edit ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-4px; font-size: 44px;min-width: 60px; width: 18vw;'>
+                <span style='font-size: 10px;margin: -23px 0px 0px 0px ;display: block;font-weight: 900'>Job/School</span>
+            </a>
+            
+        </div>
+        <style>
+
+            #ads_provide_layout_2{
+                min-width: 200px;
+                width: 100vw;
+                height: 70px;
+                display: flex;
+                
+            
+            
+            }
+            #ads_provide_layout_2 a{
+                min-width: 50px;
+                width: 20vw;
+                height: 60px;
+                text-align :center;
+                line-height: 45px;
+                font-size: 0.9em;
+            }
+            #ads_provide_layout_2 button{
+                height: 60px;
+                text-align :center;
+                line-height: 45px;
+                font-size: 18px;
+            }
+
+        </style>
+
 
     	<!-- top arrow -->
         <div id='top_arrow_container' onclick='document.getElementById("free_sites_container").style.display="block"'>
@@ -1130,6 +1184,10 @@
         var forced_ads_scrolling_skip_button_show = 10;//show skip button on tenth wallpaper
         var forced_ads_allowed = false; //set forced ads allowed tracking to false
 
+        //login menu configuration
+        var menu_layout_type = 'appearance_1'; //set appearance 2 layout as default
+        var manu_layout_ads_wallpaper = 'images/ads_layout_default_wallpaper.jpg'; //wallpaper to be used for menu layout;//this is default wallpaper to be used, 
+
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
 			//++++++++++++++if network issue, use belo copy of default variable
@@ -1193,7 +1251,11 @@
 				
 				if(data_from_db.hotspot_announcements){	  
 					notifications_from_db = data_from_db.hotspot_announcements;
-					//console.log('6'+notifications_from_db);
+                    //console.log('6'+notifications_from_db);
+                    
+                    //set notification number on menu layout type 2
+                    document.getElementById('announcements_total').innerHTML = notifications_from_db.length;
+
 					 }
 				
 				if(data_from_db.notification_bottom_text){	 
@@ -1473,6 +1535,19 @@
             }
 
             forced_ads_scrolling_skip_button_show = (Number(data_from_db.forced_advertisement_scrolling_exit_number)?Number(data_from_db.forced_advertisement_scrolling_exit_number):10 );//forced scrolling skip show button on interval
+
+            //login menu configuration
+            menu_layout_type = data_from_db.ads_ui_type;//set menu type stored on db
+
+            if(Number(data_from_db.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
+
+                if(Number(data_from_db.ads_ui_layout_wallpaper) > 0 && Number(data_from_db.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
+
+                    manu_layout_ads_wallpaper = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+                }
+
+            }
+            
 			
         }
         
@@ -1492,28 +1567,75 @@
 
 
         //show login menu contents
-        function ads_provided_menu_content_show(){
+        function ads_provided_menu_content_show(action = 'show'){
 
-            //hide menu and navigation bar
-            document.getElementById('left_arrow_2').style.display ='none';
-            document.getElementById('right_arrow_2').style.display ='none';
-            document.getElementById('ads_menu_bar_icon').style.display = 'none';
+            if(action == 'show'){ //show login menu contents
+console.log(menu_layout_type)
 
-            //show
-            document.getElementById('ads_provide_layout').style.display = 'block';//show top menu contents
-            document.getElementById('bottom_bar').style.display = 'block'; //show bottom bar 
+                //set menu layout
+                //if(menu_layout_type == 'appearance 2' || menu_layout_type == 'appearance 1'){//if menu is selected to be type 2, show menu lyout 2
+                if(menu_layout_type == 'appearance_1'){
 
-            //change wallpaper height on login screen
-            document.getElementById('page_body').style.backgroundSize= '100% 95vh';
-            document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
+                    document.getElementById('ads_provide_layout_2').style.display = 'block';//show top menu contents
+                }
 
-            //handle image display correcting for desktops computers
-            let screen_height = screen.height;
-            let screen_width = screen.width;
+                if(menu_layout_type == 'appearance_2'){ //if menu is selected to be type 3, show menu lyout 3
 
-            if( screen_height >= 1285 ||  screen_width >= 802 ){//for desktop limit wallpaper width
+                    document.getElementById('ads_provide_layout').style.display = 'block';//show top menu contents
+                }
+                //wallpaper
+                clearInterval(walp_interval);//stop wallpaper auto changer
 
-                document.getElementById('page_body').style.backgroundSize= 'auto 85vh';             
+
+                document.getElementById('page_body').style.backgroundImage = 'url('+ manu_layout_ads_wallpaper + ')';//set static wallpaper
+                document.getElementById('walp_links').innerHTML = 'View image';
+                
+                //hide menu and navigation bar
+                document.getElementById('left_arrow_2').style.display ='none';
+                document.getElementById('right_arrow_2').style.display ='none';
+                document.getElementById('ads_menu_bar_icon').style.display = 'none';
+
+                //show
+                document.getElementById('bottom_bar').style.display = 'block'; //show bottom bar 
+
+                //change wallpaper height on login screen
+                document.getElementById('page_body').style.backgroundSize= '100% 95vh';
+                document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
+
+                //handle image display correcting for desktops computers
+                let screen_height = screen.height;
+                let screen_width = screen.width;
+
+                if( screen_height >= 1285 ||  screen_width >= 802 ){//for desktop limit wallpaper width
+
+                    document.getElementById('page_body').style.backgroundSize= 'auto 85vh';             
+
+                }
+
+            }
+
+            
+            if(action == 'return'){ //return to show ads browsing screen//this is not forced ads screen
+
+                //hide menu layout
+                document.getElementById('ads_provide_layout_2').style.display = 'none';//show top menu contents
+                document.getElementById('ads_provide_layout').style.display = 'none';//show top menu contents
+
+                //show menu and navigation bar
+                document.getElementById('left_arrow_2').style.display ='block';
+                document.getElementById('right_arrow_2').style.display ='block';
+                document.getElementById('ads_menu_bar_icon').style.display = 'block';
+
+                //show
+                document.getElementById('bottom_bar').style.display = 'none'; //show bottom bar 
+
+                //change wallpaper height on login screen
+                document.getElementById('page_body').style.backgroundSize= 'auto 100vh';
+    
+                //start wallpaper changer
+                walp_changer();//change to advertisement wallpaper
+                //walp_interval =  setInterval(walp_changer, 6000);//start wallpaper auto changer
+
 
             }
 
