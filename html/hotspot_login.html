@@ -446,7 +446,7 @@
                 
             </style>
     	<!-- wallpaper links -->
-        
+        <!-- 1 -->
         <div id='walp_links_container' role='button' class='btn btn-primary'>
             <p id='walp_links' >Welcome</p>
 
@@ -458,7 +458,19 @@
              <!--show magnify when wallpaper link same as link on description  -->
             <i id='walp_link_magnify' class='la la-search-plus' style=' color: snow;font-size: 30px;text-shadow : 1px 1px 12px black;margin:0px;'></i>
 
-        </div>		
+        </div>	
+        <!-- 2 -->
+        <div id='walp_links_container_2' role='button' class='btn btn-primary' style="display: none;">
+            <p id='walp_links_2' >Welcome</p>
+
+            <i id='walp_link_eye_2' class='la la-eye' style=' color: snow;font-size: 30px;text-shadow : 1px 1px 12px black;margin:0px; display:none'></i>
+
+             <!--show magnify when wallpaper link same as link on description  -->
+            <i id='walp_link_magnify_2' class='la la-search-plus' style=' color: snow;font-size: 30px;text-shadow : 1px 1px 12px black;margin:0px;'></i>
+
+        </div>	
+
+
 		
         <style>
             #walp_links_container {
@@ -478,6 +490,32 @@
                 bottom:15%;
             }
             #walp_links_container p{
+                width: 100%;
+                height: auto;
+                padding: 15px 1vw 0px 1vw;
+                background-color: transparent;
+                color: snow;
+                font-size: 20px;
+                text-shadow : 1px 1px 12px black;
+            }
+
+            #walp_links_container_2 {
+                /*margin-top: 1vh;
+                margin-bottom: 100px;
+                */
+				min-width: 200px;
+                width: 100vw;
+                min-height:60px;
+                height: auto;
+                border: 0px;
+                background: rgba(192,192,192,0.2);
+                /* background-color: rgba(15, 1, 1, 0.775); */
+                text-align: center;
+                overflow: auto;
+                position: fixed;
+                bottom:15%;
+            }
+            #walp_links_container_2 p{
                 width: 100%;
                 height: auto;
                 padding: 15px 1vw 0px 1vw;
@@ -1186,7 +1224,7 @@
 
         //login menu configuration
         var menu_layout_type = 'appearance_1'; //set appearance 2 layout as default
-        var manu_layout_ads_wallpaper = 'images/ads_layout_default_wallpaper.jpg'; //wallpaper to be used for menu layout;//this is default wallpaper to be used, 
+        var manu_layout_ads_wallpaper = {login_menu_wallpaper_image:'images/ads_layout_default_wallpaper.jpg', login_menu_wallpaper_text: 'View image', login_menu_wallpaper_action_bar_click_link:'images/ads_layout_default_wallpaper.jpg'  }; //wallpaper to be used for menu layout;//this is default wallpaper to be used, 
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
@@ -1332,7 +1370,8 @@
                             //change login menu ui
                             document.getElementById('right_arrow_1').style.display = 'none';//hide right arrow
                             document.getElementById('left_arrow_1').style.display = 'none'; //hide left arrow
-                            document.getElementById('top_arrow_1').style.display='none'; //hide arrows
+                            //document.getElementById('top_arrow_1').style.display='none'; //hide arrows
+                            document.getElementById('top_arrow_container').style.display = 'none'; //hide arrow container
                             document.getElementById('down_arrow_1').style.display='none'; //hide arrows
                             //document.getElementById('top_arrow_2').style.display='block'; //show arrows
                             document.getElementById('down_arrow_2').style.display='block'; //show arrows
@@ -1543,7 +1582,12 @@
 
                 if(Number(data_from_db.ads_ui_layout_wallpaper) > 0 && Number(data_from_db.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
 
-                    manu_layout_ads_wallpaper = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+                    
+                     
+                    
+                    manu_layout_ads_wallpaper.login_menu_wallpaper_image = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+                    manu_layout_ads_wallpaper.login_menu_wallpaper_text = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_text;//get text of that wallpaper
+                    manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_link ;//get url action link of that wallpaper
                 }
 
             }
@@ -1570,7 +1614,7 @@
         function ads_provided_menu_content_show(action = 'show'){
 
             if(action == 'show'){ //show login menu contents
-console.log(menu_layout_type)
+
 
                 //set menu layout
                 //if(menu_layout_type == 'appearance 2' || menu_layout_type == 'appearance 1'){//if menu is selected to be type 2, show menu lyout 2
@@ -1583,12 +1627,32 @@ console.log(menu_layout_type)
 
                     document.getElementById('ads_provide_layout').style.display = 'block';//show top menu contents
                 }
+
                 //wallpaper
                 clearInterval(walp_interval);//stop wallpaper auto changer
 
+                document.getElementById('page_body').style.backgroundImage = 'url('+ manu_layout_ads_wallpaper.login_menu_wallpaper_image + ')';//set static wallpaper
 
-                document.getElementById('page_body').style.backgroundImage = 'url('+ manu_layout_ads_wallpaper + ')';//set static wallpaper
-                document.getElementById('walp_links').innerHTML = 'View image';
+                //login menu acton bar 
+                document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_text; //change login menu image action bar text
+
+                document.getElementById('walp_links_container_2').onclick = function(){//login menu wallpaper action bar click
+
+                    window.open(manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link, '_blank');//open image or url in new page
+                }
+
+                //change login menu wallpaper action bar, info icon
+                if(manu_layout_ads_wallpaper.login_menu_wallpaper_image && manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link && manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link.toLowerCase().trim() !=  manu_layout_ads_wallpaper.login_menu_wallpaper_image.toLowerCase().trim() ){
+
+                    document.getElementById('walp_link_magnify_2').style.display = 'none'; //hide magnify icon
+                    document.getElementById('walp_link_eye_2').style.display = 'block'; //show eye icon  
+
+                }
+
+                    
+                document.getElementById('walp_links_container').style.display = 'none';//hide default main advertisment wallpapers action bar
+                document.getElementById('walp_links_container_2').style.display = 'block'; //show login menu action bar
+
                 
                 //hide menu and navigation bar
                 document.getElementById('left_arrow_2').style.display ='none';
@@ -1625,6 +1689,10 @@ console.log(menu_layout_type)
                 document.getElementById('left_arrow_2').style.display ='block';
                 document.getElementById('right_arrow_2').style.display ='block';
                 document.getElementById('ads_menu_bar_icon').style.display = 'block';
+
+                document.getElementById('walp_links_container_2').style.display = 'none'; //hide login menu action bar
+                document.getElementById('walp_links_container').style.display = 'block';//show default main advertisment wallpapers action bar
+                
 
                 //show
                 document.getElementById('bottom_bar').style.display = 'none'; //show bottom bar 
