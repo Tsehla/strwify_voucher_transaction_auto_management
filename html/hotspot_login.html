@@ -1635,6 +1635,7 @@
         //show login menu contents  
         function ads_provided_menu_content_show(action = 'show'){
 
+            console.log(action)
             if(action == 'show'){ //show login menu contents
 
 
@@ -1698,9 +1699,11 @@
 
                 }
 
+                return;
+
             }
 
-            console.log(action)
+            
             
             if(action == 'return'){ //return to show ads browsing screen//this is not forced ads screen
 
@@ -1728,6 +1731,7 @@
                 walp_changer();//change to advertisement wallpaper
                 //walp_interval =  setInterval(walp_changer, 6000);//start wallpaper auto changer
 
+                return;
 
             }
 
