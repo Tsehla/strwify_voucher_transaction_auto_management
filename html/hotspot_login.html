@@ -1620,11 +1620,9 @@
 
             }
        
-            if(menu_layout_type == 'appearance_2'){//if menu layout two
+            document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
+            document.getElementById('forced_advertisement_navigation_four_button').style.display = 'none';//hide  forced ads navigation
 
-                document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
-                document.getElementById('forced_advertisement_navigation_four_button').style.display = 'none';//hide  forced ads navigation
-            }
             
 
         }
@@ -1822,9 +1820,11 @@
             }
 
             //show incase//usefull for [ layout menu type 2 ]
-            document.getElementById('walp_links_container').style.display = 'block';//show default main advertisment wallpapers action bar
-            document.getElementById('walp_links_container_2').style.display = 'none'; //hide login main menu action bar
-       
+            if(menu_layout_type == 'appearance_2'){//if menu layout two
+                
+                document.getElementById('walp_links_container').style.display = 'block';//show default main advertisment wallpapers action bar
+                document.getElementById('walp_links_container_2').style.display = 'none'; //hide login main menu  action bar
+            }
         };
         
         
