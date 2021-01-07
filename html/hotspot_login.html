@@ -1221,6 +1221,7 @@
         //forced ads scrolling skip button show on picture number
         var forced_ads_scrolling_skip_button_show = 10;//show skip button on tenth wallpaper
         var forced_ads_allowed = false; //set forced ads allowed tracking to false
+        var forced_ads_skip_to_login_menu = false; //if forced ads, allow to skip to login menu directly// i.e skip user inetrface with menu button only
 
         //login menu configuration
         var menu_layout_type = 'appearance_1'; //set appearance 2 layout as default
@@ -1385,7 +1386,10 @@
                             document.getElementById('right_arrow_2').style.display ='block';
 
                             document.getElementById('bottom_bar').style.display = 'none'; //hide bottom bar
-                            document.getElementById('ads_menu_bar_icon').style.display = 'block'; //hide bottom bar
+
+                                document.getElementById('ads_menu_bar_icon').style.display = 'block'; //show menu button
+                            
+                           
                             
 
                             //move "Enter Voucher Code" bar to bottom
@@ -1570,6 +1574,8 @@
                 forced_ads_allowed = true; //set forced ads allowed to true
                 document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
                 document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
+
+                forced_ads_skip_to_login_menu = data_from_db.forced_advertisement_skip_to_login; //set skip [ menu buttonly only user interface ] to true or false
                 
             }
 
@@ -1599,18 +1605,30 @@
         //forced advertisement hide
         function forced_ads_hide (){
 
-            //show login ui
+            //show login ui 
+
+            //forced ads skip [ menu button ui ] to login
+            if(forced_ads_skip_to_login_menu ){ //if true
+                                
+                ads_provided_menu_content_show();//call function
+            }
+            if(!forced_ads_skip_to_login_menu ){ //if false;//start wallpaper changer timer
+                                
+                //restart auto wallpaper changer//incase its stopped
+                clearInterval(walp_interval);
+                walp_interval =  setInterval(walp_changer, 6000);
+
+            }
+       
             document.getElementById('page_body_menu_contents').style.display = 'block';//show login menu
             document.getElementById('forced_advertisement_navigation_four_button').style.display = 'none';//hide  forced ads navigation
 
-            //restart auto wallpaper changer//incase its stopped
-            clearInterval(walp_interval);
-            walp_interval =  setInterval(walp_changer, 6000);
+            
 
         }
 
 
-        //show login menu contents
+        //show login menu contents  
         function ads_provided_menu_content_show(action = 'show'){
 
             if(action == 'show'){ //show login menu contents
@@ -1800,6 +1818,10 @@
                 forced_ads_auto_exit = true;//set all wallpapers scrolled to true
                 
             }
+
+            //show incase//usefull for [ layout menu type 2 ]
+            document.getElementById('walp_links_container').style.display = 'block';//show default main advertisment wallpapers action bar
+            document.getElementById('walp_links_container_2').style.display = 'none'; //hide login main menu action bar
        
         };
         
