@@ -1613,7 +1613,7 @@
 
             
             //forced ads skip [ menu button ui ] to login
-            console.log(forced_ads_skip_to_login_menu)
+            //console.log(forced_ads_skip_to_login_menu)
             if(forced_ads_skip_to_login_menu == true){ //if true
                                 
                 ads_provided_menu_content_show();//call function
@@ -1626,6 +1626,9 @@
                 walp_interval =  setInterval(walp_changer, 6000);
 
             }
+
+            //this get called when user clicks [ menu button  ], of ui shown  after enforcing this rule [ (forced_ads_skip_to_login_menu == true) ] //this cause unintended behaviour, so wil set below to false
+            forced_ads_skip_to_login_menu = false;//set to false
 
             
 
@@ -1699,7 +1702,7 @@
 
                 }
 
-                return;
+              
 
             }
 
@@ -1731,7 +1734,6 @@
                 walp_changer();//change to advertisement wallpaper
                 //walp_interval =  setInterval(walp_changer, 6000);//start wallpaper auto changer
 
-                return;
 
             }
 
