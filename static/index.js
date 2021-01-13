@@ -465,10 +465,15 @@ function buy_page_on_init(){ //get unique code for this user session
 start timer for auto voucher download
 =====================================================================================================================================================*/
 
+//console.log(url_parms_object())
+
 var free_voucher_login = false;//allow unattended login if free voucher
 
+
 function auto_voucher_check(uniqueCode){
+
 		unique_code = uniqueCode;
+
 		var url_params_array = url_parms_object();//get/return url parameters as objects
 		
 		//+++++++++++ default url for voucher finding +++++++++++++
@@ -482,8 +487,28 @@ function auto_voucher_check(uniqueCode){
 			url= http_https + current_domain + '/api/buy?code=free_voucher';
 			
 			free_voucher_login = true;//login is free voucher
-		}
 
+
+			//for free login inititated by enabling [ trial user ] on mikrotik hotspot // server connection to check for free ticket is not necessary
+			if(url_params_array.router_free_type == 'true'){
+
+				//call auto login function // mikrotik trial user expects 'T-' + client device mac address as username only; sometimes [ dst= ] which is redirect url link with [ http ], if not provided user will be directed to status page most likely, seem not with mikrosoft edge thought
+								
+				/* FUNCTION REMOVED AND SENT TO [ selected_voucher_ticket_template_append() ], issue it runs before function [ hotspot_voucher_template_selector() ] ticket request ajax call completes
+
+				auto_login({
+
+					vocher_code : 'N/A',
+					voucher_username : 'T-' + url_params_array.mac,
+					voucher_password : '' 
+				});
+
+				*/
+
+				return; //end function
+
+			}
+		}
 			
         var response = uniqueCode;
 
@@ -559,6 +584,23 @@ function manual_voucher_init(button_id){
 		if(document.location.search.indexOf('free_login') != -1){ //if true change url handling request
 			//alert('Yes user was directed by pressing free voucher button on hotspot page');
 			url= http_https + current_domain + '/api/buy?code=free_voucher'
+
+
+			//for free login inititated by enabling [ trial user ] on mikrotik hotspot // server connection to check for free ticket is not necessary
+			if(url_params_array.router_free_type == 'true'){
+
+				//call auto login function // mikrotik trial user expects 'T-' + client device mac address as username only; sometimes [ dst= ] which is redirect url link with [ http ], if not provided user will be directed to status page most likely, seem not with mikrosoft edge thought
+				 
+				auto_login({
+
+					vocher_code : 'N/A',
+					voucher_username : 'T-' + url_params_array.mac,
+					voucher_password : '' 
+				});
+				
+				return; //end function
+
+			}
 		}
     
 		document.getElementById(button_id).disabled = true;//disable mabual voucher download
@@ -617,18 +659,20 @@ voucher printing
 //console.log(auto_user_creater_wifi_radius_link.hotspot_id)
 
 //set default voucher ticket template
-var ticket_template_selector = "images/default_ticket_template_not_specified.jpg";
+var ticket_template_selector = "images/default_ticket_template_not_specified.jpg";//images/uploads/ads/16-5-53PM,%203-8-2020%20streetwifiy_ticket_template.jpg
 
 function hotspot_voucher_template_selector(){
 
+
 //if hotspot_voucher_template_link is not provided
-if(!auto_user_creater_wifi_radius_link.hotspot_voucher_template_link){
+if( auto_user_creater_wifi_radius_link.hotspot_voucher_template_link.length < 6){// if link lenght provided is less than six characters
 	selected_voucher_ticket_template_append();//call voucher div createer function
+	
 }
 
 
 //if hotspot_voucher_template_link provided
-if(auto_user_creater_wifi_radius_link.hotspot_voucher_template_link){ 
+if(auto_user_creater_wifi_radius_link.hotspot_voucher_template_link.length > 6){ //if link lenght provided is biger than six characters
 	
 	//set new image link
 	ticket_template_selector = auto_user_creater_wifi_radius_link.hotspot_voucher_template_link.trim();
@@ -680,6 +724,7 @@ if(auto_user_creater_wifi_radius_link.hotspot_voucher_template_link){
 
 function selected_voucher_ticket_template_append(){
 
+	
 	//add ticket image template to html div body
 	$('#buyer_container').append(`
 
@@ -687,6 +732,32 @@ function selected_voucher_ticket_template_append(){
 		<canvas style="width: 280px; height: 270px; display: none;" id='ticket_canvas'> Ticket </canvas>
 
 	`);
+
+
+	//call free login ticket production//for mikrotik hotspot [ trial ] user initiated free login request
+	//code block moved from [ auto_voucher_check(uniqueCode) ], so as to wait for ajax call that call container function to complete
+
+	setTimeout(function(){//added timer to prolong time before calling ticket production function
+
+		if(free_voucher_login && url_parms_object().router_free_type == 'true'){
+
+			
+				
+				auto_login({ // 
+
+					vouchercode : 'N/A',
+					voucher_username : 'T-' + url_parms_object().mac,
+					voucher_password : '' 
+				});
+
+				
+
+
+			}
+	}, 1001);// 1001 = head is also tail
+
+
+			
 	
 }
 
@@ -706,17 +777,16 @@ function voucher_print(response){
 				var year  = date.getFullYear();
 	
 				var print_date = (hour<12?hour=hour.toString()+':'+minutes.toString()+'am':hour=hour.toString()+':'+minutes.toString()+'pm')+' '+day_of_week+' '+day_of_month+'/'+month+'/'+year;
-	
-	
+
 				var voucher_pin = response.vouchercode;
 
 					if(voucher_pin == 'N/A'){
 						voucher_pin = response.voucher_username;
 					}
 
-				var voucher_profile = (response.voucherprofile == 'N/A')?response.voucherprofile_time:response.voucherprofile;//if its not data profile, print time profile value
-				var voucher_expiry_days = response.voucherexpiry;
-				var voucher_amount_cost = response.voucheramount;
+				var voucher_profile = (response.voucherprofile == 'N/A')?(response.voucherprofile_time?response.voucherprofile_time:''):(response.voucherprofile?response.voucherprofile:'');//if its not data profile, print time profile value
+				var voucher_expiry_days = (response.voucherexpiry?response.voucherexpiry:'24 Hours');
+				var voucher_amount_cost = (response.voucheramount?response.voucheramount:'0');
 
 				var ticket_canvas = document.getElementById('ticket_canvas');
 				var canvas_type = ticket_canvas.getContext('2d');
@@ -5181,6 +5251,15 @@ function auto_login(response){
 	var voucher_username = response.voucher_username;
 	var voucher_password = response.voucher_password;
 
+	//if mikrotik hotspot inititated trial user [ trial ] login, 
+	if(url_parms_object().router_free_type == 'true'){//if match
+
+		//remove password
+		voucher_password = '';//password not required for mikrotik hotspot [ trial ] users login
+
+		//clean username for voucher ticket to be printed to show code as free and not device mac address
+		response.voucher_username = 'FREE';
+	}
 
 	if(!hot_spot_url){
 
