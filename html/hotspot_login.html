@@ -44,7 +44,7 @@
         <div id='page_body_menu_contents' style="width: auto;height: auto;margin: 0px;">
     
 		<!-- login input forms -->
-		<div style="width: 60vw;height: auto; position: fixed;z-index: 1; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
+		<div style="width: 60vw;height: auto; position: absolute;z-index: 1; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
 
 			<!-- close button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='block',login_hide()" style="width: 40px; height: 40px; font-size: 1.5em; position: absolute;right: 1%; border: 0px" class="btn btn-info">&times;</button>
@@ -1387,7 +1387,8 @@
 
                             document.getElementById('bottom_bar').style.display = 'none'; //hide bottom bar
 
-                                document.getElementById('ads_menu_bar_icon').style.display = 'block'; //show menu button
+                            document.getElementById('ads_menu_bar_icon').style.display = 'block'; //show menu button
+                            document.getElementById('error_div').style.marginTop = '10vh';//re-position error belt 
                             
                            
                             
@@ -1645,13 +1646,17 @@
                 //set menu layout
                 //if(menu_layout_type == 'appearance 2' || menu_layout_type == 'appearance 1'){//if menu is selected to be type 2, show menu lyout 2
                 if(menu_layout_type == 'appearance_1'){
+                    
 
                     document.getElementById('ads_provide_layout_2').style.display = 'block';//show top menu contents
+                    
+                    
                 }
 
                 if(menu_layout_type == 'appearance_2'){ //if menu is selected to be type 3, show menu lyout 3
 
                     document.getElementById('ads_provide_layout').style.display = 'block';//show top menu contents
+                    document.getElementById('error_div').style.marginTop = '20vh';//re-position error belt 
                 }
 
                 //wallpaper
