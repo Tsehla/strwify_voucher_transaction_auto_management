@@ -1055,7 +1055,7 @@
 
             });
 		
-        console.log(router_variables_array);
+        //console.log(router_variables_array);
         
         //check if voucher login reject message is related to complementary ticket
         //if so, tell server to reverse seller account charge for specific complementary voucher transaction if conditions are met
@@ -1226,6 +1226,8 @@
         //login menu configuration
         var menu_layout_type = 'appearance_1'; //set appearance 2 layout as default
         var manu_layout_ads_wallpaper = {login_menu_wallpaper_image:'images/ads_layout_default_wallpaper.jpg', login_menu_wallpaper_text: 'View image', login_menu_wallpaper_action_bar_click_link:'images/ads_layout_default_wallpaper.jpg'  }; //wallpaper to be used for menu layout;//this is default wallpaper to be used, 
+
+        var transaction_activated_free_user_login_option = false;//free user login transaction app initiator tracker
 
 		function fill_data_from_db(data_from_db){//function applies data from DB
 			
@@ -1426,11 +1428,18 @@
 
 					}
                 }
-                
-                //++++++++++++++++++++ show free data button if enabled by hotspot owner +++++++
-                if(data_from_db.free_data_allow){
+               
+                //++++++++++++++++++++ show free data button if enabled by hotspot owner on transaction app or admin on mikrotik router +++++++
+                if(data_from_db.free_data_allow || router_variables_array.trial == 'yes'){
+                    
                          
                     document.getElementById('free_data_login_button').style.display='inline-block';
+
+                    if(data_from_db.free_data_allow){ //if free login is activated from transaction app
+
+                        transaction_activated_free_user_login_option = true;//set to true
+                    }
+                    
                 }
 
                 
@@ -1927,6 +1936,9 @@
        function free_login(){
 
 
+            
+           
+
             var alert_message = "Free Voucher Sponsored by CreativeXmindS.\r\nFind US on facebook..";
 
             if(sponsore_ads.ads_sponsored){//voucher sponsored
@@ -1938,23 +1950,37 @@
 
             alert(alert_message);//give alert
 
+            // ***** hotspot transaction app activated free login button//this is activated within hotspot menu in transaction app//authentication is done on radius unlike the one on mikrotik activated where authentication is done by router created [ trial ] user
+
+            var is_router_activated_free_login = false; //tracks if free login is activated from router hotspot menu [ mikrotik hotspot trial user ]
+
+            if(!transaction_activated_free_user_login_option){// if transaction app free user login tracker is false
+                
+                is_router_activated_free_login = true; //set hotspot free user login tracker to true
+            }
+
+         
+
+            
+           
+
                 if(hotspot_transaction_server_url){//if transact app link given
 
-                    if(sponsore_ads.ads_sponsored){ 
+                if(sponsore_ads.ads_sponsored){ //if current ads is set as free hotspot sponsore
 
-                        window.open(wall_link_description[current_image_content_tracker].image_status_link, '_blank');
+                    window.open(wall_link_description[current_image_content_tracker].image_status_link, '_blank');//open image while logging user freely
 
-                        window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:"")+ '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:"") + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:''), '_self');
+                    window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:"")+ '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:"") + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:'') + '&router_free_type=' + is_router_activated_free_login, '_self');
 
-                        return true;
-                    }
-                    
-                    window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:'') + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:"") + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:''), '_self');
+                    return true;
+                }
+
+                window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:'') + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:"") + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:'') + '&router_free_type=' + is_router_activated_free_login, '_self');
                 }
 
                 else{//if transact app link not given
-                    alert('Error, unable to send you to hotspot transaction menu. Website address not found');
-                }
+                alert('Error, unable to send you to hotspot transaction menu. Website address not found');
+                }    
 
 
         }
