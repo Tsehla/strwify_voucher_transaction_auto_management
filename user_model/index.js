@@ -205,7 +205,10 @@ router_hotspot_page_model .add({
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{"link":"https://www.google.com","text":"Search on google"}'],},
 	hotspot_announcements : {type : types.TextArray, label :'Hotspot Announcements', default: ['Dare to be different','Dare to write your destiny.',"<a href='http://www.google.com'>Click to go to Google</a>","To search the internet click <a href='http://www.google.com'>google</a> then type your query","<a href='http://www.google.com'>Google search</a>, <a href='http://scholar.google.com'>Google scholar</a>"],},
-	free_data_allow: {type :types.Boolean, default:false, label :'Allow free data' },
+	
+	free_data_allow: {type :types.Boolean, default:false, label :'Allow radius authenticated free data login' },
+	mikrotik_allow_trial_login : {type :types.Boolean, default:false, label :'Allow mikrotik authenticated trial user login' },
+	mikrotik_trial_user_data_limit : {type :String, default:'5 MB', label : 'Mikrotik trial user data limit' },
 	
 	hotspot_how_to_bottom_text : {type : String, label :'Hotspot Howto bottom text', default: 'Help yourself, To be helped.',},
 	hotspot_free_sites_bottom_text : {type : String, label :'Hotspot Free sites bottom text', default: 'Pass it on, unconditionally help a stranger, a friend, a family member.',},

@@ -175,6 +175,7 @@ var auto_user_creater_wifi_radius_link = {
 	hotspot_voucher_template_link : undefined,
 	router_hotspot_location : 'default',
 	allow_hotspot_universal_vouchers : true,
+	mikrotik_trial_user_data_limit : '',
 
 	
 };
@@ -205,6 +206,8 @@ var auto_user_creater_wifi_radius_link = {
 		   //allow default market vouchers to be shown
 		   auto_user_creater_wifi_radius_link.allow_hotspot_universal_vouchers = response.allow_hotspot_all_location_marked_vouchers;
 
+		   //get data limit in mb/gb or time in /min/hours for mikrotik [ trial ] user login
+		   auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_limit = response.mikrotik_trial_user_data_limit;
 	   }
 
 	   else{
@@ -831,15 +834,16 @@ function voucher_print(response){
 			
 			
 
-		
+		//
 			
 			
 				
 				var ticket_canvas = document.getElementById('ticket_canvas');
-				document.location.href= ticket_canvas.toDataURL('image/jpg').replace('img/jpg', 'image/octet-stream');
+
+				//picture viewing
+				//document.location.href= ticket_canvas.toDataURL('image/jpg').replace('img/jpg', 'image/octet-stream');
 				
-				//picture storing
-				
+				// //picture storing
 				var download_link = document.createElement('a');
 				download_link.download = 'Ticket _ '+ voucher_profile +' _  ' + voucher_pin + ' _ ' + 'R' + voucher_amount_cost + ' _.png';
 				download_link.href = ticket_canvas.toDataURL('image/jpg').replace('image/jpg', 'image/octed-stream');
@@ -854,7 +858,16 @@ function voucher_print(response){
 				
 				// auto_login(voucher_pin, voucher_username, voucher_password);  /* issue on iphone safari, the ticket is downloaded by opening the image in current browser page, this stops presentation of auto voucher login prompt, so ticket production function will be called after [ auto login prompt ] may cause ticket not to be downloaded at all on iphone, but so long users can log in  */
 
-	
+
+				/* picture viewing
+				var string = ticket_canvas.toDataURL('image/jpg').replace('img/jpg', 'image/octet-stream');
+
+				var iframe = "<iframe width='100%' height='100%' src=" + string + "></iframe>";
+				var x = window.open();
+				x.document.open();
+				x.document.write(iframe);
+				x.document.close();
+				*/
 	
 	
 }
@@ -5259,6 +5272,9 @@ function auto_login(response){
 
 		//clean username for voucher ticket to be printed to show code as free and not device mac address
 		response.voucher_username = 'FREE';
+
+		//set data limit
+		response.voucherprofile = auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_limit;
 	}
 
 	if(!hot_spot_url){
