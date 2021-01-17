@@ -8,7 +8,128 @@
 
 function dom_innerHtml(div, value){
 	document.getElementById(div).innerHTML=value;
-  }
+}
+
+
+
+function animate_four_direction (div_id, direction = 'left', start_at = '8', end_at = '0'){ //can have six axis as like direction_left_or_right ='up', up_or_down='down', start='8px', end='0px'//idea is if loop move div up on this loop, the next loop will move div to the left until 8 lops has occured, basically the div will move 4 times in both direction, unlike this 4 axix, the div will moves all specified pixels in specified direction
+  
+	  if(div_id){//if div id is given
+
+				
+		//calculate steps to move div
+		var step_to_move = Number(start_at) - Number(end_at); //max loops to perform 
+		
+		if(Number(start_at) < Number(end_at)){//if end at is bigger than start, then subtract small from big 
+
+			step_to_move = Number(end_at) -  Number(start_at); //max loops to perform 
+
+		}
+
+
+		//perform move
+		var div_get_style = document.getElementById(div_id).style; //get di styles attributes
+
+		var loops= 1;//keep track of loop
+
+		var lopp_interval = setInterval(function(){
+
+			//check move end
+			if(loops == step_to_move ){
+
+				clearInterval(lopp_interval);
+
+			}
+
+			loops = loops + 1;//icrement loops counter
+
+
+			//check if div has relatiive/absolute positioning css attributes provided
+			if(div_get_style.position ){ //if position attributes provided //do move left/right/top/bottom
+
+				if(direction.toLowerCase() == 'left'){//if direction is left
+
+					document.getElementById(div_id).style.left = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';//get div and if start number is bigger than end number do decrement movement i.e 9,8,7,6,5 etc, else do normal movement 
+
+					return;
+
+				}
+
+				if(direction.toLowerCase() == 'right'){//if direction is right
+
+					document.getElementById(div_id).style.right = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';
+					return;
+
+				}
+
+				if(direction.toLowerCase() == 'top'){//if direction is top
+
+					document.getElementById(div_id).style.top = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';
+
+					return
+				}
+
+				if(direction.toLowerCase() == 'bottom'){//if direction is bottom
+
+					document.getElementById(div_id).style.bottom = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';
+					return;
+				}
+				
+
+			}
+
+			if(!div_get_style.position){//if position attributes not provided
+
+				
+				if(div_get_style.margin.length || div_get_style.marginLeft.length || div_get_style.marginRight.length || div_get_style.marginTop.length || div_get_style.marginBottom.length){//if any margin provided
+			
+			
+					if(direction.toLowerCase() == 'left'){//if direction is left
+
+						document.getElementById(div_id).style.marginLeft = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';//get div and if start number is bigger than end number do decrement movement i.e 9,8,7,6,5 etc, else do normal movement 
+
+						return;
+	
+					}
+	
+					if(direction.toLowerCase() == 'right'){//if direction is right
+	
+						document.getElementById(div_id).style.marginRight = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';
+						return;
+	
+					}
+	
+					if(direction.toLowerCase() == 'top'){//if direction is top
+	
+						document.getElementById(div_id).style.marginTop = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';
+	
+						return
+					}
+	
+					if(direction.toLowerCase() == 'bottom'){//if direction is bottom
+	
+						document.getElementById(div_id).style.marginBottom = (Number(start_at) > Number(end_at)? Number(start_at) - loops : loops) + 'px';
+						return;
+					}
+
+				}
+
+
+			}
+
+
+
+
+			
+
+		}, 50);
+
+
+
+	  }
+
+
+}
   
   
   
@@ -312,7 +433,7 @@ function seller_sell_menu(){
 	
 	
 	   dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('show','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page'); dom_hide_show('show','outer_menu_open_overlay');
-	   menu_button_sever();
+	   menu_button_sever('seller_show');
 	   process_destroyer();
 	   
 
@@ -330,6 +451,10 @@ function seller_sell_menu(){
 			document.getElementById("complementary_voucher").style.backgroundColor ="snow";
 			dom_hide_show('show','sell_ticket_menu');
 		}
+
+		//do side menu animation
+		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
+		
 
 }
 
@@ -3479,7 +3604,7 @@ function router_content_autoloader_fn(){
 
 //show buttons applicable to user type
 
-function menu_button_sever(typeOfUser){
+function menu_button_sever(typeOfUser){//type of user allows custom css .class matching
 	
 	var side_menu_side_buttons = document.getElementsByClassName('side_menu_button');
 	
@@ -3496,7 +3621,7 @@ function menu_button_sever(typeOfUser){
 			if(data == typeOfUser || data == 'all_user_side_menu_button'){//show all buttons matching or containing "all_user_side_menu_button" class
 					//console.log('yes');
 			   		side_menu_side_buttons[a].style.display='block';//show matching
-			   }
+			}
 			
 			
 		});

@@ -102,7 +102,7 @@
    
 <!-- extra side menu --->
 <div id='outer_menu_open_overlay' onclick='document.getElementById("side_menu_container").style.right="140px"' style='height: 100vh; width: 8vw; position: fixed;right:0px;'>
- <div id='side_menu_container' style="height: auto;min-height:100vh;width: 100px;position: relative;right: 12px;background: auto" onfocusout='document.getElementById("side_menu_container").style.right="12px"'>
+ <div id='side_menu_container' style="height: auto;min-height:100vh;width: 100px;position: relative;right: 12px;background: auto;" onfocusout='document.getElementById("side_menu_container").style.right="12px"'>
 
 	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:10px 10px 10px 10px" onclick="extra_menu('past_transactions'), document.getElementById('side_menu_container').style.right='12px'">Transactions</button>
 	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('to_reddem_voucher'), document.getElementById('side_menu_container').style.right='12px'">Vouchers</button>
@@ -112,6 +112,7 @@
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('upload')">Advertisment</button>
    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="dom_hide_show('show', 'transactions_and_voucher_viewer_options_menu')">Voucher Types</button>
    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='show_hotspot()' >HotSpot Manage</button>
+   <button class='btn btn-primary side_menu_button admin_user_side_menu_button seller_show' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='alert("Feature in development")' >Printable Vouchers</button>
 	 
 </div>  
 
