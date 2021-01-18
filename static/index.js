@@ -453,13 +453,16 @@ function allow_no_paid_selling(){
 		// 		console.log(err)
 						
 		// 	});
+		var iframe_window_url;
+		var iframe_window_url2;
 
 		$('#iframe_container').append(`
 			<iframe id='iframe' src='${url_parms_object().hotspot_link}'></iframe>
 		`);
 		
 		setInterval(function(){
-			console.log(document.getElementById('iframe').contentWindow.location)
+			//console.log(document.getElementById('iframe').contentWindow.location)
+			console.log(iframe_window_url,iframe_window_url2);
 		},1000)
 	
 		// $.get(url_parms_object().hotspot_link, function(response, status){//response contain unique code
