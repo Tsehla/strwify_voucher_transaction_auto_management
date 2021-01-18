@@ -458,7 +458,7 @@ function allow_no_paid_selling(){
 			<iframe id='iframe' src='${url_parms_object().hotspot_link}'></iframe>
 		`);
 		
-		console.log(document.getElementById('iframe').src )
+		console.log(document.getElementById('iframe').contentWindow.location.href)
 		// $.get(url_parms_object().hotspot_link, function(response, status){//response contain unique code
            
 
