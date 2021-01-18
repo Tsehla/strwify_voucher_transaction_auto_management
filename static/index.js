@@ -152,7 +152,9 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 	  
   =====================================================================================================================================================*/
   /*seller & ||  user login details collcetor */
-  var seller_login = {logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false};
+  var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [] };
+
+  
   
   
   /* auto generated code from the user */
@@ -180,7 +182,7 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 	  
   ========================================================================================================================*/
   
-  var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:''};
+  var admin_login = {logged_in : false, admin_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', manages_hotspot :false, hotspot_printable_vouchers :false, hotspot_printable_vouchers_template :'Primary', managed_hotspot : [] };
   
 
 //store url of hotspsot login link
@@ -461,7 +463,10 @@ function seller_sell_menu(){
 function distributor_works_menu(){
        dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('show','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');dom_hide_show('show','outer_menu_open_overlay');
 		menu_button_sever();
-    	process_destroyer();
+		process_destroyer();
+
+		//do side menu animation
+		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
 }
 
 function distributor_works_menu_add_user(){
@@ -473,14 +478,18 @@ function distributor_works_menu_add_user(){
 function admin_fourth_page_menu(){
        dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('show','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');dom_hide_show('show','outer_menu_open_overlay');
 		menu_button_sever('admin_user_side_menu_button');
-	    process_destroyer();
+		process_destroyer();
+		
+		//do side menu animation
+		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
     
 }
 
 function super_admin_works_menu_add_user(){
        dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('show','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');dom_hide_show('show','outer_menu_open_overlay');
 		menu_button_sever();
-	    process_destroyer();
+		process_destroyer();
+
     
 }
 
@@ -1979,7 +1988,12 @@ function fourth_page_seller_login(){
                        seller_login.usertype = response.usertype;
                        seller_login.name = response.name+' '+response.surname;
 					   seller_login.customer_partners_contact_list = response.added_customers_partners;
-                       seller_login.credit = response.credits;
+					   seller_login.credit = response.credits;
+					   seller_login.manages_hotspot = response.manage_router;
+					   seller_login.hotspot_printable_vouchers = response.manage_router_printable_vouchers;
+					   seller_login.hotspot_printable_vouchers_template = response.manage_router_printable_vouchers_templates;
+					   seller_login.managed_hotspot = response.manage_router_hotspots;
+
                        dom_innerHtml('firth_page_seller_amount', response.credits); 
                        
 					   
@@ -2318,7 +2332,12 @@ function super_admin_login(){
                        admin_login.name = response.name+' '+response.surname;
 					   admin_login.customer_partners_contact_list = response.added_customers_partners;
 					//   console.log(admin_login.customer_partners_contact_list);
-                       admin_login.credit = response.credits;
+					   admin_login.credit = response.credits;
+					   admin_login.manages_hotspot = response.manage_router;
+					   admin_login.hotspot_printable_vouchers = response.manage_router_printable_vouchers;
+					   admin_login.hotspot_printable_vouchers_template = response.manage_router_printable_vouchers_templates;
+					   admin_login.managed_hotspot = response.manage_router_hotspots;
+
                        dom_innerHtml('super_admin_amount', response.credits); //show amount in user account
                        
 					   //check if password is default

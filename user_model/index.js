@@ -51,7 +51,14 @@ seller_distributor_model.add({
     usertype : {type :types.Select, options :'Seller, Distributor, Server Admin, Buyer', default :'Seller', label :'Type of User' },
 	added_customers_partners : {type : types.TextArray, label :'My Customers/Partners',},//customers invited to system//{'name':'tsehla','type_of_user':'seller','id_no':'1111111111111'}
 	transactionhistory : {type : types.TextArray, label :'Transactions'},//keep record of all transactions on account
-	manage_router : {type : types.Boolean, default:false, label :'Manage Router?'}, 
+
+	manage_router : {type : types.Boolean, default:false, label :'Allow Managed Router'}, //allow menu for user to configure routers they own
+	manage_router_printable_vouchers : {type : types.Boolean, default:true, label :'Allow Printable voucher on managed routers'}, //allow seller/admin printable vouchers for hotspot managed
+	manage_router_printable_vouchers_templates :  {type :types.Select, options :'Primary, All', default :'Primary', label :'Printable voucher templates' },//printable voucher design templates
+	manage_router_hotspots : {type : types.TextArray, label :'Routers hotspots managed', default : []},//location names of hotspot managed
+
+
+
 	account_recharge_bonus : {type : types.TextArray, label :'Account recharge bonus', default : ["{'Router Manager':'75%'}","{Seller:'25%'}", "{Distributor:'12%'}", "{'Server Admin':'0%'}", "{Buyer:'0%'}"]},//will add auto bonus on account recharge depending on [ usertype ] selected above, if [ manage_router ] is set to true, then 'Router Manager" recharge value will be used.//for streetwifiy router managers are those who only use out wifiy transact software and provide their own internet connection to router we provided
 });
 
