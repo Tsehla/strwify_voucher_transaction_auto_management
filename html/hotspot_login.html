@@ -1574,7 +1574,7 @@
 
                 if(go_to_home_page){//open home page/transaction app
                     if(hotspot_transaction_server_url){//if transact app link given
-                        window.open(hotspot_transaction_server_url + "/transaction?hotspot_link=" + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:"") + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:'')+"hotspot_location="+  (router_variables_array["location"]?router_variables_array["location"]:''), '_self');
+                        window.open(hotspot_transaction_server_url + "/transaction?hotspot_link=" + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:"") + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:'')+"&hotspot_location="+  (router_variables_array["location"]?router_variables_array["location"]:''), '_self');
                     }
                 }
 

@@ -152,7 +152,7 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 	  
   =====================================================================================================================================================*/
   /*seller & ||  user login details collcetor */
-  var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [] };
+  var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
   
   
@@ -425,6 +425,62 @@ if(current_url == '/admin_login'){
         when success login//same url diffrenet content
         
 ====================================================================================================================================================*/
+//part of seller/admin login ***
+function allow_no_paid_selling(){
+
+	//  var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
+
+
+	if(seller_login.logged_in && url_parms_object().hotspot_link.length > 10 && url_parms_object().hotspot_location ){//if seller is logged in // and parameters provided on urls
+
+		//use hotspot link in url parameter to call hotspot//this also checks if user is still connected to hotspot thew own//if they leave, ability to sell vouchers uncharged will be
+
+
+		// $.ajax({
+		// 	type: "HEAD",
+		// 	async: true,
+		// 	dataType:'text',
+		// 	url: url_parms_object().hotspot_link,
+		// 	success: function(message, text, response) {
+	
+		// 			console.log('0 : ',response.status, ' 1 : ',message, ' 2 : ',text, ' 3 : ',response);
+		// 			//if found, keep link as is
+		// 			//selected_voucher_ticket_template_append();//call voucher div createer function
+					
+		// 		}
+		// 	}).catch(function(err){//if file not exist
+	
+		// 		console.log(err)
+						
+		// 	});
+
+		$('#iframe_container').append(`
+			<iframe id='iframe' src='${url_parms_object().hotspot_link}'></iframe>
+		`);
+		
+		console.log(document.getElementById('iframe').src )
+		// $.get(url_parms_object().hotspot_link, function(response, status){//response contain unique code
+           
+
+		// 	if(status == 'success'){
+			  
+		// 		 console.log(status, response)
+				
+		// 	}
+			
+		// 	else{
+		// 		console.log('error : ',status, response)
+		// 	}
+		// }); 
+
+
+		//alert()
+
+	}
+
+
+}
+
 function seller_sell_menu(){
 
 		//check url to see if menu to show is for voucher sell or complimentary vucher
@@ -456,9 +512,21 @@ function seller_sell_menu(){
 
 		//do side menu animation
 		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
+
+		allow_no_paid_selling()
+
+		if(seller_login.nocharge_voucher_sell){
+
+			alert('You are connected on WiFi that you have been set as the owner.\nVoucher selling will not be charged on this account');
+
+		}
 		
 
 }
+
+
+
+
 
 function distributor_works_menu(){
        dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('show','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page'); dom_hide_show('hide','super_admin_works_menu'); dom_hide_show('hide','admin_eigth_page');dom_hide_show('hide','recharge_codes_container');dom_hide_show('hide','router_page');dom_hide_show('show','outer_menu_open_overlay');
@@ -1993,6 +2061,9 @@ function fourth_page_seller_login(){
 					   seller_login.hotspot_printable_vouchers = response.manage_router_printable_vouchers;
 					   seller_login.hotspot_printable_vouchers_template = response.manage_router_printable_vouchers_templates;
 					   seller_login.managed_hotspot = response.manage_router_hotspots;
+					   seller_login.nocharge_voucher_sell = response.manage_router_no_charge_voucher_sell;
+					
+					   
 
                        dom_innerHtml('firth_page_seller_amount', response.credits); 
                        
