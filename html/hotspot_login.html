@@ -1992,8 +1992,8 @@
         }
 
         //set iframe url to be picked by main window
-        window.parent.iframe_window_url = window.location.href;
-        window.parent.iframe_window_url2 = 'contacted';
+        var a = 5;
+       window.parent.postMessage(['varA', a], '*');
 
 		</script>
 	
