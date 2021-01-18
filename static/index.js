@@ -463,7 +463,7 @@ function allow_no_paid_selling(){
 		setInterval(function(){
 			//console.log(document.getElementById('iframe').contentWindow.location)
 			console.log(iframe_window_url, iframe_window_url2);
-		},1000)
+		},10000)
 	
 		// $.get(url_parms_object().hotspot_link, function(response, status){//response contain unique code
            
