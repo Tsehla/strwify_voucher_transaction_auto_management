@@ -89,6 +89,10 @@
 		}, ((router_variables_array.refresh_timeout_seconds * 60)*60))
 		
 	
+		 // ****** give iframe hotspot location when this window is called as an i frame in order to check if seller is still in their owned hotspot//this page will not be called direct, mikrotik hotspot login link will be called and mikrotik will respond with re-direct to external hotspot page, which will be this
+        
+		 window.parent.postMessage(['router_hotspot_location', router_variables_array["location"]], '*');
+		 
 	</script>
 	
 	
