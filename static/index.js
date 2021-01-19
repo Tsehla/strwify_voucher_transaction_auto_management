@@ -451,36 +451,52 @@ function allow_no_paid_selling(){
 
 				var owned_hotspot_match_found = false;//keep track if owned hotspot if found before array search end
 
+				var loop_recheckes_still_connected = false;//keep track if seller account is still connected in each loop//its set to false at end of array loop 
+
 				//loop through and find match
 				seller_login.managed_hotspot.forEach(function(data, index){
 
-
-					if(data && recived_data.data[1] && recived_data.data[1].toLowerCase().trim() == data.toLowerCase().trim()){
+					//set connected variables
+					if(data && recived_data.data[1] && recived_data.data[1].toLowerCase().trim() == data.toLowerCase().trim() ){//if managed hotspots matches connected to hotspot,
 						
-						seller_connected_on_owned_hotspot = true;//set connected to owned hotspot as true
+						if(seller_connected_on_owned_hotspot == false){//if  [ seller_connected_on_owned_hotspot  ] has notbeen set as true//it will be on first function call
 
-						//give alert on first login
-						alert('You are connected on WiFi that you have been set as the owner.\nVoucher selling will not be charged on this account while you remain connected on this WiFi hotspot.');
+							seller_connected_on_owned_hotspot = true;//set connected to owned hotspot as true
 
-						owned_hotspot_match_found = true; //set match found to be true for this search session
+							//give alert on first login //once only on first login
 
-						//show owned wifi connected banner
-						document.getElementById('owned_wifi_disconnected').style.display = 'none'; //hide disconnected banner  
-						document.getElementById('owned_wifi_connected').style.display = 'block';//show connected banner
+							alert('You are connected on WiFi that you have been set as the owner.\nVoucher selling will not be charged on this account while you remain connected on this WiFi hotspot.');
 
-						//set owner connection histor tracker to true
-						was_connected_before_status_change = true;
+							owned_hotspot_match_found = true; //set match found to be true for this search session
 
-						is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
+							//show owned wifi connected banner
+							document.getElementById('owned_wifi_disconnected').style.display = 'none'; //hide disconnected banner  
+							document.getElementById('owned_wifi_connected').style.display = 'block';//show connected banner
 
+							//set owner connection histor tracker to true
+							was_connected_before_status_change = true;
+
+							is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
+
+
+						}
+						
+						loop_recheckes_still_connected = true; //set as true, keep track if user is still connected to managed hotspot on each checking run
 
 					}
 
 					
+					
 					if(seller_login.managed_hotspot.length == index + 1 ){//if array loop has reach end
 
+
+
+
+
 						//check if match was not found
-						if(owned_hotspot_match_found == false){
+						//if(owned_hotspot_match_found == false || loop_recheckes_still_connected == false){// [ loop_recheckes_still_connected ] will be false if user moves away from maged hotspot
+
+						if( loop_recheckes_still_connected == false){// [ loop_recheckes_still_connected ] will be false if user moves away from maged hotspot//end checks 
 
 							//show owned WiFi doiconnected message
 							document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
@@ -494,8 +510,13 @@ function allow_no_paid_selling(){
 							//clear owned hotspot connected check interval
 							clearInterval(owned_hotspot_interval);
 
+							seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
+
+
 						}
 
+
+						loop_recheckes_still_connected = false;//return to false, keep track if user is still connected to managed hotspot on each checking run
 					}
 				})
 				
