@@ -537,15 +537,19 @@ function allow_no_paid_selling(){
 			// -- iframe
 			document.getElementById('iframe_container').innerHTML = '';//
 			// -- event listner
-			window.removeEventListener('message', function(result){
-				console.log(result);
-			});
+			// window.removeEventListener('message', function(result){
+			// 	//console.log(result);
+			// });
 
 		}, false);
+
+
 	
 		$('#iframe_container').append(`
 			<iframe id='iframe' src='${url_parms_object().hotspot_link}'></iframe>
 		`);
+
+
 		
 		//to run when timeout fires if not cancelled
 		function time_out_function(){
@@ -558,17 +562,19 @@ function allow_no_paid_selling(){
 			seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
 
 			// ** hide and show banner message if necessary
-			//hide
-			if( document.getElementById('owned_wifi_connected').style.display == 'block'  ){//if free voucher sell message is shown
 
-				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
-				document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
-			}
 			//show
 			if( document.getElementById('owned_wifi_connected').style.display == 'none'  ){//if free voucher sell message is not shown//hide all message banners just incase
 
 				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
 				document.getElementById('owned_wifi_disconnected').style.display = 'none';//show disconnect banner
+			}
+			
+			//hide
+			if( document.getElementById('owned_wifi_connected').style.display == 'block'  ){//if free voucher sell message is shown
+
+				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
+				document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
 			}
 			
 			// ** clear 
@@ -577,7 +583,7 @@ function allow_no_paid_selling(){
 
 			// -- event listner
 			window.removeEventListener('message', function(result){
-				console.log(result);
+				//console.log(result);
 			});
 		}
 		
