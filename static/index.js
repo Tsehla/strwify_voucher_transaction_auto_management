@@ -485,7 +485,7 @@ function allow_no_paid_selling(){
 					}
 
 					
-					console.log(seller_login.managed_hotspot.length,index + 1 )
+					
 					if(seller_login.managed_hotspot.length == index + 1 ){//if array loop has reach end
 
 
@@ -521,6 +521,14 @@ function allow_no_paid_selling(){
 				
 
 			}
+
+			// ** clear 
+			// -- iframe
+			document.getElementById('iframe_container').innerHTML = '';//
+			// -- event listner
+			window.removeEventListener('message', function(result){
+				console.log(result);
+			});
 
 		}, false);
 	
