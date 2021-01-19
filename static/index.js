@@ -444,7 +444,7 @@ function allow_no_paid_selling(){
 
 		window.addEventListener('message', function(recived_data){//wait for message with hotspot location from code in hotspot login page loaded from iframe
 			
-			console.log(recived_data.data[1]);
+			//console.log(recived_data.data[1]);
 
 			//check if currently hotspot connected matches seller managed hotspots
 			if(seller_login.managed_hotspot.length > 0){//if hotspot names/locations are provided in seller profile
