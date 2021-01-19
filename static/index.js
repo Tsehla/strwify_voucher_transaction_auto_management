@@ -428,7 +428,7 @@ if(current_url == '/admin_login'){
 //part of seller/admin login ***
 var seller_connected_on_owned_hotspot = false;//keep track if user is connected to hotspot
 var was_connected_before_status_change = false; //keep track if user account was ever connected before being disconnected on owned wifi
-
+var owned_hotspot_interval; //keep interval for clearing later
 
 function allow_no_paid_selling(){
 
@@ -480,7 +480,13 @@ function allow_no_paid_selling(){
 							//set owner connection histor tracker to true
 							was_connected_before_status_change = true;
 
-							is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
+							//is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
+							owned_hotspot_interval = setInterval(function(){
+		
+								allow_no_paid_selling();//call owned hotspot checking
+								console.log(1)
+							}, 60000); //every 15 minutes
+							//}, 900000); //every 15 minutes
 
 
 						}
@@ -544,6 +550,7 @@ function allow_no_paid_selling(){
 		//to run when timeout fires if not cancelled
 		function time_out_function(){
 
+			console.log('hotspot manage timeout')
 			
 			//clear owned hotspot connected check interval
 			clearInterval(owned_hotspot_interval);
@@ -580,18 +587,18 @@ function allow_no_paid_selling(){
 
 }
 
-//periodically checks if seller is still connected to hotspot they owned, if they have disconnected, [ free voucher selling ] will be dissallowed
-var owned_hotspot_interval; //keep interval for clearing later
+// //periodically checks if seller is still connected to hotspot they owned, if they have disconnected, [ free voucher selling ] will be dissallowed
+// var owned_hotspot_interval; //keep interval for clearing later
 
-function is_seller_still_connected_to_owned_wifi_hotspot(){
+// function is_seller_still_connected_to_owned_wifi_hotspot(){
 
-	return owned_hotspot_interval = setInterval(function(){
+// 	return owned_hotspot_interval = setInterval(function(){
 		
-		allow_no_paid_selling();//call owned hotspot checking
-		console.log(1)
-	}, 60000); //every 15 minutes
-	//}, 900000); //every 15 minutes
-}
+// 		allow_no_paid_selling();//call owned hotspot checking
+// 		console.log(1)
+// 	}, 60000); //every 15 minutes
+// 	//}, 900000); //every 15 minutes
+// }
 
 function seller_sell_menu(){
 
