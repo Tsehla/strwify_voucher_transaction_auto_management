@@ -426,38 +426,80 @@ if(current_url == '/admin_login'){
         
 ====================================================================================================================================================*/
 //part of seller/admin login ***
+var seller_connected_on_owned_hotspot = false;//keep track if user is connected to hotspot
+var was_connected_before_status_change = false; //keep track if user account was ever connected before being disconnected on owned wifi
+
+
 function allow_no_paid_selling(){
 
 	//  var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
-
+	
 	if(seller_login.logged_in && url_parms_object().hotspot_link.length > 10 && url_parms_object().hotspot_location ){//if seller is logged in // and parameters provided on urls
 
-		//use hotspot link in url parameter to call hotspot//this also checks if user is still connected to hotspot thew own//if they leave, ability to sell vouchers uncharged will be
+	
+		//get hotspot login url and open iframe//THIS ONLY WORKS IF ORIGIN IS SAME
+		//in this case mikrotik hotspot address is streetwifiy.co.za or whatever specified by [ url_parms_object().hotspot_link ] when calling that connected to the hotspot, mikrotik will reply with external hotspot login page, in this case the page is either login/logout/status found in the same server as this in the folder [ /html/ ]. so at the end [ same-origin ] cors requirement is met so iframe can work //error using ajax as mikrotik does not reply witth cors accept headers
 
 
-		// $.ajax({
-		// 	type: "HEAD",
-		// 	async: true,
-		// 	dataType:'text',
-		// 	url: url_parms_object().hotspot_link,
-		// 	success: function(message, text, response) {
-	
-		// 			console.log('0 : ',response.status, ' 1 : ',message, ' 2 : ',text, ' 3 : ',response);
-		// 			//if found, keep link as is
-		// 			//selected_voucher_ticket_template_append();//call voucher div createer function
-					
-		// 		}
-		// 	}).catch(function(err){//if file not exist
-	
-		// 		console.log(err)
-						
-		// 	});
-		
-		window.addEventListener('message', function(e){
-			//b= e.data[1];
-			console.log('e : ',e);
+		window.addEventListener('message', function(recived_data){//wait for message with hotspot location from code in hotspot login page loaded from iframe
 			
+			console.log(recived_data.data[1]);
+
+			//check if currently hotspot connected matches seller managed hotspots
+			if(seller_login.managed_hotspot.length > 0){//if hotspot names/locations are provided in seller profile
+
+				var owned_hotspot_match_found = false;//keep track if owned hotspot if found before array search end
+
+				//loop through and find match
+				seller_login.managed_hotspot.forEach(function(data, index){
+
+
+					if(data && recived_data.data[1] && recived_data.data[1].toLowerCase().trim() == data.toLowerCase().trim()){
+						
+						seller_connected_on_owned_hotspot = true;//set connected to owned hotspot as true
+
+						//give alert on first login
+						alert('You are connected on WiFi that you have been set as the owner.\nVoucher selling will not be charged on this account while you remain connected on this WiFi hotspot.');
+
+						owned_hotspot_match_found = true; //set match found to be true for this search session
+
+						//show owned wifi connected banner
+						document.getElementById('owned_wifi_disconnected').style.display = 'none'; //hide disconnected banner  
+						document.getElementById('owned_wifi_connected').style.display = 'block';//show connected banner
+
+						//set owner connection histor tracker to true
+						was_connected_before_status_change = true;
+
+
+					}
+
+					
+					if(seller_login.managed_hotspot.length == index + 1 ){//if array loop has reach end
+
+						//check if match was not found
+						if(owned_hotspot_match_found == false){
+
+							//show owned WiFi doiconnected message
+							document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
+
+							if(was_connected_before_status_change ){//if user was connected to owned wifi sometime in the session before disconnecting
+								//show disconnected banner
+								//useful in not showing the banner if the user was never connected to begin with//incase some if statement let water in
+								document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
+							} 
+							
+							//clear owned hotspot connected check interval
+							clearInterval(owned_hotspot_interval);
+
+						}
+
+					}
+				})
+				
+
+			}
+
 		}, false);
 	
 		$('#iframe_container').append(`
@@ -465,26 +507,22 @@ function allow_no_paid_selling(){
 		`);
 		
 		
-		// $.get(url_parms_object().hotspot_link, function(response, status){//response contain unique code
-           
-
-		// 	if(status == 'success'){
-			  
-		// 		 console.log(status, response)
-				
-		// 	}
-			
-		// 	else{
-		// 		console.log('error : ',status, response)
-		// 	}
-		// }); 
-
-
-		//alert()
 
 	}
 
 
+}
+
+//periodically checks if seller is still connected to hotspot they owned, if they have disconnected, [ free voucher selling ] will be dissallowed
+var owned_hotspot_interval; //keep interval for clearing later
+
+function is_seller_still_connected_to_owned_wifi_hotspot(){
+
+	owned_hotspot_interval = setInterval(function(){
+		
+		allow_no_paid_selling();//call owned hotspot checking
+
+	}, 900000); //every 15 minutes
 }
 
 function seller_sell_menu(){
@@ -519,13 +557,13 @@ function seller_sell_menu(){
 		//do side menu animation
 		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
 
-		allow_no_paid_selling()
-
-		if(seller_login.nocharge_voucher_sell){
-
-			alert('You are connected on WiFi that you have been set as the owner.\nVoucher selling will not be charged on this account');
+		if(seller_login.nocharge_voucher_sell && seller_login.manages_hotspot ){//if seller owns hotspot and no-charge voucher selling is allowed for them on their hotspot
+			
+			allow_no_paid_selling()//do owned hotspot check on login
+			is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
 
 		}
+		
 		
 
 }
