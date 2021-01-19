@@ -444,17 +444,21 @@ function allow_no_paid_selling(){
 
 		window.addEventListener('message', function(recived_data){//wait for message with hotspot location from code in hotspot login page loaded from iframe
 			
-			//console.log(recived_data.data[1]);
+			console.log(recived_data.data[1]);
 
 			//check if currently hotspot connected matches seller managed hotspots
 			if(seller_login.managed_hotspot.length > 0){//if hotspot names/locations are provided in seller profile
 
+				
 				var owned_hotspot_match_found = false;//keep track if owned hotspot if found before array search end
 
 				//loop through and find match
 				seller_login.managed_hotspot.forEach(function(data, index){
 
+					console.log(2)
+					console.log(recived_data.data[1], recived_data.data[1].toLowerCase().trim(), data.toLowerCase().trim())
 
+					
 					if(data && recived_data.data[1] && recived_data.data[1].toLowerCase().trim() == data.toLowerCase().trim()){
 						
 						seller_connected_on_owned_hotspot = true;//set connected to owned hotspot as true
