@@ -439,7 +439,41 @@ function allow_no_paid_selling(){
 
 	
 		//set timeout to handle no event listner response from iframe/ this will happen when i framed got no response .ie user not logged in to the hotspot so the hotspot url is invalide since its only exist on router hotspot//also when the returned iframe page has no code that comminicate with the parent code
-		var no_response_timeout = setTimeout(time_out_function(), 60000)//set timeout for 2 minutes
+		var no_response_timeout = setTimeout(function(){
+
+			console.log('hotspot manage timeout')
+			
+			//clear owned hotspot connected check interval
+			clearInterval(owned_hotspot_interval);
+
+			seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
+
+			// ** hide and show banner message if necessary
+
+			//show
+			if( document.getElementById('owned_wifi_connected').style.display == 'none'  ){//if free voucher sell message is not shown//hide all message banners just incase
+
+				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
+				document.getElementById('owned_wifi_disconnected').style.display = 'none';//show disconnect banner
+			}
+			
+			//hide
+			if( document.getElementById('owned_wifi_connected').style.display == 'block'  ){//if free voucher sell message is shown
+
+				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
+				document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
+			}
+			
+			// ** clear 
+			// -- iframe
+			document.getElementById('iframe_container').innerHTML = '';//clear div of iframe content
+
+			// -- event listner
+			window.removeEventListener('message', function(result){
+				//console.log(result);
+			});
+
+		}, 60000)//set timeout for 2 minutes
 
 		//get hotspot login url and open iframe//THIS ONLY WORKS IF ORIGIN IS SAME
 		//in this case mikrotik hotspot address is streetwifiy.co.za or whatever specified by [ url_parms_object().hotspot_link ] when calling that connected to the hotspot, mikrotik will reply with external hotspot login page, in this case the page is either login/logout/status found in the same server as this in the folder [ /html/ ]. so at the end [ same-origin ] cors requirement is met so iframe can work //error using ajax as mikrotik does not reply witth cors accept headers
@@ -551,41 +585,41 @@ function allow_no_paid_selling(){
 
 
 		
-		//to run when timeout fires if not cancelled
-		function time_out_function(){
+		// //to run when timeout fires if not cancelled
+		// function time_out_function(){
 
-			console.log('hotspot manage timeout')
+		// 	console.log('hotspot manage timeout')
 			
-			//clear owned hotspot connected check interval
-			clearInterval(owned_hotspot_interval);
+		// 	//clear owned hotspot connected check interval
+		// 	clearInterval(owned_hotspot_interval);
 
-			seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
+		// 	seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
 
-			// ** hide and show banner message if necessary
+		// 	// ** hide and show banner message if necessary
 
-			//show
-			if( document.getElementById('owned_wifi_connected').style.display == 'none'  ){//if free voucher sell message is not shown//hide all message banners just incase
+		// 	//show
+		// 	if( document.getElementById('owned_wifi_connected').style.display == 'none'  ){//if free voucher sell message is not shown//hide all message banners just incase
 
-				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
-				document.getElementById('owned_wifi_disconnected').style.display = 'none';//show disconnect banner
-			}
+		// 		document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
+		// 		document.getElementById('owned_wifi_disconnected').style.display = 'none';//show disconnect banner
+		// 	}
 			
-			//hide
-			if( document.getElementById('owned_wifi_connected').style.display == 'block'  ){//if free voucher sell message is shown
+		// 	//hide
+		// 	if( document.getElementById('owned_wifi_connected').style.display == 'block'  ){//if free voucher sell message is shown
 
-				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
-				document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
-			}
+		// 		document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
+		// 		document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
+		// 	}
 			
-			// ** clear 
-			// -- iframe
-			document.getElementById('iframe_container').innerHTML = '';//clear div of iframe content
+		// 	// ** clear 
+		// 	// -- iframe
+		// 	document.getElementById('iframe_container').innerHTML = '';//clear div of iframe content
 
-			// -- event listner
-			window.removeEventListener('message', function(result){
-				//console.log(result);
-			});
-		}
+		// 	// -- event listner
+		// 	window.removeEventListener('message', function(result){
+		// 		//console.log(result);
+		// 	});
+		// }
 		
 
 	}
