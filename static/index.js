@@ -449,8 +449,7 @@ function allow_no_paid_selling(){
 			//check if currently hotspot connected matches seller managed hotspots
 			if(seller_login.managed_hotspot.length > 0){//if hotspot names/locations are provided in seller profile
 
-				var owned_hotspot_match_found = false;//keep track if owned hotspot if found before array search end
-
+			
 				var loop_recheckes_still_connected = false;//keep track if seller account is still connected in each loop//its set to false at end of array loop 
 
 				//loop through and find match
@@ -467,7 +466,7 @@ function allow_no_paid_selling(){
 
 							alert('You are connected on WiFi that you have been set as the owner.\nVoucher selling will not be charged on this account while you remain connected on this WiFi hotspot.');
 
-							owned_hotspot_match_found = true; //set match found to be true for this search session
+							
 
 							//show owned wifi connected banner
 							document.getElementById('owned_wifi_disconnected').style.display = 'none'; //hide disconnected banner  
@@ -486,7 +485,7 @@ function allow_no_paid_selling(){
 					}
 
 					
-					
+					console.log(seller_login.managed_hotspot.length,index + 1 )
 					if(seller_login.managed_hotspot.length == index + 1 ){//if array loop has reach end
 
 
