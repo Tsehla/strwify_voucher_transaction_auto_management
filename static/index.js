@@ -446,23 +446,15 @@ function allow_no_paid_selling(){
 			//clear owned hotspot connected check interval
 			window.clearInterval(owned_hotspot_interval);
 
-			seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
-
-			// ** hide and show banner message if necessary
-
-			//show
-			if( document.getElementById('owned_wifi_connected').style.display == 'none'  ){//if free voucher sell message is not shown//hide all message banners just incase
-
-				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
-				document.getElementById('owned_wifi_disconnected').style.display = 'none';//show disconnect banner
-			}
-			
 			//hide
-			if( document.getElementById('owned_wifi_connected').style.display == 'block'  ){//if free voucher sell message is shown
+			if( was_connected_before_status_change ){//if //do
 
 				document.getElementById('owned_wifi_connected').style.display = 'none'; //hide connected banner 
 				document.getElementById('owned_wifi_disconnected').style.display = 'block';//show disconnect banner
 			}
+
+			seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
+
 			
 			// ** clear 
 			// -- iframe
@@ -567,7 +559,7 @@ function allow_no_paid_selling(){
 				
 			//clear timeout
 			window.clearTimeout(no_response_timeout);//clear/stop connection fail interval
-			
+
 			}
 
 			// ** clear 
