@@ -521,7 +521,7 @@ function is_seller_still_connected_to_owned_wifi_hotspot(){
 	return owned_hotspot_interval = setInterval(function(){
 		
 		allow_no_paid_selling();//call owned hotspot checking
-		console.log(1++)
+		console.log(1)
 
 	}, 900000); //every 15 minutes
 }
