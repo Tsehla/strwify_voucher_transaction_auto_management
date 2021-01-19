@@ -471,6 +471,8 @@ function allow_no_paid_selling(){
 						//set owner connection histor tracker to true
 						was_connected_before_status_change = true;
 
+						is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
+
 
 					}
 
@@ -561,8 +563,7 @@ function seller_sell_menu(){
 		if(seller_login.nocharge_voucher_sell && seller_login.manages_hotspot ){//if seller owns hotspot and no-charge voucher selling is allowed for them on their hotspot
 			
 			allow_no_paid_selling()//do owned hotspot check on login
-			is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
-
+			
 		}
 		
 		
