@@ -439,12 +439,12 @@ function allow_no_paid_selling(){
 
 	
 		//set timeout to handle no event listner response from iframe/ this will happen when i framed got no response .ie user not logged in to the hotspot so the hotspot url is invalide since its only exist on router hotspot//also when the returned iframe page has no code that comminicate with the parent code
-		var no_response_timeout = setTimeout(function(){
+		var no_response_timeout = window.setTimeout(function(){
 
 			console.log('hotspot manage timeout')
 			
 			//clear owned hotspot connected check interval
-			clearInterval(owned_hotspot_interval);
+			window.clearInterval(owned_hotspot_interval);
 
 			seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
 
@@ -483,7 +483,7 @@ function allow_no_paid_selling(){
 			//console.log(recived_data.data[1]);
 
 			//clear timeout
-			clearTimeout(no_response_timeout);//clear/stop connection fail interval
+			window.clearTimeout(no_response_timeout);//clear/stop connection fail interval
 
 			//check if currently hotspot connected matches seller managed hotspots
 			if(seller_login.managed_hotspot.length > 0){//if hotspot names/locations are provided in seller profile
@@ -515,7 +515,7 @@ function allow_no_paid_selling(){
 							was_connected_before_status_change = true;
 
 							//is_seller_still_connected_to_owned_wifi_hotspot(); //do periodic check of if seller still connected to their owned hotspot
-							owned_hotspot_interval = setInterval(function(){
+							owned_hotspot_interval = window.setInterval(function(){
 		
 								allow_no_paid_selling();//call owned hotspot checking
 								console.log(1)
@@ -552,7 +552,7 @@ function allow_no_paid_selling(){
 							} 
 							
 							//clear owned hotspot connected check interval
-							clearInterval(owned_hotspot_interval);
+							window.clearInterval(owned_hotspot_interval);
 
 							seller_connected_on_owned_hotspot = false;//set connected to owned hotspot as false
 
@@ -564,7 +564,10 @@ function allow_no_paid_selling(){
 					}
 				})
 				
-
+				
+			//clear timeout
+			window.clearTimeout(no_response_timeout);//clear/stop connection fail interval
+			
 			}
 
 			// ** clear 
