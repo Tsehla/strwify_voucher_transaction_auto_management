@@ -522,7 +522,7 @@ function is_seller_still_connected_to_owned_wifi_hotspot(){
 		
 		allow_no_paid_selling();//call owned hotspot checking
 		console.log(1)
-	}, 1000); //every 15 minutes
+	}, 60000); //every 15 minutes
 	//}, 900000); //every 15 minutes
 }
 
