@@ -234,6 +234,18 @@ function selected_https(){
 
 					//to keep back navi history
 					window.location.assign(url_secure_version);//change window current url/go to new url
+
+					//show loading icon
+					$('body').append(`
+
+					<span style='position:absolute; top:42vh;left:40vw; font-size:18px;font-weight:800; width:300px;height:60px;background-color:white;border-radius:20px;border:1px solid blue;text-align:center'>
+						<i class='la la-cog la-spin' style='font-size:15px;font-weight:800'>
+						</i>
+						Secure page found,<br> Applying security please wait.
+					</span>
+					`);
+
+					
 				}
 				
 				
@@ -249,6 +261,8 @@ function selected_https(){
 
 
 }
+
+		
 
 //selected_https()
 
