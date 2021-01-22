@@ -228,13 +228,16 @@ function selected_https(){
 		url: url_secure_version,
 		success: function(message, text, response) {
 
-				console.log('1 : ',message, '2 : ',text, '3 : ',response, '4 : ',response.status);
+				//console.log('1 : ',message, '2 : ',text, '3 : ',response, '4 : ',response.status);
+				if(response.status == 200){
+					window.open(url_secure_version, 'self');
+				}
 				
 				
 			}
 		}).catch(function(err){//if file not exist
 
-			console.log(err);
+			//console.log(err);
 					
 		});
 		
@@ -435,16 +438,23 @@ if(current_url == '/sell_voucher'){
 
  }
 if(current_url == '/seller_login'){
+
+	//check if server provide [ https version of the url ] if url is secure via [ http ]
+	selected_https();//disable this function call if you dont desire this hehavior
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('show','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page'); 
  
  }
 if(current_url == '/distributor_login'){
+   //check if server provide [ https version of the url ] if url is secure via [ http ]
+	selected_https();//disable this function call if you dont desire this hehavior
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('show','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('hide','admin_fourth_page');
  
  }
 if(current_url == '/admin_login'){
+   //check if server provide [ https version of the url ] if url is secure via [ http ]
+	selected_https();//disable this function call if you dont desire this hehavior
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('show','admin_fourth_page'); 
  
