@@ -5662,9 +5662,17 @@ function auto_login(response){
 
 		//http://streetwifiy.co.za/login?username=free&password=vouchr&dst=&popup=true
 			
-		
+		let url = hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password;
+
 		//window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_self');
-		window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_blank');
+		window.open(url, '_blank');
+
+		
+		//incasse window.open is closed/blocked by popup//do get request also /to trigger router login
+		$.get(url, function(response, status){ });//cross origin error wil be recieved
+
+
+
 		voucher_print(response)//call voucher image/ticket production function
 			
 		return;
@@ -5689,6 +5697,10 @@ function auto_login(response){
 
 	
 	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_blank');
+
+	//incasse window.open is closed/blocked by popup//do get request also /to trigger router login
+	$.get(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code, function(response, status){ }).//cross origin error wil be recieved
+	
 	voucher_print(response)//call voucher image/ticket production function
 }
 
