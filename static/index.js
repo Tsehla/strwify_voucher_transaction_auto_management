@@ -230,7 +230,10 @@ function selected_https(){
 
 				//console.log('1 : ',message, '2 : ',text, '3 : ',response, '4 : ',response.status);
 				if(response.status == 200){
-					window.open(url_secure_version, '_self');
+					//window.open(url_secure_version, '_self');
+
+					//to keep back navi history
+					window.location.assign(url_secure_version);//change window current url/go to new url
 				}
 				
 				
