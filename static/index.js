@@ -5701,7 +5701,7 @@ function auto_login(response){
 	voucher_print(response)//call voucher image/ticket production function
 
 	//incasse window.open is closed/blocked by popup//do get request also /to trigger router login
-	$.get(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code, function(response, status){ }).//cross origin error wil be recieved
+	$.get(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code, function(response, status){ })//cross origin error wil be recieved
 	
 	
 }
