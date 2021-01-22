@@ -2325,6 +2325,13 @@ var hour = date.getHours();
 	});
 	
 	app.get('/qr_reader', function(req, res){
+
+		//set headers only for this iframe request, if this server is running from http
+		if(req.protocol == 'http'){
+
+			res.header('X-FRAME-OPTIONS', 'ALLOW-FROM ' + 'https://' + req.hostname);//make headers 
+		}
+		
         res.sendFile(path.resolve('./html/qr_reader_iframe.html'));
         
 	});
