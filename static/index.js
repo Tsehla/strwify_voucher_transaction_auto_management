@@ -250,7 +250,7 @@ function selected_https(){
 
 }
 
-selected_https()
+//selected_https()
 
 //get url parms and return results as object array
 function url_parms_object(){
