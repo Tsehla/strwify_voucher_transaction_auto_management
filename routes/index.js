@@ -2297,7 +2297,7 @@ var hour = date.getHours();
 		 
 		 res.sendFile(path.resolve('./html/home_page_html/sitemap.xml'));
 		 
-	 });
+	 }); 
 	app.get('/transaction', function(req, res){
 		 res.sendFile(path.resolve('./html/transaction.html'));
 		 
@@ -2322,8 +2322,12 @@ var hour = date.getHours();
 	app.get('/admin_login', function(req, res){
         res.sendFile(path.resolve('./html/transaction.html'));
         
-    });
-
+	});
+	
+	app.get('/qr_reader', function(req, res){
+        res.sendFile(path.resolve('./html/qr_reader_iframe.html'));
+        
+	});
     
 /*========================================
 
@@ -3526,13 +3530,15 @@ app.get('/api/get_hotspot', function(req, res){
 
 
 
+/*=======================================
+    handle all others request with incorrect routes
+=======================================*/  
 
 
+app.get('/*', function(req, res){
 
-
-
-
-
+	res.jsonp('Icorrect link, Please try going to homepage')
+});
 
 
 
