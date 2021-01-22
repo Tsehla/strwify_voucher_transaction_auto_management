@@ -118,10 +118,11 @@ redirect_delay = setTimeout(function(){//time before loading external login page
 		/*
 			1) [ http://streetwifiy.herokuapp.com ] to link where external streetwifiy hotspot is hosted
 			2) [ orangefarm ] give location of the mikrotik router hosting ths [ login.html ]  file
-		
+			3) [ http:// ] change to  [ https:// ] if the server you  hots/run external webpage supports https
 		*/
 
-		window.location= 'http://streetwifiy.herokuapp.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&trial=$(trial)&location=orangefarm';//open link where hotspot is at  
+
+		window.location= 'https://streetwifiy.herokuapp.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&trial=$(trial)&location=orangefarm';//open link where hotspot is at  
 
 	
 },1000);//2 miliseconds before redirect
