@@ -211,6 +211,41 @@ if(location.protocol === 'http:'){
 // console.log(current_domain);
 // console.log(http_https);
 
+
+//selected menu https securing//check if this ap server support https, if so run some menu in https to allow features that allow https to
+function selected_https(){
+
+	if(http_https == 'https://'){//if website already loaded on https, 
+		return; //then ignore//end function
+
+	}
+
+	var url_secure_version = 'https://' + current_domain + current_url;//url to test if current website link can be served via https by server
+
+	$.ajax({
+		type: "HEAD",
+		async: true,
+		url: url_secure_version,
+		success: function(message, text, response) {
+
+				console.log('1 : ',message, '2 : ',text, '3 : ',response, '4 : ',response.status);
+				
+				
+			}
+		}).catch(function(err){//if file not exist
+
+			console.log(err);
+					
+		});
+		
+
+
+
+
+}
+
+selected_https()
+
 //get url parms and return results as object array
 function url_parms_object(){
 
