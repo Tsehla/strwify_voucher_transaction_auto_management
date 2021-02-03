@@ -80,9 +80,12 @@ function sider_back_or_forth ( pressed){
 // function apply data
 function slider_data_apply( header, body, image){
 
-    document.getElementById('slider_header').innerHTML=header;
-    document.getElementById('slider_text').innerHTML=body;
-    document.getElementById('slider_box').style.backgroundImage='url('+ image +')';
+    document.getElementById('hero_header').innerHTML=header;
+    document.getElementById('hero_text').innerHTML=body;
+    document.getElementById('hero_image').style.backgroundImage='url('+ image +')';
 }
 
 
+//copy right
+var year = new Date();
+document.getElementById('copy_r').innerHTML = 'Copyright 2017 - ' + year.getFullYear() + '<br /> <b> UrWifi division of NkhiCorp reg : K2016457554 </b> <br /> South Africa'
