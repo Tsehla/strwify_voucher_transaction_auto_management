@@ -4,36 +4,8 @@
 
 
 /* navi */
-#logo_navigation_bar {
-    
-    width: 100%;
-    min-height : 63px;
-    height: 14.5vh;
-    color: #2E2E2E;
-    background-color:white;
 
 
-}
-
-.navi_contents {
-    min-width: 20vw;
-    max-width: 170px;
-    height: 83px;
-    display: inline;
-    float : right;
-    text-align: center;
-    margin: 5vh 1vh 0 0;
-    
-    border-bottom: navy;
-    border-style: ridge;
-    font-size: 30px;
-    font-family: 'Inconsolata', monospace;
-    font-weight: 900;
-
-}
-#client_area{
-    border:0px;
-}
 
 #logo_image {
     width: 40vw;
@@ -52,24 +24,7 @@
 /* slider */
 
 
-.spacer{
-    width: 100%;
-    height: 25vh;
-}
 
-
-
-#tell_more_button {
-    width: 20%;
-    height: auto;
-    margin-top: 3%;
-    margin-left: 15vw;
-    font-family: 'Crimson Text', serif;
-    
-}
-#tell_more_button button {
-    font-size: 1.2em;
-}
 
 #bread_crumb {
     width: 60%;
@@ -87,59 +42,20 @@
 
 /* about_text */
 
-#about_text {
-    width: 99%;
-    height: auto;
-    text-align: center;
-    background-color: white;
-    margin: 5px;
-    
 
-}
-
-#about_text h1 {
-    font-family: 'Anton', sans-serif;
-    font-size: 4.5em;
-    color: #008ED3;
-}
-
-#about_text p {
-    font-family: 'Arimo', sans-serif;
-    font-size: 1.2em;
-    margin: 20px 20px 0px 20px;
-    color: #2E2E2E;
-    text-align: justify;
-}
-#about_text button{
-    margin: 0px 0px 20px 0px;
-    font-size: 1.2em;
-}
 /* footer */
-#footer_box {
-    padding-top: 10px;
-    width:100%;
-    height: 60px;
-    text-align: center;
-    background-color:white;
-    color: #2E2E2E;
-}
+
 
 
 
 
 /* media queries */
-@media only screen and (min-width: 1024px) {
+/* @media only screen and (min-width: 1024px) {
 
-    body { font-size: 1.47em; }
-    #slider_header {
-        font-size: 1.6em;
+    .card {
+        margin-left: 20vw;
+        width: 800px !important;
     }
-    #slider_text {
-        font-size: 1.47em;
-    }
-    #about_text {
-        width: 98.5%;
-    }
-
-}
  
+}
+  */
