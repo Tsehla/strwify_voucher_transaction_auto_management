@@ -88,4 +88,4 @@ function slider_data_apply( header, body, image){
 
 //copy right
 var year = new Date();
-document.getElementById('copy_r').innerHTML = 'Copyright 2017 - ' + year.getFullYear() + '<br /> <b> UrWifi division of NkhiCorp reg : K2016457554 </b> <br /> South Africa'
+document.getElementById('copy_r').innerHTML = 'Copyright 2017 - ' + year.getFullYear() + '<br /> <b> UWireless division of NkhiCorp reg : K2016457554 </b> <br /> South Africa'
