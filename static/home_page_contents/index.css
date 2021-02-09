@@ -5,7 +5,7 @@
 
 /* navi */
 
-
+/*{ border: 1px solid grey;} */
 
 #logo_image {
     width: 40vw;
@@ -50,12 +50,12 @@
 
 
 /* media queries */
-/* @media only screen and (min-width: 1024px) {
+ @media only screen and (min-width: 1024px) {
 
-    .card {
-        margin-left: 20vw;
-        width: 800px !important;
-    }
+  body{ 
+      max-width: 1024px;
+    margin-left: 25vw;
+}
  
 }
-  */
+  
