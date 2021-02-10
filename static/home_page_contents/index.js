@@ -6,21 +6,28 @@
 //////////// slider //////////////
 
 var slider_text_content = [
+
     {
-        header : 'Add more to your store',
-        body : 'Customers get more than bread and butter in their favourite local store, they now get QUALITY CHEAP INTERNET together with their favourite treat.',
-        image : '/home_page_contents/images/spaza.jpg',
+        header : "Improve your WiFi and guest satisfaction",
+        body : "Create a free or paid Restaurant Internet access, engage guests with advertisements, collect surveys and understand what you can do better to improve guest satisfaction",
+        image : "/home_page_contents/images/resturant.jpg",
+
+    }, 
+    {
+        header : "Intelligent marketing WiFi system for retail stores",
+        body : "Uwireless HotSpot Retail WiFi system transforms your WiFi network into an intelligent marketing system which enables a display of video advertisements on mobile phones, tablets or laptops of customers.",
+        image : '/home_page_contents/images/retail.jpg',
     },
-    {
-        header : 'Being more than one of those land lords',
-        body : 'Be CHEAP QUALITY INTERNET offering landlord.',
-        image : '/home_page_contents/images/rent.jpg',
+   {
+        header : 'Cloud Hotel WiFi software for easy guest WiFi control',
+        body : 'Uwireless Hotspot Hotel WiFi is a robust and cost effective solution suitable for any hospitality deployment. It controls user Internet access, sets limits, engages users and helps you run different marketing strategies to maximize revenue from your hotel WiFi',
+        image : '/home_page_contents/images/office_wifi.jpg',
     },
-    {
-        header : 'Built for anywhere',
-        body : 'To be enjoyed by anyone, StreetWifiy CHEAP QUALITY INTERNET.',
-        image : '/home_page_contents/images/informal.webp',
-    }
+    // {
+    //     header : 'Built for anywhere',
+    //     body : 'To be enjoyed by anyone, StreetWifiy CHEAP QUALITY INTERNET.',
+    //     image : '/home_page_contents/images/informal.webp',
+    // } 
 
 ]
 
