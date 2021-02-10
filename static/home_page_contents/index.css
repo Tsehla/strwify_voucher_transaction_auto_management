@@ -53,9 +53,17 @@
  @media only screen and (min-width: 1024px) {
 
   body{ 
-      max-width: 1024px;
-    margin-left: 25vw;
-}
+        max-width: 1024px;
+        margin-left: 25vw;
+    }
+    .dsktop_1 {
+        width: 50% !important;
+    }
  
+    .dsktop_2 {
+        margin-top: 15% !important;
+        height:100% !important;
+
+    }
 }
   
