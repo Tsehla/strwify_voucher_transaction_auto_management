@@ -8,17 +8,20 @@
 var slider_text_content = [
 
     {
+        intro : "Resturant WiFi",
         header : "Improve your WiFi and guest satisfaction",
         body : "Create a free or paid Restaurant Internet access, engage guests with advertisements, collect surveys and understand what you can do better to improve guest satisfaction",
         image : "/home_page_contents/images/resturant.jpg",
 
     }, 
     {
+        intro : "Retail WiFi",
         header : "Intelligent marketing WiFi system for retail stores",
         body : "Uwireless HotSpot Retail WiFi system transforms your WiFi network into an intelligent marketing system which enables a display of video advertisements on mobile phones, tablets or laptops of customers.",
-        image : '/home_page_contents/images/retail.jpg',
+        image : '/home_page_contents/images/retail_wifi.jpg',
     },
    {
+        intro : "Hotel WiFi",
         header : 'Cloud Hotel WiFi software for easy guest WiFi control',
         body : 'Uwireless Hotspot Hotel WiFi is a robust and cost effective solution suitable for any hospitality deployment. It controls user Internet access, sets limits, engages users and helps you run different marketing strategies to maximize revenue from your hotel WiFi',
         image : '/home_page_contents/images/office_wifi.jpg',
@@ -32,7 +35,7 @@ var slider_text_content = [
 ]
 
 //on page load//load first items
-slider_data_apply( slider_text_content[0].header, slider_text_content[0].body, slider_text_content[0].image);
+slider_data_apply(slider_text_content[0].intro, slider_text_content[0].header, slider_text_content[0].body, slider_text_content[0].image);
 var current_slide = 0;
 
 //auto slider change
@@ -46,7 +49,7 @@ var slider_timer =setInterval(function(){
     }
 
     // call function every x seconds
-    slider_data_apply( slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
+    slider_data_apply(slider_text_content[current_slide].intro, slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
 }, 6000);
 
 
@@ -65,7 +68,7 @@ function sider_back_or_forth ( pressed){
             current_slide = slider_text_content.length -1;
         }
         // apply slider data at that position
-        slider_data_apply( slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
+        slider_data_apply(slider_text_content[current_slide].intro, slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
         return;
     }
 
@@ -79,14 +82,15 @@ function sider_back_or_forth ( pressed){
         }
 
         // call function every x seconds
-        slider_data_apply( slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
+        slider_data_apply( slider_text_content[current_slide].intro, slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
 
 }
 
 
 // function apply data
-function slider_data_apply( header, body, image){
-
+function slider_data_apply( intro, header, body, image){
+    
+    document.getElementById('hero_intro').innerHTML=intro;
     document.getElementById('hero_header').innerHTML=header;
     document.getElementById('hero_text').innerHTML=body;
     document.getElementById('hero_image').style.backgroundImage='url('+ image +')';
