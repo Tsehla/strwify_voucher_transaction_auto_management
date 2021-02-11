@@ -398,6 +398,80 @@ var auto_user_creater_wifi_radius_link = {
    });
 
    //console.log(auto_user_creater_wifi_radius_link);
+
+   // ++++++++++++++++++++++++++++++++++++ custom alerts ++++++++++++++++++++++++++++++++++++++++++++++++
+   
+	function custom_alert(open_type='', alert_text='""', button_okay, button_cancel){//open type determin if links should open in self document or new tab/window option "_blank/_self/ if open_type not provided then fn will assume its a function type of alert// butons should be function with their input data myfunction(1,b) or if url they should be complete including http/https
+
+		//add alert text // the text should be formatted as desired . ie <br />, <p>, <h> etc html elementsa edded as desired, including styling
+		$("#custome_alert_box_text").append("<br />" + alert_text);
+
+		//add buttons
+
+		//if both buttons  and its url type meaning open_type is specified
+			if(button_okay && button_cancel && open_type && open_type.toLocaleLowerCase().trim() == '_blank' || open_type.toLocaleLowerCase().trim() == '_self' ){
+
+				$("#custome_alert_box_button").append(`
+				
+				<span style="width:inherit; max-heigh:inherit;">
+
+					<button onclick="window.open('${button_cancel}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-danger" style='margin-left:10px'>Cancel</button>
+					<button onclick="window.open('${button_okay}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+				
+				</span>`
+			);}
+
+			//if single url button provided
+			if(button_okay && open_type && open_type.toLocaleLowerCase().trim() == '_blank' || open_type.toLocaleLowerCase().trim() == '_self' ){
+
+				$("#custome_alert_box_button").append(`
+				
+				<span style="width:inherit; max-heigh:inherit; ">
+
+					<button onclick="window.open('${button_okay}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary" style=''>Okay</button>
+					<br />
+				
+				</span>`
+			);}
+			
+		
+
+			//for functions
+
+			//if dual buttons
+			if(button_okay && button_cancel && open_type.length == 0){ //for function open type should not be specified
+
+				$("#custome_alert_box_button").append(`
+				
+				<span style="width:inherit; max-heigh:inherit">
+
+					<button onclick="${button_cancel}) ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-danger" style='margin-left:10px'>Cancel</button>
+					<button onclick="window.open(${button_okay}) ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+				
+				</span>`
+			);}
+
+			//if single button
+			if(button_okay && button_cancel == undefined && open_type.length == 0){ //for single button , function open type should not be specified and cancel button should remain ubdefined
+
+				$("#custome_alert_box_button").append(`
+				
+				<span style="width:inherit; max-heigh:inherit">
+
+					<button onclick="window.open(${button_okay});dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+				
+				</span>`
+			);}
+
+
+		//show div
+		dom_hide_show('show', 'custome_alert_box_container');
+	
+
+	}
+
+
+
 /*_____________________________________________________________________________________________________________________________________________________
 
 app routes
@@ -5727,7 +5801,11 @@ function auto_login(response){
 		let url = hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password;
 
 		//window.open(hot_spot_url + '?username=' + voucher_username + '&password=' + voucher_password,'_self');
-		window.open(url, '_blank');
+		//window.open(url, '_blank');
+
+		//give notification to login//to bypass popup block// show single button alert box
+		custom_alert(open_type='_blank', alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', url, undefined)
+		
 
 		voucher_print(response)//call voucher image/ticket production function
 		
@@ -5767,6 +5845,7 @@ function auto_login(response){
 	
 	
 }
+
 
 
 
