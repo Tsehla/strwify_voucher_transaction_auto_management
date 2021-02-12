@@ -5792,7 +5792,14 @@ function auto_login(response){
 
 	if(!hot_spot_url){
 
-		voucher_print(response)//call voucher image/ticket production function
+		//voucher_print(response)//call voucher image/ticket production function
+
+		//give alert
+		custom_alert("", alert_text='Please find downloaded voucher code<br />Use it when connected to any of our wifi hotspot.', "voucher_free_print_initiator()", undefined);
+		
+		voucher_free_print_initiator_variable = response;//save ticket print data
+
+
 		return; //if url for router not available
 	
 	}
