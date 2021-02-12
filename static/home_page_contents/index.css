@@ -54,7 +54,7 @@
 
   body{ 
         max-width: 1024px;
-        margin-left: 25vw;
+        /* margin-left: 25vw; */
     }
     .dsktop_1 {
         width: 50% !important;
