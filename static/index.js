@@ -5838,20 +5838,21 @@ function auto_login(response){
 
 	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	
+	/*
 	 
- 	var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');
-	 
- 	if(!auto_login_confirm ){
+		var auto_login_confirm = confirm('Do you want to use this voucher to automatically log in?');
+		
+		if(!auto_login_confirm ){
 
-		voucher_print(response)//call voucher image/ticket production function
-		return
-	}//user refuse auto login
+			voucher_print(response)//call voucher image/ticket production function
+			return
+		}//user refuse auto login
 	
-
+	*/
 
 	//give notification to login//to bypass popup block// show single button alert box
 		
-	custom_alert("", alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code+"', '_blank');voucher_free_print_initiator()", undefined)
+	custom_alert("", alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code+"', '_blank');voucher_free_print_initiator()", 'voucher_free_print_initiator()')
 	
 	//window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_blank');
 
