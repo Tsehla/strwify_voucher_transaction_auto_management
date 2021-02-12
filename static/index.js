@@ -403,6 +403,13 @@ var auto_user_creater_wifi_radius_link = {
    
 	function custom_alert(open_type='', alert_text='""', button_okay, button_cancel){//open type determin if links should open in self document or new tab/window option "_blank/_self/ if open_type not provided then fn will assume its a function type of alert// butons should be function with their input data myfunction(1,b) or if url they should be complete including http/https
 
+
+   		//clean div's
+		document.getElementById("custome_alert_box_text").innerHTML = ''; //alert text div
+		document.getElementById("custome_alert_box_button").innerHTML = ''; //alert buttons fiv
+
+
+
 		//add alert text // the text should be formatted as desired . ie <br />, <p>, <h> etc html elementsa edded as desired, including styling
 		$("#custome_alert_box_text").append("<br />" + alert_text);
 
@@ -445,8 +452,8 @@ var auto_user_creater_wifi_radius_link = {
 				
 				<span style="width:inherit; max-heigh:inherit">
 
-					<button onclick="${button_cancel}) ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-danger" style='margin-left:10px'>Cancel</button>
-					<button onclick="window.open(${button_okay}) ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+					<button onclick="${button_cancel} ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-danger" style='margin-left:10px'>Cancel</button>
+					<button onclick="${button_okay} ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
 				
 				</span>`
 			);}
@@ -458,7 +465,7 @@ var auto_user_creater_wifi_radius_link = {
 				
 				<span style="width:inherit; max-heigh:inherit">
 
-					<button onclick="window.open(${button_okay});dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+					<button onclick="${button_okay};dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
 				
 				</span>`
 			);}
@@ -5755,6 +5762,8 @@ function distributor_superadmin_acc_help(type_of_user){
 
 //trick for next time, make ajax to router, get response link extract variable to see if it http-pap or chap then use corrcet way to login//using this nw im gettng allow origin issue
 
+var voucher_free_print_initiator_variable = ""; //stores data to be used to print free voucher
+
 function auto_login(response){
 	//hot_spot_url
 
@@ -5804,13 +5813,18 @@ function auto_login(response){
 		//window.open(url, '_blank');
 
 		//give notification to login//to bypass popup block// show single button alert box
-		custom_alert(open_type='_blank', alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', url, undefined)
+		//custom_alert(open_type='_blank', alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', url, undefined) //url verion
 		
+		custom_alert("", alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+url+"', '_blank');voucher_free_print_initiator()", undefined)
+		//console.log( "window.open('"+url+"', '_blank');voucher_free_print_initiator()")
 
-		voucher_print(response)//call voucher image/ticket production function
+		//voucher_print(response)//call voucher image/ticket production function
+		
+			//voucher_print(response)
+			voucher_free_print_initiator_variable = response;//save ticket print data
 		
 		//incasse window.open is closed/blocked by popup//do get request also /to trigger router login
-		$.get(url, function(response, status){ });//cross origin error wil be recieved
+		//$.get(url, function(response, status){ });//cross origin error wil be recieved
 
 
 			
@@ -5834,20 +5848,31 @@ function auto_login(response){
 	}//user refuse auto login
 	
 
+
+	//give notification to login//to bypass popup block// show single button alert box
+		
+	custom_alert("", alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code+"', '_blank');voucher_free_print_initiator()", undefined)
 	
-	window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_blank');
+	//window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_blank');
 
 
-	voucher_print(response)//call voucher image/ticket production function
+	//voucher_print(response)//call voucher image/ticket production function
+
+	voucher_free_print_initiator_variable = response;//save ticket print data
 
 	//incasse window.open is closed/blocked by popup//do get request also /to trigger router login
-	$.get(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code, function(response, status){ })//cross origin error wil be recieved
+	//$.get(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code, function(response, status){ })//cross origin error wil be recieved
 	
 	
 }
 
 
+	function voucher_free_print_initiator(){ // call voucher printing after login popup is clicked//solution is meant to solve issue on ios where image print opens on ticket window and this disanables automatic login funtions //fixing that by making auto login to open new wimdow or tab to call mikrotik login link api cause issue of blocked popup, since the new window was requested by a function not user intervention//so custom alert was created to handle the issue, and that led to this setup
 
+
+		voucher_print(voucher_free_print_initiator_variable)
+	
+	}
 
 
 /*=====================================================================================================================================================	
