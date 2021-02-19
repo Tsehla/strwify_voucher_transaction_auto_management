@@ -1,5 +1,120 @@
 
 
+body {
+    min-height: 360px;
+    height: auto;
+    background-color: #000000;
+    min-width: 370px;
+    box-sizing: border-box;
+            
+}
+
+/* fonts import */
+
+@font-face {
+    font-family: 'Serreria Sobria Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Serreria Sobria Medium'), url('SerreriaSobria.woff') format('woff');
+    }
+
+
+/* header */
+
+
+#header_container {
+
+    width: auto;
+    height: 480px;
+    /* background-image: url("/home_page_contents/images/returant wifi offering.jpg"); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#header_text_header {
+
+    min-height: 44px;
+    width: 47%;
+    height: 9%;
+    min-width: 141px;
+    background-color: rgb(255, 255, 255, 59%);
+    margin: 0px 0px 0px 29px;
+    font-size: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: -1px -1px 7px rgb(255 0 0 / 98%);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 44px;
+    font-weight: 900;
+}
+
+#header_text_body {
+
+ 
+        width: 85%;
+        min-width: 70px;
+        height: 66%;
+        min-height: 100px;
+        background-color: rgb(255, 255, 255, 59%);
+        text-align: center;
+        margin: 30px 0px 0px 29px;
+        border-radius: 3px;
+        
+
+}
+
+#header_text_body_header {
+    width: auto;
+    height: 15%;
+    min-height: 52px;
+    font-size: 14px;
+    font-family: 'Serreria Sobria Medium';
+    text-shadow: -1px 0px 16px rgb(26 27 4 / 98%);
+}
+#header_text_body_header_body {
+    width: 85%;
+    height: auto;
+    min-height: 70px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-shadow: -1px 0px 0px rgb(26 27 4 / 98%);
+    text-align: left;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 16px auto 16px auto;
+}
+ #right_nav_arrow{
+    position: absolute;
+    right: 0px;
+    z-index: 1;
+    top: 15em;
+ }
+
+#left_nav_arrow {
+    position: absolute;
+    left: 0px;
+    z-index: 1;
+    top: 15em;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

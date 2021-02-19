@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html5>
+<html lang="en">
 
     <title>Uwireless | Wifi, Hotspot, Internet | Networking</title>
 
@@ -20,92 +20,75 @@
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
-        <style> 
 
-            body {
-                min-height: 360px;
-                height: auto;
-                background-color: #ecf0f1;
-                min-width: 370px;
-                
-            }
-            
-            #nav_container{
-                min-width: 200px;
-                width: inherit;
-                height: 70px;
-                display: flex;
-               /* position: absolute;
-                top:2vh;
-                */
-               
-            }
-  
-            #nav_container button{
-                min-width: 65px;
-                width: 20%;
-                height: 60px;
-                text-align :center;
-                line-height: 45px;
-                font-size: 10px;
-                background-color: transparent !important;
-            }
-            
-           /* {border: 1px solid blue} */
-           #hero_image {
-               width: inherit;
-               min-width: 200px;
-               min-height: 200px;
-               height: 42vh;
-
-               margin-top: 1vh 0px 0px 0px;
-                background-position: center;
-                background-repeat: no-repeat;
-                background-color: white;
-                background-size: cover;
-           }
-
-
-
-        
-        </style>
 
 </head>
 
-<body class="w3-container" style="display: table;margin: auto;">
+<body>
 
     
     <!-- header -->
-    <div class="w3-card w3-margin-top" >
 
-        <div id='nav_container'> <!-- chnage href with you link -->
-            <button class='btn ' onclick="document.getElementById('services_container').style.display='block'; window.location.href='#services_container'" style='margin-left: 20%; border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom:1px solid #bdc3c7;color:#34495e;'>SERVICES</button>
-            <button class='btn ' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px;border-bottom: 1px solid #bdc3c7;color:#34495e;' onclick="document.getElementById('contact_container').style.display='block'; window.location.href='#contact_container' ">CONTACT</button>
-            <button class='btn ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px;border-bottom: 1px solid #bdc3c7;color:#34495e;' onclick="window.open('http://' + window.location.host + '/hotspot' ,'_blank')">HOTSPOT</button>
-        </div>
-    
-
-
-        <!-- hero -->
-   
-        <div id='hero_image' style="width: inherit;">
-            <div style="width: 100%;height: 50%;"></div>
-            <div id="hero_intro" style="font-size: 30px;font-weight: bolder;min-width:50px;max-width:180px;min-height: 25px;background-color:#1ca6eb42;color:white;margin-left: 10%;text-align: center;"></div>
+    <div id="header_container">
+       
+        <div style="width:100%;height: 36px;margin:0px;"></div>
+        
+        <div id="header_text_header">Retail Wifi</div>
+        <div id="header_text_body">
+            <div style="width:100%;height: 5px;"></div>
+            <div id="header_text_body_header">Intelligent marketing WiFi system for retail stores</div>
+            <div id="header_text_body_header_body">
+                Uwireless HotSpot Retail WiFi system transforms your WiFi network into an intelligent marketing system which enables a display of video advertisements on mobile phones, tablets or laptops of customers.
             </div>
         </div>
-        <div id="hero_header" style="margin-top:-35px;width: inherit; height: 30px;background-color: #bdc3c7cd;font-family: 'Courier New', Courier, monospace;font-size: 13px;font-weight: bolder;"></div>
-        <div id="hero_text" style="width: inherit; min-height: 60px;height:auto;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;background-color: #bdc3c7cd;padding-top: 10px;"></div>
-        <button class="btn w3-bottombar w3-margin-bottom" onclick="document.getElementById('contact_container').style.display='block'; window.location.href='#contact_container' " style="width: 30%; margin: 10px 0 0 30%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;border-bottom:1px solid #bdc3c7;color:#34495e;background-color: transparent;">Enquire more</button>
+
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="52" height="58" viewBox="0 0 52 58" id="left_nav_arrow" onclick="sider_back_or_forth ('back')">
+            <defs>
+              <filter id="Path_5" x="0" y="0" width="52" height="58" filterUnits="userSpaceOnUse">
+                <feOffset input="SourceAlpha"/>
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feFlood flood-color="#fff"/>
+                <feComposite operator="in" in2="blur"/>
+                <feComposite in="SourceGraphic"/>
+              </filter>
+            </defs>
+            <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Path_5)">
+              <g id="Path_5-2" data-name="Path 5" transform="translate(9 49) rotate(-90)" fill="rgba(128,116,116,0.73)" opacity="0.6">
+                <path d="M 39.12578964233398 33.5 L 0.8742111921310425 33.5 L 20 0.9861590266227722 L 39.12578964233398 33.5 Z" stroke="none"/>
+                <path d="M 20 1.972301483154297 L 1.7484130859375 33 L 38.2515869140625 33 L 20 1.972301483154297 M 20 0 L 40 34 L 0 34 L 20 0 Z" stroke="none" fill="#fff"/>
+              </g>
+            </g>
+          </svg>
+ 
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="52" height="58" viewBox="0 0 52 58" id="right_nav_arrow" onclick="sider_back_or_forth()">
+            <defs>
+              <filter id="Path_4" x="0" y="0" width="52" height="58" filterUnits="userSpaceOnUse">
+                <feOffset input="SourceAlpha"/>
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feFlood flood-color="#fff"/>
+                <feComposite operator="in" in2="blur"/>
+                <feComposite in="SourceGraphic"/>
+              </filter>
+            </defs>
+            <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Path_4)">
+              <g id="Path_4-2" data-name="Path 4" transform="translate(43 9) rotate(90)" fill="rgba(128,116,116,0.73)">
+                <path d="M 39.12578964233398 33.5 L 0.8742111921310425 33.5 L 20 0.9861590266227722 L 39.12578964233398 33.5 Z" stroke="none"/>
+                <path d="M 20 1.972301483154297 L 1.7484130859375 33 L 38.2515869140625 33 L 20 1.972301483154297 M 20 0 L 40 34 L 0 34 L 20 0 Z" stroke="none" fill="#fefafa"/>
+              </g>
+            </g>
+          </svg>
+          
+          
+
 
     </div>
-
-
-
+    
+    
 
 
     <!-- body --> 
 
-    <div class="card w3-card w3-margin-top" style="width: inherit;"> <!-- demo -->
+    <div class="w3-container card w3-card w3-margin-top" style="width: inherit;"> <!-- demo -->
 
         <!-- hotspot login video -->
 
