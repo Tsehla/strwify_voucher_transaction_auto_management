@@ -47,7 +47,7 @@ body {
     height: 9%;
     min-width: 141px;
     background-color: rgb(255, 255, 255, 59%);
-    margin: 0px auto 0px 29px;
+    margin: 0px auto 0px auto;
     font-size: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-shadow: -1px -1px 7px rgb(176 189 44 / 78%);
@@ -59,6 +59,7 @@ body {
     text-transform: uppercase;
     border-radius: 2px;
 }
+
 
 
 #header_text_body {
@@ -143,21 +144,28 @@ body {
     font-family: 'Axis Extra Bold';
 }
 
+.service_header_right {
+
+    float:right;
+}
+
 .service_images {
     min-width: 104px;
     min-height: 104px;
-    display: inline-block;
-    margin: 16% 10px 0px 10px;
-    vertical-align: top;
+    margin: 5em 10px 0px 10px;
+   
 }
 
 .services_intro_text {
-    width: 60%;
+    width: 56%;
     height: auto;
     display: inline-block;
-    font-size: 16px;
+    /* font-size: 16px; */
+    font-size: 14px;
     color: white;
     text-align: justify;
+    margin: 14px 0px 0px 10px;
+    line-break: auto;
 }
 
 
@@ -212,8 +220,28 @@ body {
 
 
 
+@media only screen and ( min-width:767px ){
+
+    .services_intro_text {
+        width: 84%;
+    }
 
 
+
+    
+}
+
+
+@media only screen and ( min-width:500px ){
+
+    .service_images {
+            margin: 3em 10px 0px 10px;
+    }
+
+
+
+    
+}
 
 
 
@@ -275,11 +303,11 @@ body {
 
 
 /* media queries */
- @media only screen and (min-width: 1024px) {
+ /* @media only screen and (min-width: 1024px) {
 
   body{ 
         max-width: 1024px;
-        /* margin-left: 25vw; */
+        /* margin-left: 25vw; *
     }
     .dsktop_1 {
         width: 50% !important;
@@ -291,4 +319,4 @@ body {
 
     }
 }
-  
+   */
