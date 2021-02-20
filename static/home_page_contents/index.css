@@ -18,6 +18,15 @@ body {
     src: local('Serreria Sobria Medium'), url('SerreriaSobria.woff') format('woff');
     }
 
+@font-face {
+    font-family: 'Axis Extra Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Axis Extra Bold'), url('Axis_Extrabold.otf') format('otf');
+}
+
+    
+
 
 /* header */
 
@@ -34,32 +43,37 @@ body {
 #header_text_header {
 
     min-height: 44px;
-    width: 47%;
+    width: 85%;
     height: 9%;
     min-width: 141px;
     background-color: rgb(255, 255, 255, 59%);
-    margin: 0px 0px 0px 29px;
+    margin: 0px auto 0px 29px;
     font-size: 20px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-shadow: -1px -1px 7px rgb(255 0 0 / 98%);
+    text-shadow: -1px -1px 7px rgb(176 189 44 / 78%);
     text-align: center;
     vertical-align: middle;
     line-height: 44px;
     font-weight: 900;
+    font-style: oblique;
+    text-transform: uppercase;
+    border-radius: 2px;
 }
+
 
 #header_text_body {
 
- 
-        width: 85%;
-        min-width: 70px;
-        height: 66%;
-        min-height: 100px;
-        background-color: rgb(255, 255, 255, 59%);
-        text-align: center;
-        margin: 30px 0px 0px 29px;
-        border-radius: 3px;
-        
+    width: 85%;
+    min-width: 70px;
+    height: 66%;
+    min-height: 100px;
+    background-color: rgb(255, 255, 255, 82%);
+    text-align: center;
+    margin: 30px auto 0px auto;
+    border-radius: 3px;
+    font-family: Muli,sans-serif;
+    letter-spacing: 0.06em;
+    line-height: 28px;
 
 }
 
@@ -67,19 +81,20 @@ body {
     width: auto;
     height: 15%;
     min-height: 52px;
-    font-size: 14px;
+    font-size: 13px;
     font-family: 'Serreria Sobria Medium';
     text-shadow: -1px 0px 16px rgb(26 27 4 / 98%);
+    text-transform: uppercase;
 }
 #header_text_body_header_body {
     width: 85%;
     height: auto;
     min-height: 70px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-shadow: -1px 0px 0px rgb(26 27 4 / 98%);
+    /* text-shadow: -1px 0px 0px rgb(26 27 4 / 98%); */
     text-align: left;
     font-size: 16px;
-    font-weight: 700;
+    /* font-weight: 700; */
     margin: 16px auto 16px auto;
 }
  #right_nav_arrow{
@@ -95,7 +110,102 @@ body {
     z-index: 1;
     top: 15em;
 }
+
+#simple_nav {
+    width: 100%;
+    height: auto;
+    min-width: 300px;
+    min-height: 30px;
+    margin: 10px 0px 10px 0px
 }
+
+#simple_nav a {
+ 
+    /* border: 1px solid rgb(112 112 112 / 78%); */
+    display: inline-block;
+    width: 30%;
+    /* min-width: 5.5em; */
+    height: 76px;
+    min-height: 20px;
+    margin: 0px;
+    border: 1px solid rgb(176 189 44 / 78%);
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    line-height: 76px;
+    font-size: 10px;
+}
+
+
+.service_header {
+    font-size: 34px;
+    color: white;
+    font-family: 'Axis Extra Bold';
+}
+
+.service_images {
+    min-width: 104px;
+    min-height: 104px;
+    display: inline-block;
+    margin: 16% 10px 0px 10px;
+    vertical-align: top;
+}
+
+.services_intro_text {
+    width: 60%;
+    height: auto;
+    display: inline-block;
+    font-size: 16px;
+    color: white;
+    text-align: justify;
+}
+
+
+.services_button {
+    background-color: rgb(255 255 255 / 24%);
+    min-width: 157px;
+    min-height: 44px;
+    border: 1px solid rgb(112 112 112);
+    margin: 10px;
+    border-radius: 40px;
+    color: white;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 767px */
 
 
 
