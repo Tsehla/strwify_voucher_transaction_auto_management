@@ -110,32 +110,25 @@
             
 
             
+        </div> -->
+        <div id='simple_nav'>
+            <div style="width:auto;height: auto;margin:0px auto 0px 0px;text-align: center;">
+                <a href="#in_action" onclick="document.getElementById('demonstration_video_text').style.display='block';document.getElementById('demonstration_video').style.display='block'">Gallery</a>
+                <a href="#contact_container" onclick="document.getElementById('contact_button_show').style.display='none';document.getElementById('contact_button_hide').style.display='block'">Contact us</a>
+                <a href="#" onclick="window.open('http://' + window.location.host + '/hotspot' ,'_blank')">Wifi demo</a>
+            </div>
         </div>
 
-        <!-- live hotspot demo --
-        <div  style=" background-color:#ecf0f1;  height:auto; height:100px; width: 48%; text-align: center;margin:10px 3px 3px 3px;font-family: Verdana, Geneva, Tahoma, sans-serif;display: inline-block; float:right; border-radius: 13px;" onclick="window.open('http://' + window.location.host + '/hotspot' ,'_blank')"> 
-            
-            <i style="font-size:60px;font-weight:bolder; margin:8px 0 2px 3px ;display: inline-block" class="la la-wifi" ></i>
-
-            <p style="" >Explore live demo</p>
-            
-        </div>
-
-        <div id="demonstration_video_text" style="width: 100%;height: 10px;margin:10px 0 -10px 0; text-align: center;font-weight: bolder; display: none;" >Free auto login demonstration </div>
+       <!--live hotspot demo -->
+        <div id="demonstration_video_text" style="width: 100%;;height: 20px;margin:20px 0 -10px 0; text-align: center;font-weight: bolder; display: none;color:white" >Free auto login demonstration </div>
 
             <a name='in_action'></a>
 
-        <video id="demonstration_video" src="/home_page_contents/demonstration/vids/streetwifiyFreeLogin.mp4" style="width: 100%;height: auto;display: none;margin: 18px 0 18px 0;" controls=true></video>
+        <video id="demonstration_video" src="/home_page_contents/demonstration/vids/streetwifiyFreeLogin.mp4" style="width: 100%;max-width:300px;height: auto;display: none;margin: 18px auto 18px auto;" controls=true></video>
 
-    </div> -->
+   
 
-    <div id='simple_nav'>
-        <div style="width:auto;height: auto;margin:0px auto 0px 0px;text-align: center;">
-            <a href="">Gallery</a>
-            <a href="">Contact us</a>
-            <a href="">Wifi demo</a>
-        </div>
-    </div>
+  
      
    
     <div class="card" style="width: inherit;"> <!-- services -->
@@ -171,8 +164,12 @@
                     <div class="services_intro_text">
                         We understand every client is different and so is their needs and wants. Hence we at Uwireless have developed multiple offerings each tailor made to meet a specific needs for a specific client.
                     </div>
-                    <div style="width: 100%;height: auto;text-align: right;margin: 10px -10% 10px 0px;">
-                        <button class="services_button">+</button>
+                    <div style="width: 100%;height: auto;min-height: 75px;margin: 10px -10% 10px 0px;">
+                        
+                        <button id="service_button_show" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('service_button_hide').style.display='block';document.getElementById('services_container').style.display='block' ">+</button>
+                        <button id="service_button_hide" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('service_button_show').style.display='block';document.getElementById('services_container').style.display='none'" style="display: none;">-</button>
+
+                 
                     </div>
                 </div>
     
@@ -342,9 +339,14 @@
                     <div style="height:auto;width:auto;display:inline-block;vertical-align: top;">
                         <img src="/home_page_contents/images/Icon material-router.png" class="service_images" alt="services image">   
                     </div>
-                    <div style="width: 100%;height: auto;text-align: right;margin: 10px -10% 10px 0px;">
-                        <button class="services_button">+</button>
+                    <div style="width: 100%;height: auto;min-height: 75px;margin: 10px -10% 10px 0px;">
+                        
+                        <button id="hardware_button_show" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('hardware_button_hide').style.display='block';document.getElementById('equipment_container').style.display='block' ">+</button>
+                        <button id="hardware_button_hide" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('hardware_button_show').style.display='block';document.getElementById('equipment_container').style.display='none'" style="display: none;">-</button>
+
+                 
                     </div>
+                </div>
                 </div>
     
             </div>
@@ -408,8 +410,12 @@
                         
                     </div>
 
-                    <div style="width: 100%;height: auto;text-align: right;margin: 10px -10% 10px 0px;">
-                        <button class="services_button">+</button>
+                    <div style="width: 100%;height: auto;min-height: 75px;margin: 10px -10% 10px 0px;">
+                        
+                        <button id="mission_button_show" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('mission_button_hide').style.display='block';document.getElementById('about_container').style.display='block' ">+</button>
+                        <button id="mission_button_hide" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('mission_button_show').style.display='block';document.getElementById('about_container').style.display='none'" style="display: none;">-</button>
+
+                 
                     </div>
                 </div>
     
@@ -498,8 +504,12 @@
                         <img src="/home_page_contents/images/Icon metro-perm-phone-msg.png" class="service_images" alt="services image">   
                     </div>
 
-                    <div style="width: 100%;height: auto;text-align: right;margin: 10px -10% 10px 0px;">
-                        <button class="services_button">+</button>
+                    <div style="width: 100%;height: auto;min-height: 75px;margin: 10px -10% 10px 0px;">
+                        
+                        <button id="contact_button_show" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('contact_button_hide').style.display='block';document.getElementById('contact_container').style.display='block' ">+</button>
+                        <button id="contact_button_hide" class="services_button" onclick="document.getElementById(this.id).style.display='none';document.getElementById('contact_button_show').style.display='block';document.getElementById('contact_container').style.display='none'" style="display: none;">-</button>
+
+                        
                     </div>
                 </div>
     
@@ -524,7 +534,7 @@
             <i class="la la-envelope" style="width: 100%; margin : 10px 0px 1px 3px"><a class="w3-margin" href='mailto:streetwifiy@gmail.com' target="_blank">Streetwifiy@gmail.com</a></i>
             <br />
             <br />
-            <i class="la la-facebook" style="width: 100%; margin : 10px 0px 10px 3px" onclick="window.open('http://www.fb.com/creativexminds', '_blank')"><a class="w3-margin" href="#"> CreativeXmindS </a></i>
+            <i class="la la-facebook" style="width: 100%; margin : 10px 0px 10px 3px; display: none;" onclick="window.open('http://www.fb.com/creativexminds', '_blank')"><a class="w3-margin" href="#"> CreativeXmindS </a></i>
             
             
         </div>
