@@ -11,20 +11,9 @@ body {
 
 /* fonts import */
 
-@font-face {
-    font-family: 'Serreria Sobria Medium';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Serreria Sobria Medium'), url('SerreriaSobria.woff') format('woff');
-    }
+@import url('http://fonts.googleapis.com/css2?family=Heebo:wght@800&display=swap');
 
-@font-face {
-    font-family: 'Axis Extra Bold';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Axis Extra Bold'), url('Axis_Extrabold.otf') format('otf');
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@800&family=Overpass:wght@200&display=swap');
     
 
 
@@ -83,7 +72,7 @@ body {
     height: 15%;
     min-height: 52px;
     font-size: 13px;
-    font-family: 'Serreria Sobria Medium';
+    font-family: 'Heebo', sans-serif;
     text-shadow: -1px 0px 16px rgb(26 27 4 / 98%);
     text-transform: uppercase;
 }
@@ -141,7 +130,7 @@ body {
 .service_header {
     font-size: 34px;
     color: white;
-    font-family: 'Axis Extra Bold';
+    font-family: 'Overpass', sans-serif;
 }
 
 .service_header_right {
