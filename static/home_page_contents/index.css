@@ -130,6 +130,7 @@ body {
 .service_header {
     font-size: 34px;
     color: white;
+    font-weight: 600;
     font-family: 'Overpass', sans-serif;
 }
 
