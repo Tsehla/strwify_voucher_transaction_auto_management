@@ -81,21 +81,65 @@ function sider_back_or_forth ( pressed){
             current_slide = 0;
         }
 
+        document.getElementById('header_container').style.animation='fadeOut 6s';
+
+        //animate background //fade out
+        fade_animation("out")
+
+
         // call function every x seconds
         slider_data_apply( slider_text_content[current_slide].intro, slider_text_content[current_slide].header, slider_text_content[current_slide].body, slider_text_content[current_slide].image); 
+
+        
 
 }
 
 
 // function apply data
 function slider_data_apply( intro, header, body, image){
+
+    //animate background //fade in
+    fade_animation("in")
+
     
     document.getElementById('header_text_header').innerHTML=intro;
     document.getElementById('header_text_body_header').innerHTML=header;
     document.getElementById('header_text_body_header_body').innerHTML=body;
     document.getElementById('header_container').style.backgroundImage='url('+ image +')';
+   
+  
+
 }
 
+function fade_animation(todo="in"){
+
+    var track_opacity = 0;
+
+    var fade = setInterval(function(){
+
+        if(todo == "in"){
+
+            document.getElementById('header_container').style.opacity = track_opacity;//increment opacity
+    
+        }
+    
+        if(todo == "out"){
+    
+            document.getElementById('header_container').style.opacity = 1 - track_opacity;//decrement opacity
+    
+           
+        }
+
+        if(track_opacity > 1){//stop interval
+            clearInterval(fade);
+        }
+        
+        track_opacity = track_opacity + 0.1;//increment
+
+    }, 80);
+
+
+}
 
 //copy right
 var year = new Date();
