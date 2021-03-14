@@ -19,7 +19,9 @@ body {
 
 
 /* header */
-
+/* *{
+    border: 1px solid blue;
+} */
 
 #header_container {
 
@@ -143,6 +145,13 @@ body {
 .service_header_right {
 
     float:right;
+    width: 100%;
+}
+
+.services_header_image{
+    
+    width: 38% !important;
+    text-align: center !important;
 }
 
 .service_images {
@@ -180,9 +189,24 @@ body {
 }
 
 
+/* #copy_r{
+    text-align: left;
+} */
+.copry_r_1 {
+    width:90%; 
+    /* display:inline-block; */
+    height:auto;
+    text-align:left;
+    margin:20px;
+}
 
-
-
+.copry_r_2 {
+    width:90%; 
+    /* display:inline-block; */
+    height:auto;
+    text-align:center;
+    margin:20px;
+}
 
 
 
@@ -227,9 +251,9 @@ body {
 
 @media only screen and ( min-width:500px ){
 
-    .service_images {
+    /* .service_images {
             margin: 3em 10px 0px 10px;
-    }
+    } */
 
 
 
@@ -296,8 +320,8 @@ body {
 
 
 /* media queries */
- /* @media only screen and (min-width: 1024px) {
-
+ @media only screen and (min-width: 1024px) {
+/* 
   body{ 
         max-width: 1024px;
         /* margin-left: 25vw; *
@@ -310,6 +334,52 @@ body {
         margin-top: 15% !important;
         height:100% !important;
 
+    } */
+
+
+
+    .service_header_right{
+        margin-right: 2.3% !important;
+        float: right !important;
+        /* width: 100% !important; */
+        text-align: right !important;
     }
+
+
+    .services_header_image{
+        height: 27vh !important;
+        width: 50% !important;
+        text-align: center;
+        background-color: #ffffff1f;
+    }
+
+    .services_intro_text{
+        width: 47%;
+    }
+
+    .sevices_button_container_right{
+
+        width: 50% !important;
+        margin: -60px -4% 10px 0px !important;
+        float: right !important;
+        text-align: center !important;
+    }
+    .sevices_button_container_left{
+        width: 50% !important;
+        margin: -60px -4% 10px 0px !important;
+        float:left!important;
+        text-align: center !important;
+    }
+
+    .services_button {
+        float: none !important;
+    }
+
+
+    .copry_r_2 {
+        width:100%; 
+        
+    }
+    
 }
-   */
+  

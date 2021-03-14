@@ -143,4 +143,4 @@ function fade_animation(todo="in"){
 
 //copy right
 var year = new Date();
-document.getElementById('copy_r').innerHTML = 'Copyright 2017 - ' + year.getFullYear() + '<br /> <b> UWireless division of NkhiCorp reg : K2016457554 </b> <br /> South Africa'
+document.getElementById('copy_r').innerHTML = '<br /><div class="copry_r_1"><a href="mailto:streetwifiy@gmail.com" target="_blank">Email : Streetwifiy@gmail.com</a><br><a href="tel:+27670909089" target="_blank">Phone : +27 67 090 9089</a><br/><a onclick="window.open(\'http://wa.me/+27670909089?text=Uwireless%20enquiry.%20\', \'_blank\')" href=\'#\'>Whatsapp : +27 67 090 9089</a></div><div class="copry_r_2">Copyright 2017 - ' + year.getFullYear() + '<br /> <b> UWireless division of NkhiCorp reg : K2016457554 </b> <br /> South Africa</div>'
