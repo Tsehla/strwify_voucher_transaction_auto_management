@@ -30,7 +30,9 @@ body{ color: #737373; font-size: 12px; font-family: verdana; }
 a, a:link, a:visited, a:active { color: #AAAAAA; text-decoration: none; font-size: 12px; }
 a:hover { border-bottom: 1px dotted #c1c1c1; color: #AAAAAA; }
 img {border: none;}
-td { font-size: 12px; padding: 4px;}
+td { font-size: 15px; padding: 4px; width: 48%;}
+
+.buy_button {background:#0918a5;color:#fff;border:0;cursor:pointer;text-align:center;width:200px;height:44px;border-radius:6px;-webkit-transition:background .3s ease-in-out;transition:background .3s ease-in-out; margin-top: 50px;font-size: 20px;}
 
 
 </style>
@@ -39,7 +41,21 @@ td { font-size: 12px; padding: 4px;}
 	
 <script type="text/javascript">//checks for internet connection//en if available show external login//if not available show default mikrotik
 	
-	// +++++++++++++ CHANGE HERE ++++++++++ 
+	var supportsES6 = function() {//check browser es6 support
+
+	try {
+		new Function("(a = 0) => a");
+		return true;
+	}
+	catch (err) {
+		return false;
+	}
+
+	}();
+
+	if (supportsES6 == true) {//
+
+		// +++++++++++++ CHANGE HERE ++++++++++ 
 
 		//--- +++++++++++++ CHANGE +++++++++ ---
 		/*
@@ -50,6 +66,11 @@ td { font-size: 12px; padding: 4px;}
 
 		window.open('http://streetwifiy.herokuapp.com/hotspot_logout?logout=true&login_link=$(link-login)&user_name=$(username)&ip_address=$(ip)&mac_address=$(mac)&uptime=$(uptime)&time_left=$(session-time-left)&data_uploaded=$(bytes-in-nice)&data_downloaded=$(bytes-out-nice)&data_left=$(remain-bytes-total-nice)&link-login-only=$(link-login-only)&location=orangefarm', '_self');
 		
+
+		
+
+	}
+
 
 	
 	
@@ -67,24 +88,26 @@ td { font-size: 12px; padding: 4px;}
 //-->
 </script>
 
-<table width="100%" height="100%">
+<table width="100%" height="100%" style="padding-top:50px; margin-left: auto; margin-right: auto;" >
 
 <tr>
-<td align="center" valign="middle">
+<td align="center" valign="top">
 <b>you have just logged out</b> <br><br>
-<table class="tabula" border="1">  
-<tr><td align="right">user name</td><td>$(username)</td></tr>
-<tr><td align="right">IP address</td><td>$(ip)</td></tr>
-<tr><td align="right">MAC address</td><td>$(mac)</td></tr>
-<tr><td align="right">session time</td><td>$(uptime)</td></tr>
-$(if session-time-left)
-<tr><td align="right">time left</td><td>$(session-time-left)</td></tr>
-$(endif)
-<tr><td align="right">bytes up/down:</td><td>$(bytes-in-nice) / $(bytes-out-nice)</td></tr>
+<table class="tabula" border="0">  
+<tr><td >user name</td><td><b>$(username)</b></td></tr>
+<tr><td >IP address</td><td><b>$(ip)</b></td></tr>
+<tr><td >MAC address</td><td><b>$(mac)</b></td></tr>
+<tr><td >Data available :</td><td><b style="color: blue;">$(remain-bytes-total-nice)</b></td></tr>
+<tr><td >Data uploaded / downloaded :</td><td><b style="color: blue;">$(bytes-in-nice) / $(bytes-out-nice)</b></td></tr>
+<tr><td >Connection time used / left</td><td><b style="color: blue;">$(uptime) / $(session-time-left)</b></td></tr>
+
+
+
+
 </table>
 <br>
 <form action="$(link-login)" name="login" onSubmit="return openLogin()">
-<input type="submit" value="log in">
+<input type="submit" value="log in" class="buy_button">
 </form>
 </td>
 </table>
