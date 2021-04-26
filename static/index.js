@@ -220,7 +220,7 @@ function selected_https(){
 
 	}
 
-	var url_secure_version = 'https://' + current_domain + current_url;//url to test if current website link can be served via https by server
+	var url_secure_version = 'https://' + current_domain + "/" + (location.pathname + location.search).substr(1);//url to test if current website link can be served via https by server
 
 	$.ajax({
 		type: "HEAD",
