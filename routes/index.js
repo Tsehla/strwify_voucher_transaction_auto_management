@@ -770,7 +770,13 @@ app.get('/api/auto_voucher_types_add', function(req, res){
 					//check if amount match
 					if(Number(data.voucher_cost) == Number(req.query.voucher_price) ){//if match
 
-						voucher_match_found = true; //set match to found
+						//check if location match
+						
+						if(Number(data.voucher_authorized_location ) == Number(req.query.voucher_hotspot_location )){
+							voucher_match_found = true; //set match to found
+
+						}
+						
 						
 					}
 
