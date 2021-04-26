@@ -613,7 +613,7 @@ function allow_no_paid_selling(){//prevent user account from using recharge poin
 		}, 60000)//set timeout for 2 minutes
 
 		//get hotspot login url and open iframe//THIS ONLY WORKS IF ORIGIN IS SAME
-		//in this case mikrotik hotspot address is streetwifiy.co.za or whatever specified by [ url_parms_object().hotspot_link ] when calling that connected to the hotspot, mikrotik will reply with external hotspot login page, in this case the page is either login/logout/status found in the same server as this in the folder [ /html/ ]. so at the end [ same-origin ] cors requirement is met so iframe can work //error using ajax as mikrotik does not reply witth cors accept headers
+		//in this case mikrotik hotspot address is streetwifiy.co.za or whatever specified by [ url_parms_object().hotspot_link ] when calling that connected to the hotspot, mikrotik will reply with external hotspot login page, in this case the page is either login/logout/status found in the same server as this in the folder [ /html/ ]. so at the end [ same-origin ] cors requirement is met so iframe can work //error using ajax as mikrotik does not reply witth cors accept headers  [ this not working { issue calling hotspot url which is https at the moment causes browser to give error since the seller is logged in in https by default if its available }]
 
 		window.addEventListener('message', function(recived_data){//wait for message with hotspot location from code in hotspot login page loaded from iframe
 			
@@ -632,7 +632,7 @@ function allow_no_paid_selling(){//prevent user account from using recharge poin
 				seller_login.managed_hotspot.forEach(function(data, index){
 
 					//set connected variables
-					if(data && recived_data.data[1] && recived_data.data[1].toLowerCase().trim() == data.toLowerCase().trim() ){//if managed hotspots matches connected to hotspot,
+					if(data && recived_data.data[1] && recived_data.data[1].toLowerCase().trim() == data.toLowerCase().trim() ){//if managed hotspots matches connected to hotspot,//checks returned hotspot location name, with managed hotspot location name
 						
 						if(seller_connected_on_owned_hotspot == false){//if  [ seller_connected_on_owned_hotspot  ] has notbeen set as true//it will be on first function call
 
