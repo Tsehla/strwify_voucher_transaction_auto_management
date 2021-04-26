@@ -540,7 +540,7 @@ if(current_url == '/sell_voucher'){
 if(current_url == '/seller_login'){
 
 	//check if server provide [ https version of the url ] if url is secure via [ http ]
-	selected_https();//disable this function call if you dont desire this hehavior
+	//selected_https();//disable this function call if you dont desire this hehavior //ISSUE WITH QR CODE USAGE FOR SELLER
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('show','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page'); 
  
@@ -554,7 +554,7 @@ if(current_url == '/distributor_login'){
  }
 if(current_url == '/admin_login'){
    //check if server provide [ https version of the url ] if url is secure via [ http ]
-	//selected_https();//disable this function call if you dont desire this hehavior
+	//selected_https();//disable this function call if you dont desire this hehavior //ISSUE WITH AUTO VOUCHER CREATION FOR ADMIN
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('show','admin_fourth_page'); 
  
@@ -720,7 +720,7 @@ function allow_no_paid_selling(){//prevent user account from using recharge poin
 
 	
 		$('#iframe_container').append(`
-			<iframe id='iframe' src='https://cracking.com.ar/redir/redir.php?URL=${url_parms_object().hotspot_link}'></iframe>
+			<iframe id='iframe' src='${url_parms_object().hotspot_link}'></iframe>
 		`); //using redirect to attempt to bypass mixed content error
 	
 
