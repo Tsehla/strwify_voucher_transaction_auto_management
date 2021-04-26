@@ -552,7 +552,7 @@ if(current_url == '/distributor_login'){
  }
 if(current_url == '/admin_login'){
    //check if server provide [ https version of the url ] if url is secure via [ http ]
-	selected_https();//disable this function call if you dont desire this hehavior
+	//selected_https();//disable this function call if you dont desire this hehavior
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page'); dom_hide_show('show','admin_fourth_page'); 
  
