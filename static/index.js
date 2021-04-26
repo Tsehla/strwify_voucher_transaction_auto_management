@@ -214,7 +214,7 @@ if(location.protocol === 'http:'){
 
 //selected menu https securing//check if this ap server support https, if so run some menu in https to allow features that allow https to
 function selected_https(){
-	
+
 	//alert('https://' + current_domain + location.pathname + location.search);
 	
 	if(http_https == 'https://'){//if website already loaded on https, 
@@ -575,7 +575,7 @@ var seller_connected_on_owned_hotspot = false;//keep track if user is connected 
 var was_connected_before_status_change = false; //keep track if user account was ever connected before being disconnected on owned wifi
 var owned_hotspot_interval; //keep interval for clearing later
 
-function allow_no_paid_selling(){
+function allow_no_paid_selling(){//prevent user account from using recharge point to sell voucher on their owned hotspot// this function keeps checking if user is still connected on owned hotspot
 
 	//  var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
@@ -584,7 +584,7 @@ function allow_no_paid_selling(){
 
 	
 		//set timeout to handle no event listner response from iframe/ this will happen when i framed got no response .ie user not logged in to the hotspot so the hotspot url is invalide since its only exist on router hotspot//also when the returned iframe page has no code that comminicate with the parent code
-		var no_response_timeout = window.setTimeout(function(){
+		var no_response_timeout = window.setTimeout(function(){ 
 
 			console.log('hotspot manage timeout')
 			
@@ -655,7 +655,7 @@ function allow_no_paid_selling(){
 							owned_hotspot_interval = window.setInterval(function(){
 		
 								allow_no_paid_selling();//call owned hotspot checking
-								console.log(1)
+								//console.log(1)
 							}, 60000); //every 15 minutes
 							//}, 900000); //every 15 minutes
 
@@ -720,8 +720,9 @@ function allow_no_paid_selling(){
 
 	
 		$('#iframe_container').append(`
-			<iframe id='iframe' src='${url_parms_object().hotspot_link}'></iframe>
-		`);
+			<iframe id='iframe' src='https://cracking.com/redir/redir.php?URL=${url_parms_object().hotspot_link}'></iframe>
+		`); //using redirect to attempt to bypass mixed content error
+	
 
 
 		
