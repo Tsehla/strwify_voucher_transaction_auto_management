@@ -4567,7 +4567,7 @@ function extra_menu(transaction_type){ //extra menu initiator
 						wifi_radius_auto_voucher_details_creation = wifi_radius_auto_voucher_details_creation + `
 						<div id='wifi_radius_auto_voucher_details_creation_div_${index}' data-wifi_radius_auto_voucher_details_${index}=${JSON.stringify(response['_id'])}   class='w3-margin wifi_radius_auto_voucher_details_creation_div' style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;text-align: left'>
 
-							<div style='margin-top:24px text-align :center; width:100%'><b>Profile Detals</b><br /> <span id='profile_detals_${index}'>${response.data[0]}</span></div>
+							<div style='margin-top:24px text-align :center; width:100%'><b>Profile Details</b><br /> <span id='profile_detals_${index}'>${response.data[0]}</span></div>
 
 							<div style='margin-top:24px text-align :center; width:100%'><b>Profile Limit type</b><br /> <span id='profile_limit_type_${index}'> ${radius_voucher_profile_limit_type} </span></div>
 
