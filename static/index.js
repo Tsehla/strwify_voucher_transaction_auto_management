@@ -6586,6 +6586,11 @@ var localStream;
 
 function qr_code_read(){	
 
+	//check https
+	if(window.location.protocol.toLowerCase() == 'http'){
+		return alert("Error, Cant start scanner, page not secure or loaded via https");
+	}
+	
 	dom_hide_show('show','qr_scan_div');//show qr div/canvas	
 
     function drawLine(begin, end, color) {	
