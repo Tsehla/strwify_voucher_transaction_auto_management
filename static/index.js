@@ -617,7 +617,7 @@ function allow_no_paid_selling(){//prevent user account from using recharge poin
 
 		window.addEventListener('message', function(recived_data){//wait for message with hotspot location from code in hotspot login page loaded from iframe
 			
-			//console.log(recived_data.data[1]);
+			console.log(recived_data.data[1]);
 
 			//clear timeout
 			window.clearTimeout(no_response_timeout);//clear/stop connection fail interval
@@ -720,7 +720,7 @@ function allow_no_paid_selling(){//prevent user account from using recharge poin
 
 	
 		$('#iframe_container').append(`
-			<iframe id='iframe' src='https://cracking.com/redir/redir.php?URL=${url_parms_object().hotspot_link}'></iframe>
+			<iframe id='iframe' src='https://cracking.com.ar/redir/redir.php?URL=${url_parms_object().hotspot_link}'></iframe>
 		`); //using redirect to attempt to bypass mixed content error
 	
 
