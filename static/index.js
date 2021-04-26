@@ -214,13 +214,15 @@ if(location.protocol === 'http:'){
 
 //selected menu https securing//check if this ap server support https, if so run some menu in https to allow features that allow https to
 function selected_https(){
-
+	
+	//alert('https://' + current_domain + location.pathname + location.search);
+	
 	if(http_https == 'https://'){//if website already loaded on https, 
 		return; //then ignore//end function
 
 	}
 
-	var url_secure_version = 'https://' + current_domain + "/" + (location.pathname + location.search).substr(1);//url to test if current website link can be served via https by server
+	var url_secure_version = 'https://' + current_domain + location.pathname + location.search;//url to test if current website link can be served via https by server
 
 	$.ajax({
 		type: "HEAD",
