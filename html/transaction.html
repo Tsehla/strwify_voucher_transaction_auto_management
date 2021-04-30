@@ -314,9 +314,9 @@
   </b>
 </p>
 	
-  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='fourth_page_id_input'>
-  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='fourth_page_password_input'>
-<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="fourth_page_seller_login()">Log In</button>
+  <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter ID number' class="form-control" id='fourth_page_id_input' onclick ='clearInterval(animate_interval);border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "fourth_page_password_input")'>
+  <input type="password" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder = 'enter Sentence Password' class="form-control" id='fourth_page_password_input' onclick='clearInterval(animate_interval);border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "fourth_page_seller_login_button")'>
+<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick="clearInterval(animate_interval);fourth_page_seller_login()" id="fourth_page_seller_login_button">Log In</button>
     
 </div><!--login wrapper end -->
 
@@ -458,17 +458,17 @@
 <!-- sell ticket menu -->
 <div id='sell_ticket_menu' style="width: auto; height: auto;margin: 0px;padding: 0px;display: none;">
 
-<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount' onclick='add_sell_ticket_pop_contents()' readonly>
+<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Ticket amount' class="form-control" id ='seller_ticket_amount' onclick='add_sell_ticket_pop_contents();clearInterval(animate_interval); border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "seller_ticket_unique_code")' readonly>
 
      
-<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control" id ='seller_ticket_unique_code'>
+<input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Code from buyer' class="form-control" id ='seller_ticket_unique_code' onclick='clearInterval(animate_interval); border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "sell_ticket_id_button")'>
 
 
 <div style="padding: 0px;margin: 0px;width: 95vw; height: auto"> 
 
     <div style="padding: 0px;margin: 0px;width: 70vw;display: inline-block;height: 16vh;">
 
-        <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success" onclick ='sell_ticket(this.id)' id='sell_ticket_id_button'>Sell Ticket</button>
+        <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-success" onclick ='clearInterval(animate_interval);sell_ticket(this.id)' id='sell_ticket_id_button'>Sell Ticket</button>
 
         <button style="width:100%; height:7vh; margin :10px 0px 10px 0px; padding:0px; display: block" class="btn btn-primary" onclick='distributor_superadmin_acc_help("seller")'>Help</button>
 

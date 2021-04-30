@@ -833,6 +833,7 @@ function allow_no_paid_selling(){//prevent user account from using recharge poin
 
 function seller_sell_menu(){
 
+
 		//check url to see if menu to show is for voucher sell or complimentary vucher
 		if(document.location.search.indexOf('?its_resturent_hotel_cafe_login=true')> -1){
 
@@ -844,7 +845,7 @@ function seller_sell_menu(){
 	   menu_button_sever('seller_show');
 	   process_destroyer();
 	   
-
+	   
 
 	   //select which menu to show first//sell voucher or complementary voucher menu
 		if(seller_login.resturent_hotel_cafe_login){//show complementary menu
@@ -858,6 +859,11 @@ function seller_sell_menu(){
 			document.getElementById("complementary_voucher").style.boxShadow="-2px 1px 2px lightgrey"; 
 			document.getElementById("complementary_voucher").style.backgroundColor ="snow";
 			dom_hide_show('show','sell_ticket_menu');
+
+			clearInterval(animate_interval);//clear 
+			border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "seller_ticket_amount");//start animate
+		
+		
 		}
 
 		//do side menu animation
