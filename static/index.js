@@ -131,7 +131,42 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 
 }
   
-  
+
+//user click guide cues
+        var animate_interval = "";//contains js interval 
+
+        function border_breath_animation(color_pallette = [], div_id="", apply_to = "border"){//if not "border" can be "background"
+           
+            if(color_pallette.length > 0 && typeof color_pallette == "object"){
+
+                //add transparent color to array
+                color_pallette.unshift("transparent");
+
+                var color_pallette_current_color_index = 0; //start default 
+
+                animate_interval = setInterval(function(){ //set
+
+                    if(color_pallette_current_color_index == color_pallette.length){ //if color index is array length//array length will be 1 point extra
+
+                        color_pallette_current_color_index = 0;//reset
+
+                    }
+					if(apply_to == "border"){ //default apply on border
+						document.getElementById(div_id).style.borderColor =  color_pallette[ color_pallette_current_color_index ]; //apply color
+					}
+
+					if(apply_to != "border"){//other apply on background
+						document.getElementById(div_id).style.backgroundColor =  color_pallette[ color_pallette_current_color_index ]; //apply color
+					}
+                   
+              
+                    color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
+                    console.log("busy");
+                }, 200)  
+
+            }
+
+        }
   
   
   /*=====================================================================================================================================================
@@ -142,6 +177,7 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 		  
 		  clearInterval(router_auto_loader);
 		  
+		  clearInterval(animate_interval);//clear animate
 		  
 	  }
   
@@ -425,7 +461,7 @@ var auto_user_creater_wifi_radius_link = {
 				<span style="width:inherit; max-heigh:inherit;">
 
 					<button onclick="window.open('${button_cancel}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-danger" style='margin-left:10px'>Cancel</button>
-					<button onclick="window.open('${button_okay}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+					<button id="custome_alert_okay_button" onclick="window.open('${button_okay}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container'); clearInterval(animate_interval)" class="btn btn-primary">Okay</button>
 				
 				</span>`
 			);}
@@ -504,13 +540,17 @@ ________________________________________________________________________________
 	//temp store hotspot login link from urll//pass it to voucher buy page url
 	 hot_spot_url = document.location.search;
 
-
+	 clearInterval(animate_interval);//clear animate
+	 border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "user_buy_option");//button animation
  
  } 
 if(current_url == '/buy_voucher'){
   
    dom_hide_show('hide','first_page'); dom_hide_show('show','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page'); 
    buy_page_on_init();/*page init */
+
+   clearInterval(animate_interval);//clear animate
+   border_breath_animation(["#f3f5f7", "#d8e2ec", "#e3e7ea"], "qrcode_text", "background");//button animation
 	
 	//set hot spot login link for router//enable auto login after voucher sold//handles both free login request or paid voucher request
 	 var url_params = document.location.search.indexOf('?hotspot_link=') > -1 ?document.location.search.indexOf('?hotspot_link=') : document.location.search.indexOf('?free_login&hotspot_link=');
@@ -527,6 +567,8 @@ if(current_url == '/buy_voucher'){
 
 	//if free voucher login/show manual view page menu
 	if(document.location.search.indexOf('?free_login&hotspot_link=') > -1){
+
+		clearInterval(animate_interval);//clear animate
 		simple_or_manual_view('manualViewButton');//show manual version voucher buy menu
 	}
 		
@@ -536,6 +578,9 @@ if(current_url == '/sell_voucher'){
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('show','third_page'); dom_hide_show('hide','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page');
 
+   clearInterval(animate_interval);//clear animate
+   border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "seller_distributor_option_2");//button animation
+
  }
 if(current_url == '/seller_login'){
 
@@ -544,6 +589,11 @@ if(current_url == '/seller_login'){
    
    dom_hide_show('hide','first_page'); dom_hide_show('hide','second_page'); dom_hide_show('hide','third_page'); dom_hide_show('show','fourth_page'); dom_hide_show('hide','firth_page'); dom_hide_show('hide','sixth_page'); dom_hide_show('hide','seventh_page'); dom_hide_show('hide','eigth_page');dom_hide_show('hide','admin_fourth_page'); 
  
+
+   clearInterval(animate_interval);//clear animate
+   border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "fourth_page_id_input");//button animation
+
+
  }
 if(current_url == '/distributor_login'){
    //check if server provide [ https version of the url ] if url is secure via [ http ]
@@ -1112,7 +1162,8 @@ function manual_voucher_init(button_id){
         $.get(url, function(response, status){
            
            if(status == 'success'){
-               
+
+				clearInterval(animate_interval);//clear animate
                
                 if(response == 'Voucher Not found'){
                var show_code = "<p style='color:red;margin:0px 0px 0px 2px;padding:0px;height:0px;width:0px'>Error couldn't find voucher. <span style='color:blue; margin:0px;padding:0px;height:auto;width:auto'>re-Checking...</span></p>";
@@ -5770,6 +5821,9 @@ var voucher_free_print_initiator_variable = ""; //stores data to be used to prin
 function auto_login(response){
 	//hot_spot_url
 
+	clearInterval(animate_interval);//clear animate
+	
+
 	var vocher_code = response.vouchercode;
 
 	if(vocher_code == 'N/A'){
@@ -5827,6 +5881,8 @@ function auto_login(response){
 		
 		custom_alert("", alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+url+"', '_blank');voucher_free_print_initiator()", undefined)
 		//console.log( "window.open('"+url+"', '_blank');voucher_free_print_initiator()")
+
+		border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "custome_alert_okay_button");//button animation
 
 		//voucher_print(response)//call voucher image/ticket production function
 		
@@ -5914,9 +5970,14 @@ function simple_or_manual_view(div){
 		dom_hide_show('hide', 'manual_screen_content')//hide	
 		dom_hide_show('show', 'qr_container')//show	
 
+		clearInterval(animate_interval);//clear animate
+		border_breath_animation(["#f3f5f7", "#d8e2ec", "#e3e7ea"], "qrcode_text", "background");//button animation
+
 	}	
 
 	if(div == 'manualViewButton'){	
+
+		clearInterval(animate_interval)
 
 		get_div.style.boxShadow = 'none';//remove shadow/activate 	
 		//get_div.disabled = true;//disable clicked button	
@@ -6565,7 +6626,7 @@ function qr_code_fn(uniqueCode){
 					
 					<div class="qr" id="qrcode_div"></div>	
 					<hr>	
-					<i style="font-size:12px;text-align:center; width:auto;height:auto;white-space:normal;margin:5px">Show Quck Response Code to seller/Tell unique numbers..</i>	
+					<i id="qrcode_text" style="font-size:12px;text-align:center; width:auto;height:auto;white-space:normal;margin:5px">Give "UNIQUE Code" to seller/Show them Qr code..</i>	
 					`;	
 
 				 new QRCode(document.getElementById("qrcode_div"), qr_design_array[Math.floor(Math.random() * qr_design_array.length)].config);	

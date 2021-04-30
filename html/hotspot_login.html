@@ -180,6 +180,16 @@
                     <i class='la la-bars' style=" font-size: 20px;font-weight: 900;"></i>
                     <span style=" font-size: 18px;font-weight: 600;">Menu</span>
                 </button>
+                <!-- <div id="ads_menu_bar_icon" style="position: fixed; top: 2vh; left: 2vw; display: none;">
+                    <div id="menu_border1" style="border:1px solid yellow;margin:2px">
+                        <div id="menu_border2" style="border:1px solid green;margin:2px">
+                            <button onclick="ads_provided_menu_content_show()" class=" btn btn-primary " style="margin:2px">
+                               <i class="la la-bars" style=" font-size: 20px;font-weight: 900;"></i>
+                                <span style=" font-size: 18px;font-weight: 600;">Menu</span>
+                               </button>
+                        </div>
+                    </div>
+                </div> -->
 
                 <!-- ads provided layout change -->
                 <!-- layout version 3 -->
@@ -187,7 +197,7 @@
 
                     <a href='#' onclick='prev_wallpaper_ads()' class='btn btn-primary la la-arrow-left ' role='button' style='margin-left: 10vw; border-bottom-right-radius:0px;border-top-right-radius:0px;margin:auto -5px auto auto; font-size: 28px;min-width: 60px; width: 19vw;'></a>
         
-                    <button class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px 0px 0px;min-width: 60px; width: 19vw;' onclick='buy()'>BUY</button>
+                    <button id="ads_provide_layout_1_buy" class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px 0px 0px;min-width: 60px; width: 19vw;' onclick='buy()'>BUY</button>
                     
                     <span class='' style='min-width: 65px; width: auto;min-height:100px; height: auto; display: inline-block; position: relative ;top:40px;' >
                         
@@ -247,7 +257,7 @@
             
             </a>
 
-            <button class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px 0px 0px;min-width: 60px; width: 19vw;font-size: 15px;' onclick='buy()'>BUY</button>
+            <button id="ads_provide_layout_2_buy" class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px 0px 0px;min-width: 60px; width: 19vw;font-size: 15px;' onclick='buy()'>BUY</button>
 
             
             <a href='#' onclick='ads_provided_menu_content_show("return")' class='btn btn-primary la la-bars ' role='button' style='border-radius:2px; margin:0px; font-size: 28px;min-width: 60px; width: 18vw;font-size: 38px;'>
@@ -1391,6 +1401,8 @@
                             document.getElementById('bottom_bar').style.display = 'none'; //hide bottom bar
 
                             document.getElementById('ads_menu_bar_icon').style.display = 'block'; //show menu button
+                            border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_menu_bar_icon");//button animation
+
                             document.getElementById('error_div').style.marginTop = '10vh';//re-position error belt 
                             
                            
@@ -1642,6 +1654,7 @@
                 clearInterval(walp_interval);
                 walp_interval =  setInterval(walp_changer, 6000);
 
+                
             }
 
             //this get called when user clicks [ menu button  ], of ui shown  after enforcing this rule [ (forced_ads_skip_to_login_menu == true) ] //this cause unintended behaviour, so wil set below to false
@@ -1657,7 +1670,7 @@
 
             //console.log(action)
             if(action == 'show'){ //show login menu contents
-
+                clearInterval(animate_interval);//clear animate
 
                 //set menu layout
                 //if(menu_layout_type == 'appearance 2' || menu_layout_type == 'appearance 1'){//if menu is selected to be type 2, show menu lyout 2
@@ -1665,7 +1678,7 @@
                     
 
                     document.getElementById('ads_provide_layout_2').style.display = 'block';//show top menu contents
-                    
+                    border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_provide_layout_2_buy");//button animation
                     
                 }
 
@@ -1673,6 +1686,7 @@
 
                     document.getElementById('ads_provide_layout').style.display = 'block';//show top menu contents
                     document.getElementById('error_div').style.marginTop = '20vh';//re-position error belt 
+                  border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_provide_layout_1_buy");//button animation
                 }
 
                 //wallpaper
@@ -1705,6 +1719,7 @@
                 document.getElementById('left_arrow_2').style.display ='none';
                 document.getElementById('right_arrow_2').style.display ='none';
                 document.getElementById('ads_menu_bar_icon').style.display = 'none';
+                
 
                 //show
                 document.getElementById('bottom_bar').style.display = 'block'; //show bottom bar 
@@ -1730,7 +1745,7 @@
             
             
             if(action == 'return'){ //return to show ads browsing screen//this is not forced ads screen
-
+                clearInterval(animate_interval);//clear animate
 
                 //hide menu layout
                 document.getElementById('ads_provide_layout_2').style.display = 'none';//show top menu contents
@@ -1740,6 +1755,7 @@
                 document.getElementById('left_arrow_2').style.display ='block';
                 document.getElementById('right_arrow_2').style.display ='block';
                 document.getElementById('ads_menu_bar_icon').style.display = 'block';
+                border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_menu_bar_icon");//button animation
 
                 document.getElementById('walp_links_container_2').style.display = 'none'; //hide login menu action bar
                 document.getElementById('walp_links_container').style.display = 'block';//show default main advertisment wallpapers action bar
@@ -1929,7 +1945,9 @@
 			window.open(hotspot_url+'/status');
 		} 
 		function buy(){
-			
+
+			clearInterval(animate_interval);//stop animate
+
 			window.open(hotspot_transaction_server_url + '/transaction?hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:"") + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:'') + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:''), '_blank' );
 		} 
 		function search(){
@@ -1995,6 +2013,37 @@
         // ****** give iframe hotspot location when this window is called as an i frame in order to check if seller is still in their owned hotspot//this page will not be called direct, mikrotik hotspot login link will be called and mikrotik will respond with re-direct to external hotspot page, which will be this
         
         window.parent.postMessage(['router_hotspot_location', router_variables_array["location"]], '*');
+
+
+        //user click guide cues
+        var animate_interval = "";//contains js interval 
+
+        function border_breath_animation(color_pallette = [], div_id=""){
+           
+            if(color_pallette.length > 0 && typeof color_pallette == "object"){
+
+                //add transparent color to array
+                color_pallette.unshift("transparent");
+
+                var color_pallette_current_color_index = 0; //start default 
+
+                animate_interval = setInterval(function(){ //set
+
+                    if(color_pallette_current_color_index == color_pallette.length){ //if color index is array length//array length will be 1 point extra
+
+                        color_pallette_current_color_index = 0;//reset
+
+                    }
+
+                    document.getElementById(div_id).style.borderColor = color_pallette[ color_pallette_current_color_index ]; //apply color
+              
+                    color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
+                    //console.log("busy");
+                }, 200)  
+
+            }
+
+        }
 
 		</script>
 	
