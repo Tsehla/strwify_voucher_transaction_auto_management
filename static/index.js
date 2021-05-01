@@ -509,6 +509,19 @@ var auto_user_creater_wifi_radius_link = {
 			);}
 
 
+			//just a standard alert()
+			if(open_type.length == 0 && button_okay == undefined && button_cancel == undefined){ //to call do  custom_alert("","alert text");
+
+				$("#custome_alert_box_button").append(`
+				
+					<span style="width:inherit; max-heigh:inherit">
+
+						<button onclick="dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+					
+					</span>`
+				);
+			}
+
 		//show div
 		dom_hide_show('show', 'custome_alert_box_container');
 	
@@ -6634,7 +6647,7 @@ function qr_code_fn(uniqueCode){
 
 				container = document.getElementById('qr_container').innerHTML+=`	
 					<div style="font-size: 23px;text-align:center;width:100%;height:auto;white-space:normal;position: relative;margin: 23px auto 11px auto;z-index: 0;color: blue;font-weight: 600;">Unique Code</div>
-					<div style="font-size: 22px;text-align:center;width:100%;height:auto;white-space:normal;margin: -5px auto -43px auto;position: relative;z-index: 3;font-weight: 600;"  onclick="alert('Give UNIQUE Code to seller/Show them Qr code..')"> <b id="qrcode_text_code" style="width:auto;height:100%;margin:0px;padding:0px;border-bottom:1px solid white">${uniqueCode}</b></div>
+					<div style="font-size: 22px;text-align:center;width:100%;height:auto;white-space:normal;margin: -5px auto -43px auto;position: relative;z-index: 3;font-weight: 600;"  onclick="custom_alert('','Give UNIQUE Code to seller/Show them Qr code..')"> <b id="qrcode_text_code" style="width:auto;height:100%;margin:0px;padding:0px;border-bottom:1px solid white">${uniqueCode}</b></div>
 					<div class="qr" id="qrcode_div"></div>	
 					<hr>	
 					<i id="qrcode_text" style="font-size:12px;text-align:center; width:auto;height:auto;white-space:normal;margin:5px">Give "UNIQUE Code" to seller/Show them Qr code..</i>	
@@ -6642,7 +6655,7 @@ function qr_code_fn(uniqueCode){
 
 				 new QRCode(document.getElementById("qrcode_div"), qr_design_array[Math.floor(Math.random() * qr_design_array.length)].config);	
 
-
+				
 }		
 
 /* qr code reader */	
