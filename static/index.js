@@ -550,7 +550,8 @@ if(current_url == '/buy_voucher'){
    buy_page_on_init();/*page init */
 
    clearInterval(animate_interval);//clear animate
-   border_breath_animation(["#f3f5f7", "#d8e2ec", "#e3e7ea"], "qrcode_text", "background");//button animation
+   //border_breath_animation(["#f3f5f7", "#d8e2ec", "#e3e7ea"], "qrcode_text", "background");//button animation 
+   border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "qrcode_text_code", "border");//button animation
 	
 	//set hot spot login link for router//enable auto login after voucher sold//handles both free login request or paid voucher request
 	 var url_params = document.location.search.indexOf('?hotspot_link=') > -1 ?document.location.search.indexOf('?hotspot_link=') : document.location.search.indexOf('?free_login&hotspot_link=');
@@ -6012,9 +6013,12 @@ function qr_code_fn(uniqueCode){
 	var qr_backgroud_array = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg'];	
 	var qr_logo_array = ["logo1.jpg","logo2.jpg","logo3.jpg","logo4.jpg"]	
 
-			var	qr_text = uniqueCode; // Content	
-			var	qr_title = 'Unique Code'; // Title	
-			var	qr_subTitle = uniqueCode; // Subtitle content	
+			// var	qr_text = uniqueCode; // Content	
+			// var	qr_title = 'Unique Code'; // Title	
+			//var	qr_subTitle = uniqueCode; // Subtitle content
+			var	qr_text = " "; // Content	
+			var	qr_title = " "; // Title	
+			var	qr_subTitle = " "; // Subtitle content	
 			var	qr_logo = '/images/qr_code_images/logos/' + qr_logo_array[Math.floor(Math.random() * qr_logo_array.length)]; // LOGO	
 			var	qr_backgroundImage = '/images/qr_code_images/backgrounds/' + qr_backgroud_array[Math.floor(Math.random() * qr_backgroud_array.length)];//background img;	
 
@@ -6629,7 +6633,8 @@ function qr_code_fn(uniqueCode){
 
 
 				container = document.getElementById('qr_container').innerHTML+=`	
-					
+					<div style="font-size: 23px;text-align:center;width:100%;height:auto;white-space:normal;position: relative;margin: 23px auto 11px auto;z-index: 0;color: blue;font-weight: 600;">Unique Code</div>
+					<div style="font-size: 22px;text-align:center;width:100%;height:auto;white-space:normal;margin: -5px auto -43px auto;position: relative;z-index: 3;font-weight: 600;"  onclick="alert('Give UNIQUE Code to seller/Show them Qr code..')"> <b id="qrcode_text_code" style="width:auto;height:100%;margin:0px;padding:0px;border-bottom:1px solid white">${uniqueCode}</b></div>
 					<div class="qr" id="qrcode_div"></div>	
 					<hr>	
 					<i id="qrcode_text" style="font-size:12px;text-align:center; width:auto;height:auto;white-space:normal;margin:5px">Give "UNIQUE Code" to seller/Show them Qr code..</i>	
@@ -6638,7 +6643,7 @@ function qr_code_fn(uniqueCode){
 				 new QRCode(document.getElementById("qrcode_div"), qr_design_array[Math.floor(Math.random() * qr_design_array.length)].config);	
 
 
-}	
+}		
 
 /* qr code reader */	
 
