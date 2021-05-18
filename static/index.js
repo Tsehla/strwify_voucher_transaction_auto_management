@@ -161,7 +161,7 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
                    
               
                     color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
-                    console.log("busy");
+                    //console.log("busy");
                 }, 200)  
 
             }
@@ -5968,11 +5968,163 @@ function auto_login(response){
 =====================================================================================================================================================*/	
 
 /* div view manage */	
-function simple_or_manual_view(div){	
+function simple_or_manual_view(div){ 
+	
+	//hadle help
+	// if(div == "help_button"){
+
+	// 	custom_alert('','Shows vouchers you baught on this device connected on this WIFI hotspot</br>1) You can use the vouchers to reconnect to the wifi if they are still valid/not depleted.<br/>2) You can re-download voucher ticket.');
+
+	// 	return;
+	// }
 
 	var get_div = document.getElementById(div);	
 
+	if(div == 'vouchersViewButton'){
 
+		//write text on div
+		document.getElementById("vouchers_history_view").innerHTML =` <div style="width: 100%;height: 100%;padding-top:25%;text-align: center;"> Searching for Vouchers you baught previously on <br/>this hotspot, using this phone/computer<br/><br/>PLESE WAIT..<br/><br/><i class="la la-gear la-spin" style="font-size: 35px;"></i></div>`;
+
+		get_div.style.boxShadow = 'none';//remove shadow/activate	
+		//get_div.disabled = true;//disable clicked button	
+		
+
+		document.getElementById('manualViewButton').style.boxShadow = '-1px 1px 2px gainsboro, -2px 1px 2px gainsboro';//apply shadow to button 	
+		document.getElementById('manualViewButton').style.backgroundColor = '#F8F8F8';
+
+		document.getElementById('simpleViewButton').style.boxShadow = '-2px 1px 2px gainsboro, 2px 1px 2px gainsboro';//apply shadow to button	
+		document.getElementById('simpleViewButton').style.backgroundColor = '#F8F8F8';
+		
+		
+		document.getElementById('vouchersViewButton').style.backgroundColor = '#FfFfFf';
+
+		document.getElementById('buyer_container').style.height = '80vh';//for the looks/apperance
+		document.getElementById('page_location_footer_').style.marginTop = '3%';//for the looks/apperance 
+
+		document.getElementById('manualViewButton').disabled = false;//enable non clicked button	
+		document.getElementById('simpleViewButton').disabled = false;//enable non clicked button
+
+		dom_hide_show('hide', 'manual_screen_content')//hide	
+		dom_hide_show('hide', 'qr_container')//hide
+		dom_hide_show('show', 'vouchers_history')//show	
+
+		clearInterval(animate_interval);//clear animate
+
+
+		//get vouchers
+		var url_params_array = url_parms_object();//get/return url parameters as objects
+
+
+		
+		//+++++++++++ default url for voucher finding +++++++++++++
+		var url= '/api/buy?code=baught_vouchers&mac=' + url_params_array['mac'];//this wont find vouchers only for the current connected hotspot, to do that we will need to add hotspot name/location as a filter wtogether with mac address when searching the database.
+
+
+		if(!url_params_array['mac'] && url_params_array['mac'].length < 5){//if mac address is not available or text is less than 5 letters or symbols
+
+			document.getElementById("vouchers_history_view").innerHTML	= `<div style="width: 100%;height: 100%;padding-top:25%;text-align: center;color:red"> Error : Searching for Vouchers<br/>you baught previously on this hotspot, <br/>using this phone/computer<br/><br/>Please connect to one of your local <br/>streetWifiy hotspot to use this feature.<br/><br/> Or try to close and open this browser window.</div>
+			</div>`;
+
+			return; //end function
+		}
+
+
+
+		$.get(url, function(response, status){
+           
+			if(status == 'success'){
+				
+				
+				if(response == 'Voucher Not found' || response == "Problem finding Voucher"){
+				
+					//give error
+					dom_innerHtml('vouchers_history_view', `<div style="width: 100%;height: 100%;padding-top:25%;text-align: center;color:red"> Error : Searching for Vouchers<br/>you baught previously on this hotspot, <br/>using this phone/computer<br/><br/>You haven't yet baught a voucher<br/>while connected on this hotspot.</div>
+			  		</div>`); 
+				
+					return;
+				}
+
+				//console.log(response);
+
+				//clear div
+				dom_innerHtml('vouchers_history_view', "");
+				//add data to div
+				response.forEach(function(data){
+
+					//clculate date 
+					var date = new Date()
+					
+					var code= (data.soldto? data.soldto : "000000:0000000")//get year/month/day from unique code
+					code = code.split(":"); //turn to array
+
+					var year= code[0][0].toString() + code[0][1];//get year
+					var month = code[0][2].toString();//get month / get months first digit if double dgit month[ oct/nov/december ]
+
+
+					var voucher_produced_day = (data.voucherproducedday?data.voucherproducedday:"00");//get day
+					
+					//check if month should be double digit//OCT/NOV/DEC
+					if(code[0].length == 6  && voucher_produced_day.length == 2){//if day is double digit/en combined /year/month/day is six digits then month should also be double digit
+						 month = month+code[0][3];//get other digit for month
+					}
+					if(code[0].length == 5  && voucher_produced_day.length == 1){ //if day single digit;//en total date string is 5 digit long; then day should be double digit
+						month = month+code[0][3]//get another month digit
+					}
+
+					
+					var month_text = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+					var current_year = date.getFullYear().toString();//looking for century/lol the year will loose accuracy when century changes for vouchers of old century
+					current_year = current_year[0] + current_year[1]; //getting century fro current year date
+
+					var voucher_produced_date = voucher_produced_day+"/"+month_text[month]+"/"+current_year+year;//date
+
+		
+					
+					$("#vouchers_history_view").append(`
+
+						<div style='width:100%;min-height: 40px;height:auto;margin : 10px 0px;border-bottom:4px solid blue;background-color:#ffd700'>
+							<br>
+							Voucher code	: <br/><b>${data.vouchercode}</b>
+							<br/>
+							Voucher cost	: R${data.voucheramount}
+							<br />
+							Voucher data/time	 : ${data.voucherprofile == "N/A"? data.voucherprofile_time:data.voucherprofile}
+							<br>
+							 voucher produced date : <br/>${voucher_produced_date} 
+
+							 <div style="width:100%;height:7%; text-align:center">
+							 	<button class="btn btn-primary" style="height: 100%;width:70%; margin-bottom:20px" onclick='auto_login(${JSON.stringify(data)})'>Use Voucher</button>
+						   </div>
+						</div>
+
+						
+
+					`)
+				})
+
+
+			}
+			
+			else{ //give error
+			 
+			  dom_innerHtml('vouchers_history_view', `<div style="width: 100%;height: 100%;padding-top:25%;text-align: center;color:red"> Error : Searching for Vouchers<br/>you baught previously on this hotspot, <br/>using this phone/computer<br/><br/>Please connect to one of your local <br/>streetWifiy hotspot to use this feature.<br/><br/> Or try to close and open this browser window.</div>
+			  </div>`); 
+				
+			}
+			
+				
+		});
+
+
+
+
+
+
+
+
+
+
+	}
 
 	if(div == 'simpleViewButton'){	
 		get_div.style.boxShadow = 'none';//remove shadow/activate	
@@ -5980,14 +6132,20 @@ function simple_or_manual_view(div){
 
 		document.getElementById('manualViewButton').style.boxShadow = '-1px 1px 2px gainsboro, -2px 1px 2px gainsboro';//apply shadow to button 	
 		document.getElementById('manualViewButton').style.backgroundColor = '#F8F8F8';	
+
+		document.getElementById('vouchersViewButton').style.boxShadow = '2px 1px 2px gainsboro, 2px 1px 2px gainsboro';//apply shadow to button	
+		document.getElementById('vouchersViewButton').style.backgroundColor = '#F8F8F8';
+
 		document.getElementById('simpleViewButton').style.backgroundColor = '#FfFfFf';	
 
 		document.getElementById('manualViewButton').disabled = false;//enable non clicked button	
+		document.getElementById('vouchersViewButton').disabled = false;//enable non clicked button
 
 		document.getElementById('buyer_container').style.height = '63vh';//for the looks/apperance 
 		document.getElementById('page_location_footer_').style.marginTop = '11%';//for the looks/apperance 
 
-		dom_hide_show('hide', 'manual_screen_content')//hide	
+		dom_hide_show('hide', 'manual_screen_content')//hide
+		dom_hide_show('hide', 'vouchers_history')//hide	
 		dom_hide_show('show', 'qr_container')//show	
 
 		clearInterval(animate_interval);//clear animate
@@ -6004,15 +6162,22 @@ function simple_or_manual_view(div){
 
 		document.getElementById('simpleViewButton').style.boxShadow = '2px 1px 2px gainsboro, 2px 1px 2px gainsboro';//apply shadow to button	
 		document.getElementById('simpleViewButton').style.backgroundColor = '#F8F8F8';	
+
+		document.getElementById('vouchersViewButton').style.boxShadow = '2px 1px 2px gainsboro, 2px 1px 2px gainsboro';//apply shadow to button	
+		document.getElementById('vouchersViewButton').style.backgroundColor = '#F8F8F8';
+
 		document.getElementById('manualViewButton').style.backgroundColor = '#FfFfFf';	
 
+		document.getElementById('vouchersViewButton').disabled = false;//enable non clicked button
 		document.getElementById('simpleViewButton').disabled = false;//enable non clicked button	
 
 		document.getElementById('buyer_container').style.height = '80vh';//for the looks/apperance
 		document.getElementById('page_location_footer_').style.marginTop = '3%';//for the looks/apperance 
 
-		dom_hide_show('hide', 'qr_container')//show	
-		dom_hide_show('show', 'manual_screen_content')//hide	
+		
+		dom_hide_show('hide', 'vouchers_history')//hide	
+		dom_hide_show('hide', 'qr_container')//hide	
+		dom_hide_show('show', 'manual_screen_content')//show
 
 
 	}	

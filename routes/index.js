@@ -356,7 +356,7 @@ seller or distributor console, credt auto_voucher_check
 				}
 				
 				else{
-						res.jsonp(complementary_response); 
+						res.jsonp(complementary_response); //give response
 						//++++++++++++++++++++save voucher as printed+++++++++++++++++
 							
 						complementary_response.voucherprinted = true;//set voucher as printed (yes)
@@ -381,10 +381,11 @@ seller or distributor console, credt auto_voucher_check
 			}
 			
             else{
-                res.jsonp(response); 
+                res.jsonp(response); //give response
 				//++++++++++++++++++++save voucher as printed+++++++++++++++++
 				
 				response.voucherprinted = true;//set voucher as printed (yes)
+				response.voucher_soldto_device_mac = req.query.mac;//save mac address of device sold to
 				response.save(function(err, success){
 					if(err){
 							console.log('Error, updating voucher as printed : '+error);
@@ -429,6 +430,70 @@ seller or distributor console, credt auto_voucher_check
 		}
 
 		//search complementary voucher if not found in normal voucher
+
+
+
+		//------------------- get list of user baught vouchers -------------------
+
+		if(req.query.code == 'baught_vouchers'){//give user unique code
+		
+			//console.log(req.query.mac)
+			
+
+				keystone.list('Voucher Codes').model.find()
+				.where({voucher_soldto_device_mac : req.query.mac, voucherstate : 'used'})
+				.exec( function(error, response){
+
+				if(error){
+
+					res.jsonp('Problem finding Voucher');
+				}
+
+				if(response == null){//if voucher not found in normal vouchers/search complimentary
+					
+
+					//++++++++ search for code in complenmetary vouchers ++++++++++
+
+					keystone.list('Complementary Voucher').model.find()
+					//.where({soldto : seach_code_,voucherprinted : false})
+					.where({complementary_soldto_device_mac : req.query.mac})
+
+					.exec( function(error, complementary_response){
+
+						if(error){
+							res.jsonp('Problem finding Voucher');
+						}
+						
+						if(complementary_response == null){//if voucher not found in normal vouchers/search complimentary
+					
+							res.jsonp('Voucher Not found');
+						}
+						
+						else{
+								res.jsonp(complementary_response); //give response
+						
+							}
+					
+							
+					});
+
+
+
+				// res.jsonp('Voucher Not found');
+				return;
+				}
+				
+				else{
+					res.jsonp(response); //give response
+								
+				}
+			
+				
+			});
+		
+		
+		
+		}
 
         
         

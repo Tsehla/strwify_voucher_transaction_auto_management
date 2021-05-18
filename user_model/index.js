@@ -90,6 +90,7 @@ voucher_model.add(
 		voucher_created : {type : types.Select, options: "manual, automatic", default:'manual', label :'Voucher creation method'},
 		soldby : {type : String, label :'Sold By'},
 		soldto : {type: String, default:'', label :'Sold To'},
+		voucher_soldto_device_mac : {type: String, default:'', label :'Sold To Device Mac'},
 		loadedby : {type: String, default:'', label :'Added by'},
 		voucherprinted : {type : types.Boolean, default:false, label :'Voucher Printed'},
 		voucherproducedday : {type: String, default:'', label :'Voucher Produced Day'},

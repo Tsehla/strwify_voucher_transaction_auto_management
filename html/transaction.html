@@ -165,12 +165,33 @@
 <div id='buyer_container' class='btn' style="margin:5vh 2vw 1vh 2vw; padding:0px;width:95vw; min-height:460px; height:63vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
 
   <!-- Simple/Manual screen -->
-    <div id='' style="width: 95vw; height:7vh; padding:0px; margin:0px;">
+  <div id='' style="width: 95vw; height:7vh; padding:0px; margin:0px;">
+    <button id='vouchersViewButton' style="width: 33%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:#F8F8F8;box-shadow: 2px 1px 2px gainsboro, 2px 1px 2px gainsboro;" class='btn' onclick='simple_or_manual_view(this.id)'>Vouchers</button>
 
-    <button id='simpleViewButton' style="width: 49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white;" class='btn' onclick='simple_or_manual_view(this.id)'>Simple</button>
+    <button id='simpleViewButton' style="width: 33%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:white;" class='btn' onclick='simple_or_manual_view(this.id)'>Simple</button>
 
-    <button id='manualViewButton' style="width: 49.5%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:#F8F8F8; box-shadow: -1px 1px 2px gainsboro, -2px 1px 2px gainsboro;" class='btn' onclick='simple_or_manual_view(this.id)'>Manual</button>
+    <button id='manualViewButton' style="width: 33%; height:7vh; margin:0px; padding:0px; display: inline-block; border-radius: 0%;  background-color:#F8F8F8; box-shadow: -1px 1px 2px gainsboro, -2px 1px 2px gainsboro;" class='btn' onclick='simple_or_manual_view(this.id)'>Manual</button>
   </div>
+
+
+
+  <!-- Vouvhers/voucher history screen -->
+  <div id="vouchers_history" style='width: 95vw;margin: 10px auto; height:80vh; display: none;'>
+
+    <!-- vouchers view-->
+    <div id="vouchers_history_view" style="width: 100%; height:80%"></div>
+
+
+    <!-- help button -->
+    <div style="width:100%;height:7%; text-align:center">
+
+      <button class="btn btn-primary" style="height: 100%;width:70%" onclick="custom_alert('','This menu Shows vouchers you baught on this device while connected on this WIFI hotspot.</br>1) You can use the vouchers to re-connect to the WIFI if they are still valid/not depleted.<br/>2) You can re-download voucher ticket.<br/>')"> Help</button>
+
+    </div>
+
+
+  </div>
+  
 
 	<!-- voucher code image -->
   <!-- ticket canvas -->
