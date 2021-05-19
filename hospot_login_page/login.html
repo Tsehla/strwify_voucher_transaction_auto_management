@@ -54,6 +54,8 @@ input[type=text]:focus{-webkit-box-shadow:0 0 5px 0 rgba(62,77,89,.2);box-shadow
 .buy_voucher_code_login{background:#06f122;color:rgb(70, 66, 66);border:0;cursor:pointer;text-align:center;width:200px;height:44px;border-radius:6px;-webkit-transition:background .3s ease-in-out;transition:background .3s ease-in-out}
 
 .buy_enter_voucher{background:#3e4d59;color:#fff;border:0;cursor:pointer;text-align:center;width:200px;height:44px;border-radius:6px;-webkit-transition:background .3s ease-in-out;transition:background .3s ease-in-out}
+.buy_voucher_view_history{background:#2f017e;color:rgb(255, 255, 255);border:0;cursor:pointer;text-align:center;width:200px;height:44px;border-radius:6px;-webkit-transition:background .3s ease-in-out;transition:background .3s ease-in-out}
+.buy_voucher_view_history_help{background:#b6d013;color:rgb(10, 10, 10);border:0;cursor:pointer;text-align:center;width:200px;height:44px;border-radius:6px;-webkit-transition:background .3s ease-in-out;transition:background .3s ease-in-out}
 
 
 table{border-collapse:collapse;width:100%;margin-bottom:2px}
@@ -68,7 +70,7 @@ table td:first-child{font-weight:700}
 
 <body onload="abc()">
 
-<div id="body_container" >
+<div id="body_container" style="display: none;">
 
 
 
@@ -200,7 +202,8 @@ $(if error)<br /><div style="color: #FF8080;width: 100%; margin-bottom: 10px;" c
 			</div>
 
 			<div style="width: 100%;height: auto;margin-top: 60px;text-align: center;font-size: 15px;">
-				<p style="width: 20px;height:auto;margin-top: 30px;margin-bottom: 30px;margin-left: auto;margin-right: auto">OR </p>
+				<button class="buy_voucher_view_history" style="margin-top: 0px;margin-left: auto;margin-right: auto;margin-bottom: 0px;" onclick="voucher_history_find()">View voucher history</button>
+				<p style="width: 20px;height:auto;margin-top: 10px;margin-bottom: 10px;margin-left: auto;margin-right: auto">OR </p>
 				<button class="buy_enter_voucher" style="margin-top: 10px;margin-left: auto;margin-right: auto;margin-bottom: 10px;" onclick="home()">Enter voucher code</button>
 			</div>
 
@@ -210,6 +213,27 @@ $(if error)<br /><div style="color: #FF8080;width: 100%; margin-bottom: 10px;" c
 
 </div>
 
+<!-- voucher history -->
+<div id="buy_voucher_history" style="width: 100%;height:auto; display: none;">
+
+	<div style="width: 50%;min-width:320px;height: auto;background-color: #f7f7f7;margin-top:30px;margin-left: auto;margin-right: auto;border-radius: 10px;">
+		<div style="width: 100%;height: 50px; text-align: center;font-size: 18px;">
+			<div style="width: 50%;height: auto;border-bottom: 1px solid #000000;padding-top: 30px;margin-left: auto;margin-right: auto;" >Purchased vouchers History</div>
+		</div>
+
+		<div style="width: 100%;height: auto;">
+			<div id="voucher_history_view_div" style="width: 300px;max-height:600px;height: auto;overflow-y: auto;border:1px solid black; margin-top: 30px;margin-left: auto;margin-right: auto;border-radius: 20px;"></div>
+
+			<div style="width: 100%;height: auto;margin-top: 60px;text-align: center;font-size: 15px;">
+				<button class="buy_voucher_view_history_help" style="margin-top: 0px;margin-left: auto;margin-right: auto;margin-bottom: 0px;" onclick="voucher_history_help()">Help</button>
+				
+			</div>
+
+				
+		</div>
+	</div>
+
+</div>
 
 <button id='diagnose_button' class='btn' onclick="remove_delay()" style="min-width:95%;width: 95vw;height:95vh;background-color: inherit;border: none;">
 
@@ -226,7 +250,7 @@ $(if error)<br /><div style="color: #FF8080;width: 100%; margin-bottom: 10px;" c
 		2) [ orangefarm ] give location of the mikrotik router hosting ths [ login.html ]  file
 		3) [ http:// ] keep http or make link insecure if your hotspot is not [ https ] secure//and have wallpaper links insecure also//or your hotspot wallgarden will fail to allow connection of thoe links
 	*/
-	var transact_server_url = 'http://streetwifiy.herokuapp.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&trial=$(trial)&location=orangefarm';//open link where hotspot is at 
+	var transact_server_url = 'http://streetwifiy.herokuapp.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&trial=$(trial)&location=';//open link where hotspot is at 
 
 
 
@@ -339,7 +363,9 @@ function home(){
 }
 
 
-var transact_server_domain = transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[0];//transact server domain
+//var transact_server_domain = transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[0];//transact server domain
+
+var transact_server_domain = transact_server_url.split("/hotspot?")[0];//include protocol unlike the top link
 
 var new_user_unique_code = '';//store voucher sell user unique identifying code
 
@@ -363,7 +389,9 @@ function add_voucher_code(){ //old browser way
 			document.getElementById("buy_code").innerHTML = "Error requesting unique code";
 		}
 	}
-	xhr.open("GET", "http://"+transact_server_domain +"/api/buy?code=unique_code");
+	//xhr.open("GET", "http://"+transact_server_domain +"/api/buy?code=unique_code");
+	xhr.open("GET", transact_server_domain +"/api/buy?code=unique_code");
+
 	xhr.send(null);
 
 
@@ -408,12 +436,12 @@ function auto_voucher_check(){
 		// 	document.getElementById("voucher_code").innerHTML = "Voucher not found";
 		// }
 	}
-	xhr.open("GET", "http://"+transact_server_domain +'/api/buy?code=get_voucher&unique_code=' + new_user_unique_code + '&mac=$(mac-esc)');
+	xhr.open("GET", transact_server_domain +'/api/buy?code=get_voucher&unique_code=' + new_user_unique_code + '&mac=$(mac-esc)');
 	xhr.send(null);
 
 }
 
-function auto_use_voucher_alert(){
+function F(){
 
 	var auto_login_confirm = confirm("Success: you have been sold a voucher.\n\nDo you want to use the voucher code to login now?");
 
@@ -435,7 +463,7 @@ function tria_user_show(){
 
 	//trial_login
 
-	var transact_server_domain = transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[0];//transact server domain
+	// var transact_server_domain = transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[0];//transact server domain
 
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = function(){
@@ -451,12 +479,161 @@ function tria_user_show(){
 			document.getElementById("wifi_name").innerHTML = "<b style='color:orange' >"+JSON.parse(xhr.responseText)["router_id"] + "</b>, to";
 		}
 	}
-	xhr.open("GET", "http://"+transact_server_domain +"/api/hotspot_data?location="+ transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[1].replace(/&/g, "=").split("=")[transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[1].replace(/&/g, "=").split("=").indexOf("location") + 1] );
+	//xhr.open("GET", "http://"+transact_server_domain +"/api/hotspot_data?location="+ transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[1].replace(/&/g, "=").split("=")[transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[1].replace(/&/g, "=").split("=").indexOf("location") + 1] );
+
+	xhr.open("GET", transact_server_domain +"/api/hotspot_data?location="+ transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[1].replace(/&/g, "=").split("=")[transact_server_url.replace("http","").replace("https","").replace("://","").split("/hotspot?")[1].replace(/&/g, "=").split("=").indexOf("location") + 1] );
+
 	xhr.send(null);
 
 
 
 }
+
+
+// ========= voucher history ==========
+
+function voucher_history_help(){//gives alert
+	alert("This menu Shows vouchers you baught on this device while connected on this WIFI hotspot.\n\n1) You can use the vouchers to re-connect to the WIFI if they are still valid/not depleted.\n2) You can re-download voucher ticket.");
+}
+
+
+// voucher find
+function voucher_history_find(){
+
+//clear voucher auto login timer
+//clearInterval(auto_voucher_check_timer);
+
+//show voucher history div
+document.getElementById("buy_voucher_history").style.display = "block";
+//hide voucher buy div
+document.getElementById("buy_voucher").style.display = "none";
+
+
+document.getElementById("voucher_history_view_div").innerHTML = '<div style="width: 100%;height: 100%;padding-top:10%;text-align: center;color:grey"> Searching for Vouchers you baught previously on <br/>this hotspot, using this phone/computer<br/><br/>PLESE WAIT..<br/><br/><i class="la la-gear la-spin" style="font-size: 35px;"></i></div>';
+
+
+//check device mac address
+var device_mac ="$(mac-esc)";//get device mac from router/mikrotik router
+
+//alert(device_mac)
+//+++++++++++ default url for voucher finding +++++++++++++
+
+
+
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function(){
+	if(xhr.readyState == XMLHttpRequest.DONE){
+		//alert(xhr.responseText)
+
+		if(xhr.responseText.replace(/"/g, "") != "Voucher Not found" || xhr.responseText.replace(/"/g, "") != "Problem finding Voucher"){//if results is not "Voucher Not found"
+
+			//document.getElementById("voucher_code").innerHTML = JSON.parse(xhr.responseText)["vouchercode"];
+			//console.log(JSON.parse(xhr.responseText))
+
+			// //show auto login alert()  ${data.voucherprofile == "N/A"? data.voucherprofile_time:data.voucherprofil
+			// auto_use_voucher_alert()
+			var vouchers_div = "";
+
+			for(var a = 0; a <= JSON.parse(xhr.responseText).length - 1; a++){
+
+				var voucher_profile =JSON.parse(xhr.responseText)[a]["voucherprofile"] ; //voucherprofile
+				//check if time profile is provided
+				if(JSON.parse(xhr.responseText)[a]["voucherprofile_time"] != "N/A"){
+
+					voucher_profile =JSON.parse(xhr.responseText)[a]["voucherprofile_time"]
+
+				}
+
+
+			
+
+
+				// ------ clculate date ---------
+				var date = new Date()
+						
+				var code = JSON.parse(xhr.responseText)[a]["soldto"] ; //get year/month/day from unique code
+
+				if(JSON.parse(xhr.responseText)[a]["soldto"] == undefined || JSON.parse(xhr.responseText)[a]["soldto"] == null ||JSON.parse(xhr.responseText)[a]["soldto"].length < 6){//check if soldo is provided
+					code="000000:0000000";
+
+				}
+
+				code = code.split(":"); //turn to array
+
+				var year= code[0][0].toString() + code[0][1];//get year
+				var month = code[0][2].toString();//get month / get months first digit if double dgit month[ oct/nov/december ]
+
+
+				var voucher_produced_day = JSON.parse(xhr.responseText)[a]["voucherproducedday"];//get day
+
+				if(JSON.parse(xhr.responseText)[a]["voucherproducedday"] == undefined || JSON.parse(xhr.responseText)[a]["voucherproducedday"] == null || JSON.parse(xhr.responseText)[a]["voucherproducedday"] < 6){//check if soldo is provided
+
+					voucher_produced_day = "00";
+				}
+						
+				//check if month should be double digit//OCT/NOV/DEC
+				if(code[0].length == 6  && voucher_produced_day.length == 2){//if day is double digit/en combined /year/month/day is six digits then month should also be double digit
+					month = month+code[0][3];//get other digit for month
+				}
+				if(code[0].length == 5  && voucher_produced_day.length == 1){ //if day single digit;//en total date string is 5 digit long; then day should be double digit
+					month = month+code[0][3]//get another month digit
+				}
+
+						
+				var month_text = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+				var current_year = date.getFullYear().toString();//looking for century/lol the year will loose accuracy when century changes for vouchers of old century
+				current_year = current_year[0] + current_year[1]; //getting century fro current year date
+
+				var voucher_produced_date = voucher_produced_day+"/"+month_text[month]+"/"+current_year+year;//date
+
+				//console.log(voucher_produced_day+"/"+month+"/"+current_year+year)
+
+
+			
+
+				
+				vouchers_div = vouchers_div + "<br/><div style='width:100%;max-width:300px;min-height: 40px;height:auto;margin : 10px auto;border-bottom:4px solid blue;background-color:#ffd700'><br>Voucher code	: <br/><b>"+(JSON.parse(xhr.responseText)[a]["vouchercode"])+"</b><br/>Voucher cost	: R" + JSON.parse(xhr.responseText)[a]["voucheramount"] +"<br />Voucher data/time	 : "+voucher_profile+"<br>voucher produced date : <br/>"+voucher_produced_date+"<br/><br/><div style='width:100%;height:7%; text-align:center'><button class='buy_voucher_view_history' style='height: 100%;min-height:30px;width:70%; margin-bottom:20px' onclick='voucher_history_login("+JSON.stringify(JSON.parse(xhr.responseText)[a])+")'>Use Voucher</button></div></div>";
+
+			}
+
+			//show vouchers
+			document.getElementById("voucher_history_view_div").innerHTML = vouchers_div;
+			document.getElementById("voucher_history_view_div").style.textAlign	= "center";
+
+		}	
+
+	}
+	else {
+		document.getElementById("voucher_history_view_div").innerHTML = '<div style="width: 100%;height: 100%;padding-top:25%;text-align: center;color:red"> Error : Searching for Vouchers<br/>you baught previously on this hotspot, <br/>using this phone/computer<br/><br/>Please connect to one of your local <br/>streetWifiy hotspot to use this feature.<br/><br/> Or try to close and open this browser window.</div></div>';
+	}
+}
+xhr.open("GET", transact_server_domain + "/api/buy?code=baught_vouchers&mac=" + device_mac);
+xhr.send(null);
+
+
+
+
+
+}
+
+//voucher history login
+function voucher_history_login(voucherCode){
+	
+	/* 
+		code to handle password and username login, if voucher code not provided just like in transact html
+		//login content in this html is meant to handle old browsers
+	*/
+
+
+	//console.log(voucherCode)
+
+	//set login voucher code
+	document.getElementById("username_input").value = voucherCode["vouchercode"];
+	//call login
+	doLogin()
+}
+
 
 </script>
 
