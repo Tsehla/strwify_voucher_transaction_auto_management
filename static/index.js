@@ -398,7 +398,7 @@ var auto_user_creater_wifi_radius_link = {
 
 
  $.get('/api/hotspot_data?location='+ (url_parms_object()['hotspot_location']?url_parms_object()['hotspot_location']:''), function(response, status){
-	 
+	
 	   if(status == 'success'){//if success
 	
 		//console.log(response)

@@ -1046,7 +1046,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
         if(req.query.code == 'sell_voucher'){
 			
 			
-
+			
              
         //http://127.0.0.1:4100/api/sell?code=get_voucher&unique_code=xyz;//api query link
             
@@ -1096,10 +1096,10 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
             }
 			
 			if(response == null){
-
+				
 
 				//catch auto vouchers
-				if(req.query.u_link.length > 6 && req.query.u_link_allowed){//if wifi radius server link is grether than 6 characters
+				if(req.query.u_link.length > 6 && req.query.u_link_allowed && req.query.u_link_allowed == "true"){//if wifi radius server link is grether than 6 characters
 
 					/*
 						external wifi radius simple create single voucher api
