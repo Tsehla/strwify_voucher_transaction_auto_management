@@ -5938,7 +5938,9 @@ function auto_login(response){
 
 	//give notification to login//to bypass popup block// show single button alert box
 		
-	custom_alert("", alert_text='Free login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code+"', '_blank');voucher_free_print_initiator()", 'voucher_free_print_initiator()')
+	//custom_alert("", alert_text='Login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code+"', '_blank');voucher_free_print_initiator()", 'voucher_free_print_initiator()')
+
+	custom_alert("", alert_text='Login voucher ready<br/>Click okay to automatically login and use the Wifi Internet Voucher.', "window.open('"+hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code+"', '_self')", 'voucher_free_print_initiator()') ;//accepting auto login wont download voucher anymore compare to above link//now user can refer to their voucher history in the [vouchers menu] for re-use//cancel will download voucher
 	
 	//window.open(hot_spot_url + '?password=' + vocher_code +'&username=' + vocher_code,'_blank');
 
