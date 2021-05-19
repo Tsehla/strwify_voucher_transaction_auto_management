@@ -6082,7 +6082,7 @@ function simple_or_manual_view(div){
 					
 					$("#vouchers_history_view").append(`
 
-						<div style='width:100%;min-height: 40px;height:auto;margin : 10px 0px;border-bottom:4px solid blue;background-color:#ffd700'>
+						<div style='width:100%;max-width:300px;min-height: 40px;height:auto;margin : 10px auto;border-bottom:4px solid blue;background-color:#ffd700'>
 							<br>
 							Voucher code	: <br/><b>${data.vouchercode}</b>
 							<br/>

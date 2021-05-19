@@ -441,7 +441,7 @@ seller or distributor console, credt auto_voucher_check
 			
 
 				keystone.list('Voucher Codes').model.find()
-				.where({voucher_soldto_device_mac : req.query.mac, voucherstate : 'used'})
+				.where({voucher_soldto_device_mac : req.query.mac, voucherstate : 'used',voucherprinted : true})
 				.exec( function(error, response){
 
 				if(error){
@@ -456,7 +456,7 @@ seller or distributor console, credt auto_voucher_check
 
 					keystone.list('Complementary Voucher').model.find()
 					//.where({soldto : seach_code_,voucherprinted : false})
-					.where({complementary_soldto_device_mac : req.query.mac})
+					.where({complementary_soldto_device_mac : req.query.mac, voucherprinted : true})
 
 					.exec( function(error, complementary_response){
 
