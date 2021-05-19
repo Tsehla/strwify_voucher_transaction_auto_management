@@ -442,6 +442,7 @@ seller or distributor console, credt auto_voucher_check
 
 				keystone.list('Voucher Codes').model.find()
 				.where({voucher_soldto_device_mac : req.query.mac, voucherstate : 'used',voucherprinted : true})
+				.sort({soldto: "descending"})
 				.exec( function(error, response){
 
 				if(error){
