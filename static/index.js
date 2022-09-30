@@ -136,6 +136,9 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
         var animate_interval = "";//contains js interval 
 
         function border_breath_animation(color_pallette = [], div_id="", apply_to = "border"){//if not "border" can be "background"
+
+			// console.log(div_id)
+			
            
             if(color_pallette.length > 0 && typeof color_pallette == "object"){
 
@@ -392,6 +395,7 @@ var auto_user_creater_wifi_radius_link = {
 	router_hotspot_location : 'default',
 	allow_hotspot_universal_vouchers : true,
 	mikrotik_trial_user_data_limit : '',
+	mikrotik_trial_user_data_expiery : undefined
 
 	
 };
@@ -401,7 +405,7 @@ var auto_user_creater_wifi_radius_link = {
 	
 	   if(status == 'success'){//if success
 	
-		//console.log(response)
+		// console.log(response) 
 
 		   //add u link
 		   auto_user_creater_wifi_radius_link.u_link = response.external_radius_user_creation_link;
@@ -424,6 +428,11 @@ var auto_user_creater_wifi_radius_link = {
 
 		   //get data limit in mb/gb or time in /min/hours for mikrotik [ trial ] user login
 		   auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_limit = response.mikrotik_trial_user_data_limit;
+
+		   //get data expiery mikrotik [ trial ] user login
+		   auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_expiery = response.mikrotik_trial_user_data_expiery
+
+
 	   }
 
 	   else{
@@ -473,7 +482,7 @@ var auto_user_creater_wifi_radius_link = {
 				
 				<span style="width:inherit; max-heigh:inherit; ">
 
-					<button onclick="window.open('${button_okay}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary" style=''>Okay</button>
+					<button id="custome_alert_okay_button" onclick="window.open('${button_okay}', '${open_type.toLocaleLowerCase().trim()}') ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary" style=''>Okay</button>
 					<br />
 				
 				</span>`
@@ -491,7 +500,7 @@ var auto_user_creater_wifi_radius_link = {
 				<span style="width:inherit; max-heigh:inherit">
 
 					<button onclick="${button_cancel} ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-danger" style='margin-left:10px'>Cancel</button>
-					<button onclick="${button_okay} ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+					<button id="custome_alert_okay_button" onclick="${button_okay} ;dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
 				
 				</span>`
 			);}
@@ -503,7 +512,7 @@ var auto_user_creater_wifi_radius_link = {
 				
 				<span style="width:inherit; max-heigh:inherit">
 
-					<button onclick="${button_okay};dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+					<button id="custome_alert_okay_button" onclick="${button_okay};dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
 				
 				</span>`
 			);}
@@ -516,7 +525,7 @@ var auto_user_creater_wifi_radius_link = {
 				
 					<span style="width:inherit; max-heigh:inherit">
 
-						<button onclick="dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
+						<button id="custome_alert_okay_button" onclick="dom_hide_show('hide', 'custome_alert_box_container')" class="btn btn-primary">Okay</button>
 					
 					</span>`
 				);
@@ -1340,6 +1349,10 @@ function selected_voucher_ticket_template_append(){
 
 function voucher_print(response){
    // alert('voucher print fn');
+
+
+	// console.log({response})
+
 				var month_text = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
 				var day_of_week_text = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 	
@@ -5865,6 +5878,9 @@ function auto_login(response){
 
 		//set data limit
 		response.voucherprofile = auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_limit;
+		
+		//set voucher expiery
+		response.voucherexpiry = auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_expiery
 	}
 
 	if(!hot_spot_url){

@@ -219,6 +219,7 @@ router_hotspot_page_model .add({
 	free_data_allow: {type :types.Boolean, default:false, label :'Allow radius authenticated free data login' },
 	mikrotik_allow_trial_login : {type :types.Boolean, default:false, label :'Allow mikrotik authenticated trial user login' },
 	mikrotik_trial_user_data_limit : {type :String, default:'5 MB', label : 'Mikrotik trial user data limit' },
+	mikrotik_trial_user_data_expiery : {type : types.Select, options: "1 Minutes,5 Minutes,10 Minutes,15 Minutes,20 Minutes,30 Minutes,45 Minutes,50 Minutes,1 Hour,1:30 Hours,2 Hours,3 Hours,4 Hours,5 Hours,6 Hours,7 Hours,8 Hours,9 Hours,10 Hours,11 Hours,12 Hours,24 Hours,2 Days,3 Days,4 Days,5 Days,6 Days,7 Days,2 Weeks,3 Weeks,1 Month,2 Month,3 Months,4 Months,5 Months", default:'24 Hours', label :'Mikrotik trial user data expiery'},
 	
 	hotspot_how_to_bottom_text : {type : String, label :'Hotspot Howto bottom text', default: 'Help yourself, To be helped.',},
 	hotspot_free_sites_bottom_text : {type : String, label :'Hotspot Free sites bottom text', default: 'Pass it on, unconditionally help a stranger, a friend, a family member.',},
