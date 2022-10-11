@@ -1,5 +1,0 @@
-router script to be updated
-
---
-1) add trial user scheduling script, and re-create new setup script
-2) non 5gz script maybe missing, or this script covers all device type, dont remember will have to confirm next time in fixing issues or configuring new router
