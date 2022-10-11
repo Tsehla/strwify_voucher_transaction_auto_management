@@ -3572,7 +3572,31 @@ app.get('/api/get_hotspot', function(req, res){
 
 
 
+/*=======================================
+ mikrotik trial login data usage tracker
+=======================================*/ 
 
+
+app.post('/trial_login_data_usage_trcker', function(req, res) {
+	
+	// var date = new Date();			
+	// var hour = date.getHours();
+	// var minutes = date.getMinutes();
+	// var seconds = date.getSeconds();
+	// var day = date.getDay();
+	// var month = date.getMonth();
+	// var year = date.getFullYear();
+		
+	// // var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
+	
+
+	console.log(" --- ", req.body)
+	res.send("recived");
+	res.end();
+
+
+});
+	
 
 
 
