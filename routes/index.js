@@ -3579,6 +3579,9 @@ app.get('/api/get_hotspot', function(req, res){
 
 app.post('/trial_login_data_usage_trcker', function(req, res) {
 	
+
+	// trial login sample link :: http://uwireless.za/login?username=T-90%3A2E%3A1C%3A69%3AB3%3ABA&password=
+
 	// var date = new Date();			
 	// var hour = date.getHours();
 	// var minutes = date.getMinutes();
@@ -3589,8 +3592,53 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 		
 	// // var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
 	
+	
+	//---- turn recived data to array containing JSON strings objects ----
+	// console.log(req.body)   // { data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' }
+	
+	
+	// var trial_ursage_report = JSON.parse('["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:179711},,"]')[0].replaceAll('"',"`").replaceAll(' ','').replaceAll('<>','\"').split(',,');
+	var trial_ursage_report = JSON.parse(req.body.data)[0].replaceAll('"',"`").replaceAll(' ','').replaceAll('<>','\"').split(',,');//last array will be empty, this best i can do to forge an object api from mikrotik with my current knowledh=ge, hahahaha
+		
+	console.log(trial_ursage_report, '----- ',JSON.parse(trial_ursage_report[0]));
 
-	console.log(" --- ", req.body, '---', req.body.data, '-- ', typeof req.body.data)   // {	   data: '["{mac: C8:94:BB:38:A7:01 ,bytes_down:806547},{mac: 90:2E:1C:69:B3:BA ,bytes_down:64079},"]'	}
+	//check if any trial data was recived
+	if(trial_ursage_report[0].length > 0){  //if so do saving en etc
+
+
+
+		console.log('-- trial data was recieved in this post request')
+
+		
+
+
+
+		//update amount of data usage for this session user currently connected to hotspot, if trial user data arrives en user is not in hotspot, take it as old session ended, add usage data to new session
+		//---- 1) check if user mac is found in active users variable, if so, then add current usage data to old usage data
+		//---- 2) if mac-adress is available but check (1) fails, then take it as a new session, then capture time, date, en data used thus far 
+
+
+		//update number of trial user currently connected to hotspot
+		//-- check if all users sendt by hotspot with hotspot name matches, only check those in corresponding hotspot names as many routers can report at same time, 
+		//---- also i may consider having a big list, en only remove users after certain time if they dont report back, this will remove a need of having hotspot have unique names always so ya set time
+
+
+
+		// have a function that will set usage limit for new to login users user session an will be picked up by login system if any usage limits
+
+
+		//================== when user logins check their usage en give warning as required, this if for login part of this
+
+
+	}
+
+	
+
+
+
+
+
+	
 	res.send("recived");
 	res.end();
 

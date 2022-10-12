@@ -14,19 +14,21 @@ router script to be updated
 :foreach counter in=[/ip hotspot active find where user~"^[T][-].{17}"] do={
     :set datadown [/ip hotspot active get $counter bytes-out]
     :set macaddress [/ip hotspot active get $counter mac-address]
-    :set usagedata  ($usagedata . "{mac: $macaddress ,bytes_down:$datadown}," )
+    :set usagedata  ($usagedata . "{<>mac<>:<>$macaddress<> ,<>bytes_down<>:$datadown},," )
 }
 
 
 
   
-/tool fetch http-method=post http-data="data=[\"$usagedata\"]"  output=user url="http://street-wify-transcat.herokuapp.com/trial_login_data_usage_trcker\?router_name=uWireless&"
+/tool fetch http-method=post http-data="data=[\"$usagedata\"]"  output=user url="http://192.168.88.235:3100/trial_login_data_usage_trcker\?router_name=uWireless&"
+
+
 
 
 //exected post() req.body() data on path   [ app.post('/trial_login_data_usage_trcker', function(req, res) { ]
  
  {
-    data: '["{mac: C8:94:BB:38:A7:01 ,bytes_down:806547},{mac: 90:2E:1C:69:B3:BA ,bytes_down:64079},"]'
+    data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' 
  }
 
  //if no device connected with trial login req.body data = { data: '[""]' }
