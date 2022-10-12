@@ -3590,7 +3590,7 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 	// // var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
 	
 
-	console.log(" --- ", req.body)   // {	   data: '["{mac: C8:94:BB:38:A7:01 ,bytes_down:806547},{mac: 90:2E:1C:69:B3:BA ,bytes_down:64079},"]'	}
+	console.log(" --- ", req.body, '---', req.body.data, '-- ', typeof req.body.data)   // {	   data: '["{mac: C8:94:BB:38:A7:01 ,bytes_down:806547},{mac: 90:2E:1C:69:B3:BA ,bytes_down:64079},"]'	}
 	res.send("recived");
 	res.end();
 
