@@ -3624,10 +3624,25 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 
 
 
-		// have a function that will set usage limit for new to login users user session an will be picked up by login system if any usage limits
+		// have a function that will set usage limit for new to login users user session an will be picked up by login system if any usage limits, this limits are just more informative as they dont do much as fr as router is concerned except blocking part which is carried out by login function, hey can pretty much be easily bypassed by using a link to login directly to router
+
+
+		// also pernality and blocking will happen here for missbehaving
+
+		//also will set variables for login total active users here, that will have to be obeyed by login, use hotspot names, so imthinking even thought it may cause problems i should try different or unique hotspot names, so use hotspot specific everything en enorcing
 
 
 		//================== when user logins check their usage en give warning as required, this if for login part of this
+
+
+
+
+
+
+
+
+
+
 
 
 	}
