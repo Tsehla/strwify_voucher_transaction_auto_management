@@ -3594,7 +3594,7 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 	
 	
 	//---- turn recived data to array containing JSON strings objects ----
-	// console.log(req.body)   // { data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' }
+	console.log('--',req.body,req.body.data)   // { data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' }
 	
 	
 	// var trial_ursage_report = JSON.parse('["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:179711},,"]')[0].replaceAll('"',"`").replaceAll(' ','').replaceAll('<>','\"').split(',,');
