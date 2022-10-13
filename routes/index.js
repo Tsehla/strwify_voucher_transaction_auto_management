@@ -3598,7 +3598,7 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 	
 	
 	// var trial_ursage_report = JSON.parse('["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:179711},,"]')[0].replaceAll('"',"`").replaceAll(' ','').replaceAll('<>','\"').split(',,');
-	var trial_ursage_report = JSON.parse(req.body.data)[0].replace(/"/g,"`").replaceAll(/ /g,'').replaceAll(/\<\>/g,'\"').split(',,');//last array will be empty, this best i can do to forge an object api from mikrotik with my current knowledh=ge, hahahaha
+	var trial_ursage_report = JSON.parse(req.body.data)[0].replaceAll('"',"`").replaceAll(' ','').replaceAll('<>','\"').split(',,');//last array will be empty, this best i can do to forge an object api from mikrotik with my current knowledh=ge, hahahaha
 		
 	console.log(trial_ursage_report, '----- ',JSON.parse(trial_ursage_report[0]));
 
