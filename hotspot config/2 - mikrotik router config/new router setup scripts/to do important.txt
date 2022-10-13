@@ -31,4 +31,4 @@ router script to be updated
     data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' 
  }
 
- //if no device connected with trial login req.body data = { data: '[""]' }
+ //if no device connected with trial login req.body data =  { data: '[""]' }
