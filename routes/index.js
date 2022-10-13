@@ -3615,7 +3615,7 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 
 		//update amount of data usage for this session user currently connected to hotspot, if trial user data arrives en user is not in hotspot, take it as old session ended, add usage data to new session
 		//---- 1) check if user mac is found in active users variable, if so, then add current usage data to old usage data
-		//---- 2) if mac-adress is available but check (1) fails, then take it as a new session, then capture time, date, en data used thus far 
+		//---- 2) if mac-adress is available but check (1) fails, then take it as a new session, then capture time, date, en data used thus far //can also check if previus data is lower than current usage that, this will mean new session
 
 
 		//update number of trial user currently connected to hotspot
