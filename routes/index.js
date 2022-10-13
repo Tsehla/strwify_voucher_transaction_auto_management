@@ -3594,14 +3594,12 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 	
 	
 	//---- turn recived data to array containing JSON strings objects ----
-	console.log(req.body,req.body.data)   // { data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' }
+	// console.log(req.body,req.body.data)   // { data: '["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:67516},,"]' }
 	
 	
 	// var trial_ursage_report = JSON.parse('["{<>mac<>:<>90:2E:1C:69:B3:BA<> ,<>bytes_down<>:179711},,"]')[0].replaceAll('"',"`").replaceAll(' ','').replaceAll('<>','\"').split(',,');
 	var trial_ursage_report = JSON.parse(req.body.data)[0].replace(/"/g,"`").replace(/ /g,'').replace(/\<\>/g,'\"').split(',,');//last array will be empty, this best i can do to forge an object api from mikrotik with my current knowledh=ge, hahahaha
 		
-	
-
 	//check if any trial data was recived
 	if(trial_ursage_report[0].length > 0){  //if so do saving en etc
 
