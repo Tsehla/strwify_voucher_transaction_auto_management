@@ -32,7 +32,7 @@
 					color: blue;
 				}
 
-                {border: 1px solid grey}
+                /* *{border: 1px solid grey} */
 
 
 			</style>
@@ -368,9 +368,9 @@
                     height: 100%;
                     margin-top: 13vh;
                 }
-                #left_arrow div:active {
-                /* background-color :grey; */
-                }
+                /* #left_arrow _div:active {
+                background-color :grey;
+                } */
                 #left_arrow div{
                     height: 100%;
                     vertical-align: middle;
@@ -393,9 +393,9 @@
                     height: 100%;
                     margin-top: 13vh;
                 }
-                #right_arrow div:active {
-                /* background-color :grey; */
-                }
+                /* #right_arrow div:active {
+                background-color :grey;
+                } */
                 #right_arrow div{
                     height: 100%;
                     vertical-align: middle;
@@ -450,9 +450,9 @@
                     text-shadow : 2px 2px 1px snow;
 					line-height: 55px;
                 } 
-				#notification_alert_icon{
-					/* display: none;*/
-				}
+				/* #notification_alert_icon{
+					display: none;
+				} */
                 
                 
             </style>
@@ -918,7 +918,7 @@
             <button id='free_data_login_button' onclick="free_login()" class="btn btn" style="min-width: 95px; height:45px; margin: 4.5px 2.5%; display: none;background: rebeccapurple; color: whitesmoke; float: left;">Free Data Voucher</button>
            
             <!--add vouchers button -->
-			<button onclick="document.getElementById('bottom_bar').style.display='none',login_display()" class="btn btn-success" style="min-width: 95px; height:45px;; margin: 4.5px 2.5%;   display: inline-block; float:right;">Enter Voucher Code</button>
+			<button id="add_voucher_button" onclick="document.getElementById('bottom_bar').style.display='none',login_display()" class="btn btn-success" style="min-width: 95px; height:45px;; margin: 4.5px 2.5%;   display: inline-block; float:right;">Enter Voucher Code</button>
 
 
         </div>
@@ -941,7 +941,7 @@
 
             <button class='btn btn-info la la-eye la-5x' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:auto -1px;min-width: 65px; width: 20vw;' onclick='window.open(wall_link_description[current_image_content_tracker].image_status_link, "_blank")'></button>
 
-            <button id='' class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-1px;min-width: 65px; width: 20vw;font-size: 15px;' onclick='forced_ads_hide()'>CLOSE</button>
+            <button id='forced_ads_hide' class='btn btn-info' style='border-bottom-right-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-1px;min-width: 65px; width: 20vw;font-size: 15px;' onclick='forced_ads_hide()'>CLOSE</button>
 
             <a href='#' onclick='next_wallpaper_ads()' class='btn btn-primary la la-arrow-right ' role='button' style='border-bottom-left-radius:0px;border-top-left-radius:0px; margin:-4px; font-size: 28px;min-width: 65px; width: 20vw;'></a>
             
@@ -2017,10 +2017,15 @@
 
         //user click guide cues
         var animate_interval = "";//contains js interval 
+        var contrast_change_alternate_tracker = false;//tracks if contrast was change
 
         function border_breath_animation(color_pallette = [], div_id=""){
+            
            
             if(color_pallette.length > 0 && typeof color_pallette == "object"){
+
+
+                console.log(contrast_change_alternate_tracker)
 
                 //add transparent color to array
                 color_pallette.unshift("transparent");
@@ -2035,11 +2040,55 @@
 
                     }
 
+                    //border change
                     document.getElementById(div_id).style.borderColor = color_pallette[ color_pallette_current_color_index ]; //apply color
+
+                    //add voucher button
+                    document.getElementById('add_voucher_button').style.borderColor = color_pallette[ color_pallette_current_color_index ]; //apply color
+                 
+            
               
                     color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
+
+
+                    //item contrast change
+                    if(contrast_change_alternate_tracker == true){//if constrast was set
+
+                      
+                        //remove opacity
+                        document.getElementById(div_id).style.opacity = '100%';
+
+                        //forced ads hide
+                        document.getElementById('forced_ads_hide').style.opacity = '100%';
+
+                        //free login             
+                        document.getElementById('free_data_login_button').style.filter = 'contrast(100%)';
+
+                        contrast_change_alternate_tracker = false//set contrast tracker
+
+                        return
+
+                    }
+
+                
+
+                        //apply opacity
+                        document.getElementById(div_id).style.opacity = '80%';
+
+                           //forced ads hide
+                        document.getElementById('forced_ads_hide').style.opacity = '80%';
+
+                        //free login
+                        document.getElementById('free_data_login_button').style.filter = 'contrast(50%)';
+
+                        contrast_change_alternate_tracker = true//set contrast tracker
+        
+
+
                     //console.log("busy");
-                }, 200)  
+
+                
+                }, 900)  
 
             }
 

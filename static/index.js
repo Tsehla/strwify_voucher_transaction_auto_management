@@ -134,6 +134,7 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 
 //user click guide cues
         var animate_interval = "";//contains js interval 
+		var contrast_change_alternate_tracker = false;//tracks if contrast was change
 
         function border_breath_animation(color_pallette = [], div_id="", apply_to = "border"){//if not "border" can be "background"
 
@@ -164,6 +165,29 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
                    
               
                     color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
+
+					
+
+					    //item contrast change
+						if(contrast_change_alternate_tracker == true){//if constrast was set
+
+                      
+							// user buy           
+							document.getElementById('user_buy_option').style.filter = 'contrast(100%)';
+	
+							contrast_change_alternate_tracker = false//set contrast tracker
+	
+							return
+	
+						}
+
+
+				 		// user buy
+                        document.getElementById('user_buy_option').style.filter = 'contrast(95%)';
+
+                        contrast_change_alternate_tracker = true//set contrast tracker
+	
+
                     //console.log("busy");
                 }, 200)  
 
