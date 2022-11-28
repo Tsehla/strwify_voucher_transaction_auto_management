@@ -209,7 +209,7 @@ router_hotspot_page_model .add({
 	forced_advertisement_skip_to_login : {type :types.Boolean, default:true, label :'Forced advertisement skip to login menu' },
 
 
-	ads_ui_type : {type : types.Select, options: "appearance_1,appearance_2", default:'appearance_1', label :'Ads Menu layout'},
+	ads_ui_type : {type : types.Select, options: "appearance_1,appearance_2,dark_neumorph_skin", default:'appearance_1', label :'Ads Menu layout'},
 	ads_ui_layout_wallpaper : {type : String, label :'Layout menu advertisement wallpaper number', default: 0,},
 	
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},

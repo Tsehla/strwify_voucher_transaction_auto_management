@@ -12,10 +12,11 @@
 
 
 			<style type="text/css">
-				body {color: #737373; font-size: 12px; font-family: verdana;height: 100vh;min-height: 500px;}
+				/* body {color: #737373; font-size: 12px; font-family: verdana;height: 100vh;min-height: 500px;} */
+				#page_body {color: #737373; font-size: 12px; font-family: verdana;height: 100vh;min-height: 500px;}
 
-				img {border: none;}
-				input{
+				#page_body img {border: none;}
+				#page_body input{
 						font-size: 1.5em;
 						text-align: center;
 					}
@@ -39,12 +40,15 @@
 
 		</head>
 
-	<body id='page_body'>
+	<body >
+
+    <div id='page_body_container'>
+    <div id='page_body'>
 
         <div id='page_body_menu_contents' style="width: auto;height: auto;margin: 0px;">
     
 		<!-- login input forms -->
-		<div style="width: 60vw;height: auto; position: absolute;z-index: 1; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover" align="center" id="form_container">
+		<div style="width: 60vw;height: auto; position: absolute;z-index: 1; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover"  id="form_container">
 
 			<!-- close button -->
 			<button onclick="document.getElementById('bottom_bar').style.display='block',login_hide()" style="width: 40px; height: 40px; font-size: 1.5em; position: absolute;right: 1%; border: 0px" class="btn btn-info">&times;</button>
@@ -190,6 +194,7 @@
                         </div>
                     </div>
                 </div> -->
+
 
                 <!-- ads provided layout change -->
                 <!-- layout version 3 -->
@@ -1001,6 +1006,9 @@
         
         </style>
 
+    </div>
+ </div>
+
 
 
 		
@@ -1689,6 +1697,24 @@
                   border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_provide_layout_1_buy");//button animation
                 }
 
+                //new skinning 
+                if(menu_layout_type == 'dark_neumorph_skin'){ 
+
+              
+                    //crete html skin elements
+                    dark_neumorph_skin();
+
+                    //show error 
+                    // document.getElementById('error_div').style.marginTop = '20vh';//re-position error belt
+                    
+                    //navigation path shower for new users
+                    // border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_provide_layout_1_buy");//button animation
+
+
+                }
+
+
+
                 //wallpaper
                 clearInterval(walp_interval);//stop wallpaper auto changer
 
@@ -1710,20 +1736,30 @@
 
                 }
 
-                    
-                document.getElementById('walp_links_container').style.display = 'none';//hide default main advertisment wallpapers action bar
+                if( document.getElementById('walp_links_container')){
+                    document.getElementById('walp_links_container').style.display = 'none';//hide default main advertisment wallpapers action bar
+                }
+     
                 document.getElementById('walp_links_container_2').style.display = 'block'; //show login menu action bar
 
                 
                 //hide menu and navigation bar
-                document.getElementById('left_arrow_2').style.display ='none';
-                document.getElementById('right_arrow_2').style.display ='none';
-                document.getElementById('ads_menu_bar_icon').style.display = 'none';
+                if(document.getElementById('left_arrow_2')){
+                    document.getElementById('left_arrow_2').style.display ='none';
+                    document.getElementById('right_arrow_2').style.display ='none';
+                }
+                if(document.getElementById('ads_menu_bar_icon')){
+                    document.getElementById('ads_menu_bar_icon').style.display = 'none';
+                }
+              
                 
 
                 //show
-                document.getElementById('bottom_bar').style.display = 'block'; //show bottom bar 
+                if( document.getElementById('bottom_bar')){
+                    document.getElementById('bottom_bar').style.display = 'block'; //show bottom bar 
 
+                }
+               
                 //change wallpaper height on login screen
                 document.getElementById('page_body').style.backgroundSize= '100% 95vh';
                 document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
@@ -2093,6 +2129,223 @@
             }
 
         }
+
+
+
+
+        // skinks
+
+        function dark_neumorph_skin(){
+
+
+
+        //clear html and apply skin
+        document.getElementById('page_body_container').innerHTML = `
+            
+          <!-- skin style  global -->
+
+            <style>
+                
+                /* width */
+                ::-webkit-scrollbar {
+                width: 10px;
+                }
+
+                /* Track */
+                ::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                }
+
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                background: #f44336;
+                }
+
+                /* Handle on hover */
+                ::-webkit-scrollbar-thumb:hover {
+                background: #555;
+                }
+
+                
+                @font-face {
+                    font-family: 'Rubik Distressed';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Rubik Distressed'),url('/images/RubikDistressed-Regular.ttf') format('truetype');
+                
+                }
+
+                @font-face {
+                    font-family: 'Open Sans';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('/images/OpenSans-LightItalic.ttf') format('truetype');
+                
+                }
+            </style>
+
+            
+            
+
+            <!-- Skin -->
+
+                            
+            <div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh">
+
+                <div style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
+
+
+                    
+                    <!-- top -->
+                    <div style="width:100%;height:10%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;">
+
+                    
+                        <div id="walp_links_2" style="width: 80%;height:90%;margin:auto;padding:2px;overflow-y: auto;font-size: 10px;font-weight: 600;color: burlywood;">
+                        Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link  
+                        </div>
+
+                        <!-- <img src="/images/contact_support_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;"> -->
+
+                    </div>
+
+
+                    <!-- mmidle -->
+                    <div style="width:100%;height:77%;min-height:30px;">
+                    
+                        <!-- left -->
+                        <div style="height:100%;min-height:374px;width:30%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;box-shadow: inset 39px 47px 69px rgb(0 0 0 / 71%), inset -18px -21px 22px rgb(0 0 0 / 82%);">
+                        
+                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;" onclick="free_login()">
+                                <!-- <button onclick="">Free Data Voucher</button> -->
+                            
+                                <img src="/images/wifi_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                <div style="width: 100%;height: 22px;">Free Wifi</div>
+
+                            </div>
+                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;" onclick='buy()'>
+                                <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                <div style="width: 100%;height: 22px;">BUY</div>
+                            </div>
+                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/widgets_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                <div style="width: 100%;height: 22px;">MENU</div>
+                            </div>
+                            <!-- <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;"  onclick='buy()'>
+                                <div style="width: 100%;height: 22px;">BUY</div>
+                            </div> -->
+                            <!-- <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/widgets_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;" onclick='ads_provided_menu_content_show("return")'>
+                                <div style="width: 100%;height: 22px;">MENU</div>
+                            </div> -->
+                            <div style="width:100%;height: 19%;min-height: 29px;font-size: 15px;">
+                                <!-- <div style="width:50%;height:30px;margin:0px auto;line-height :75px"><<<<<</div> -->
+                                <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 59px;margin: 5px auto 0px auto;" onclick='prev_wallpaper_ads()'>
+                            </div>
+                            <!-- <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/campaign_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                <div style="width: 100%;height: 22px;">MESSAGE</div>
+                            </div> -->
+                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/laptop_windows_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;" onclick='document.getElementById("free_sites_container").style.display="block"'>
+                                <div style="width: 100%;height: 22px;">WEBSITES</div>
+                            </div>
+                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                <div style="width: 100%;height: 22px;">Login</div>
+                            </div>
+                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/campaign_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;" onclick='document.getElementById("notification_container").style.display="block"' >
+                                <div style="width: 100%;height: 22px;">MESSAGE</div>
+                            </div>
+                            <!-- <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
+                                <img src="/images/laptop_windows_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                <div style="width: 100%;height: 22px;">WEBSITES</div>
+                            </div> -->
+                        
+                        
+                        </div>
+
+                        <!-- center -->
+                        <div id="page_body" style="height:100%;min-height:374px;width: 69.5%;min-width:30px;display: inline-block;float: right;background-image: url('/images/HD-wallpaper-wifi-technology.jpg');background-size:auto 100%;background-repeat: no-repeat;box-shadow: inset 0px -17px 47px rgb(12 12 13), -4px -1px 14px rgb(12 12 13 / 83%);">
+                        
+                        
+                            <!-- inner right -->
+                            <div style="height:100%;width:40%;min-width:30px;display: inline-block; float: right;">
+
+                                <div style="width:100%;height:17%;min-height:30px;"></div>
+                                <div style="width:100%;height:17%;min-height:30px;"></div>
+                                <div style="width:100%;height:31%;min-height:30px;text-align: center;">
+                                    <!-- <div style="width:100%;height:30px;margin:30% auto">>>></div> -->
+                                    <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 25px auto 0px auto;" onclick='next_wallpaper_ads()'>
+                                <div style="width:100%;height:17%;min-height:30px;"></div>
+                                <div style="width:100%;height:17%;min-height:30px;"></div>
+                        
+                            </div>
+                        </div>
+
+                    
+                    </div>
+
+                    <!-- bottom -->
+                    <div style="width:100%;height: 16%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
+                        <!-- <div style="height:100%;width:49%;min-width:30px;display: inline-block;text-align: center;"> -->
+                        <div style="height:100%;width:30%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <!-- <button onclick="">Free Data Voucher</button> -->
+                        
+                            <!-- <img src="/images/wifi_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+                            <div style="width: 100%;height: 22px;">Free Wifi</div> -->
+
+                        </div>
+                        <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <!-- <button onclick="">Free Data Voucher</button> -->
+                        
+                            <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+                            <!-- <div style="width: 100%;height: 22px;">Free Wifi</div> -->
+
+                        </div>
+                        <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <!-- <button onclick="">Free Data Voucher</button> -->
+                        
+                            <img src="/images/support_agent_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick='document.getElementById("help_container").style.display="block"'>
+                            <div style="width: 100%;height: 22px;">Help</div>
+
+                        </div>
+                        <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <!-- <button onclick="">Free Data Voucher</button> -->
+                        
+                            <img id="walp_links_container_2" src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+                            <!-- <div style="width: 100%;height: 22px;">Free Wifi</div> -->
+
+                        </div>
+                        <!-- <div style="height:100%;width:30%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <button onclick="">Free Data Voucher</button>
+                        
+                            <img src="/images/wifi_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+                            <div style="width: 100%;height: 22px;">Free Wifi</div>
+
+                        </div> -->
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            `;
+
+
+        }
+
+
+
+
+
+        
 
 		</script>
 	
