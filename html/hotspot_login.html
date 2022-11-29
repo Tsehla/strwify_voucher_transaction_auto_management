@@ -2366,10 +2366,12 @@
 
                     if (up) {
                         // Going up
-                        $container.scrollTop(position - 1);
+                        // $container.scrollTop(position - 1);
+                        $container.scrollTop(position - (height/4));
                     } else {
                         // Going down
-                        $container.scrollTop(position + 1);
+                        // $container.scrollTop(position + 1);
+                        $container.scrollTop(position + (height/4));
                     }
 
                     if(scroll_stop == 1){
