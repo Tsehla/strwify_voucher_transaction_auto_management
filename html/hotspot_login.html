@@ -1722,11 +1722,16 @@
 
                 //login menu acton bar 
                 document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_text; //change login menu image action bar text
+                document.getElementById('walp_links_2').onclick = function(){//login menu wallpaper txt action bar click
+                    window.open(manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link, '_blank');//open image or url in new page
+                }
 
                 document.getElementById('walp_links_container_2').onclick = function(){//login menu wallpaper action bar click
 
                     window.open(manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link, '_blank');//open image or url in new page
                 }
+
+            
 
                 //change login menu wallpaper action bar, info icon
                 if(manu_layout_ads_wallpaper.login_menu_wallpaper_image && manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link && manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link.toLowerCase().trim() !=  manu_layout_ads_wallpaper.login_menu_wallpaper_image.toLowerCase().trim() ){
@@ -2338,7 +2343,8 @@
 
             `;
 
-            walp_links_2_text_scroll();
+            //add a delay, font loading/applying stops scrolling
+            setTimeout(walp_links_2_text_scroll(),300);
 
         }
 
@@ -2366,12 +2372,12 @@
 
                     if (up) {
                         // Going up
-                        // $container.scrollTop(position - 1);
-                        $container.scrollTop(position - (height/4));
+                        $container.scrollTop(position - 3);
+                        // $container.scrollTop(position - (height/4));
                     } else {
                         // Going down
-                        // $container.scrollTop(position + 1);
-                        $container.scrollTop(position + (height/4));
+                        $container.scrollTop(position + 3);
+                        // $container.scrollTop(position + (height/4));
                     }
 
                     if(scroll_stop == 1){
