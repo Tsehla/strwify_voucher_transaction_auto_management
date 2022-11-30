@@ -211,6 +211,8 @@ router_hotspot_page_model .add({
 
 	ads_ui_type : {type : types.Select, options: "appearance_1,appearance_2,dark_neumorph_skin", default:'appearance_1', label :'Ads Menu layout'},
 	ads_ui_layout_wallpaper : {type : String, label :'Layout menu advertisement wallpaper number', default: 0,},
+	ads_download_watermark : {type :types.Boolean, default:true, label :'Ads download watermark' },
+	ads_download_watermark_text : {type :String, default:'StreeWifiy : Advertisement, Paid & Free WiFi', label : 'Ads watermark text' },
 	
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{"link":"https://www.google.com","text":"Search on google"}'],},
