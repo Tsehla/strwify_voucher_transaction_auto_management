@@ -1395,6 +1395,9 @@
 						    document.getElementById('walp_links_2').innerHTML = wall_link_description[0].image_status_text;
                         }
                         document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[0].image_link + ')';
+                        document.getElementById('page_body').style.backgroundSize = 'contain';
+                        document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
+                        document.getElementById('page_body').style.backgroundPosition = 'center' 
 
                         if(wall_link_description[0].image_link.length > 0 ){//if wallpaper is available
 
@@ -1885,6 +1888,9 @@
 			   }
 			
 			document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
+            document.getElementById('page_body').style.backgroundSize = 'contain';
+            document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
+            document.getElementById('page_body').style.backgroundPosition = 'center' 
 
             if(document.getElementById('walp_links')){
                 document.getElementById('walp_links').innerHTML = wall_link_description[current_image_content_tracker].image_status_text;
@@ -2449,7 +2455,7 @@
                         if(document.getElementById("page_body").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")'){
                       
                             document.getElementById("page_body").style.backgroundImage = 'url("/images/HD-wallpaper-wifi-technology.jpg")';//new default wallpaper for this skin
-                            document.getElementById("page_body").style.backgroundSize = 'fill';//background size
+                            document.getElementById("page_body").style.backgroundSize = 'cover';//background size
                         }
                 
                     }
