@@ -59,7 +59,11 @@
 				<!-- input content -->
 				<!-- hotspot logo -->
 				<p style='color: white;font-size: 15px;font-weight: 500;padding: 0px;border : 0px solid red;min-height: 70px' id='logo_container'></p>
+
 				<br/>	
+                <div id="router_location" style="width:100%;height:30px;text-align:center;text-transform: capitalize;color: yellowgreen;font-size: 20px;font-weight: 900;margin: 5px 0;">
+                    streetwifiy uwireles
+                </div>
 
 				<!-- top text -->
 				<p style='color: white;font-size: 15px;font-weight: 500;margin: 0px;border : 0px solid red;height: auto' id='logo_container'>Enter</p>
@@ -543,7 +547,8 @@
         </style>
 		
 		<!-- notification  modal -->
-       <div id='help_container'>
+        <div id='help_container'>
+
             <h1>How to use recharge Voucher</h1>
             <button onclick='document.getElementById("help_container").style.display="none"' class='btn btn-danger'>x</button>
             <div id='help'>
@@ -604,7 +609,7 @@
                 <h2>Voucher</h2>
                 <div style="width: auto; height: 200px; background-image: url(images/voucher%20template.png); background-position: center; background-repeat: no-repeat;background-size: contain"></div>
             </div>
-       <Marquee role='marquee' id='how_to_bottom_text'></Marquee>
+            <Marquee role='marquee' id='how_to_bottom_text'></Marquee>
        </div>
 		<style>
              #help_container {
@@ -1267,6 +1272,7 @@
 			var free_sites_bottom_text = 'Pass it on, unconditionally help a stranger, a friend, a family member';//free sites bottom text;
 			var notifications_from_db = ['Dare to be diffrents','Dare to write your destiny, Dare to write your destiny,Dare to write your destiny'];//notifications text
 			var notification_bottom_text = 'If it was easy, no one would care. If it was impossible, no one would dare';//notification page bottom text
+            var router_location = 'streetwifiy_orangefarm';//location of router
 			
 			var help_picture_video_buy = 'default_slide_images/1.jpg';// help how to buy voucher and use wifi
 			var help_picture_video_sell = 'default_slide_images/2.jpg';//help how to sell wifi
@@ -1326,7 +1332,12 @@
 				if(data_from_db.notification_bottom_text){	 
 					notification_bottom_text = data_from_db.notification_bottom_text;
 					//console.log('7'+notification_bottom_text);
-					 }
+				}
+				
+				if(data_from_db.routerlocation){	 
+					router_location = data_from_db.routerlocation.replace(/_/g," ");
+					//console.log('7'+notification_bottom_text);
+				}
 				
 				if(data_from_db.hotspot_how_to_buy){	 
 					help_picture_video_buy = data_from_db.hotspot_how_to_buy;
@@ -1525,6 +1536,9 @@
 			document.getElementById('free_sites_bottom_text').innerHTML = free_sites_bottom_text ;
 			//free sites -- bottom text
 			document.getElementById('notification_bottom_text').innerHTML = notification_bottom_text ;
+
+            //login router name
+			document.getElementById('router_location').innerHTML = router_location ;
 			//how to link image/sell -- buy
 			document.getElementById('help_picture_video_buy').innerHTML = "<a href="+help_picture_video_buy+" style='margin:0px;padding:0px;' target='_blank'>Click Here</a>"  ;
 				
@@ -2200,7 +2214,7 @@
 
            if(image_text_link && !wallpaper_not_default){
                 //alert(document.getElementById('walp_links').textContent);
-              window.open(wall_link_description[current_image_content_tracker].image_status_link);
+              window.open(wall_link_description[current_image_content_tracker].image_status_link,'_blank');
             
             }    
             else{
@@ -2262,147 +2276,357 @@
                     src: local('Open Sans'),url('/images/OpenSans-LightItalic.ttf') format('truetype');
                 
                 }
+                @font-face {
+                    font-family: 'NerkoOne';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('images/NerkoOne-Regular.ttf') format('truetype');
+                }
+                
+                
+                @font-face {
+                    font-family: 'RubikGlitch';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('images/RubikGlitch-Regular.ttf') format('truetype');	
+                }
+			
             </style>
-
-            
-            
 
             <!-- Skin -->
 
+            <!--router error div -->
 
-            <div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh">
+                <!-- error message container -->
+                <div style="color: #FF8080; font-size: 1.5em; width: 100%; height: auto;text-align: center; background-color: dimgrey;border: 2px solid red;display:none" id='error_div'>Error message</div>
 
-                <div style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
 
+                <div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh">
 
-                    
-                    <!-- top -->
-                    <div id="top_text_div" style="width:100%;height:10%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" onclick="image_text_link()">
+                    <div style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
+
 
                         
-                        <div id="walp_links_2" style="width: 80%;height:50%;margin:auto;padding:10px;overflow-y:hidden;font-size: 10px;font-weight: 600;color: burlywood;">
-                        Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link  
-                        </div>
+                        <!-- top -->
+                        <div id="top_text_div" style="width:100%;height:10%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" onclick="image_text_link()">
 
-
-                    </div>
-
-
-                    <!-- mmidle -->
-                    <div id="middle_div" style="width:100%;height:77%;min-height:30px;">
-                    
-                        <!-- left -->
-                        <div id="middle_left_div" style="height:100%;min-height:374px;width:30%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;box-shadow: inset 39px 47px 69px rgb(0 0 0 / 71%), inset -18px -21px 22px rgb(0 0 0 / 82%);">
-                        
-                            <div id="free_data_login_button" style="width:100%;height: 13%;min-height: 50px;font-size: 15px;\\*display:none*\\" onclick="free_login()">
                             
-                                <img src="/images/wifi_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
-                                <div style="width: 100%;height: 22px;">Free Wifi</div>
+                            <div id="walp_links_2" style="width: 80%;height:50%;margin:auto;padding:10px;overflow-y:hidden;font-size: 10px;font-weight: 600;color: burlywood;">
+                            Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link  
+                            </div>
 
-                            </div>
-                            <div style="width:100%;height: 13%;min-height: 50px;font-size: 15px;" onclick='buy()'>
-                                <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
-                                <div style="width: 100%;height: 22px;">BUY</div>
-                            </div>
-                            <div style="width:100%;height: 13%;min-height: 50px;font-size: 15px;" onclick="dark_neumorph_skin_menu_show()">
-                                <img src="/images/widgets_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
-                                <div style="width: 100%;height: 22px;">MENU</div>
-                            </div>
-                    
-                            <div style="width:100%;height: 19%;min-height: 29px;font-size: 15px;">
-                                <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 61px;margin: 5px auto 0px auto;" onclick='prev_wallpaper_ads()'>
-                            </div>
-                    
-                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
-                                <img src="/images/laptop_windows_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;" onclick='document.getElementById("free_sites_container").style.display="block"'>
-                                <div style="width: 100%;height: 22px;">WEBSITES</div>
-                            </div>
-                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
-                                <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
-                                <div style="width: 100%;height: 22px;">Login</div>
-                            </div>
-                            <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;">
-                                <img src="/images/campaign_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;" onclick='document.getElementById("notification_container").style.display="block"' >
-                                <div style="width: 100%;height: 22px;">MESSAGE</div>
-                            </div>
-                
-                        
-                        
+
                         </div>
 
-                        <!-- center -->
-                        <div id="page_body" style="height:100%;min-height:374px;width: 69.5%;min-width:30px;display: inline-block;float: right;background-image: url('/images/ads_layout_default_wallpaper.jpg');background-size:auto 100%;background-repeat: no-repeat;box-shadow: inset 0px -17px 47px rgb(12 12 13), -4px -1px 14px rgb(12 12 13 / 83%);">
-                        
-                            <!-- inner left for menu only -->
-                            <div id='center_left' style="height:100%;width:40%;min-width:30px;display: inline-block; float: left;display: none;">
 
-                                <div style="width:100%;height:17%;min-height:30px;">
-                                    <button style="width: 90px;height: 44px;text-align:center;font-size: 20px;background-color:white;border-radius: 25px;margin: 13px;box-shadow: inset -4px -3px 11px rgb(14 27 187 / 81%), inset 7px 4px 9px rgb(231 0 0 / 76%);" onclick="dark_neumorph_skin()">Menu</button>
-                                </div>
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
-                                <div style="width:100%;height:31%;min-height:30px;text-align: center;">
-                                    <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 61px;margin: 25px auto 0px auto;" onclick='prev_wallpaper_ads()'>
-                                </div>
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
+                        <!-- mmidle -->
+                        <div id="middle_div" style="width:100%;height:77%;min-height:30px;">
                         
+                            <!-- left -->
+                            <div id="middle_left_div" style="height:100%;min-height:374px;width:30%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;box-shadow: inset 39px 47px 69px rgb(0 0 0 / 71%), inset -18px -21px 22px rgb(0 0 0 / 82%);">
+                            
+                                <div id="free_data_login_button" style="width:100%;height: 13%;min-height: 50px;font-size: 15px;\\*display:none*\\" onclick="free_login()">
+                                
+                                    <img src="/images/wifi_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                    <div style="width: 100%;height: 22px;">Free Wifi</div>
+
+                                </div>
+                                <div style="width:100%;height: 13%;min-height: 50px;font-size: 15px;" onclick='buy()'>
+                                    <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                    <div style="width: 100%;height: 22px;">BUY</div>
+                                </div>
+                                <div style="width:100%;height: 13%;min-height: 50px;font-size: 15px;" onclick="dark_neumorph_skin_menu_show()">
+                                    <img src="/images/widgets_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                    <div style="width: 100%;height: 22px;">MENU</div>
+                                </div>
+                        
+                                <div style="width:100%;height: 19%;min-height: 29px;font-size: 15px;">
+                                    <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 61px;margin: 5px auto 0px auto;" onclick='prev_wallpaper_ads()'>
+                                </div>
+                        
+                                <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;" onclick='document.getElementById("free_sites_container").style.display="block"'>
+                                    <img src="/images/laptop_windows_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;" >
+                                    <div style="width: 100%;height: 22px;">WEBSITES</div>
+                                </div>
+                                <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;" onclick='document.getElementById("form_container").style.display="block"'  >
+                                    <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;">
+                                    <div style="width: 100%;height: 22px;">Login</div>
+                                </div>
+                                <div style="width:100%;height: 10%;min-height: 50px;font-size: 15px;" onclick='document.getElementById("notification_container").style.display="block"'>
+                                    <img src="/images/campaign_white_24dp.svg" style="height: 19px;margin: 5px auto 0px auto;"  >
+                                    <div style="width: 100%;height: 22px;">MESSAGE</div>
+                                </div>
+                    
+                            
+                            
                             </div>
-                        
-                            <!-- inner right -->
-                            <div style="height:100%;width:40%;min-width:30px;display: inline-block; float: right;">
 
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
-                                <div style="width:100%;height:31%;min-height:30px;text-align: center;">
-                                    <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 25px auto 0px auto;" onclick='next_wallpaper_ads()'>
+                            <!-- center -->
+                            <div id="page_body" style="height:100%;min-height:374px;width: 69.5%;min-width:30px;display: inline-block;float: right;background-image: url('/images/ads_layout_default_wallpaper.jpg');background-size:auto 100%;background-repeat: no-repeat;box-shadow: inset 0px -17px 47px rgb(12 12 13), -4px -1px 14px rgb(12 12 13 / 83%);">
+                            
+                                <!-- inner left for menu only -->
+                                <div id='center_left' style="height:100%;width:40%;min-width:30px;display: inline-block; float: left;display: none;">
+
+                                    <div style="width:100%;height:17%;min-height:30px;">
+                                        <button style="width: 90px;height: 44px;text-align:center;font-size: 20px;background-color:white;border-radius: 25px;margin: 13px;box-shadow: inset -4px -3px 11px rgb(14 27 187 / 81%), inset 7px 4px 9px rgb(231 0 0 / 76%);" onclick="dark_neumorph_skin()">Menu</button>
                                     </div>
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
-                                <div style="width:100%;height:17%;min-height:30px;"></div>
-                        
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                                    <div style="width:100%;height:31%;min-height:30px;text-align: center;">
+                                        <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 61px;margin: 25px auto 0px auto;" onclick='prev_wallpaper_ads()'>
+                                    </div>
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                            
+                                </div>
+                            
+                                <!-- inner right -->
+                                <div style="height:100%;width:40%;min-width:30px;display: inline-block; float: right;">
+
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                                    <div style="width:100%;height:31%;min-height:30px;text-align: center;">
+                                        <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 25px auto 0px auto;" onclick='next_wallpaper_ads()'>
+                                        </div>
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                                    <div style="width:100%;height:17%;min-height:30px;"></div>
+                            
+                                </div>
                             </div>
+
+                        
                         </div>
 
+                        <!-- bottom -->
+
+                        <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
                     
-                    </div>
+                            <div style="height:100%;width:35%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            
 
-                    <!-- bottom -->
+                            </div>
+                            <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
+                            
+                            
+                                <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+                            
 
-                    <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
-                
-                        <div style="height:100%;width:35%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            </div>
+                            <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("help_container").style.display="block"'>
+                        
+                            
+                                <img src="/images/support_agent_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
+                                <div style="width: 100%;height: 22px;">Help</div>
+
+                            </div>
+                            <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            
+                            
+                                <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick="image_text_link()"> 
                         
 
+                            </div>
+                        
                         </div>
-                        <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
-                        
-                        
-                            <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
-                        
 
-                        </div>
-                        <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
-                    
-                        
-                            <img src="/images/support_agent_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick='document.getElementById("help_container").style.display="block"'>
-                            <div style="width: 100%;height: 22px;">Help</div>
-
-                        </div>
-                        <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
-                        
-                        
-                            <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick="image_text_link()"> 
-                    
-
-                        </div>
-                    
                     </div>
 
                 </div>
+                
+                
+                
+                <!-- notification  modal -->
+                <div id='help_container' style="width: 99%;height:100%;overflow-y:auto;position: absolute;top: 0px;display:none">
+                
+                    <div style="width: 80%;height: auto;background-color: #a52a2ade;max-height: 914px;margin: 40px auto 10px auto;color: white;max-width: 430px;padding-bottom: 28px;box-shadow: inset 7px 1px 53px #4d1213, inset -14px 1px 53px #4d1213;">
+                    
+                        <div style="width:100%;height:20px;margin: 10px 0 10px 0">
+                            <button style="float:right;margin-right:10px;margin-top:10px" onclick='document.getElementById("help_container").style.display="none"' class='btn btn-primary'>x</button>
+                        </div>	
+                        
+                        <h1 style="margin-top: 12px;width: 100%;font-size: 20px;text-align: center;font-family:RubikGlitch;color:#3bad18">How to use recharge Voucher</h1>
+                        
+                
+                        
+                        <div id='help'>
+                            <h2 style="font-family:NerkoOne;margin-left:5px">Help Picture/video's</h2>
+                                <ul style="font-family: 'Open Sans'; font-size: 15px;" >
+                                    <li>
+                                    How to buy recharge and and access Wifi <i style='color: #29d421;font-weight: 600;; margin:0px;padding: 0px;' id='help_picture_video_buy'></i>
+                                    </li>
+                                    
+                                    <li>
+                                        How to sell recharge Vouchers <i style='color: #29d421;font-weight: 600;; margin:0px;padding: 0px;' id='help_picture_video_sell'></i>
+                                    </li> 
+                                                            
+                                </ul>
+                            
+                            <h2 style="font-family:NerkoOne;margin-left:5px">Recharge</h2>
+                        
+                                <ol style="font-family: 'Open Sans';font-size: 15px;">
+                                    <li>
+                                        Open browser 
+                                    </li>
+                                    <li>
+                                        goto <i style='color: #29d421;font-weight: 600;' id='how_to_router_link'></i>
+                                    </li>
+                                    <li>
+                                        Click <i style='color: #29d421;font-weight: 600;'>'CONNECT'</i>
+                                    </li>
+                                    <li>
+                                        Enter <i style='color: #29d421;font-weight: 600;'>VOUCHER</i>
+                                    </li>
+                                    
+                                    <li id='how_to_buy'></li>
+                                    
+                                </ol>
+                            
+                            <h2 style="font-family:NerkoOne;display:block;margin-left:5px">Tips</h2>
+                            
+                            <span style=";margin-left:5px"># Check balance</span>
+                                <ol style="font-family: 'Open Sans';font-size: 15px;">
+                                    <li>
+                                        goto <i style='color: #29d421;font-weight: 600;' id='how_to_check_balance'></i>
+                                    </li>
+                                </ol>
+                            <span style=";margin-left:5px"># Login</span>
+                                <ol style="font-family: 'Open Sans'font-size: 15px;;">
+                                    <li>
+                                        goto <i style='color: #29d421;font-weight: 600;' id='how_to_log_in'></i>
+                                    </li>
+                                </ol>
+                            <span style=";margin-left:5px"># Logout</span>
+                                <ol style="font-family: 'Open Sans';font-size: 15px;">
+                                    <li>
+                                        goto <i style='color: #29d421;font-weight: 600;' id='how_to_log_out'></i>
+                                    </li>
+                                </ol>
+                                        
+                            
+                            <h2 style="font-family:NerkoOne;margin-left:5px">Voucher</h2>
+                            <div style="width: auto; height: 200px; background-image: url(/images/voucher%20template.png); background-position: center; background-repeat: no-repeat;background-size: contain"></div>
+                        </div>
+                        <Marquee role='marquee' id='how_to_bottom_text' style="font-family: 'Open Sans';"></Marquee>
+                        
+                    </div>
+                </div>
+                
+                
+                
+                <!-- free web modal -->
 
-            </div>
+                <div id='free_sites_container' style="width: 99%;height:100%;overflow-y:auto;position: absolute;top: 0px;display:none">
+                
+                    <div style="width: 80%;height: auto;background-color: #a52a2ade;max-height: 914px;margin: 40px auto 10px auto;color: white;max-width: 430px;padding-bottom: 28px;box-shadow: inset 7px 1px 53px #4d1213, inset -14px 1px 53px #4d1213;">
+                    
+                        <div style="width:100%;height:20px;margin: 10px 0 10px 0">
+                            <button style="float:right;margin-right:10px;margin-top:10px" onclick='document.getElementById("free_sites_container").style.display="none"' class='btn btn-primary'>x</button>
+                        </div>	
+                                        
+                        <h1 style="margin-top: 12px;width: 100%;font-size: 20px;text-align: center;font-family:RubikGlitch;color:#3bad18">FREE WEBSITES</h1>
+                        
+                        
+                        <div id='education'>
+                        
+                            <h2 style="font-family:NerkoOne;margin-left:5px"> EDUCATION</h2>
+                            
+                            <div id='education_free_links' style="width: auto;height: auto;font-family: 'Open Sans';font-size: 15px;"></div>
+                            
+                        </div>
+                        
+                        <div id='work'>
+                        
+                            <h2 style="font-family:NerkoOne;margin-left:5px">JOBS</h2>
+                            
+                            <div id='jobs_free_links' style="width: auto;height: auto;font-family: 'Open Sans';font-size: 15px;"></div>
+                            
+                        </div>
+                        
+                        <Marquee style=";font-family: 'Open Sans';font-size: 15px;" role='marquee' id='free_sites_bottom_text'></Marquee>
+                
+                </div>
+                </div>
+                
+                
+                <!-- login modal -->
+                
+                <div id='form_container' style="width: 99%;height:100%;overflow-y:auto;position: absolute;top: 0px;display:none">
+
+                <div style="width: 80%;height: auto;max-height: 914px;margin: 40px auto 10px auto;color: white;max-width: 430px;padding-bottom: 28px;">
+                
+                        
+                    <!-- login input forms -->
+                    <!-- <div style="width: 60vw;height: auto; position: absolute;z-index: 1; display: none; background-color: antiquewhite; margin-top: 10%;margin-left:20vw;background-image: url(/images/black-wood.jpg);background-position: center;background-repeat: no-repeat;background-size: cover"  id="form_container"> -->
+
+                    
+                        <!-- login overlay background -->
+                        <div style="\*border: 3px double #cccccc*\; padding: 0px;background-image: url(/images/black-wood.jpg); width: 100%;height: 100%">
+
+                            <div style="width:100%;height:20px;margin: 10px 0 10px 0">
+                                <button style="float:right;margin-right:10px;margin-top:10px" onclick='document.getElementById("form_container").style.display="none"' class='btn btn-primary'>x</button>
+                            </div>	
+                                
+                            <!-- input content -->
+                            <!-- hotspot logo -->
+                            <p style='color: white;font-size: 15px;font-weight: 500;padding: 0px;border : 0px solid red;min-height: 70px;background-image:url("/images/logo.png");background-size:auto 70px;background-repeat:no-repeat;background-position:center' id='logo_container'></p>
+                            
+
+                            <div id="router_location" style="width:100%;height:30px;text-align:center;font-size: 20px;text-align: center;font-family:RubikGlitch;color:#3bad18;margin: 5px 0;">
+                                streetwifiy uwireles
+                            </div>
+                            <!-- top text -->
+                            <p style='color: white;font-size: inherit;margin: 0px;height: auto;width: 100%;text-align: center;font-family:NerkoOne;' id='logo_container'>Enter</p>
+                            
+
+                            <!-- voucher code input -->
+                            <input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Voucher code" id='input_voucher_code' onclick='document.getElementById("input_user_name").value="";document.getElementById("input_password").value="";' onkeyup='form_sender_decider(event)'/>
+                            <br/>
+
+                            <!-- or -->
+                            <p style='color: white;font-size: inherit;margin: 0px;height: auto;width: 100%;text-align: center;font-family:NerkoOne;margin-top: 30px'>OR</p>
+
+                            <!-- username input -->
+                            <input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="username" type="text" value="" placeholder="Username" id='input_user_name' onclick='document.getElementById("input_voucher_code").value="";' />
+
+                            <!-- user password input -->
+                            <input style="min-height: 30px; height: 10vh; width: 100%; margin-top:5%;border-radius: 20px" name="password" type="password" placeholder="Password" id='input_password' onclick='document.getElementById("input_voucher_code").value="";' onkeyup='form_sender_decider(event)'/>
+
+                            <!-- inputs login button -->	
+                            <button style="min-height: 40px; max-height: 15%; width: 60%; margin-top:4%;margin-bottom:4%;display:inline-block" class="btn btn-primary" onclick='form_sender_decider(null)'>Log in</button>
+                            <button style="min-height: 40px; max-height: 15%; width: 30%; margin-top:4%;margin-bottom:4%;display: inline-block;" class="btn btn-warning" onclick='alert("Please type Voucher code, or username with its password then press Log in button.\n\nTIP# Only Username and password are case sensitive.")'>Help</button>
+
+                        
+                    
+                    </div>
+                
+                </div>
 
 
+                <!-- notification  modal -->
+                
+                <div id='notification_container' style="width: 99%;height:100%;overflow-y:auto;position: absolute;top: 0px;display:none">
+                
+                    <div style="width: 80%;height: auto;background-color: #a52a2ade;max-height: 914px;margin: 40px auto 10px auto;color: white;max-width: 430px;padding-bottom: 28px;box-shadow: inset 7px 1px 53px #4d1213, inset -14px 1px 53px #4d1213;">
+                    
+                        <div style="width:100%;height:20px;margin: 10px 0 10px 0">
+                            <button style="float:right;margin-right:10px;margin-top:10px" onclick='document.getElementById("notification_container").style.display="none"' class='btn btn-primary'>x</button>
+                        </div>	
+                                        
+                        <h1 style="margin-top: 12px;width: 100%;font-size: 20px;text-align: center;font-family:RubikGlitch;color:#3bad18">ANNOUNCEMENTS</h1>
+                                        
+                        <div id='notification' style="width: auto;height: auto;font-family: 'Open Sans';font-size: 15px;"></div>
+                
+                        <Marquee style=";font-family: 'Open Sans';font-size: 15px;" role='marquee' id='notification_bottom_text'></Marquee>
+                        
+                    </div>
+                    
+                </div>
+                
+                        
+            
 
+      
        
 
         `;
@@ -2498,7 +2722,7 @@
                 walp_changer()
             }
 
-            function wallpaer_image_download(){
+            function wallpaer_image_download(action='download'){/// to download edited image or view in new tab
 
                     
 
@@ -2530,8 +2754,22 @@
 
                         var dataURL = canvas.toDataURL('image/jpeg');
                         callback(dataURL);
+
+               
+                   
+            
+                    
+                  
+          
                     };
                     image.src = src;
+      
+                    // var w = window.open("");
+                    //     w.document.write(image.outerHTML);
+
+                    //     console.log(image)
+
+                   
                 }
 
 
@@ -2540,12 +2778,30 @@
                    
                     // alert(dataURL);
 
+                    
+                    //view edited image in new tab
+                    if(action=='view'){ //if image view
+
+                        var image = new Image();
+                        image.src = dataURL
+                        var window_tab = window.open("");
+                            window_tab.document.write(image.outerHTML);
+
+                        return
+                    }
+
+                    //else do download
                     var download_image_name = document.getElementById('walp_links_2').textContent.substring(0,50);
 
                     var download_link = document.createElement('a');
-                            download_link.download = download_image_name + '.jpg';
-                            download_link.href = dataURL.replace('image/jpg', 'image/octed-stream');
-                            download_link.click()
+                        download_link.download = download_image_name + '.jpg';
+                        download_link.href = dataURL.replace('image/jpg', 'image/octed-stream');
+
+                        download_link.click()
+
+                
+
+    
                 })
 
                                         
