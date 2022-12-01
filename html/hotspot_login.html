@@ -2409,6 +2409,7 @@
 
 
         function dark_neumorph_skin_walp_links_2_text_scroll(){
+
                 
                 // over flow notification scrolling
                 var up = false;
@@ -2439,8 +2440,17 @@
                     }
 
                     if(scroll_stop == 1){
+
                         clearInterval(interval_notification_scroll);
                         $container.scrollTop(0);
+
+                                
+                        //quck default wallpaper change to custom
+                        if(document.getElementById("page_body").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")'){
+                      
+                            document.getElementById("page_body").style.backgroundImage = 'url("/images/HD-wallpaper-wifi-technology.jpg")';//new default wallpaper for this skin
+                            document.getElementById("page_body").style.backgroundSize = 'fill';//background size
+                        }
                 
                     }
 
