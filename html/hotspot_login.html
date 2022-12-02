@@ -84,7 +84,7 @@
 
 				<!-- inputs login button -->	
 				<button style="min-height: 40px; max-height: 15%; width: 60%; margin-top:4%;margin-bottom:4%;display:inline-block" class="btn btn-primary" onclick='form_sender_decider(null)'>Log in</button>
-                <button style="min-height: 40px; max-height: 15%; width: 30%; margin-top:4%;margin-bottom:4%;display: inline-block;" class="btn btn-warning" onclick='alert("Please type Voucher code, or username with its password then press Log in button.\n\nTIP# Only Username and password are case sensitive.")'>Help</button>
+                <button style="min-height: 40px; max-height: 15%; width: 30%; margin-top:4%;margin-bottom:4%;display: inline-block;" class="btn btn-warning" onclick='alert("Please type Voucher code, or username with its password then press Log in button.\\n\\nTIP# Only Username and password are case sensitive.")'>Help</button>
 
 			 </div>    
            
@@ -1283,6 +1283,14 @@
         
         var help_picture_video_buy = 'default_slide_images/1.jpg';// help how to buy voucher and use wifi
         var help_picture_video_sell = 'default_slide_images/2.jpg';//help how to sell wifi
+        var how_to_router_link = 'N/A';
+        var how_to_check_balance = 'N/A';
+        var how_to_log_in = 'N/A';
+        var how_to_log_out = 'N/A';
+        var how_to_buy = 'N/A';
+
+
+
         
         var wall_link_description =[//walp data	 //Get wallpaper links data from db
             {image_link :"default_slide_images/1.jpg" , image_status_text : "Click here to see Picture", image_status_link: "default_slide_images/1.jpg", ads_sponsored : true, hidden:false},	
@@ -1378,9 +1386,9 @@
 					//console.log('7'+notification_bottom_text);
 				}
 				
-				if(data_from_db.routerlocation){	 
-					router_location = data_from_db.routerlocation.replace(/[^A-Za-z0-9\s]/g," ");
-					//console.log('7'+notification_bottom_text);
+				if(data_from_db.router_location){	 
+					router_location = data_from_db.router_location.replace(/[^A-Za-z0-9\s]/g," ");
+
 				}
 				
 				if(data_from_db.hotspot_how_to_buy){	 
@@ -1562,18 +1570,27 @@
 			
 			//how to link -- enter voucher
 			document.getElementById('how_to_router_link').innerHTML = '<a href="' + hotspot_url + '">' + hotspot_url + '</a>';
+            how_to_router_link = '<a href="' + hotspot_url + '">' + hotspot_url + '</a>';
 							
 			
 			//	how to link -- status
 			document.getElementById('how_to_check_balance').innerHTML = '<a href="' + hotspot_url + '/status">' + hotspot_url + '/status</a>';
+            how_to_check_balance = '<a href="' + hotspot_url + '/status">' + hotspot_url + '/status</a>';
 			
 			//	how to link -- login
 			document.getElementById('how_to_log_in').innerHTML = '<a href="' + hotspot_url + '/login">' + hotspot_url + '/login</a>';
+            how_to_log_in = '<a href="' + hotspot_url + '/login">' + hotspot_url + '/login</a>';
 			
 			//	how to link -- logout
 			document.getElementById('how_to_log_out').innerHTML = '<a href="' + hotspot_url + '/logout?erase-cookie=1">' + hotspot_url + '/logout</a>';
+            how_to_log_out = '<a href="' + hotspot_url + '/logout?erase-cookie=1">' + hotspot_url + '/logout</a>';
+
+
 			//how to link -- buy
             document.getElementById('how_to_buy').innerHTML = '<a href="' + hotspot_transaction_server_url + '/transaction?hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:'') + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:'') + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:'') + '">Click <i style="color:green">BUY</i> Button to buy recharge voucher</a>';
+            how_to_buy = '<a href="' + hotspot_transaction_server_url + '/transaction?hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:'') + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:'') + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:'') + '">Click <i style="color:green">BUY</i> Button to buy recharge voucher</a>';
+
+
 			//how to link -- bottom text
 			document.getElementById('how_to_bottom_text').innerHTML = how_to_bottom_text ;
 			//free sites -- bottom text
@@ -1956,7 +1973,8 @@
 			   }
 			
 			document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
-            document.getElementById('page_body').style.backgroundSize = 'contain';
+            // document.getElementById('page_body').style.backgroundSize = 'contain';
+            document.getElementById('page_body').style.backgroundSize = 'auto 100%';
             document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
             document.getElementById('page_body').style.backgroundPosition = 'center' 
 
@@ -2531,16 +2549,16 @@
                             Open browser 
                         </li>
                         <li>
-                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_router_link'></i>
+                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_router_link'>${how_to_router_link}</i>
                         </li>
                         <li>
-                            Click <i style='color: #29d421;font-weight: 600;'>'CONNECT'</i>
+                            Click <i style='color: #29d421;font-weight: 600;'>'LOGIN'</i>
                         </li>
                         <li>
                             Enter <i style='color: #29d421;font-weight: 600;'>VOUCHER</i>
                         </li>
                         
-                        <li id='how_to_buy'></li>
+                        <li id='how_to_buy'>${how_to_buy}</li>
                         
                     </ol>
                 
@@ -2549,19 +2567,19 @@
                  <span style=";margin-left:5px"># Check balance</span>
                     <ol style="font-family: 'Open Sans';font-size: 15px;">
                         <li>
-                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_check_balance'></i>
+                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_check_balance'>${how_to_check_balance}</i>
                         </li>
                     </ol>
                  <span style=";margin-left:5px"># Login</span>
                     <ol style="font-family: 'Open Sans'font-size: 15px;;">
                         <li>
-                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_log_in'></i>
+                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_log_in'>${how_to_log_in}</i>
                         </li>
                     </ol>
                 <span style=";margin-left:5px"># Logout</span>
                     <ol style="font-family: 'Open Sans';font-size: 15px;">
                         <li>
-                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_log_out'></i>
+                            goto <i style='color: #29d421;font-weight: 600;' id='how_to_log_out'>${how_to_log_out}</i>
                         </li>
                     </ol>
                             
@@ -2658,7 +2676,7 @@
 
                 <!-- inputs login button -->	
                 <button style="min-height: 40px; max-height: 15%; width: 60%; margin-top:4%;margin-bottom:4%;display:inline-block" class="btn btn-primary" onclick='form_sender_decider(null)'>Log in</button>
-                <button style="min-height: 40px; max-height: 15%; width: 30%; margin-top:4%;margin-bottom:4%;display: inline-block;" class="btn btn-warning" onclick='alert("Please type Voucher code, or username with its password then press Log in button.\n\nTIP# Only Username and password are case sensitive.")'>Help</button>
+                <button style="min-height: 40px; max-height: 15%; width: 30%; margin-top:4%;margin-bottom:4%;display: inline-block;" class="btn btn-warning" onclick='alert("Please type Voucher code, or username with its password then press Log in button\\n\\nTIP# Only Username and password are case sensitive.")'>Help</button>
 
             </div>
            
@@ -2703,7 +2721,7 @@
 
 
         function dark_neumorph_skin_walp_links_2_text_scroll(){
-
+   
                 
                 // over flow notification scrolling
                 var up = false;
@@ -2731,6 +2749,17 @@
                         // Going down
                         $container.scrollTop(position + 3);
                         // $container.scrollTop(position + (height/4));
+
+
+
+                        
+                        //quck default wallpaper change to custom
+                        if(document.getElementById("page_body").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")'){
+                        
+                        document.getElementById("page_body").style.backgroundImage = 'url("/images/HD-wallpaper-wifi-technology.jpg")';//new default wallpaper for this skin
+                        document.getElementById("page_body").style.backgroundSize = 'cover';//background size
+                  }
+
                     }
 
                     if(scroll_stop == 1){
@@ -2739,12 +2768,7 @@
                         $container.scrollTop(0);
 
                                 
-                        //quck default wallpaper change to custom
-                        if(document.getElementById("page_body").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")'){
-                      
-                            document.getElementById("page_body").style.backgroundImage = 'url("/images/HD-wallpaper-wifi-technology.jpg")';//new default wallpaper for this skin
-                            document.getElementById("page_body").style.backgroundSize = 'cover';//background size
-                        }
+              
                 
                     }
 
