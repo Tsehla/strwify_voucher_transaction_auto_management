@@ -1709,7 +1709,6 @@
                 
 
             //forced ads show
-
             
             if(data_from_db.allow_forced_advertisement_scrolling && wall_link_description.length > 0 && wall_link_description[0].image_link.length > 0){//if forced ads show is true and wallpaper links are provided
 
@@ -1726,6 +1725,14 @@
 
             //login menu configuration
             menu_layout_type = data_from_db.ads_ui_type;//set menu type stored on db
+                        
+            if(menu_layout_type != 'appearance_1' || menu_layout_type != 'appearance_2' && !forced_ads_skip_to_login_menu){
+
+                document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+
+                ads_provided_menu_content_show('show');
+
+            }
 
             if(Number(data_from_db.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
 
@@ -1810,21 +1817,20 @@
 
                 //new skinning 
                 if(menu_layout_type == 'dark_neumorph_skin'){ 
-
-              
                     //crete html skin elements
                     dark_neumorph_skin();
 
-                    //show error 
-                    // document.getElementById('error_div').style.marginTop = '20vh';//re-position error belt
+                    //skip menu , if forced ads are allowd and menu skip is allowed
+                    if(forced_ads_skip_to_login_menu && forced_ads_allowed){
+                        return 
+                    }
                     
+                    dark_neumorph_skin_menu_show();
+
                     //navigation path shower for new users
                     // border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_provide_layout_1_buy");//button animation
-
-
                 }
-
-
+      
 
                 //wallpaper
                 clearInterval(walp_interval);//stop wallpaper auto changer
@@ -2390,7 +2396,7 @@
 
                 
                 <div id="walp_links_2" style="width: 80%;height:50%;margin:auto;padding:10px;overflow-y:hidden;font-size: 10px;font-weight: 600;color: burlywood;">
-                Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link   Hello click link  
+                    ${router_location}
                 </div>
 
 
@@ -2752,7 +2758,7 @@
 
 
 
-                        
+
                         //quck default wallpaper change to custom
                         if(document.getElementById("page_body").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")'){
                         
