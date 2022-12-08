@@ -1391,14 +1391,26 @@
 
 				}
 				if(data_from_db.menu_fallback_wallpaper){	 
-                    console.log('---',manu_layout_ads_wallpaper)
                     
 					manu_layout_ads_wallpaper.login_menu_wallpaper_image = data_from_db.menu_fallback_wallpaper;
                     manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = data_from_db.menu_fallback_wallpaper;
                     manu_layout_ads_wallpaper.login_menu_wallpaper_text = data_from_db.menu_fallback_wallpaper_text;
 
 				}
-				
+
+                    
+                if(Number(data_from_db.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
+
+                    if(Number(data_from_db.ads_ui_layout_wallpaper) > 0 && Number(data_from_db.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
+                        
+                        manu_layout_ads_wallpaper.login_menu_wallpaper_image = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+                        manu_layout_ads_wallpaper.login_menu_wallpaper_text = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_text;//get text of that wallpaper
+                        manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_link ;//get url action link of that wallpaper
+                    }
+
+                }
+
+                    
 				if(data_from_db.hotspot_how_to_buy){	 
 					help_picture_video_buy = data_from_db.hotspot_how_to_buy;
 					
@@ -1744,19 +1756,19 @@
 
             }
 
-            if(Number(data_from_db.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
+            // if(Number(data_from_db.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
 
-                if(Number(data_from_db.ads_ui_layout_wallpaper) > 0 && Number(data_from_db.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
+            //     if(Number(data_from_db.ads_ui_layout_wallpaper) > 0 && Number(data_from_db.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
 
                     
                      
                     
-                    manu_layout_ads_wallpaper.login_menu_wallpaper_image = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
-                    manu_layout_ads_wallpaper.login_menu_wallpaper_text = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_text;//get text of that wallpaper
-                    manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_link ;//get url action link of that wallpaper
-                }
+            //         manu_layout_ads_wallpaper.login_menu_wallpaper_image = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+            //         manu_layout_ads_wallpaper.login_menu_wallpaper_text = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_text;//get text of that wallpaper
+            //         manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = wall_link_description[ Number(data_from_db.ads_ui_layout_wallpaper) - 1 ].image_status_link ;//get url action link of that wallpaper
+            //     }
 
-            }
+            // }
             
 			
         }
