@@ -1839,7 +1839,8 @@
 
                 //new skinning 
                 if(menu_layout_type == 'dark_neumorph_skin'){ 
-                    //crete html skin elements
+                    
+                    //crete html skin elements, en show landing page
                     dark_neumorph_skin();
 
                     //skip menu , if forced ads are allowd and menu skip is allowed
@@ -1847,7 +1848,8 @@
                         return 
                     }
                     
-                    dark_neumorph_skin_menu_show();
+                    //show menu as landing
+                    dark_neumorph_skin_menu_show("first_page_load");
 
                     //navigation path shower for new users
                     // border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "ads_provide_layout_1_buy");//button animation
@@ -2790,16 +2792,13 @@
                         clearInterval(interval_notification_scroll);
                         $container.scrollTop(0);
 
-                                
-              
-                
                     }
 
                 }, 300);
 
             }
 
-            function dark_neumorph_skin_menu_show(){
+            function dark_neumorph_skin_menu_show(load="first_load"){
 
        
 
@@ -2831,9 +2830,19 @@
 
 
                 //ads start
-                //add delay before calling wallpaper changer
-                setTimeout(function(){wallpaper_changer_start()},900);
-                // wallpaper_changer_start()
+
+                //if first page load, allow div to be added to dom
+                if(load == "first_page_load"){ 
+
+                    //remove default wallpaper for nice transition
+
+                    //add delay before calling wallpaper changer
+                    return setTimeout(function(){wallpaper_changer_start()},900);
+                    
+                }
+
+                wallpaper_changer_start();
+           
             }
 
 
