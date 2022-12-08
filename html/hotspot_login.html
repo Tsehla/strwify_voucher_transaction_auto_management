@@ -1734,8 +1734,6 @@
             //login menu configuration
             menu_layout_type = data_from_db.ads_ui_type;//set menu type stored on db
 
-            console.log("menu_layout_type",menu_layout_type,menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2' , forced_ads_skip_to_login_menu == false)
-
                         
             if(menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2' && !forced_ads_skip_to_login_menu){
 
@@ -1806,7 +1804,7 @@
         //show login menu contents  
         function ads_provided_menu_content_show(action = 'show'){
 
-            console.log(action,menu_layout_type)
+            // console.log(action,menu_layout_type)
             if(action == 'show'){ //show login menu contents
                 clearInterval(animate_interval);//clear animate
 
@@ -2462,7 +2460,7 @@
                             </div>
 
                             <!-- center -->
-                            <div id="page_body" style="height:100%;min-height:374px;width: 69.5%;min-width:30px;display: inline-block;float: right;background-image: url('/images/ads_layout_default_wallpaper.jpg');background-size:auto 100%;background-repeat: no-repeat;box-shadow: inset 0px -17px 47px rgb(12 12 13), -4px -1px 14px rgb(12 12 13 / 83%);">
+                            <div id="page_body" style="height:100%;min-height:374px;width: 69.5%;min-width:30px;display: inline-block;float: right;box-shadow: inset 0px -17px 47px rgb(12 12 13), -4px -1px 14px rgb(12 12 13 / 83%);">
                             
                                 <!-- inner left for menu only -->
                                 <div id='center_left' style="height:100%;width:40%;min-width:30px;display: inline-block; float: left;display: none;">
@@ -2730,6 +2728,12 @@
 
         `;
 
+            //stop wallpapr changer if was loaded
+            wallpaper_changer_stop();
+
+            //set selected static ads wallpaper if selected/else default selected wallpaper will be set
+            set_static_selected_ads_wallpaper()
+
             //add a delay, font loading/applying stops scrolling
             setTimeout(dark_neumorph_skin_walp_links_2_text_scroll(),300);
 
@@ -2766,11 +2770,6 @@
                         // Going down
                         $container.scrollTop(position + 3);
                         // $container.scrollTop(position + (height/4));
-
-
-                        // quick_custom_wallpaper()
-
-
 
                     }
 
@@ -2821,29 +2820,59 @@
 
                 //ads start
                 //add delay before calling wallpaper changer
-                // setTimeout(function(){walp_changer()},900);
-                walp_changer()
+                setTimeout(function(){wallpaper_changer_start()},900);
+                // wallpaper_changer_start()
             }
 
 
+            function wallpaper_changer_start(){ //start wallpaper looping
 
-            // function quick_custom_wallpaper(){
+                			            
+                //check if there are wallapers ads provided
+                if(wall_link_description.length > 0){ //if so
+
+                    //set firt ads wallaper to show
+                    document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
+
+                    //set wallaper link text
+                    document.getElementById('walp_links_2').innerHTML = wall_link_description[current_image_content_tracker].image_status_text;
+
+                    //start walpaper auto lopp
+                    walp_interval =  setInterval(walp_changer, 6000);
+
+                }
+            
+            }
+
+            function wallpaper_changer_stop(){ //stop wallpaper looping
+               
+               clearInterval(walp_interval);
+
+           }
+
+
+           //set home static selected wallpaper, default if no background selected
+            function set_static_selected_ads_wallpaper(){
                 
-            //     //quck default wallpaper change to custom
-            //     if(document.getElementById("page_body").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")'){
+                //set wallaper size
+                document.getElementById('page_body').style.backgroundSize = 'auto 100%';
+                document.getElementById('page_body').style.backgroundRepeat = 'no-repeat';
+                document.getElementById('page_body').style.backgroundPosition = 'center' 
 
-            //         manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = "images/HD-wallpaper-wifi-technology.jpg";
-            //         manu_layout_ads_wallpaper.login_menu_wallpaper_image = "images/HD-wallpaper-wifi-technology.jpg";
+                //set selectated static wallpaper
+                
+                document.getElementById('page_body').style.backgroundImage = 'url('+ manu_layout_ads_wallpaper.login_menu_wallpaper_image + ')';//set static wallpaper
 
-            //         document.getElementById("page_body").style.backgroundImage = 'url("/images/HD-wallpaper-wifi-technology.jpg")';//new default wallpaper for this skin
-            //         document.getElementById("page_body").style.backgroundSize = 'cover';//background size
+                //login menu acton bar 
+                document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_text; //change login menu image action bar text
 
-            //     }
-            // }
+
+            }
+
 
             function wallpaer_image_download(action='download'){/// to download edited image or view in new tab
 
-                    
+            
 
                 //get image from url abd return dataURL, 
                 function toDataURL(src, callback){ 
