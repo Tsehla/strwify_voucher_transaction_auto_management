@@ -213,6 +213,8 @@ router_hotspot_page_model .add({
 	ads_ui_layout_wallpaper : {type : String, label :'Layout menu advertisement wallpaper number', default: 0,},
 	ads_download_watermark : {type :types.Boolean, default:true, label :'Ads download watermark' },
 	ads_download_watermark_text : {type :String, default:'StreeWifiy : Advertisement, Paid & Free WiFi', label : 'Ads watermark text' },
+	menu_fallback_wallpaper : {type :types.Select, options:"images/ads_layout_default_wallpaper.jpg,images/HD-wallpaper-wifi-technology.jpg", default: "images/ads_layout_default_wallpaper.jpg",label : 'Menu fallback wallpaper' },
+	menu_fallback_wallpaper_text : {type :String, default:'View image', label : 'Menu fallback wallpaper text' },
 	
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{"link":"https://www.google.com","text":"Search on google"}'],},
