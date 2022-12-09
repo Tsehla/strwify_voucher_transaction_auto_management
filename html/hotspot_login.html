@@ -2835,13 +2835,15 @@
                 if(load == "first_page_load"){ 
 
                     //remove default wallpaper for nice transition
+                    // document.getElementById('page_body').style.backgroundImage = 'url()';
 
                     //add delay before calling wallpaper changer
-                    return setTimeout(function(){wallpaper_changer_start()},900);
+                    // return setTimeout(function(){wallpaper_changer_start()},900);
+                    return setTimeout(function(){wallpaper_changer_start()},100);
                     
                 }
 
-                wallpaper_changer_start();
+                wallpaper_changer_start();//start
            
             }
 
