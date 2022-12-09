@@ -1728,14 +1728,30 @@
             }
                 
 
+            //login menu configuration
+            menu_layout_type = data_from_db.ads_ui_type;//set menu type stored on db
+
             //forced ads show
             
             if(data_from_db.allow_forced_advertisement_scrolling && wall_link_description.length > 0 && wall_link_description[0].image_link.length > 0){//if forced ads show is true and wallpaper links are provided
 
                 
                 forced_ads_allowed = true; //set forced ads allowed to true
-                document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
-                document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
+
+                //for legacy skins
+                if(menu_layout_type.trim() == 'appearance_1' || menu_layout_type.trim() == 'appearance_2'){
+
+                    document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+                    document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
+                }
+
+                //custom manu forced ads
+                if(menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2'){
+
+                    ads_provided_menu_content_show('show',do_forced_ads=data_from_db.allow_forced_advertisement_scrolling);
+
+                }
+             
 
                 forced_ads_skip_to_login_menu = data_from_db.forced_advertisement_skip_to_login; //set skip [ menu buttonly only user interface ] to true or false
                 
@@ -1743,16 +1759,13 @@
 
             forced_ads_scrolling_skip_button_show = (Number(data_from_db.forced_advertisement_scrolling_exit_number)?Number(data_from_db.forced_advertisement_scrolling_exit_number):10 );//forced scrolling skip show button on interval
 
-            //login menu configuration
-            menu_layout_type = data_from_db.ads_ui_type;//set menu type stored on db
+     
 
                         
             if(menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2' && !forced_ads_skip_to_login_menu){
 
                 
                 document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
-
-                ads_provided_menu_content_show('show');
 
             }
 
@@ -1814,7 +1827,7 @@
 
 
         //show login menu contents  
-        function ads_provided_menu_content_show(action = 'show'){
+        function ads_provided_menu_content_show(action = 'show', do_forced_ads = false){
 
             // console.log(action,menu_layout_type)
             if(action == 'show'){ //show login menu contents
@@ -1842,6 +1855,14 @@
                     
                     //crete html skin elements, en show landing page
                     dark_neumorph_skin();
+
+
+                    //check if forced ads to show on load
+                    // if(forced_ads_allowed){
+                    if(do_forced_ads){
+
+                       return dark_neumorph_skin_forced_ads()
+                    }
 
                     //skip menu , if forced ads are allowd and menu skip is allowed
                     if(forced_ads_skip_to_login_menu && forced_ads_allowed){
@@ -2415,7 +2436,7 @@
 
                 <div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh">
 
-                    <div style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
+                    <div id='dark_neumorph_skin_inner_container' style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
 
 
                         
@@ -2492,7 +2513,7 @@
                                 </div>
                             
                                 <!-- inner right -->
-                                <div style="height:100%;width:40%;min-width:30px;display: inline-block; float: right;">
+                                <div id='center_right' style="height:100%;width:40%;min-width:30px;display: inline-block; float: right;">
 
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
@@ -2512,8 +2533,9 @@
 
                         <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
                     
-                            <div style="height:100%;width:35%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
-                            
+                            <div style="height:100%;width:32%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+
+                                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;float:right;display:none" onclick="prev_wallpaper_ads()">
 
                             </div>
                             <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
@@ -2523,11 +2545,18 @@
                             
 
                             </div>
-                            <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("help_container").style.display="block"'>
+                            <div id="help_navi" style="height:100%;width:10%;min-width:51px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("help_container").style.display="block"'>
                         
                             
                                 <img src="/images/support_agent_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
                                 <div style="width: 100%;height: 22px;">Help</div>
+
+                            </div>
+                            <div id="forced_ads_close" style="height:100%;width:10%;min-width:51px;display: none;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="ads_provided_menu_content_show()">
+                        
+                                    
+                                <img src="/images/close_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
+                                <div style="width: 100%;height: 22px;">Close</div>
 
                             </div>
                             <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
@@ -2537,6 +2566,12 @@
                         
 
                             </div>
+                            <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+            
+                                <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;display:none" onclick="next_wallpaper_ads()"> 
+                    
+                            </div>
+                  
                         
                         </div>
 
@@ -2889,6 +2924,58 @@
 
                 //login menu acton bar 
                 document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_text; //change login menu image action bar text
+
+
+            }
+
+            //forced ads
+            function dark_neumorph_skin_forced_ads(){
+
+                console.log('forced_ads ------ ')
+
+                document.getElementById('middle_left_div').style.display = 'none';
+                document.getElementById('center_left').style.display = 'none';
+                document.getElementById('center_right').style.display = 'none';
+
+                document.getElementById('page_body').style.width = '100%';
+                document.getElementById('middle_div').style.height = '87%';
+
+
+                document.getElementById('top_text_div').style.position = 'absolute';
+                document.getElementById('top_text_div').style.top = '73%';
+                document.getElementById('top_text_div').style.maxWidth = '506px';
+                document.getElementById('top_text_div').style.width = '100%';
+                document.getElementById('top_text_div').style.maxHeight = '50px';
+                document.getElementById('top_text_div').style.maxWidth = '100%';
+                document.getElementById('top_text_div').style.backgroundColor = 'rgb(240 248 255 / 69%)';
+                document.getElementById('top_text_div').style.borderRadius = '5px';
+                document.getElementById('top_text_div').style.zIndex = 5;
+                document.getElementById('top_text_div').style.display ='none';
+
+
+                document.getElementById('walp_links_2').style.color = 'black';
+                document.getElementById('walp_links_2').style.width = '91%';
+                document.getElementById('walp_links_2').style.fontWeight = 'bolder';
+                document.getElementById('walp_links_2').style.margin = '0px auto auto';
+                document.getElementById('walp_links_2').style.padding = '0px';
+
+                document.getElementById('dark_neumorph_skin').style.height = '98vh';
+                document.getElementById('dark_neumorph_skin_inner_container').style.maxWidth = '100%';
+                
+                document.getElementById("help_navi").style.display = 'none';
+                document.getElementById("forced_ads_next").style.display = 'block';
+                document.getElementById("forced_ads_previous").style.display = 'block';
+
+                document.getElementById("forced_ads_close").style.display = 'inline-block';
+
+
+          
+                //add delay to wallpaper start
+                setTimeout(function(){
+                    wallpaper_changer_start()
+                },100);
+                    
+                
 
 
             }
