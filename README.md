@@ -77,3 +77,11 @@ Staging login :
 -> Add ability to send recharge to users added as contact
 
 
+
+---------
+
+run on node version 12.22.9, npm version 6.14.15
+
+
+
+
