@@ -1373,23 +1373,26 @@
 					 }
 				
 				if(data_from_db.hotspot_announcements){	  
+
 					notifications_from_db = data_from_db.hotspot_announcements;
                     //console.log('6'+notifications_from_db);
                     
                     //set notification number on menu layout type 2
                     document.getElementById('announcements_total').innerHTML = notifications_from_db.length;
 
-					 }
+				}
 				
 				if(data_from_db.notification_bottom_text){	 
+
 					notification_bottom_text = data_from_db.notification_bottom_text;
 					//console.log('7'+notification_bottom_text);
+
 				}
 				
 				if(data_from_db.router_location){	 
 					router_location = data_from_db.router_location.replace(/[^A-Za-z0-9\s]/g," ");
-
 				}
+
 				if(data_from_db.menu_fallback_wallpaper){	 
                     
 					manu_layout_ads_wallpaper.login_menu_wallpaper_image = data_from_db.menu_fallback_wallpaper;
@@ -1958,6 +1961,7 @@
             
             
             if(action == 'return'){ //return to show ads browsing screen//this is not forced ads screen
+                
                 clearInterval(animate_interval);//clear animate
 
                 //hide menu layout

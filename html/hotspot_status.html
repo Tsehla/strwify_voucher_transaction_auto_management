@@ -11,44 +11,215 @@
 
 		<link rel="stylesheet" href="line-awesome/css/line-awesome.css">
 
+		<style>
+
+				@font-face {
+                    font-family: 'Rubik Distressed';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Rubik Distressed'),url('/images/RubikDistressed-Regular.ttf') format('truetype');
+                
+                }
+
+                @font-face {
+                    font-family: 'Open Sans';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('/images/OpenSans-LightItalic.ttf') format('truetype');
+                
+                }
+                @font-face {
+                    font-family: 'NerkoOne';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('images/NerkoOne-Regular.ttf') format('truetype');
+                }
+                
+                
+                @font-face {
+                    font-family: 'RubikGlitch';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('images/RubikGlitch-Regular.ttf') format('truetype');	
+                }
+
+
+
+
+		</style>
+
 	</head>
 
 	<body>
 		
 
-		<div id='classic_menu_skin' style="width:100%;height:auto;font-size: 16px;">
+		<div id='classic_menu_skin' style="width:100%;height:auto;font-size: 16px;display: none;">
 
-			<div style="width: 100vw;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Welcome :<span id='welcome_user_name' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+			<div style="width: 90%;height: auto;min-height: 400px;margin: 10px auto;max-width: 420px;font-size: 16px;display: block;box-shadow: 2px 7px 18px grey, -6px -8px 19px grey;border-radius: 22px;min-width: 305px;">
+
+			<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Welcome :<span id='welcome_user_name' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 			
-			<div style="width: 100vw;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">IP address :<span id='ip_address' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+			<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">IP address :<span id='ip_address' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 			
 
-			<div style="width: 100vw;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Data available :<span id='data_available' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div> 
+			<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Data available :<span id='data_available' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div> 
 			
-			<div style="width: 100vw;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Data uploaded / downloaded :<span id='bytes_up_down' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+			<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Data uploaded / downloaded :<span id='bytes_up_down' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 			
-			<div style="width: 100vw;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
+			<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Connection time used / left :<span id='connection_time' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 			
-			<div style="width: 100vw;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">status refreshes in :<span id='to_before_refresh' style="color:blue;padding-left: 5px;font-weight: 400"></span></p>
+			<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">status refreshes in :<span id='to_before_refresh' style="color:blue;padding-left: 5px;font-weight: 400"></span></p></div>
 			
-			<div style="width: 100%;height: 20vh;min-height:100px;max-width: 543px;margin: 14px auto;">
+			<div style="width: 100%;height: auto;min-height:100px;max-width: 543px;margin: 15px auto;padding-bottom: 13px;text-align: center;">
 
 				<button class='btn' style="width: 46%;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-weight: 900; line-height: 30px" onclick='page_refresh()'>Update Status</button>
 				
 				<div style="width: 100%;height: 10vh;min-height:50px;">
 
-					<button class='btn btn-danger' onclick="window.open(router_variables_array.logout_link+'?erase-cookie=1','_self')" style="width: 44%;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block;font-weight: 900; line-height: 30px">Log out</button>
-					<button class='btn btn-warning' onclick="window.open(http_https + window.location.host + '/transaction?hotspot_link=' + router_login_link + '&hotspot_location=' + router_variables_array['location'],'_self')" style="width: 46%;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-weight: 900; line-height: 30px">Buy</button>
+					<button class='btn btn-danger' onclick="window.open(router_variables_array.logout_link+'?erase-cookie=1','_self')" style="width: 40%;height: 50px;margin:0px 10px 10px 2.2vw;display: inline-block;font-weight: 900; line-height: 30px">Log out</button>
+					<button class='btn btn-warning' onclick="window.open(http_https + window.location.host + '/transaction?hotspot_link=' + router_login_link + '&hotspot_location=' + router_variables_array['location'],'_self')" style="width: 40%;height: 50px;margin:0px 0px 10px 10px;display: inline-block;font-weight: 900; line-height: 30px">Buy</button>
 
-				</dic>
+				</div>
 				
 			</div>	
+			</div>
 			
 		</div>
 
 
 
 		<!-- dak neumoph skin -->
+		<div id="dark_neumorph_status_skin" style="width:100%;height:auto;min-height:100vh;display: none;">
+		
+		
+			
+
+			<div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh;font-family: 'Open Sans', sans-serif;">
+
+				<div id='dark_neumorph_skin_inner_container' style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
+
+
+					
+					<!-- top -->
+					<div id="desktop_ads_viewwer" style="width: 100%;height:85%">
+						<div id="top_text_div" style="width:100%;height:10%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" onclick="image_text_link()">
+
+							
+							<div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;">
+								${router_location}
+							</div>
+
+
+						</div>
+					</div>
+
+
+					<!-- bottom -->
+
+					<div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
+				
+						<div style="height:100%;width:32%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+
+							<img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;float:right;display:block" onclick="prev_wallpaper_ads()">
+
+						</div>
+						<div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
+						
+						
+							<img src="/images/share_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+						
+
+						</div>
+						<div id="help_navi" style="height:100%;width:10%;min-width:51px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("login_status").style.display="block"'>
+					
+						
+							<img src="/images/query_stats_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
+							<div style="width: 100%;height: 22px;">WiFi</div>
+
+						</div>
+		
+						<div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+						
+						
+							<img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick="image_text_link()"> 
+					
+
+						</div>
+						<div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+		
+							<img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;display:block" onclick="next_wallpaper_ads()"> 
+				
+						</div>
+			  
+					
+					</div>
+
+				</div>
+
+			</div>
+
+
+
+
+
+
+
+
+
+
+
+			           
+			<div id='login_status' style="width: 99%;height:100%;overflow-y:auto;position: absolute;top: 0px;display:block;z-index:1">
+                
+				<div style="width: 80%;height: 92%;background-color: #a52a2ae6;max-height: 914px;min-height: 406px;margin: 15px auto 10px auto;color: white;max-width: 430px;padding-bottom: 28px;box-shadow: inset 7px 1px 53px #4d1213, inset -14px 1px 53px #4d1213;border-radius: 11px;">
+				
+					<div style="width:100%;height:20px;margin: 10px 0 10px 0">
+						<div id="router_location_show_skin" style="width:auto;height: 37px;line-height: 37px;font-size: 13px;display: inline-block;margin-left: 12px;font-family:RubikGlitch;color:#3bad18;text-shadow: -2px 2px black;" >${router_location}</div>	<button style="float:right;margin-right:10px;margin-top:10px" onclick='document.getElementById("login_status").style.display="none"' class='btn btn-primary'>x</button>
+					</div>	
+									
+					
+					<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Welcome :<span id='welcome_user_name_skin' style="color:#01ff20;padding-left: 5px;font-weight: 400"></span></p></div>
+					
+					<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">IP address :<span id='ip_address_skin' style="color:#01ff20;padding-left: 5px;font-weight: 400"></span></p></div>
+					
+
+					<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Data available :<span id='data_available_skin' style="color:#01ff20;padding-left: 5px;font-weight: 400"></span></p></div> 
+					
+					<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;font-size:10px">Data uploaded / downloaded :<span id='bytes_up_down_skin' style="color:#01ff20;padding-left: 5px;font-weight: 400"></span></p></div>
+					
+					<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">Connection time used / left :<span id='connection_time_skin' style="color:#01ff20;padding-left: 5px;font-weight: 400"></span></p></div>
+					
+					<div style="width: 100%;height: 10vh;min-height: 40px;line-height: 40px;border-bottom: 1px solid grey;align-content: center" class="btn"><p  style="width: auto;">status refreshes in :<span id='to_before_refresh_skin' style="color:#01ff20;padding-left: 5px;font-weight: 400"></span></p></div>
+					
+					<div style="width: 100%;height: 20vh;min-height:100px;max-width: 543px;margin: 14px auto;text-align: center;">
+
+						<button class='btn' style="width: 54%;height: 39px;margin:0px 0px 10px 10px;display: inline-block;font-weight: 900;line-height: 30px;color: #565656;line-height: 25px;" onclick='page_refresh()'>Update Status</button>
+						
+						<div style="width: 100%;height: 10vh;min-height:50px;">
+
+							<button class='btn btn-danger' onclick="window.open(router_variables_array.logout_link+'?erase-cookie=1','_self')" style="width: 40%;height: 38px;margin: 0px 10px 10px 10px;display: inline-block;font-weight: 900;line-height: 30px;line-height: 20px;">Log out</button>
+							<button class='btn btn-warning' onclick="window.open(http_https + window.location.host + '/transaction?hotspot_link=' + router_login_link + '&hotspot_location=' + router_variables_array['location'],'_self')" style="width: 42%;height: 39px;margin:0px 0px 10px 10px;display: inline-block;font-weight: 900;line-height: 20px;">Buy</button>
+
+						</div>
+						
+					</div>	
+				
+					<!-- <Marquee style="font-family: 'Open Sans';font-size: 11px;margin-top: 42px;border-top:1px solid grey;text-align: center;" role='marquee' id='notification_bottom_text'>${notification_bottom_text}</Marquee> -->
+					
+				</div>
+				
+			</div>
+		
+		
+		
+		
+		</div>
+
+
 
 
 
@@ -142,29 +313,421 @@
 			
 			window.parent.postMessage(['router_hotspot_location', router_variables_array["location"]], '*');
 			
+
+
+
+
+
 		
 			//++++++++++++++++++ connect to db ++++++++++++++
 			var hot_spot_db_url = '/api/hotspot_data?location='+ router_location;
 				
 			//console.log(hot_spot_db_url) ;	
-				
+
+			var ui_interface_to_use = 'classic';//set as default
+			var hotspot_descriptive_data = undefined;
+			
+			var manu_layout_ads_wallpaper = {login_menu_wallpaper_image:'images/ads_layout_default_wallpaper.jpg', login_menu_wallpaper_text: 'View image', login_menu_wallpaper_action_bar_click_link:'images/ads_layout_default_wallpaper.jpg'  }; //wallpaper to be used for menu layout;//this is default wallpaper to be used, 
+
+			
+			// image download watermark
+			var ads_download_image_watermark = false;//if to show water mar
+			var ads_download_image_watermark_text = '';//water mark text
+
+
+			var wall_link_description =[];//walp data	 //Get wallpaper links data from db
+
+			var hotspot_announcements = '';//hot spot announcements
+
+			var router_location = 'Orange Farms';
+
+			var current_image_content_tracker = 0;//track wallpaper changing
+
+			var walp_interval = '';//
+
+			var ads_ui_layout_wallpaper = 0;//chosen ads wallpaper if given
+
 			$.get(hot_spot_db_url, function(response, status){
 				
 				if(status == 'success'){
-					console.log(JSON.stringify(response));
-					//    fill_data_from_db(response);//start with data from db function
-					return;
+					// console.log(JSON.stringify(response));
+
+					//save data
+					hotspot_descriptive_data = JSON.stringify(response);
+					
+					if(hotspot_descriptive_data && JSON.parse(hotspot_descriptive_data)){//if exist
+
+						//turn to object
+						hotspot_descriptive_data = JSON.parse(hotspot_descriptive_data);
+
+
+
+						//apply db data
+
+						//router location
+						if(hotspot_descriptive_data){	 
+							router_location = hotspot_descriptive_data.router_location.replace(/[^A-Za-z0-9\s]/g," ");
+
+						}
+
+						     // water mark
+							ads_download_image_watermark = hotspot_descriptive_data.ads_download_watermark//if to show water mar
+                			ads_download_image_watermark_text = hotspot_descriptive_data.ads_download_watermark_text;//water mark text
+				
+						//fallback wallpaper
+						if(hotspot_descriptive_data){	 
+							
+							manu_layout_ads_wallpaper.login_menu_wallpaper_image = hotspot_descriptive_data.menu_fallback_wallpaper;
+							manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = hotspot_descriptive_data.menu_fallback_wallpaper;
+							manu_layout_ads_wallpaper.login_menu_wallpaper_text = hotspot_descriptive_data.menu_fallback_wallpaper_text;
+
+						}
+
+
+						               
+						// if(Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
+
+						// 	if(Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) > 0 && Number(hotspot_descriptive_data.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
+								
+						// 		manu_layout_ads_wallpaper.login_menu_wallpaper_image = wall_link_description[ Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+						// 		manu_layout_ads_wallpaper.login_menu_wallpaper_text = wall_link_description[ Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) - 1 ].image_status_text;//get text of that wallpaper
+						// 		manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = wall_link_description[ Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) - 1 ].image_status_link ;//get url action link of that wallpaper
+						// 	}
+
+						// }
+
+
+
+						ui_interface_to_use = hotspot_descriptive_data.status_ads_ui_type;
+								
+						if(hotspot_descriptive_data.hotspot_wallpaper){	//if wallpaper data from db
+							
+					
+							wall_link_description = []// empty array
+							
+							hotspot_descriptive_data.hotspot_wallpaper.forEach(function(data){
+								
+
+								let  slide_data = JSON.parse(data);//turn data to object
+
+								if(slide_data.hidden == false){ //exclude those hidden
+
+									wall_link_description.push(slide_data);//add content to array
+								}
+								
+							
+							});
+							
+							//if router is under maintenance, put maintenance type notice at front
+							var maintenance_types = {
+								'maintenance' : {image_link :"system_state_images/system_under_maintenance.png" , image_status_text : "System undergoing maintenance, <br /> some features may not work", image_status_link: "system_state_images/system_under_maintenance.png", ads_sponsored : true, hidden:false},
+								'repair' : {image_link :"system_state_images/system_under_repair.png" , image_status_text : "System undergoing Emergency repair,<br /> some features may not work", image_status_link: "system_state_images/system_under_repair.png", ads_sponsored : true, hidden:false},
+								'upgrade' : {image_link :"system_state_images/system_undergoing_upgrade.png" , image_status_text : "System is being upgradeded,<br /> some features may not work", image_status_link: "system_state_images/system_undergoing_upgrade.png", ads_sponsored : false, hidden:false},
+									
+							};
+
+							if(hotspot_descriptive_data.system_maintenace != 'functional'){//give alert & insert system state wallpaper
+
+								alert('System undergoing ' + data_from_db.system_maintenace.toUpperCase()  + '.\n\nSome features may not work or fail or result in loss.\n\nWe apologise for the inconvinience.'); //give maintenance alert
+								
+								wall_link_description.unshift(maintenance_types[data_from_db.system_maintenace]); //push type of maintenance wallpaper at fron of others
+							}
+							
+							// //console.log(wall_link_description.length)
+							// if(wall_link_description.length == 0){//if wallapers from db
+								
+							// 	wall_link_description.push({"image_link" :"" , "image_status_text" : "Welcome", "image_status_link": ""});
+							// 	wall_link_description.push({"image_link" :"" , "image_status_text" : "O amo hetswe", "image_status_link": ""});
+							// 	//document.getElementById('walp_links_container').style.backgroundColor = 'rgba(192,192,192,0.2)';//change wallpaper description text color
+								
+							// }
+						}
+
+
+						//chosen start home wallpaper
+						
+
+						if(Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
+
+							if(Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) > 0 && Number(hotspot_descriptive_data.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
+								
+								ads_ui_layout_wallpaper = Number(hotspot_descriptive_data.ads_ui_layout_wallpaper);
+							}
+
+						}
+
+
+						//auto start wallpaper changer
+						if(wall_link_description.length > 1){//if theres some wallpapers
+
+							walp_interval =  setInterval(walp_changer, 6000);
+
+						}
+
+
+		
+						//do further skin
+						if(ui_interface_to_use != 'classic'){
+
+							do_skin();//call
+							set_static_selected_ads_wallpaper();
+
+						}
+
+						//show default skin
+						if(ui_interface_to_use == 'classic'){
+							//show classic skin
+							document.getElementById("classic_menu_skin").style.display = 'block';
+						}		
+				
+					}
+
+					else {//if not
+						//show classic skin
+						document.getElementById("classic_menu_skin").style.display = 'block';
+					}
+					
 				}
 
-				else{
-						console.log('Error retrieving data from db for hotspot') ;
-						fill_data_from_db();//start with no data from db function
-						return;
-				}         
+				else{ //else
+
+					console.log('Error retrieving data from db for hotspot');
+					
+					//show classic skin
+					document.getElementById("classic_menu_skin").style.display = 'block';
+				}
+
 			});
 
 
 
+			function walp_changer(){//slideshow
+				
+				//increment when function call
+				current_image_content_tracker = current_image_content_tracker + 1;
+				
+				//check if image tracker is still with provided image length range
+				if(current_image_content_tracker > wall_link_description.length -1){//if image tracker is over image array leng\\reset image traccker
+					current_image_content_tracker = 0;
+				}
+				
+
+				//wallpaper text // may need to see how links text works, 
+				document.getElementById('walp_links_2').innerHTML = wall_link_description[current_image_content_tracker].image_status_text;
+				
+				document.getElementById('desktop_ads_viewwer').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
+
+
+		
+
+				
+			};
+			
+
+			function prev_wallpaper_ads(){//previous walpaper changer navigation
+
+				clearInterval(walp_interval);
+
+				current_image_content_tracker = current_image_content_tracker - 2;
+
+				if(current_image_content_tracker < 0){
+					
+					current_image_content_tracker = wall_link_description.length -2 ;
+				}
+
+				walp_changer();
+
+				
+			}
+
+			function next_wallpaper_ads(){//nex wallpaper
+
+				//stop wallpaper changer
+				clearInterval(walp_interval);
+
+				walp_changer();
+			}
+
+
+			function image_text_link(){
+
+						
+				var image_text_link = wall_link_description[current_image_content_tracker].image_status_link;
+
+				//check if div [ page_body] has no default wallpaper
+				var wallpaper_not_default = document.getElementById("desktop_ads_viewwer").style.backgroundImage =='url("/images/ads_layout_default_wallpaper.jpg")';//default wallpaper 1
+
+				if(image_text_link && !wallpaper_not_default){
+					//alert(document.getElementById('walp_links').textContent);
+				window.open(wall_link_description[current_image_content_tracker].image_status_link,'_blank');
+
+				}    
+				else{
+				
+					window.open(manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link, '_blank');//open image or url in new page
+				}  
+
+			}
+
+
+			function wallpaer_image_download(action='download'){/// to download edited image or view in new tab
+
+							
+
+				//get image from url abd return dataURL, 
+				function toDataURL(src, callback){ 
+
+					var image = new Image();
+					image.crossOrigin = 'Anonymous';
+					image.onload = function(){
+						var canvas = document.createElement('canvas');
+						var context = canvas.getContext('2d');
+						canvas.height = this.naturalHeight;
+						canvas.width = this.naturalWidth;
+						context.drawImage(this, 0, 0);
+						if(ads_download_image_watermark){//water mark ads
+							//draw rectangle
+							var grd = context.createLinearGradient(0, 0, 170, 0);
+							grd.addColorStop(0, "#eeaeca");
+							grd.addColorStop(1, "#94bbe9");
+							context.fillStyle = grd;
+							context.fillRect(0, (this.naturalHeight - 30), 520, 30);
+
+							//write text on rectangle
+							context.fillStyle = '#FF0000';
+							context.font= '25px Arial';
+							context.fillText(ads_download_image_watermark_text, 10, (this.naturalHeight - 5));
+						}
+					
+
+						var dataURL = canvas.toDataURL('image/jpeg');
+						callback(dataURL);
+
+
+					};
+					image.src = src;
+				
+				}
+
+
+				//call imge to data url function//get url from background image shown or applied //and do download
+				toDataURL(document.getElementById('desktop_ads_viewwer').style.backgroundImage.replace('url("','').replace('")','').toString(), function(dataURL){
+				
+					// alert(dataURL);
+
+					
+					//view edited image in new tab
+					if(action=='view'){ //if image view
+
+						var image = new Image();
+						image.src = dataURL
+						var window_tab = window.open("");
+							window_tab.document.write(image.outerHTML);
+
+						return
+					}
+
+					//else do download
+					var download_image_name = document.getElementById('walp_links_2').textContent.substring(0,50);
+
+					var download_link = document.createElement('a');
+
+					download_link.download = download_image_name + '.jpg';
+					download_link.href = dataURL.replace('image/jpg', 'image/octed-stream');
+
+					download_link.click()
+
+
+
+
+				})
+
+										
+			}
+
+
+
+				
+			//set home static selected wallpaper, default if no background selected
+			function set_static_selected_ads_wallpaper(){
+				
+		
+
+				//set selectated static/fallback wallpaper
+		
+				if(ads_ui_layout_wallpaper > 0 && wall_link_description.length > 0){ //if ads wallpaper list provided with chosen wallpaper
+
+		
+					manu_layout_ads_wallpaper.login_menu_wallpaper_image = wall_link_description[ Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) - 1 ].image_link ;//get url link of that wallpaper
+
+					manu_layout_ads_wallpaper.login_menu_wallpaper_text = wall_link_description[ Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) - 1 ].image_status_text;//get text of that wallpaper
+
+					manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link = wall_link_description[ Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) - 1 ].image_status_link ;//get url action link of that wallpaper
+
+					current_image_content_tracker = ads_ui_layout_wallpaper -1;
+				}
+
+				
+
+				//if wallpaper are available
+				document.getElementById('desktop_ads_viewwer').style.backgroundImage = 'url('+ manu_layout_ads_wallpaper.login_menu_wallpaper_image + ')';//set static wallpaper
+
+				//login menu acton bar 
+				// document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_text; //change login menu image action bar text
+				document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_action_bar_click_link; //change login menu image action bar text
+
+
+
+
+				//set wallaper size
+				document.getElementById('desktop_ads_viewwer').style.backgroundSize = 'auto 100%';
+				document.getElementById('desktop_ads_viewwer').style.backgroundRepeat = 'no-repeat';
+				document.getElementById('desktop_ads_viewwer').style.backgroundPosition = 'center' 
+
+		
+
+			}
+
+
+
+			//app selected skin
+			function do_skin(){
+
+				//show selected skin
+				if(ui_interface_to_use == 'dark_neumorph_status_skin'){  //document.getElementById("classic_menu_skin").style.display = 'block'
+					dark_neumorph_status_skin_apply();//call
+				}
+
+
+
+
+			}
+
+
+		
+			//dark_neumorph_status_skin spply
+			function dark_neumorph_status_skin_apply(){
+
+
+				//apply details
+
+				// document.getElementById().innerHTML = hotspot_announcements;
+				document.getElementById('router_location_show_skin').innerHTML = router_location;
+				document.getElementById('welcome_user_name_skin').innerHTML= welcome_user_name +'!';
+				document.getElementById('ip_address_skin').innerHTML= ip_address;
+				document.getElementById('bytes_up_down_skin').innerHTML= bytes_up_down;
+				document.getElementById('connection_time_skin').innerHTML= connection_time_used +' / ' + connection_time_available;
+				document.getElementById('to_before_refresh_skin').innerHTML= to_before_refresh;
+				document.getElementById('data_available_skin').innerHTML= data_available;
+			
+
+
+				//show skin
+				document.getElementById('dark_neumorph_status_skin').style.display = 'block';
+
+				// set_static_selected_ads_wallpaper(); //not working when call here where i rather it be, otherwiwes works fine
+
+			}
 
 
 		</script>

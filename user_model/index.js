@@ -198,47 +198,61 @@ var router_hotspot_page = 'Router hotspot page';
 var router_hotspot_page_model = new keystone.List(router_hotspot_page);
 
 router_hotspot_page_model .add({
+
+	//mikrotik router details
 	router_location : {type :String, initial:true, required:true, default:'default', label : 'Router location' },
 	router_id : {type :String, default:'Happy surfing !!! ;-)', label : 'Router hotspot identification name' },
+
+	//voucher data creation config for sellers and voucher templates
 	hotspot_voucher_template_link : {type :String, default:'images/uploads/ads/16-5-53PM,%203-8-2020%20streetwifiy_ticket_template.jpg', label : 'Hotspot voucher image template link' },
 	allow_hotspot_all_location_marked_vouchers : {type :types.Boolean, default:true, label :'Show location unrestricted vouchers' },
 	
+	//ads wallpapers and advertisements
 	hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored ": true, "hidden" : false}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Image 3", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Image 5", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Image 6", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Image 7", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Image 8", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Image 9", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Image 10", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true}'], label :'Wallpaper data' },
 	allow_forced_advertisement_scrolling : {type :types.Boolean, default:false, label :'Force advertisement scrolling' },
 	forced_advertisement_scrolling_exit_number  : {type : String, label :'Advertisement show skip on scroll number', default: 6,},
 	forced_advertisement_skip_to_login : {type :types.Boolean, default:true, label :'Forced advertisement skip to login menu' },
 
 
+	//wallpapers en login ui
 	ads_ui_type : {type : types.Select, options: "appearance_1,appearance_2,dark_neumorph_skin", default:'appearance_1', label :'Ads Menu layout'},
 	ads_ui_layout_wallpaper : {type : String, label :'Layout menu advertisement wallpaper number', default: 0,},
 	ads_download_watermark : {type :types.Boolean, default:true, label :'Ads download watermark' },
 	ads_download_watermark_text : {type :String, default:'StreeWifiy : Advertisement, Paid & Free WiFi', label : 'Ads watermark text' },
 	menu_fallback_wallpaper : {type :types.Select, options:"images/ads_layout_default_wallpaper.jpg,images/HD-wallpaper-wifi-technology.jpg", default: "images/ads_layout_default_wallpaper.jpg",label : 'Menu fallback wallpaper' },
 	menu_fallback_wallpaper_text : {type :String, default:'View image', label : 'Menu fallback wallpaper text' },
+	status_ads_ui_type : {type : types.Select, options: "classic,dark_neumorph_status_skin", default:'classic', label :'Status Ads layout'},
 	
+	//extra stuff
 	free_education_sites : {type : types.TextArray, label :'Free Education sites', default:['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}']},
 	free_jobs_sites : {type : types.TextArray, label :'Free Jobs Sites',default:['{"link":"https://www.google.com","text":"Search on google"}'],},
 	hotspot_announcements : {type : types.TextArray, label :'Hotspot Announcements', default: ['Dare to be different','Dare to write your destiny.',"<a href='http://www.google.com'>Click to go to Google</a>","To search the internet click <a href='http://www.google.com'>google</a> then type your query","<a href='http://www.google.com'>Google search</a>, <a href='http://scholar.google.com'>Google scholar</a>"],},
 	
+	//free login and free login vouchers configs
 	free_data_allow: {type :types.Boolean, default:false, label :'Allow radius authenticated free data login' },
 	mikrotik_allow_trial_login : {type :types.Boolean, default:false, label :'Allow mikrotik authenticated trial user login' },
 	mikrotik_trial_user_data_limit : {type :String, default:'5 MB', label : 'Mikrotik trial user data limit' },
 	mikrotik_trial_user_data_expiery : {type : types.Select, options: "1 Minutes,5 Minutes,10 Minutes,15 Minutes,20 Minutes,30 Minutes,45 Minutes,50 Minutes,1 Hour,1:30 Hours,2 Hours,3 Hours,4 Hours,5 Hours,6 Hours,7 Hours,8 Hours,9 Hours,10 Hours,11 Hours,12 Hours,24 Hours,2 Days,3 Days,4 Days,5 Days,6 Days,7 Days,2 Weeks,3 Weeks,1 Month,2 Month,3 Months,4 Months,5 Months", default:'24 Hours', label :'Mikrotik trial user data expiery'},
 	
+	//inspiration text and notigication
 	hotspot_how_to_bottom_text : {type : String, label :'Hotspot Howto bottom text', default: 'Help yourself, To be helped.',},
 	hotspot_free_sites_bottom_text : {type : String, label :'Hotspot Free sites bottom text', default: 'Pass it on, unconditionally help a stranger, a friend, a family member.',},
 	notification_bottom_text : {type : String, label :'Hotspot notification bottom text', default: 'If it was easy, no one would care. If it was impossible, no one would dare.',},
 	
+	//help and help media
 	hotspot_how_to_buy : {type : String, label :'Hotspot How to buy image', default: '/default_slide_images/1.jpg',},
 	hotspot_how_to_sell : {type : String, label :'Hotspot How to sell image', default: '/default_slide_images/2.jpg',},
 	hotspot_how_to_recharge_seller : {type : String, label :'Hotspot How to recharge-seller image', default: '/default_slide_images/3.jpg',},
 	hotspot_how_to_super_admin: {type : String, label :'Hotspot How to Super-admin image', default: '/default_slide_images/4.jpg',},
 
+	//auto voucher creation wifi radius //works with only ::: https://github.com/Tsehla/nodejs_radius_server
 	use_external_radius_user_creation: {type :types.Boolean, default:false, label :'Enable Wifi-Radius auto user creation?' },
 	external_radius_user_creation_link: {type : String, label :'Link to Wifi-radius server.', default: 'Works only with wifi-radius see (https://github.com/Tsehla/nodejs_radius_server)'},
 
+	//system maintenance alerts to user
 	system_maintenace : {type : types.Select, options: "functional, maintenance, repair, upgrade", default:'functional', label :'System state'},
 	
+	//hotspots logo en hotspot managers
 	hotspot_logo : {type : String, label :'Hotspot Logo', default: '/images/logo.png',},
 	hotspot_manager : {type : types.TextArray, label :'hotspot Managers', default : ['8905135800000']},
 });
