@@ -26,8 +26,20 @@ For login use any details shown on https://github.com/Tsehla/strwify_voucher_tra
 Front end http://127.0.0.1:3100
 backend (keystone) http://127.0.0.1:3100/keystone
 
-# hotspot page acess :
+# hotspot page acess : test links without router 
+## hotspot page acess : landing page 
 direct hotspot acess : http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://streetwifiy.co.za/login&link-orig=http://www.msftconnecttest.com/redirect&chap-id=&chap-challenge=&link-orig-esc=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&mac-esc=90%3A2E%3A1C%3A69%3AB3%3ABA&username=&location=orangefarm
+
+## hotspot page acess : landing page :: with mikrotik router enabled trial login :: Trial to be allowed/enabled in mikrotik and also app keystone [ Router Hotspot Pages ] menu to work
+http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://uwireless.za/login&link-orig=http://www.msftconnecttest.com/redirect&chap-id=&chap-challenge=&link-orig-esc=http%3A%2F%2Fwww.msftconnecttest.com%2Fredirect&mac-esc=90%3A2E%3A1C%3A69%3AB3%3ABA&username=&trial=yes&location=orangefarm
+
+## login status menu
+http://127.0.0.1:3100/hotspot_status?status=true&refresh_timeout_seconds=60&advert_link=http://wifi.com/advert&logout_link=http://wifi.com/logout&user_name=usbwalt&ip_address=192.168.88.252&data_uploaded=114%20B&data_downloaded=96%20B&connection_time_used=0s&connection_time_left=&up_time=0s&refresh_time=1m&data_available=1277.5%20MiB&link-login-only=http://wifi.com/login&location=orangefarm
+
+## lougout menu
+http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=http://streetwifiy.co.za/login&user_name=8905135852087@meshdesk&ip_address=10.5.50.251&mac_address=90:2E:1C:69:B3:BA&uptime=13s&time_left=28d1h27m24s&data_uploaded=13.3%20KiB&data_downloaded=43.2%20KiB&data_left=unlimited
+		
+
 
 To learn how hotspot page works, Please see readme inside folder using link below.
 https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/master/hospot_login_page
@@ -61,6 +73,7 @@ Feature overview
 
 Hot Hotspot landing Page : 
 http://street-wify-transcat.herokuapp.com/hotspot?hotspot_link=http://streetwifiy.co.za/login&location=&link-login-only=http://streetwifiy.co.za/login
+
 
 Staging login :
 
