@@ -37,7 +37,7 @@ http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://uwireless
 http://127.0.0.1:3100/hotspot_status?status=true&refresh_timeout_seconds=60&advert_link=http://wifi.com/advert&logout_link=http://wifi.com/logout&user_name=usbwalt&ip_address=192.168.88.252&data_uploaded=114%20B&data_downloaded=96%20B&connection_time_used=0s&connection_time_left=&up_time=0s&refresh_time=1m&data_available=1277.5%20MiB&link-login-only=http://wifi.com/login&location=orangefarm
 
 ## lougout menu
-http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=http://streetwifiy.co.za/login&user_name=8905135852087@meshdesk&ip_address=10.5.50.251&mac_address=90:2E:1C:69:B3:BA&uptime=13s&time_left=28d1h27m24s&data_uploaded=13.3%20KiB&data_downloaded=43.2%20KiB&data_left=unlimited
+http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=http://uwireless.za/login&user_name=guest&ip_address=192.168.88.250&mac_address=90:2E:1C:69:B3:BA&uptime=1m24s&time_left=&data_uploaded=3.7%20MiB&data_downloaded=9.6%20MiB&data_left=unlimited&link-login-only=http://uwireless.za/login&location=orangefarm
 		
 
 
