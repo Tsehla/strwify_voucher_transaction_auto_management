@@ -2053,7 +2053,7 @@
 			}
 			
 
-            console.log(wall_link_description[current_image_content_tracker].image_link)
+            // console.log(wall_link_description[current_image_content_tracker].image_link)
 
 			document.getElementById('page_body').style.backgroundImage = 'url(' + wall_link_description[current_image_content_tracker].image_link + ')';
             // document.getElementById('page_body').style.backgroundSize = 'contain';
@@ -2104,8 +2104,18 @@
             
 
             if(current_image_content_tracker >= forced_ads_scrolling_skip_button_show && forced_ads_allowed){//if current wallpaper interval number is equal to skip button show interval
-                document.getElementById('forced_advertisement_navigation_three_button').style.display = 'none'; // then sow skip button
-                document.getElementById('forced_advertisement_navigation_four_button').style.display = 'block'; // then sow skip button
+
+                if(document.getElementById('forced_advertisement_navigation_three_button')){
+                    document.getElementById('forced_advertisement_navigation_three_button').style.display = 'none'; // then sow skip button
+                }
+            
+                if(document.getElementById('forced_advertisement_navigation_four_button')){
+                    document.getElementById('forced_advertisement_navigation_four_button').style.display = 'block'; // then sow skip button
+                }
+             
+                if(document.getElementById('forced_ads_close')){
+                 return document.getElementById('forced_ads_close').style.display = 'inline-block'; // then sow skip button
+                }
 
                 //set forced ads to false 
                 forced_ads_allowed = false;
@@ -2534,7 +2544,7 @@
                                     </div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:31%;min-height:30px;text-align: center;">
-                                        <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 61px;margin: 37% auto 0px auto;" onclick='prev_wallpaper_ads()'>
+                                        <img src="/images/arrow_back_ios_white_24dp.svg" style="height: 61px;margin: 21% auto 0px auto;" onclick='prev_wallpaper_ads()'>
                                     </div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
@@ -2547,7 +2557,7 @@
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:31%;min-height:30px;text-align: center;">
-                                        <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 37% auto 0px auto;" onclick='next_wallpaper_ads()'>
+                                        <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 21% auto 0px auto;" onclick='next_wallpaper_ads()'>
                                         </div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
@@ -2562,45 +2572,51 @@
 
                         <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
                     
-                            <div style="height:90%;margin-top:4%;width:32%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                        <div style="width:auto;height:100%;margin:0px auto;text-align:center">
 
-                                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 30px;margin: 5px auto 0px auto;float:right;display:none" onclick="prev_wallpaper_ads()">
+                            <div style="height:90%;margin-top:1%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+
+                                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 30px;margin: 5px auto 0px auto;display:none" onclick="prev_wallpaper_ads()">
 
                             </div>
-                            <div style="height:90%;margin-top:4%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
+                            <div style="height:90%;margin-top:1%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
                             
                             
                                 <img src="/images/share_white_24dp.svg" style="height: 30px;margin: 5px auto 0px auto;">
                             
 
                             </div>
-                            <div id="help_navi" style="height:100%;width:10%;min-width:51px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("help_container").style.display="block"'>
+                            <div id="help_navi" style="height:100%;width:10%;margin-top:0.5%;min-width:51px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("help_container").style.display="block"'>
                         
                             
                                 <img src="/images/support_agent_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
                                 <div style="width: 100%;height: 22px;">Help</div>
 
                             </div>
-                            <div id="forced_ads_close" style="height:90%;margin-top:4%;width:10%;min-width:51px;display: none;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="ads_provided_menu_content_show()">
+                            <div id="forced_ads_close" style="height:90%;margin-top:0.5%;width:10%;min-width:51px;display:none;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="ads_provided_menu_content_show()">
                         
-                                    
+            
+                                
                                 <img src="/images/close_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
                                 <div style="width: 100%;height: 22px;">Close</div>
 
+                            
+
                             </div>
-                            <div style="height:90%;margin-top:4%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <div style="height:90%;margin-top:1%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
                             
                             
                                 <img  src="/images/zoom_in_white_24dp.svg" style="height: 30px;margin: 5px auto 0px auto;" onclick="image_text_link()"> 
                         
 
                             </div>
-                            <div style="height:90%;margin-top:4%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+                            <div style="height:90%;margin-top:1%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
             
                                 <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 30px;margin: 5px auto 0px auto;display:none" onclick="next_wallpaper_ads()"> 
                     
                             </div>
-                  
+
+                        </div>
                         
                         </div>
 
@@ -2960,7 +2976,7 @@
             //forced ads
             function dark_neumorph_skin_forced_ads(){
 
-                console.log('forced_ads ------ ')
+                // console.log('forced_ads ------ ')
 
                 document.getElementById('middle_left_div').style.display = 'none';
                 document.getElementById('center_left').style.display = 'none';
@@ -2995,7 +3011,7 @@
                 document.getElementById("forced_ads_next").style.display = 'block';
                 document.getElementById("forced_ads_previous").style.display = 'block';
 
-                document.getElementById("forced_ads_close").style.display = 'inline-block';
+                // document.getElementById("forced_ads_close").style.display = 'inline-block';
 
 
           
