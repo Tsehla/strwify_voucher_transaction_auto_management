@@ -143,38 +143,36 @@
 
     	<!-- search -->
         <div id='navi_container'>
-			<button onclick='buy()' class='btn btn-success' style="font-size: 30px">Buy</button>
+			<button onclick='buy()' class='btn btn-success' style="font-size: 21px">Buy</button>
             <input type='search' placeholder='Google' class='form-control' id='search'>
-            <button onclick='search()' class='btn btn' style="background: rebeccapurple;">	&#8981;</button>
+            <button onclick='search()' class='btn btn' style="background: rebeccapurple;">	<p style="font-size: 22px; ">&#8981;</p></button>
         </div>
         <style>
             #navi_container {
-				min-width: 200px;
-                width: 100vw;
-                height: 70px;
-				line-height: 45px;
-				text-align: center;
-                display: flex;
+                min-width: 200px;
+                width: 100%;
+                height: 45px;
+                text-align: center;
+                display: block;
                
             }
             #navi_container input {
                 width: 40%;
-                height: 80%;
-                margin: 2% 2% 2% 2%;
+                height: 82%;
+                margin: auto;
                 text-align: center;
+                display: inline-block;
+                vertical-align: middle;
             }
             #navi_container input::placeholder {
                  font-size: 15px;
             
             }
             #navi_container button {
-                width: 30%;
-                height: 98%;
-                margin-top: 1%;
+                width: 25%;
+                height: 100%;
                 color: snow;
-                font-size: 60px;
-                vertical-align: middle;
-                line-height: 45px;
+                display: inline-block;
             }
             #navi_container button:active{
                 background-color:black;
@@ -497,26 +495,37 @@
                 /*margin-top: 1vh;
                 margin-bottom: 100px;
                 */
-				min-width: 200px;
+				/* min-width: 200px;
                 width: 100vw;
                 min-height:60px;
                 height: auto;
                 border: 0px;
                 background: rgba(192,192,192,0.2);
-                /* background-color: rgba(15, 1, 1, 0.775); */
+                /* background-color: rgba(15, 1, 1, 0.775); 
                 text-align: center;
                 overflow: auto;
                 position: fixed;
-                bottom:15%;
+                bottom:15%; */
+
+
+                width: 100%;
+                height: auto;
+                padding: 1px 11px;
+                background: rgba(192,192,192,0.2);
+                color: snow;
+                font-size: 16px;
+                text-shadow: 1px 1px 12px black;
+                position: fixed;
+                bottom:23%; 
             }
             #walp_links_container p{
                 width: 100%;
                 height: auto;
-                padding: 15px 1vw 0px 1vw;
                 background-color: transparent;
                 color: snow;
-                font-size: 20px;
-                text-shadow : 1px 1px 12px black;
+                font-size: 16px;
+                text-shadow: 1px 1px 12px black;
+                margin: 0px;
             }
 
             #walp_links_container_2 {
@@ -715,7 +724,7 @@
        </div>
         <style>
            #free_sites_container {
-                position: fixed;
+                /* position: fixed;
                 display: none;
                 top : 3vh;
                 left :7vw;
@@ -724,7 +733,20 @@
                 max-height : 80vh;
                 background-color : white;
                 box-shadow: 3px 3px 13px magenta, -3px -3px 13px magenta;
-                overflow-y: auto;/*hidden scrolling*/
+                overflow-y: auto;/*hidden scrolling*
+                overflow-x: hidden;
+                border-radius: 9px; */
+
+                position: fixed;
+                display: none;
+                top: 3vh;
+                left: 7vw;
+                width: 85vw;
+                min-height: 383px;
+                max-height: 80%;
+                background-color: white;
+                box-shadow: 3px 3px 13px magenta, -3px -3px 13px magenta;
+                overflow-y: auto;
                 overflow-x: hidden;
                 border-radius: 9px;
               
@@ -839,7 +861,7 @@
                 top : 3vh;
                 left :7vw;
                 width : 85vw;
-                min-height : 500px;
+                min-height: 383px;
                 max-height : 80vh;
                 background-color : white;
                 box-shadow: 3px 3px 13px green, -3px -3px 13px green;
@@ -1748,16 +1770,19 @@
                     document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
                 }
 
-                //custom manu forced ads
-                if(menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2'){
-
-                    ads_provided_menu_content_show('show',do_forced_ads=data_from_db.allow_forced_advertisement_scrolling);
-
-                }
              
 
                 forced_ads_skip_to_login_menu = data_from_db.forced_advertisement_skip_to_login; //set skip [ menu buttonly only user interface ] to true or false
                 
+            }
+
+            
+            //custom manu show if so
+            if(menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2'){
+
+                
+                ads_provided_menu_content_show('show',do_forced_ads=data_from_db.allow_forced_advertisement_scrolling);
+
             }
 
             forced_ads_scrolling_skip_button_show = (Number(data_from_db.forced_advertisement_scrolling_exit_number)?Number(data_from_db.forced_advertisement_scrolling_exit_number):10 );//forced scrolling skip show button on interval
