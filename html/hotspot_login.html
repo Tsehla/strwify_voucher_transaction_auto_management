@@ -1267,7 +1267,9 @@
         //forced ads scrolling skip button show on picture number
         var forced_ads_scrolling_skip_button_show = 10;//show skip button on tenth wallpaper
         var forced_ads_allowed = false; //set forced ads allowed tracking to false
+        var forced_ads_allowed_login_first_run = true; //removing some bug a feature caused
         var forced_ads_skip_to_login_menu = false; //if forced ads, allow to skip to login menu directly// i.e skip user inetrface with menu button only
+        var forced_ads_continious_scroll_on = false;//continiuos scrollibg of ads
 
         //login menu configuration
         var menu_layout_type = 'appearance_1'; //set appearance 2 layout as default
@@ -1279,6 +1281,7 @@
         var ads_download_image_watermark_text = '';//water mark text
 
         var transaction_activated_free_user_login_option = false;//free user login transaction app initiator tracker
+        var show_free_wifi_button = false;//free wifi button
 
         var logo_image_url = 'images/logo.png';//logo image
         var how_to_bottom_text = 'Help yourself, To be helped;'//text shown on help menu as marquee
@@ -1589,7 +1592,13 @@
                     // login link example with mikrotik [ trial ] user activated : http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://StreetWifiy.co.za/login&link-orig=&chap-id=&chap-challenge=&link-orig-esc=&mac-esc=90%3A2E%3A1C%3A69%3AB3%3ABA&username=&trial=yes&location=default
                     //trick is [ trial=yes ]
 
-                    document.getElementById('free_data_login_button').style.display='inline-block';
+                    //legacy skine free login button
+                    if(document.getElementById('free_data_login_button')){
+                        document.getElementById('free_data_login_button').style.display='inline-block';
+                    }
+                    
+                    //for new skins
+                    show_free_wifi_button = true;
 
                     if(data_from_db.free_data_allow){ //if free login is activated from transaction app
 
@@ -1762,6 +1771,8 @@
 
                 
                 forced_ads_allowed = true; //set forced ads allowed to true
+
+                forced_ads_continious_scroll_on = data_from_db.forced_ads_continious_scroll_on
 
                 //for legacy skins
                 if(menu_layout_type.trim() == 'appearance_1' || menu_layout_type.trim() == 'appearance_2'){
@@ -2046,6 +2057,8 @@
 			
 			//increment when function call
 			current_image_content_tracker = current_image_content_tracker +1;
+
+           
 			
 			//check if image tracker is still with provided image length range
 			if(current_image_content_tracker > wall_link_description.length -1){//if image tracker is over image array leng\\reset image traccker
@@ -2104,7 +2117,7 @@
             
 
             if(current_image_content_tracker >= forced_ads_scrolling_skip_button_show && forced_ads_allowed){//if current wallpaper interval number is equal to skip button show interval
-
+              
                 if(document.getElementById('forced_advertisement_navigation_three_button')){
                     document.getElementById('forced_advertisement_navigation_three_button').style.display = 'none'; // then sow skip button
                 }
@@ -2112,20 +2125,37 @@
                 if(document.getElementById('forced_advertisement_navigation_four_button')){
                     document.getElementById('forced_advertisement_navigation_four_button').style.display = 'block'; // then sow skip button
                 }
+
+                //for legacy skins
+                if(document.getElementById('forced_advertisement_navigation_three_button') || document.getElementById('forced_advertisement_navigation_four_button')){
+                       //set forced ads to false 
+                    forced_ads_allowed = false;
+                }
              
                 if(document.getElementById('forced_ads_close')){
-                 return document.getElementById('forced_ads_close').style.display = 'inline-block'; // then sow skip button
+
+                    if( forced_ads_allowed_login_first_run){
+
+                        document.getElementById('forced_ads_close').style.display = 'inline-block'; // then sow skip button
+                        border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "forced_ads_close");//button animation
+                 
+                        forced_ads_allowed_login_first_run = false;
+                    }
+                  
+                  
                 }
 
-                //set forced ads to false 
-                forced_ads_allowed = false;
+             
 
                   
             }
            
+            // console.log(current_image_content_tracker)
+            // console.log(forced_ads_auto_exit,forced_ads_continious_scroll_on,current_image_content_tracker ,wall_link_description.length )
 
-            if(forced_ads_auto_exit){//if all walpaper have been scrolled through
+            if(forced_ads_auto_exit && !forced_ads_continious_scroll_on){//if all walpaper have been scrolled through
 
+               
                 forced_ads_hide ();//auto exit forced ads mode
 
             }
@@ -2248,23 +2278,29 @@
             }
 
 
-            alert(alert_message);//give alert
+           
 
             // ***** hotspot transaction app activated free login button//this is activated within hotspot menu in transaction app//authentication is done on radius unlike the one on mikrotik activated where authentication is done by router created [ trial ] user
 
             var is_router_activated_free_login = false; //tracks if free login is activated from router hotspot menu [ mikrotik hotspot trial user ]
 
             if(!transaction_activated_free_user_login_option){// if transaction app free user login tracker is false
+
+                //check if button is not activated forcefully via css
+                if(router_variables_array.trial != 'yes'){
+                    alert("Free login is not currently enabled on this hotspot. Please check later or contact hotspot owner/manager.")
+                    return;
+                }
                 
                 is_router_activated_free_login = true; //set hotspot free user login tracker to true
             }
 
          
 
-            
+            alert(alert_message);//give alert
            
 
-                if(hotspot_transaction_server_url){//if transact app link given
+            if(hotspot_transaction_server_url){//if transact app link given
 
                 if(sponsore_ads.ads_sponsored){ //if current ads is set as free hotspot sponsore
 
@@ -2276,11 +2312,11 @@
                 }
 
                 window.open(hotspot_transaction_server_url+'/buy_voucher?free_login&hotspot_link=' + (router_variables_array["link-login-only"]?router_variables_array["link-login-only"]:'') + '&mac='+(router_variables_array["mac-esc"]?router_variables_array["mac-esc"]:"") + '&hotspot_location='+  (router_variables_array["location"]?router_variables_array["location"]:'') + '&router_free_type=' + is_router_activated_free_login, '_self');
-                }
+            }
 
-                else{//if transact app link not given
+            else{//if transact app link not given
                 alert('Error, unable to send you to hotspot transaction menu. Website address not found');
-                }    
+            }    
 
 
         }
@@ -2300,7 +2336,7 @@
             if(color_pallette.length > 0 && typeof color_pallette == "object"){
 
 
-                console.log(contrast_change_alternate_tracker)
+                // console.log(contrast_change_alternate_tracker)
 
                 //add transparent color to array
                 color_pallette.unshift("transparent");
@@ -2315,13 +2351,25 @@
 
                     }
 
-                    //border change
-                    document.getElementById(div_id).style.borderColor = color_pallette[ color_pallette_current_color_index ]; //apply color
+                   
 
-                    //add voucher button
-                    document.getElementById('add_voucher_button').style.borderColor = color_pallette[ color_pallette_current_color_index ]; //apply color
+                    //add voucher button//handle legacy skins
+                    if(document.getElementById('add_voucher_button')){
+                        document.getElementById(div_id).style.borderColor = color_pallette[ color_pallette_current_color_index ];
+                        document.getElementById('add_voucher_button').style.borderColor = color_pallette[ color_pallette_current_color_index ]; //apply color
                  
+                    }
+                   
+                    //new skins
+                    if(!document.getElementById('add_voucher_button')){
+                        //border change
+                        document.getElementById(div_id).style.border = "1px solid "+color_pallette[ color_pallette_current_color_index ]; //apply color
+                        document.getElementById(div_id).style.borderRadius = '5px';
+                 
+                    }
+                   
             
+
               
                     color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
 
@@ -2333,11 +2381,18 @@
                         //remove opacity
                         document.getElementById(div_id).style.opacity = '100%';
 
-                        //forced ads hide
-                        document.getElementById('forced_ads_hide').style.opacity = '100%';
+                        if(menu_layout_type.trim() == 'appearance_1' || menu_layout_type.trim() == 'appearance_2'){
+                            //forced ads hide
+                            if( document.getElementById('forced_ads_hide')){
+                                document.getElementById('forced_ads_hide').style.opacity = '100%';
+                            }
+                        
 
-                        //free login             
-                        document.getElementById('free_data_login_button').style.filter = 'contrast(100%)';
+                            //free login
+                            if(document.getElementById('free_data_login_button')){
+                                document.getElementById('free_data_login_button').style.filter = 'contrast(100%)';
+                            }             
+                        }
 
                         contrast_change_alternate_tracker = false//set contrast tracker
 
@@ -2347,17 +2402,27 @@
 
                 
 
-                        //apply opacity
-                        document.getElementById(div_id).style.opacity = '80%';
+                    //apply opacity
+                    document.getElementById(div_id).style.opacity = '80%';
 
-                           //forced ads hide
-                        document.getElementById('forced_ads_hide').style.opacity = '80%';
+                    if(menu_layout_type.trim() == 'appearance_1' || menu_layout_type.trim() == 'appearance_2'){
+                        
+                        //forced ads hide
+                        if(document.getElementById('forced_ads_hide')){
+                            document.getElementById('forced_ads_hide').style.opacity = '80%';
+                        }
+                        
 
                         //free login
-                        document.getElementById('free_data_login_button').style.filter = 'contrast(50%)';
+                        if(document.getElementById('free_data_login_button')){
+                            document.getElementById('free_data_login_button').style.filter = 'contrast(50%)';
+                        }
 
-                        contrast_change_alternate_tracker = true//set contrast tracker
-        
+                    }
+                        
+
+                    contrast_change_alternate_tracker = true//set contrast tracker
+    
 
 
                     //console.log("busy");
@@ -2497,13 +2562,16 @@
                             <!-- left -->
                             <div id="middle_left_div" style="height:100%;min-height:345px;width:30%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;box-shadow: inset 39px 47px 69px rgb(0 0 0 / 71%), inset -18px -21px 22px rgb(0 0 0 / 82%);">
                             
-                                <div id="free_data_login_button" style="width:100%;height: 13%;min-height: 50px;font-size: 15px;\\*display:none*\\" onclick="free_login()">
+                                <div  style="width:100%;height: 13%;min-height: 50px;font-size: 15px;">
                                 
-                                    <img src="/images/wifi_white_24dp.svg" style="height: 19px;margin: 4% auto 0px auto;">
-                                    <div style="width: 100%;height: 22px;">Free Wifi</div>
+                                    <div id="free_data_login_button" style="width:auto;height:auto;display:none" onclick="free_login()">
+
+                                        <img src="/images/wifi_white_24dp.svg" style="height: 19px;margin: 4% auto 0px auto;">
+                                        <div style="width: 100%;height: 22px;">Free Wifi</div>
+                                    </div>
 
                                 </div>
-                                <div style="width:100%;height: 13%;min-height: 50px;font-size: 15px;" onclick='buy()'>
+                                <div id="newskin_buy_button" style="width:100%;height: 13%;min-height: 50px;font-size: 15px;" onclick='buy()'>
                                     <img src="/images/shopping_cart_white_24dp.svg" style="height: 19px;margin: 4% auto 0px auto;">
                                     <div style="width: 100%;height: 22px;">BUY</div>
                                 </div>
@@ -2540,7 +2608,7 @@
                                 <div id='center_left' style="height:100%;width:40%;min-width:30px;display: inline-block; float: left;display: none;">
 
                                     <div style="width:100%;height:17%;min-height:30px;">
-                                        <button style="width: 90px;height: 44px;text-align:center;font-size: 20px;background-color:white;border-radius: 25px;margin: 13px;box-shadow: inset -4px -3px 11px rgb(14 27 187 / 81%), inset 7px 4px 9px rgb(231 0 0 / 76%);" onclick="dark_neumorph_skin()">Menu</button>
+                                        <button id="menu_button_non_legacy_skin" style="width: 90px;height: 44px;text-align:center;font-size: 20px;background-color:white;border-radius: 25px;margin: 13px;box-shadow: inset -4px -3px 11px rgb(14 27 187 / 81%), inset 7px 4px 9px rgb(231 0 0 / 76%);" onclick="dark_neumorph_skin()">Menu</button>
                                     </div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:31%;min-height:30px;text-align: center;">
@@ -2557,7 +2625,7 @@
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:31%;min-height:30px;text-align: center;">
-                                        <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 21% auto 0px auto;" onclick='next_wallpaper_ads()'>
+                                        <img src="/images/arrow_forward_ios_white_24dp.svg" style="height: 61px;margin: 22% auto 0px auto;" onclick='next_wallpaper_ads()'>
                                         </div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
                                     <div style="width:100%;height:17%;min-height:30px;"></div>
@@ -2831,6 +2899,10 @@
             //add a delay, font loading/applying stops scrolling
             setTimeout(dark_neumorph_skin_walp_links_2_text_scroll(),300);
 
+            if(show_free_wifi_button){
+                document.getElementById('free_data_login_button').style.display = 'block';
+            }
+
         }
 
 
@@ -2910,6 +2982,15 @@
                 // document.getElementById().style.display = 'none';
 
 
+
+                //gudes animation
+                // setTimeout(function(){//add delay to have html redy
+
+                //     border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "menu_button_non_legacy_skin");//button animation
+                //     border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "newskin_buy_button");//button animation
+
+                // },500);
+
                 //ads start
 
                 //if first page load, allow div to be added to dom
@@ -2920,12 +3001,18 @@
 
                     //add delay before calling wallpaper changer
                     // return setTimeout(function(){wallpaper_changer_start()},900);
-                    return setTimeout(function(){wallpaper_changer_start()},100);
+                    return setTimeout(function(){
+
+                        wallpaper_changer_start();
+                        
+
+                    },100);
                     
                 }
 
                 wallpaper_changer_start();//start
-           
+                
+         
             }
 
 
@@ -2945,6 +3032,8 @@
                     walp_interval =  setInterval(walp_changer, 6000);
 
                 }
+
+
             
             }
 
@@ -2969,6 +3058,10 @@
 
                 //login menu acton bar 
                 document.getElementById('walp_links_2').innerHTML = manu_layout_ads_wallpaper.login_menu_wallpaper_text; //change login menu image action bar text
+
+                // gudes animation
+                border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "menu_button_non_legacy_skin");//button animation
+                border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "newskin_buy_button");//button animation
 
 
             }

@@ -36,6 +36,9 @@ http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://uwireless
 ## login status menu
 http://127.0.0.1:3100/hotspot_status?status=true&refresh_timeout_seconds=60&advert_link=http://wifi.com/advert&logout_link=http://wifi.com/logout&user_name=usbwalt&ip_address=192.168.88.252&data_uploaded=114%20B&data_downloaded=96%20B&connection_time_used=0s&connection_time_left=&up_time=0s&refresh_time=1m&data_available=1277.5%20MiB&link-login-only=http://wifi.com/login&location=orangefarm
 
+## login status menu # mikrotik router trial user enabled/created
+http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://StreetWifiy.co.za/login&link-orig=&chap-id=&chap-challenge=&link-orig-esc=&mac-esc=90%3A2E%3A1C%3A69%3AB3%3ABA&username=&trial=yes&location=orangefarm
+
 ## lougout menu
 http://127.0.0.1:3100/hotspot_logout?logout=true&login_link=http://uwireless.za/login&user_name=guest&ip_address=192.168.88.250&mac_address=90:2E:1C:69:B3:BA&uptime=1m24s&time_left=&data_uploaded=3.7%20MiB&data_downloaded=9.6%20MiB&data_left=unlimited&link-login-only=http://uwireless.za/login&location=orangefarm
 		
