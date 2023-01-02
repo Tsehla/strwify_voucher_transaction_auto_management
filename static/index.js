@@ -5837,7 +5837,7 @@ function distributor_superadmin_acc_help(type_of_user){
 			return;
 		}
 		
-		alert(`1) Enter amount of data to sell.\n\t\tExample :\n\t\t\tFor R5.00 Enter 5\n\t\t\tFor R10.00, Enter 10\n\t\t\tFor R100.00, Enter 100\n\n2) Get the Temporary code from the buyer\n3) Enter the temporary code to the second input box\n5) Press sell ticket button\n4) Wait few second and ask buyer to press get ticket button in their cellphone\n\nNB\nMake sure buyer does not close the app or change the code until transaction is complete\n\nTip :\na) Complementary vouchers are meant to be offered to users once per hour/day/week/etc and will reject login until their usage is reset per person if the already used it\nb) [ Hote/Resturant/etc ] menu printed vouchers will not show voucher amount but resturant/hotel/etc name or any message`);
+		alert(`1) Enter amount of data to sell.\n\t\tExample :\n\t\t\tFor R5.00 Enter 5\n\t\t\tFor R10.00, Enter 10\n\t\t\tFor R100.00, Enter 100\n\n2) Get the Temporary code from the buyer\n3) Enter the temporary code to the second input box\n5) Press sell ticket button\n4) Wait few second and ask buyer to press get ticket button in their cellphone\n\nNB\nMake sure buyer does not close the app or change the code until transaction is complete\n\nTip :\na) Complementary vouchers are meant to be offered to users once per hour/day/week/etc and will reject login until their usage is reset per person if the already used it\nb) [ Hote/Resturant/etc ] menu, printed vouchers will not show [ voucher amount] but resturant/hotel/etc [name] or any [message]`);
 		return;
 		
 	}
