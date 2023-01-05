@@ -3271,11 +3271,17 @@ app.get('/api/hotspot_data', function(req, res){
 	
 	//create model for the location
 	function create_new_named_hotspot_data(){//data specified on model is used, this here is disregarded...
+
+		// var v = {"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":2033,"created_by_account_id": ""}
+
+		//get current year
+		var date = new Date();
+		var year = date.getFullYear() + 10;//lol big year
 		
 		keystone.createItems({
 			'Router hotspot page' : [{
 				router_location : location_of_router.toLowerCase(),
-				hotspot_wallpaper: ['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored ": false, "hidden" : true}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true}'],
+				hotspot_wallpaper: ['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored ": true, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Image 3", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Image 5", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Image 6", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Image 7", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored" : false, "hidden" : true, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Image 8", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Image 9", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Image 10", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":'+year+',"created_by_account_id": ""}'],
 				free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
 				free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
 				free_data_allow : true,
@@ -3288,6 +3294,7 @@ app.get('/api/hotspot_data', function(req, res){
 				hotspot_how_to_recharge_seller : '/default_slide_images/3.jpg',
 				hotspot_how_to_super_admin: '/default_slide_images/4.jpg',
 				hotspot_logo : '/images/logo.png',
+		
 				
 			}]
 			
@@ -3363,6 +3370,313 @@ app.get('/api/hotspot_data', function(req, res){
 
 
 	});
+
+
+
+	//hotspot get all
+
+	app.get('/api/get_hotspot_data_for_ads', function(req, res){	
+	
+		
+		var user_requesting_data_id = req.query.user_id;
+
+		//get user type from query string//dont know why i should clean it, but it seem i did in onother code here, so i do copy paste hahaha
+		var user_requesting_data_user_type = req.query.user_type.replace('%20', ' '); 
+		user_requesting_data_user_type = user_requesting_data_user_type.replace(user_requesting_data_user_type[0], user_requesting_data_user_type[0].toUpperCase());// make capital letter
+
+		
+		//check if details provided
+		if(user_requesting_data_id && user_requesting_data_id.trim().length < 13 || user_requesting_data_user_type && user_requesting_data_user_type.trim().length < 4){ 
+			
+			//if problem send error back
+			return 	send_router_hotspot_data ('error : login problem');//send nothing back
+		}
+
+
+		//check if user details are found on db
+
+		var max_ads_slots_per_hotspots_allowed = 0;//get ads slots allowed for this user per hotspot
+		
+		//find looged in user
+		function find_logged_in_user(){ 
+
+
+			keystone.list('seller distributor').model.findOne()
+			.where({idnumber : Number(user_requesting_data_id),usertype: user_requesting_data_user_type})
+			.exec(function(err, response){
+	
+	
+				if(err){
+					console.log("ads hotspot user logins check error: user id = "+ user_requesting_data_id +", user type = "+user_requesting_data_user_type);
+					send_router_hotspot_data ('error : login problem');//send nothing back
+					return;
+				}
+	
+				if(response == null || response == undefined || response == ''){//user not found//add user
+					console.log("ads hotspot user logins check error: user id = "+ user_requesting_data_id +", user type = "+user_requesting_data_user_type);
+					send_router_hotspot_data ('error : login problem');//send nothing back
+					return;
+				}
+				
+				// get_router_hotspots(response);
+				get_router_hotspots();
+				// console.log('-----',response);
+				max_ads_slots_per_hotspots_allowed = response.max_ads_slots_per_hotspots_allowed;
+				return;
+	
+			});
+
+		};
+
+		find_logged_in_user();//auto start
+
+
+		//get hotpots data
+		function get_router_hotspots(){
+
+			var final_hotspots_data_array = [
+				// {
+				// 	hotspot_location : '',//location of hotspot or name
+				// 	hotspot_ads_currently_live : [], //ads of this user currently on hotspot
+				// 	hotspot_db_id : '',//hotspot db id
+				// 	is_private_or_limited_hotspot : false,//if hotspot is only meant for those who have their id added to hotspot [ Hotspots assigned ] keystone menu//if hotspot has user id in this field, then it will automatically be treated as gone private//to be shown to usr, the user has to be included as hotspot manager by system admin
+				// 	hotspots_ads_disabled : false,//for admin//disabled hotspot wont show to users irrespective if they have ads on them or not
+
+				// }
+			];//contain filtered hotspots data
+
+
+			keystone.list('Router hotspot page').model.find()
+			// .where(user_details)
+			.exec(function(err, response){
+	
+	
+				if(err){
+					console.log("ads hotspot user logins get hotspots error: user id = "+ user_requesting_data_id +", user type = "+user_requesting_data_user_type);
+					send_router_hotspot_data ('error : login problem');//send nothing back
+					return;
+				}
+	
+				if(response == null || response == undefined || response == ''){//user not found//add user
+					console.log("ads hotspot user logins get hotspots [empty] error: user id = "+ user_requesting_data_id +", user type = "+user_requesting_data_user_type);
+					send_router_hotspot_data ('error : login problem');//send nothing back
+					return;
+				}
+	
+				// console.log('-----',response);
+
+				//filter hotspot data
+
+	
+
+				response.forEach(function(data, index){
+
+					// console.log( data.router_location);
+
+					//CLEAN RESULTS it contains some meta data
+					data = JSON.parse(JSON.stringify(data ));
+
+					// console.log('======',data)
+
+
+					//for sellers or distributors
+					if(user_requesting_data_user_type == 'Seller' || user_requesting_data_user_type == "Distributor"){//for sellers or distributor accounts
+
+
+						//check if hotspot is enabled for user ads
+						if(data.hotspot_allow_user_ads ){
+
+						
+							var is_private_or_limited_hotspot = false;//if hotspot is only meant for those who have their id added to hotspot [ Hotspots assigned ] keystone menu//if hotspot has user id in this field, then it will automatically be treated as gone private//to be shown to usr, the user has to be included as hotspot manager by system admin
+
+
+							var is_hotspot_private_en_user_is_included_in_hotspot_manager_list = false;//if user is part of those allowd to advertise in private hotspot
+							
+							//check if hotspot is private
+							if(data.hotspot_manager.length > 0){//if there are users
+
+								//check if current user is prt of the users
+								data.hotspot_manager.forEach(function(user_ids){
+
+
+									
+									if(user_ids.trim() == user_requesting_data_id.trim()){//if in list
+
+										is_hotspot_private_en_user_is_included_in_hotspot_manager_list = true;//set true
+										is_private_or_limited_hotspot = true;//set true
+									}
+
+								})
+
+							}
+							//final checks
+							if(data.hotspot_manager.length == 0 || data.hotspot_manager.length > 0 && is_hotspot_private_en_user_is_included_in_hotspot_manager_list){//if hotspot has no manages, or has managers and current user is part of the managers then add hotspot
+
+								//ads posted by current user
+								var hotspot_ads_currently_live = [];//ads of this user currently on hotspot
+
+								data.hotspot_wallpaper.forEach(function(ads,index){
+
+									ads = JSON.parse(ads);//turn to object
+
+									//if ads was posted by this user
+
+									//if ads has creater account id matching current user account id
+									if(ads.created_by_account_id && ads.created_by_account_id.trim() ==  user_requesting_data_id.trim() ){
+										//save advertisement
+										hotspot_ads_currently_live.push(ads)
+									}
+
+								})
+
+
+								//save data
+								final_hotspots_data_array.push(
+									{
+										hotspot_location : data.router_location,//location of hotspot or name
+										hotspot_ads_currently_live : hotspot_ads_currently_live, //ads of this user currently on hotspot
+										hotspot_db_id : data._id,//hotspot db id
+										is_private_or_limited_hotspot : is_private_or_limited_hotspot,//if hotspot is only meant for those who have their id added to hotspot [ Hotspots assigned ] keystone menu//if hotspot has user id in this field, then it will automatically be treated as gone private//to be shown to usr, the user has to be included as hotspot manager by system admin
+										// hotspots_ads_disabled : false,//for admin//disabled hotspot wont show to users irrespective if they have ads on them or not
+										ads_edit_create_costs : JSON.parse(data.ads_create_edit_costs), //costs to create new ads or edit already active ads
+										max_ads_slots_per_hotspots_allowed : max_ads_slots_per_hotspots_allowed,
+									}
+								)
+							}
+
+						}
+
+
+					}
+
+					//for system admin
+					if(user_requesting_data_user_type == 'Admin'){
+
+						final_hotspots_data_array.push(data)
+					}
+
+
+
+
+
+
+					//on last loop
+					if(index == response.length - 1){
+
+						// console.log(final_hotspots_data_array)
+						//send filtered data back
+						send_router_hotspot_data (final_hotspots_data_array)
+					}
+
+
+
+				})
+
+	
+
+
+
+	
+			});
+
+		
+
+
+
+
+
+
+
+
+		};
+
+
+
+
+
+
+
+
+
+			
+		//find router hostpot data
+		// function find_router_hotspsot_data(){ 
+		// 	 keystone.list('Router hotspot page').model.findOne()
+		// 	.where({router_location : location_of_router.toLowerCase()})
+		// 	.exec(function(err, response){
+	
+	
+		// 		if(err){
+		// 			console.log('Error finding router with location');
+		// 			send_router_hotspot_data ('');//send nothing back
+		// 			return;
+		// 		}
+	
+		// 		if(response == null || response == undefined || response == ''){//user not found//add user
+		// 			console.log('No router with location found');//
+		// 			create_new_named_hotspot_data();//create new named hotspot
+		// 			return;
+		// 		}
+				
+		// 		// send_router_hotspot_data (response); //send named hotspot data back
+		// 		return;
+	
+		// 	 });
+		// };
+		// find_router_hotspsot_data();//start function 
+		
+		// //create model for the location
+		// function create_new_named_hotspot_data(){//data specified on model is used, this here is disregarded...
+			
+		// 	keystone.createItems({
+		// 		'Router hotspot page' : [{
+		// 			router_location : location_of_router.toLowerCase(),
+		// 			hotspot_wallpaper: ['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored" : true, "hidden" : false}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Legal for Creatives", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Five Fingers", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Marseillies", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Unarams", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Anrya", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored ": false, "hidden" : true}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Urban Village", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Nonkuphiri", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Know Your Voucher", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true}'],
+		// 			free_education_sites : ['{"link":"https://scholar.google.co.za/", "text":"Google scholar"}','{"link":"https://www.google.com","text":"Search on google"}'],
+		// 			free_jobs_sites : ['{"link":"https://www.google.com","text":"Search on google"}'],
+		// 			free_data_allow : true,
+		// 			hotspot_announcements : ['Dare to be different','Dare to write your destiny.'],
+		// 			hotspot_how_to_bottom_text : 'Help yourself, To be helped.',
+		// 			hotspot_free_sites_bottom_text : 'Pass it on, unconditionally help a stranger, a friend, a family member.',
+		// 			notification_bottom_text : 'If it was easy, no one would care. If it was impossible, no one would dare.',
+		// 			hotspot_how_to_buy :'/default_slide_images/1.jpg',
+		// 			hotspot_how_to_sell :  '/default_slide_images/2.jpg',
+		// 			hotspot_how_to_recharge_seller : '/default_slide_images/3.jpg',
+		// 			hotspot_how_to_super_admin: '/default_slide_images/4.jpg',
+		// 			hotspot_logo : '/images/logo.png',
+					
+		// 		}]
+				
+		// 	}, function(err, success){
+		// 		if(err){
+					
+		// 			console.log('Error, when attempt creating new router location');
+		// 			send_router_hotspot_data ('');//send nothing back
+		// 			return;	
+					
+		// 		}
+		// 		if(success == null || success == undefined || success == ''){
+		// 			console.log('No response given after attempt creating new router location');
+		// 			send_router_hotspot_data ('');//send nothing back
+		// 			return;
+		// 		}
+				
+		// 		find_router_hotspsot_data();//restart search
+		// 		return;
+		// 	});
+			
+		// }
+		
+		// responder function	
+		function send_router_hotspot_data (data){
+			res.jsonp(data);
+			return;
+		}
+		
+		
+	});
+		
+
 
 
 

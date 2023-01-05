@@ -217,6 +217,22 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
   /*seller & ||  user login details collcetor */
   var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
+//   seller_login= {
+// 		"logged_in": true,
+// 		"seller_id": "8905135800000",
+// 		"usertype": "Seller",
+// 		"credit": 500,
+// 		"name": "Tsehla Seller",
+// 		"customer_partners_contact_list": [],
+// 		"resturent_hotel_cafe_login": false,
+// 		"manages_hotspot": false,
+// 		"hotspot_printable_vouchers": true,
+// 		"hotspot_printable_vouchers_template": "Primary",
+// 		"managed_hotspot": [],
+// 		"nocharge_voucher_sell": true
+// 	}
+
+//   console.log('======delete this [seller_login ]===== ',seller_login)
   
   
   
@@ -7106,3 +7122,222 @@ function hotspot_edit(hot_spot_data){
 
 
 //------------ save hotspot changes -------------------
+
+
+
+
+
+//------------ hotspot manage -------------------------
+
+var router_ads_owned = [];//ads owned
+
+function get_hotspots_editable_for_user(){
+
+
+
+	//shot htospot menu
+	dom_hide_show('show', 'hotspot_manage')
+
+	var user_type;//type of logged in user
+	var user_id; //logged in user id
+
+	//get loggeg in user data
+	if(seller_login.logged_in){
+
+		user_type = seller_login.usertype
+		user_id = seller_login.seller_id
+
+	}
+
+	if(distributor_login.logged_in){
+		
+		user_type = distributor_login.usertype
+		user_id = distributor_login.seller_id
+	}
+
+	if(admin_login.logged_in){
+
+		user_type = admin_login.usertype
+		user_id = admin_login.seller_id
+
+	}
+
+
+	//check if login details provided
+	if(!user_type || !user_id){
+
+		return alert('Please login to you account to use this menu');//give error alert
+	}
+
+
+	$.get('/api/get_hotspot_data_for_ads?user_id='+user_id + '&user_type='+user_type, function(response, status){
+	
+		if(status == 'success'){//if success
+
+
+			if(response == 'error : login problem'){
+				return alert("loggin details contain error, please re-login or contact system administrator for help");//give error 
+			}
+	 
+		 	console.log(response) 
+
+			router_ads_owned = response;//save ads
+
+
+			var div_text = '';
+
+			//create divs
+			response.forEach(function(hotspots, index){
+
+
+				var ads_data = '';//containd ads links en data
+
+				hotspots.hotspot_ads_currently_live.forEach(function (ads_links){
+
+					ads_data = ads_data + `
+					
+					
+											
+						<li style="width:80%;margin: 10px auto;border-bottom: 1px solid grey;">
+							<div style="width: 100%;height:20px;margin: 10px 0px;text-align: center;background-color: orange;"> Is Advertisement de-activated/expired :${ads_links.expire} </div>
+
+							<span style="width: 100%;height:auto;margin:2px;display: block;">
+								Expiery date : <span style="font-weight:bolder"> ${ads_links.expire_day }/${ads_links.expire_month}/${ads_links.expire_year}</span>
+							</span>
+							<span style="width: 100%;height:auto;margin:2px;display: block;">
+								Advertisment poster link :  <br><a href="${ads_links.image_link}" style="display: block;"><span style="font-weight:bolder">${ads_links.image_link}</span></a>
+							</span>
+							<span style="width: 100%;height:auto;margin:2px;display: block;">
+								Advertisment status click link :  <br> <a href="${ads_links.image_status_link}"><span style="font-weight:bolder">${ads_links.image_status_link }</span></a>
+							</span>
+							<span style="width: 100%;height:auto;margin:2px;display: block;">
+								Advertisment status text : <br><span style="font-weight:bolder">${ads_links.image_status_text }</span>
+							</span>
+	
+
+						</li>
+					
+					`;
+
+				})
+
+
+				//check if this ads is new or an edit
+				var button_edit = '';//edit button
+				var button_create = '';//crete button
+			
+
+				if(hotspots.hotspot_ads_currently_live.length == 0 || hotspots.hotspot_ads_currently_live.length < hotspots.max_ads_slots_per_hotspots_allowed ){//if their are no hotspots ads links or data for the user//then it means they will have to create ads in this hotspot as nothing to edit//ADD HOTSPOT MAX ADS CHECK HERE, IF NO SPOTS DONT SHOW EDIT, EN ON SERVER YOU MAY NOT GIVE THE HOTSPOT WITHOUT SPOTS TO USERS, EXCEPT IF THEY ALREADY HAVE POSTS OR ADS ON IT, BUT CREATE BUTTON WONT SHOW
+
+					//change
+					button_create = `
+					<div style="width: 100%;margin:10px 0px;font-size: 10px;">
+						To create new Advertisment on this hotspots will cost :<br> <span style="font-weight:bolder">R${hotspots.ads_edit_create_costs.ads_create_costs}</span>
+					</div>
+					<button class="btn btn-primary" style="margin: 10px auto;" onclick="ads_create(${index})">Create new Advertisment</button>`;
+
+				}
+
+				if(hotspots.hotspot_ads_currently_live.length > 0){
+					button_edit = `
+					<div style="width: 100%;margin:10px 0px;font-size: 10px;">
+						To edit/update this Advertisment on this hotspots will cost :<br> <span style="font-weight:bolder">R${hotspots.ads_edit_create_costs.ads_edit_cost}</span>
+					</div>
+					<button class="btn btn-primary" style="margin: 10px auto;" onclick="ads_edit(${index})">Edit Advertisment</button>`;
+				}
+
+				div_text = div_text + `
+				
+				
+				
+                <div style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;box-shadow: 5 5 3 black;border: 1px solid blue;">
+
+                  <div style="width: auto;height:20px;margin:10px 0px">
+                    Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase()}</span>
+                  </div>
+
+				  <div style="width: auto;height:20px;margin:10px 0px">
+					You have used [ <span style="font-weight:bolder">${hotspots.hotspot_ads_currently_live.length}</span> ] of [ <span style="font-weight:bolder">${hotspots.max_ads_slots_per_hotspots_allowed}</span> ] ads slots for you on this hotspot.
+				 </div>
+                
+                  <div style="width: auto;min-height:20px;margin:10px 0px">
+
+                    <div style="width: 100%;height:20px;margin: 10px 0px;text-align: center;background-color: greenyellow;"> Is Hotspot private : <span style="font-weight:bolder">${hotspots.is_private_or_limited_hotspot}</span> </div>
+
+						<ol>
+							${ads_data}
+						</ol>
+
+						${button_edit}
+						${button_create}
+      
+                  	</div>
+                
+                </div>
+				
+				`
+
+
+
+
+				//on last loop
+				if(index == response.length - 1){
+					
+					dom_innerHtml('hotspot_select', div_text)
+					
+				}
+
+
+			})
+	
+		}
+	
+		else{
+	
+			 console.log('Error retrieving hotspot data from db, please re-login or contact system administrator for help') ;
+		}      
+		
+	
+	
+	});
+	
+
+
+}
+// get_hotspots_editable_for_user()
+
+function ads_edit(hotspot_index){
+
+
+	//if ads is edited//no charged
+
+		//check if ads is still active//if not do new ads request //user will be charged new ads price
+
+	//check if user has enough funds to pay for ads edits
+
+	
+
+	console.log('edit', hotspot_index, router_ads_owned[hotspot_index])
+
+	
+
+
+
+
+
+}
+
+
+function ads_create(hotspot_index){
+
+	console.log('create', hotspot_index, router_ads_owned[hotspot_index])
+
+	//create new ads, check if user has enough credit to do new ads;
+
+	//check ads slots for this users when creating
+
+
+
+
+
+}
