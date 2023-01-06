@@ -7205,10 +7205,10 @@ function get_hotspots_editable_for_user(){
 								Expiery date : <span style="font-weight:bolder"> ${ads_links.expire_day }/${ads_links.expire_month}/${ads_links.expire_year}</span>
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
-								Advertisment poster link :  <br><a href="${ads_links.image_link}" style="display: block;"><span style="font-weight:bolder">${ads_links.image_link}</span></a>
+								Advertisment poster link :  <br><a href="${ads_links.image_link}" style="display: block;" target="bank"><span style="font-weight:bolder">${ads_links.image_link}</span></a>
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
-								Advertisment status click link :  <br> <a href="${ads_links.image_status_link}"><span style="font-weight:bolder">${ads_links.image_status_link }</span></a>
+								Advertisment status click link :  <br> <a href="${ads_links.image_status_link}" target="bank"><span style="font-weight:bolder">${ads_links.image_status_link }</span></a>
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
 								Advertisment status text : <br><span style="font-weight:bolder">${ads_links.image_status_text }</span>
@@ -7253,7 +7253,7 @@ function get_hotspots_editable_for_user(){
                 <div style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;box-shadow: 5 5 3 black;border: 1px solid blue;">
 
                   <div style="width: auto;height:20px;margin:10px 0px">
-                    Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase()}</span>
+                    Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase().replace(/^A-Za-z0-9/gi,' ')}</span>
                   </div>
 
 				  <div style="width: auto;height:20px;margin:10px 0px">
@@ -7270,6 +7270,10 @@ function get_hotspots_editable_for_user(){
 
 						${button_edit}
 						${button_create}
+
+					
+
+						<button class="btn btn-success" style="margin: 10px auto;" onclick="selected_hotspot_ads_view('${hotspots.hotspot_location}')">live View this hotspots</button>
       
                   	</div>
                 
@@ -7338,6 +7342,32 @@ function ads_create(hotspot_index){
 
 
 
+
+
+}
+
+//opens ads to view on current hotspots
+function selected_hotspot_ads_view(hotspot_location='default_'){
+
+
+	//if locaion its default_, mostly help button was pressed
+	if(hotspot_location == 'default_'){
+
+		//give help
+		var confirm_ = confirm("1) Create/Edit your ads shown on hotspots.\r\rDo you want to see ads currently shown on sample hotspot")
+
+		if(confirm_){//if true
+
+			//show default hotspot
+			window.open("/hotspot?location=default", "_blank")
+		}
+		return
+
+	}
+
+
+	//else open selected hotspot
+	window.open("/hotspot?location="+hotspot_location, "_blank")
 
 
 }
