@@ -217,22 +217,22 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
   /*seller & ||  user login details collcetor */
   var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
-//   seller_login= {
-// 		"logged_in": true,
-// 		"seller_id": "8905135800000",
-// 		"usertype": "Seller",
-// 		"credit": 500,
-// 		"name": "Tsehla Seller",
-// 		"customer_partners_contact_list": [],
-// 		"resturent_hotel_cafe_login": false,
-// 		"manages_hotspot": false,
-// 		"hotspot_printable_vouchers": true,
-// 		"hotspot_printable_vouchers_template": "Primary",
-// 		"managed_hotspot": [],
-// 		"nocharge_voucher_sell": true
-// 	}
+  seller_login= {
+		"logged_in": true,
+		"seller_id": "8905135800000",
+		"usertype": "Seller",
+		"credit": 500,
+		"name": "Tsehla Seller",
+		"customer_partners_contact_list": [],
+		"resturent_hotel_cafe_login": false,
+		"manages_hotspot": false,
+		"hotspot_printable_vouchers": true,
+		"hotspot_printable_vouchers_template": "Primary",
+		"managed_hotspot": [],
+		"nocharge_voucher_sell": true
+	}
 
-//   console.log('======delete this [seller_login ]===== ',seller_login)
+  console.log('======delete this [seller_login ]===== ',seller_login)
   
   
   
@@ -7196,8 +7196,6 @@ function get_hotspots_editable_for_user(){
 
 					ads_data = ads_data + `
 					
-					
-											
 						<li style="width:80%;margin: 10px auto;border-bottom: 1px solid grey;">
 							<div style="width: 100%;height:20px;margin: 10px 0px;text-align: center;background-color: orange;"> Is Advertisement de-activated/expired :${ads_links.expire} </div>
 
@@ -7206,6 +7204,7 @@ function get_hotspots_editable_for_user(){
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
 								Advertisment poster link :  <br><a href="${ads_links.image_link}" style="display: block;" target="bank"><span style="font-weight:bolder">${ads_links.image_link}</span></a>
+								<img src="${ads_links.image_link}" alt="${ads_links.image_status_text }" style="height:200px;margin : 5px auto" onclick="window.open('${ads_links.image_link}','_blank')">
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
 								Advertisment status click link :  <br> <a href="${ads_links.image_status_link}" target="bank"><span style="font-weight:bolder">${ads_links.image_status_link }</span></a>
@@ -7250,7 +7249,7 @@ function get_hotspots_editable_for_user(){
 				
 				
 				
-                <div style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;box-shadow: 5 5 3 black;border: 1px solid blue;">
+                <div style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;box-shadow: 5 5 3 black;border: 1px solid blue;background-color: #0c26ff17;border-radius: 12px;">
 
                   <div style="width: auto;height:20px;margin:10px 0px">
                     Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase().replace(/^A-Za-z0-9/gi,' ')}</span>
@@ -7281,34 +7280,25 @@ function get_hotspots_editable_for_user(){
 				
 				`
 
-
-
-
 				//on last loop
 				if(index == response.length - 1){
 					
 					dom_innerHtml('hotspot_select', div_text)
 					
 				}
-
-
 			})
-	
 		}
 	
 		else{
 	
 			 console.log('Error retrieving hotspot data from db, please re-login or contact system administrator for help') ;
 		}      
-		
-	
-	
 	});
 	
 
 
 }
-// get_hotspots_editable_for_user()
+get_hotspots_editable_for_user()
 
 function ads_edit(hotspot_index){
 
@@ -7354,7 +7344,7 @@ function selected_hotspot_ads_view(hotspot_location='default_'){
 	if(hotspot_location == 'default_'){
 
 		//give help
-		var confirm_ = confirm("1) Create/Edit your ads shown on hotspots.\r\rDo you want to see ads currently shown on sample hotspot")
+		var confirm_ = confirm("1) Create/Edit your ads shown on hotspots.\r\r2) Private hotspots you not registered to be part off, are not shown here\r\rDo you want to see ads currently shown on sample hotspot")
 
 		if(confirm_){//if true
 
