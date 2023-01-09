@@ -7415,9 +7415,6 @@ function ads_create(hotspot_index){
 		//check if user can afford this ads slots
 		if(total_charge <= credits){//if so, add the slot
 
-			
-	
-
 			hotspot_ads_slots = hotspot_ads_slots + `
 
 				<div style="width:80%;min-height:130px;border:1px solid;margin:10px auto;box-shadow: inset 0px 0px 6px #0e0e0e66;">
@@ -7469,7 +7466,20 @@ function ads_create(hotspot_index){
 	}
 
 	//dont ask dont know, not carring right now
-	added_slots = added_slots - 1
+	added_slots = added_slots - 1;
+
+	var create_ads_buttons = '';//ads create/preview buttons
+
+	if(added_slots > 0){//if ads slots where created
+	
+		create_ads_buttons = `
+		
+			<div style="width:100%;height:30px;margin:20px;text-align:center">
+				<button style="display:inline-block;margin:auto" onclick="ads_create_save('${ads_to_edit_details.hotspot_db_id}',${added_slots})" class="btn btn-danger">Create Advertisment</button>
+				<button style="display:inline-block;margin:auto" onclick="ads_edit_create_preview('${ads_to_edit_details.hotspot_db_id}',${added_slots})" class="btn btn-success">Preview Advertisment</button>
+			</div>
+		`;
+	}
 
 	//hotspots create menu
 	var hotspot_div = `
@@ -7479,11 +7489,8 @@ function ads_create(hotspot_index){
 		</div>
 
 		${hotspot_ads_slots}
+		${create_ads_buttons}
 
-		<div style="width:100%;height:30px;margin:20px;text-align:center">
-			<button style="display:inline-block;margin:auto" onclick="ads_create_save('${ads_to_edit_details.hotspot_db_id}',${added_slots})" class="btn btn-danger">Create Advertisment</button>
-			<button style="display:inline-block;margin:auto" onclick="ads_edit_create_preview('${ads_to_edit_details.hotspot_db_id}',${added_slots})" class="btn btn-success">Preview Advertisment</button>
-		</div>
 	`;
 
 
@@ -7503,8 +7510,15 @@ function ads_create(hotspot_index){
 
 
 //advertisement created saving
-function ads_create_save(){
+function ads_create_save(hospot_id, total_ads_slots_created){
 
+
+	//check if any sds slot was filled, //look for ads image, and click text maybe
+	//do post to back end
+
+	var ads_to_create = [];//ads to create
+
+	
 
 
 	//give confirm box
