@@ -217,22 +217,22 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
   /*seller & ||  user login details collcetor */
   var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
-  seller_login= {
-		"logged_in": true,
-		"seller_id": "8905135800000",
-		"usertype": "Seller",
-		"credit": 500,
-		"name": "Tsehla Seller",
-		"customer_partners_contact_list": [],
-		"resturent_hotel_cafe_login": false,
-		"manages_hotspot": false,
-		"hotspot_printable_vouchers": true,
-		"hotspot_printable_vouchers_template": "Primary",
-		"managed_hotspot": [],
-		"nocharge_voucher_sell": true
-	}
+//   seller_login= {
+// 		"logged_in": true,
+// 		"seller_id": "8905135800000",
+// 		"usertype": "Seller",
+// 		"credit": 500,
+// 		"name": "Tsehla Seller",
+// 		"customer_partners_contact_list": [],
+// 		"resturent_hotel_cafe_login": false,
+// 		"manages_hotspot": false,
+// 		"hotspot_printable_vouchers": true,
+// 		"hotspot_printable_vouchers_template": "Primary",
+// 		"managed_hotspot": [],
+// 		"nocharge_voucher_sell": true
+// 	}
 
-  console.log('======delete this [seller_login ]===== ',seller_login)
+//   console.log('======delete this [seller_login ]===== ',seller_login)
   
   
   
@@ -7296,7 +7296,7 @@ function get_hotspots_editable_for_user(){
 
 
 }
-get_hotspots_editable_for_user();
+// get_hotspots_editable_for_user();
 
 function ads_edit(hotspot_index){
 
