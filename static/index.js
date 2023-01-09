@@ -217,22 +217,22 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
   /*seller & ||  user login details collcetor */
   var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
-//   seller_login= {
-// 		"logged_in": true,
-// 		"seller_id": "8905135800000",
-// 		"usertype": "Seller",
-// 		"credit": 500,
-// 		"name": "Tsehla Seller",
-// 		"customer_partners_contact_list": [],
-// 		"resturent_hotel_cafe_login": false,
-// 		"manages_hotspot": false,
-// 		"hotspot_printable_vouchers": true,
-// 		"hotspot_printable_vouchers_template": "Primary",
-// 		"managed_hotspot": [],
-// 		"nocharge_voucher_sell": true
-// 	}
+  seller_login= {
+		"logged_in": true,
+		"seller_id": "8905135800000",
+		"usertype": "Seller",
+		"credit": 500,
+		"name": "Tsehla Seller",
+		"customer_partners_contact_list": [],
+		"resturent_hotel_cafe_login": false,
+		"manages_hotspot": false,
+		"hotspot_printable_vouchers": true,
+		"hotspot_printable_vouchers_template": "Primary",
+		"managed_hotspot": [],
+		"nocharge_voucher_sell": true
+	}
 
-//   console.log('======delete this [seller_login ]===== ',seller_login)
+  console.log('======delete this [seller_login ]===== ',seller_login)
   
   
   
@@ -7246,10 +7246,8 @@ function get_hotspots_editable_for_user(){
 				}
 
 				div_text = div_text + `
-				
-				
-				
-                <div id="hotspot_container_${index}" style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;box-shadow: 5 5 3 black;border: 1px solid blue;background-color: #ff220c08;border-radius: 12px;">
+
+                <div id="hotspot_container_${index}" style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;border: 2px solid #ff4b0054;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
 
                   <div style="width: auto;height:20px;margin:10px 0px">
                     Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase().replace(/^A-Za-z0-9/gi,' ')}</span>
@@ -7298,7 +7296,7 @@ function get_hotspots_editable_for_user(){
 
 
 }
-// get_hotspots_editable_for_user();
+get_hotspots_editable_for_user();
 
 function ads_edit(hotspot_index){
 
@@ -7326,11 +7324,204 @@ function ads_create(hotspot_index){
 
 	console.log('create', hotspot_index, router_ads_owned[hotspot_index])
 
-	//create new ads, check if user has enough credit to do new ads;
+	//get ads to edit details
+	var ads_to_edit_details = router_ads_owned[hotspot_index];
 
-	//check ads slots for this users when creating
+	/*
+		ads_edit_create_costs 	: 	{ads_edit_cost: 50, ads_create_costs: 100}
+		hotspot_ads_currently_live	: 	[]
+		hotspot_db_id	: 	"63a6baea0672fa206cd45718"
+		hotspot_location	: 	"default"
+		is_private_or_limited_hotspot	: 	false
+		max_ads_slots_per_hotspots_allowed	: 	3
+
+	*/
+	
+
+	// //check if users has ads to edit in this hotspot
+	// if(ads_to_edit_details.hotspot_ads_currently_live.length == 0){ //if no ads alread created by this user on this hotspot
+
+	// 	//give alert
+	// 	alert("You do not have advertisment already created on this hotspot, you will be sent to advertisement create menu");
+
+	// 	return ads_edit(hotspot_index);
+
+	// }
 
 
+
+	//check if user still has advertisement slots available
+	if(ads_to_edit_details.hotspot_ads_currently_live.length >= ads_to_edit_details.max_ads_slots_per_hotspots_allowed){
+
+		// give alert
+		alert("You already have used all your advertisement slots on this hotspot.\r\rYou may ask system administrator for more advertisement slots or edit (active) adverstiement you already have.\r\ryou will be sent to advertisement edit menu for this hotspot.");
+
+		return ads_edit(hotspot_index)
+	}
+
+
+
+	//get logged in user credits
+	var credits = 0
+
+	//get loggeg in user data
+	if(seller_login.logged_in){
+
+		credits = seller_login.credit
+
+	}
+
+	if(distributor_login.logged_in){
+		
+		credits = distributor_login.credit
+	}
+
+	if(admin_login.logged_in){
+
+		credits = admin_login.credit
+
+	}
+
+	
+	//check if user can afford minimum 1 advertisement slot
+	if(credits + 0.1 < ads_to_edit_details.ads_edit_create_costs.ads_create_costs ){
+
+		dom_innerHtml('hotspot_edit_create', 'You do not have enough credits to afford to create a single advertisement on this hotspot\r\rYou have R' + credits + ' available.\r\rSingle advertisement slots on this hotspot cost R'+ads_to_edit_details.ads_edit_create_costs.ads_create_costs + '. Please recharge your account or contact system administrator.');
+
+		//show hotspot
+		dom_hide_show('show','hotspot_manage_edit_or_create');
+
+		return;
+	}
+
+	//create  ads for available slots
+	var hotspot_ads_slots = '';
+
+	//create slots
+	var slots_available = ads_to_edit_details.max_ads_slots_per_hotspots_allowed - ads_to_edit_details.hotspot_ads_currently_live.length;
+
+
+	//ads slots usr can afford for this hotspot
+	var added_slots = 1;
+
+
+	for(var a = 1; a <= slots_available; a++){
+
+
+		//check if user credits are enough to pay for ads slots before adding them
+		var total_charge = added_slots * ads_to_edit_details.ads_edit_create_costs.ads_create_costs ;
+
+		
+		//check if user can afford this ads slots
+		if(total_charge <= credits){//if so, add the slot
+
+			
+	
+
+			hotspot_ads_slots = hotspot_ads_slots + `
+
+				<div style="width:80%;min-height:130px;border:1px solid;margin:10px auto;box-shadow: inset 0px 0px 6px #0e0e0e66;">
+					
+					<div style="width:100%;height:20px;text-align:center;margin:10px 0px">
+					Advertisment no :  <span style="font-weight:bolder">${added_slots}</span>
+					</div>
+				
+					<div style="width:80%;text-align:center;margin:10px auto">
+
+						<div style="width: 100%;height:20px;margin:10px 0px 2px 0px;text-align:left">
+							1) 
+						</div>
+						Paste picture/image link of your Advertisment here.<br>
+						Example link to picture/image : <a href="/default_slide_images/5.jpg">http://www.website.com/ads/birthday_event.jpg</a><br>
+						Recommended image/picture size is : width = 802px , height = 1285px.
+
+						<input id='${ads_to_edit_details.hotspot_db_id}_${added_slots }_1' type="text"  placeholder="type/paste advertisement link here" class="form-control" style="border: 1px solid #00bcd4;">
+
+						<span style="width:100%;height:20px; text-align:center;display: block;margin:5px 0px">OR</span>
+
+						<span style="width:100%;height:20px; text-align:center">Use button below to upload your advertsiement image/picture</span>
+
+						<input id='${ads_to_edit_details.hotspot_db_id}_${added_slots }_1.2' type="file" class="form-control" style="border: 1px solid #00bcd4;">
+
+						<div style="width: 100%;height:20px;margin:10px 0px 2px 0px;text-align:left">
+							2) 
+						</div>
+						Give link or website you want user to be sent when clicking the image or image description, or just leave empty.
+						<input id="${ads_to_edit_details.hotspot_db_id}_${added_slots}_2" type="text"  placeholder="link to send user to when clicking on the advertisement image" class="form-control" style="border: 1px solid #00bcd4;">
+
+						<div style="width: 100%;height:20px;margin:10px 0px 2px 0px;text-align:left">
+							3) 
+						</div>
+						Give short description of your advertisement to user, Example : Party with us this weekend
+						<input id="${ads_to_edit_details.hotspot_db_id}_${added_slots }" type="text"  placeholder="Advertisment short description or introduction" class="form-control" style="margin-bottom: 20px;b  oi order: 1px solid #00bcd4;">
+
+					</div>
+				
+				</div>
+			
+			`;
+
+
+			//increment slots
+			added_slots = added_slots + 1;
+
+		}
+	}
+
+	//dont ask dont know, not carring right now
+	added_slots = added_slots - 1
+
+	//hotspots create menu
+	var hotspot_div = `
+					
+		<div style="width:100%;height:20px;text-align:center;margin:5px 0px">
+			Ads slots available :  <span style="font-weight:bolder">${ads_to_edit_details.max_ads_slots_per_hotspots_allowed - ads_to_edit_details.hotspot_ads_currently_live.length }</span>
+		</div>
+
+		${hotspot_ads_slots}
+
+		<div style="width:100%;height:30px;margin:20px;text-align:center">
+			<button style="display:inline-block;margin:auto" onclick="ads_create_save('${ads_to_edit_details.hotspot_db_id}',${added_slots})" class="btn btn-danger">Create Advertisment</button>
+			<button style="display:inline-block;margin:auto" onclick="ads_edit_create_preview('${ads_to_edit_details.hotspot_db_id}',${added_slots})" class="btn btn-success">Preview Advertisment</button>
+		</div>
+	`;
+
+
+	//create div
+	dom_innerHtml('hotspot_edit_create', hotspot_div);
+	
+
+	//show hotspot
+	dom_hide_show('show','hotspot_manage_edit_or_create');
+
+	//give not enough funds to afford all slot available friendly reminder
+	if(added_slots < slots_available ){//if slots added are less than slots available
+		alert("Alert!, Your account credit is not enough to afford all advertisements [ "+slots_available+" ] slots available. \rOnly [ "+added_slots+" ] could be added.\rIf you were intending to use all advertisements slots, you will have to recharge your account and come back to add the advertisments.");
+	}
+
+}
+
+
+//advertisement created saving
+function ads_create_save(){
+
+
+
+	//give confirm box
+	var create_confirm = confirm("You are about to create [ 3 ] ads, this is irreversable.\r\rContinue?")
+
+	//if confirm cancel button click
+	if(!create_confirm){
+		return;//end function
+	}
+
+
+
+
+	//alert to give privew of live hotspot when ads created
+};
+
+function ads_edit_create_preview(){
 
 
 
