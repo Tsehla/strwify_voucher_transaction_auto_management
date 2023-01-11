@@ -1,0 +1,10 @@
+there an issure with this keystone, body-parser file post() limit is ignore when set and every file/request above 100kb is not accept. but if <form> is used it works fine. Problem seem to be caused by raw-body module, so this patch is a method of trying to just defeat file limit.
+also manually setting file limit on the body parser module works also i think .lol . dont know what size number i added is in megabytes, but dont care spent two days on this already
+
+https://www.linkedin.com/pulse/how-replace-npm-library-your-own-implementation-yumasoft
+
+
+
+commands
+create patch :  npx patch-package raw-body
+apply patch :  npx patch-package

@@ -153,7 +153,8 @@ function readStream (stream, encoding, length, limit, callback) {
   // note: we intentionally leave the stream paused,
   // so users should handle the stream themselves.
 
-  limit = 283744475;
+  limit = 586547865;// ----forcing increase file ost limit ------- //SELF EDITED HERE OR ADDED TO BYPASS UPLOAD LIMIT++++++
+
   if (limit !== null && length !== null && length > limit) {
     return done(createError(413, 'request entity too large', {
       expected: length,

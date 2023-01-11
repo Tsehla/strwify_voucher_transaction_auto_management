@@ -4,6 +4,7 @@ var path = require ('path');//to solve sendFile forbidden error
 //var express = require('express');
 
 
+
 var fs = require('fs'); //file read
 
 keystone.get('routes', function(app){
@@ -12,15 +13,17 @@ keystone.get('routes', function(app){
 
 
 
-
-
 	var corse = require('cors');
 	app.use(corse());
 
-   	//app.use(cors(corsOptions)); //cors
 
-   	//app.options('*',cors()); //preflight cors
-   
+	//body parser is ignored---- in this keystone, actually it get overriden by some code/module i dont know
+	// app.use(bodyParser.json({ limit: "500kb" }));
+	// app.use(bodyParser.urlencoded({
+	// 	// // extended: true,
+	// 	// limit: "5000kb" 
+	// }));
+
     //super admin login
     app.get('/admin', function(req, res){
         
@@ -3686,10 +3689,10 @@ app.get('/api/hotspot_data', function(req, res){
 	//================================
 		
 
-	app.post('/do_advertisement', function(req, res) {
+	app.post('/do_advertisement',function(req, res) {
 
 
-		console.log(req.body);
+		console.log(req.body, JSON.stringify(req.body,1,2));
 
 		res.send('done')
 
@@ -3752,6 +3755,53 @@ app.get('/api/hotspot_data', function(req, res){
 		}); 
 	});
 	
+	
+	app.post('/upload2', function(req, res) {
+		
+		var date = new Date();			
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+		var day = date.getDay();
+		var month = date.getMonth();
+		var year = date.getFullYear();
+			
+		var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
+		
+		if(!req.files.filetoupload){//upload file not selected
+			console.log(" Error, file to upload not selected..")
+				res.redirect("/upload");
+				res.end();
+			return;
+		}
+
+		fs.readFile(req.files.filetoupload.path, function (err, data) {
+	
+			var imageName = upload_date_time + req.files.filetoupload.originalname;
+	
+			
+			if(!imageName){//Error uploading
+	
+				console.log("There was an error_ uloading image..")
+				res.redirect("/upload");
+				res.end();
+	
+			} else { 
+	
+			  var newPath = "./static/images/uploads/ads/" + imageName;
+	
+			  /// write file to uploads/ folder
+			  fs.writeFile(newPath, data, function (err) {
+	
+				//res.sendFile(path.resolve("./static/images/uploads/ads/" + imageName));
+				// extends_upload(req, res,imageName);
+	
+			  });
+			}
+		}); 
+
+		res.end()
+	});
 	
 	/*=======================================
 		// show upload contents

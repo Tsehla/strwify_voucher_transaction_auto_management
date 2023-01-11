@@ -21,6 +21,10 @@ keyst.set('port', port);
 
 keyst.start();
 
+console.log("---------------------------------- ")
+console.log("-------------- hello ------------- ")
+console.log("-- use : npm start , to start server, not node index--- ")
+console.log("---------------------------------- ")
 
 	//----------------  router auto status checker ----------------
 	

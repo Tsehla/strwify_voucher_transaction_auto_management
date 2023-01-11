@@ -16,7 +16,8 @@ Make sure you have a working local mongo db installaton.
 
 Rename file dot.env to .env and fill in details to enable some features of this app to work.
 
-Run npm i, to start server
+Run npm i , to install modules
+To start server : npm start
 
 # Login
 For login use any details shown on https://github.com/Tsehla/strwify_voucher_transaction_auto_management/tree/master/updates for specific type of user you want to acess.
@@ -96,7 +97,7 @@ Staging login :
 
 ---------
 
-run on node version 12.22.9, npm version 6.14.15
+
 
 
 
