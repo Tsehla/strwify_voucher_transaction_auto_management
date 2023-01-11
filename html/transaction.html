@@ -1301,7 +1301,7 @@
    	   
     <!-- hotspot manage -->
     
-    <div id="hotspot_manage" style="width:98vw; height: auto;position: absolute;top: 0px;left: 0px;display: none">
+    <div id="hotspot_manage" style="width:98vw; height: auto;position: absolute;top: 0px;left: 0px;display: block">
         <div id="hotspot_manage_menu_wrapper" style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro'>
             <div id="hotspot_manage_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; min-height: 500px; max-height: none; text-align: center;" class="">
               <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -1344,7 +1344,7 @@
           </p>
 
           <!-- hotspot edit content -->
-          <div id="hotspot_edit_create" style="height: 80%; width: 100%;overflow-y: auto;">
+          <div id="hotspot_edit_create" style="height: 80%; width: 100%;overflow-y: auto;overflow-x: hidden;">
 
             
           </div>
@@ -1397,6 +1397,10 @@
     </div>
 	   
 	   
+    <!-- busy loader -->
+    <div id="busy_animate" class="loader" style="display: none;" >
+      <button class="btn btn-danger" style="font-size: 9px;font-weight: bolder;margin: 29px;border-radius: 52%;width: 30px;height: 30px;" onclick="div_hide('busy_animate')">X</button>
+    </div>
 	   
 	   
 	   

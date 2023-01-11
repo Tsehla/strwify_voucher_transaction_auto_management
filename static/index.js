@@ -217,22 +217,22 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
   /*seller & ||  user login details collcetor */
   var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
 
-//   seller_login= {
-// 		"logged_in": true,
-// 		"seller_id": "8905135800000",
-// 		"usertype": "Seller",
-// 		"credit": 500,
-// 		"name": "Tsehla Seller",
-// 		"customer_partners_contact_list": [],
-// 		"resturent_hotel_cafe_login": false,
-// 		"manages_hotspot": false,
-// 		"hotspot_printable_vouchers": true,
-// 		"hotspot_printable_vouchers_template": "Primary",
-// 		"managed_hotspot": [],
-// 		"nocharge_voucher_sell": true
-// 	}
+  seller_login= {
+		"logged_in": true,
+		"seller_id": "8905135800000",
+		"usertype": "Seller",
+		"credit": 500,
+		"name": "Tsehla Seller",
+		"customer_partners_contact_list": [],
+		"resturent_hotel_cafe_login": false,
+		"manages_hotspot": false,
+		"hotspot_printable_vouchers": true,
+		"hotspot_printable_vouchers_template": "Primary",
+		"managed_hotspot": [],
+		"nocharge_voucher_sell": true
+	}
 
-//   console.log('======delete this [seller_login ]===== ',seller_login)
+  console.log('======delete this [seller_login ]===== ',seller_login)
   
   
   
@@ -7296,7 +7296,7 @@ function get_hotspots_editable_for_user(){
 
 
 }
-// get_hotspots_editable_for_user();
+get_hotspots_editable_for_user();
 
 function ads_edit(hotspot_index){
 
@@ -7431,6 +7431,7 @@ function ads_create(hotspot_index){
 						Paste picture/image link of your Advertisment here.<br>
 						Example link to picture/image : <a href="/default_slide_images/5.jpg">http://www.website.com/ads/birthday_event.jpg</a><br>
 						Recommended image/picture size is : width = 802px , height = 1285px.
+						Recommended picture size for best user experience and quick display = 100Kb and less.
 
 						<input id='${ads_to_edit_details.hotspot_db_id}_${added_slots }_1' type="text"  placeholder="type/paste advertisement link here" class="form-control" style="border: 1px solid #00bcd4;">
 
@@ -7438,7 +7439,7 @@ function ads_create(hotspot_index){
 
 						<span style="width:100%;height:20px; text-align:center">Use button below to upload your advertsiement image/picture</span>
 
-						<input id='${ads_to_edit_details.hotspot_db_id}_${added_slots }_1.2' type="file" class="form-control" style="border: 1px solid #00bcd4;">
+						<input id='${ads_to_edit_details.hotspot_db_id}_${added_slots }_1.2' type="file" class="form-control" style="border: 1px solid #00bcd4;" onchange=" imageUploaded('${ads_to_edit_details.hotspot_db_id}_${added_slots }_1.2')">
 
 						<div style="width: 100%;height:20px;margin:10px 0px 2px 0px;text-align:left">
 							2) 
@@ -7450,7 +7451,7 @@ function ads_create(hotspot_index){
 							3) 
 						</div>
 						Give short description of your advertisement to user, Example : Party with us this weekend
-						<input id="${ads_to_edit_details.hotspot_db_id}_${added_slots }" type="text"  placeholder="Advertisment short description or introduction" class="form-control" style="margin-bottom: 20px;b  oi order: 1px solid #00bcd4;">
+						<input id="${ads_to_edit_details.hotspot_db_id}_${added_slots }_3" type="text"  placeholder="Advertisment short description or introduction" class="form-control" style="margin-bottom: 20px;b  oi order: 1px solid #00bcd4;">
 
 					</div>
 				
@@ -7508,31 +7509,265 @@ function ads_create(hotspot_index){
 
 }
 
+//get image and convert to base 64 for upload	
+var base_64_ads_images_container =[
+
+	// {
+	// 	image_form_id : {
+	// 		image_base64_data : '',
+	// 		image_file_name : '',
+	// 		image_file_size : '',//forbid over 300kb 
+	// 	}
+	// }
+];
+	
+function imageUploaded(image_form_id) {
+
+	console.log(image_form_id, typeof image_form_id)
+
+	let base64String = "";
+
+	var file = document.querySelector(
+		'input[id="'+image_form_id+'"]'
+	)['files'][0];
+
+	console.log('----',file)
+	
+	var reader = new FileReader();
+	console.log("next");
+		
+	reader.onload = function () {
+		base64String = reader.result.replace("data:", "")
+			.replace(/^.+,/, "");
+	
+		imageBase64Stringsep = base64String;
+	
+		// alert(imageBase64Stringsep);
+		// console.log(base64String);
+		// created_ads_data.upload_image_data = base64String;
+
+	
+	
+		
+
+		//save image
+		// base_64_ads_images_container[image_form_id].image_base64_data = base64String;
+		// base_64_ads_images_container[image_form_id].image_file_name = file.name;
+		// base_64_ads_images_container[image_form_id].image_file_size = file.size;//forbid over 300kb 
+
+
+
+		base_64_ads_images_container.push(
+
+			{	image_form_id : image_form_id,
+				image_base64_data : base64String,
+				image_file_name : file.name,
+				image_file_size : file.size,//forbid over 300kb 
+			
+			}
+		);
+
+	}
+
+	reader.readAsDataURL(file);
+
+	// console.log(base_64_ads_images_container)
+
+}
 
 //advertisement created saving
-function ads_create_save(hospot_id, total_ads_slots_created){
+async function ads_create_save(hospot_id, total_ads_slots_created){
 
 
 	//check if any sds slot was filled, //look for ads image, and click text maybe
-	//do post to back end
-
 	var ads_to_create = [];//ads to create
+
+
+	//loop through created ads sloot
+	for(var a = 1; a <= total_ads_slots_created; a++ ){
+
+		//check if values where added
+		var ads_image_link = document.getElementById(hospot_id + '_' + a +'_1').value;//type/paste advertisement link here
+		var ads_image_link_uploaded = document.getElementById(hospot_id + '_' + a +'_1.2').value;
+		var ads_image_link_click_redirect = document.getElementById(hospot_id + '_' + a +'_2').value;//link to send user to when clicking on the advertisement image
+		var ads_description = document.getElementById(hospot_id + '_' + a +'_3').value;//Advertisment short description or introduction
+
+		var created_ads_data = {};//contains created ads data
+
+		//check if image link is provided //this is important
+		if(ads_image_link || ads_image_link_uploaded){
+
+			//check image link provided
+			if(ads_image_link){
+				created_ads_data.ads_image_link = ads_image_link;
+			}
+			
+			//check if upload provided
+			if(ads_image_link_uploaded){
+
+				created_ads_data.ads_image_link = ads_image_link_uploaded;
+
+			
+				//crrent processing upload input form id
+				// console.log('match uload', upload_file_input_id )
+				var upload_file_input_id = hospot_id + '_' + a +'_1.2';
+
+				//loop through images to upload
+				for(counter in base_64_ads_images_container){
+
+					//find matching input id
+					if(base_64_ads_images_container[counter].image_form_id == upload_file_input_id ){
+
+						// console.log('match found')
+						//save upload file data
+						created_ads_data.ads_image_link_t_upload_file_data = base_64_ads_images_container[counter];
+
+						//end loop
+						// break;
+					}
+
+					// console.log('match no match',base_64_ads_images_container[counter].image_form_id , upload_file_input_id )
+
+				}
+
+	
+
+			}
+		
+
+			//check for click redirect link
+			if(ads_image_link_click_redirect){
+				created_ads_data.ads_image_link_click_redirect = ads_image_link_click_redirect;
+
+			}
+
+			//if no redirect link given
+			if(!ads_image_link_click_redirect){
+
+				//given image link
+				created_ads_data.ads_image_link_click_redirect = created_ads_data.ads_image_link;
+
+			}
+
+			//check ads description
+			if(ads_description){
+				created_ads_data.ads_description = ads_description;
+			}
+
+			//if no ads description
+			if(!ads_description){
+				created_ads_data.ads_description = "Click here to see picture";
+			}
+
+			//save ads data
+			ads_to_create.push(created_ads_data);
+
+		}
+
+		// on last loop
+		if(a == total_ads_slots_created){
+			console.log('hhhh',ads_to_create)
+			do_upload_csv_cleaning()
+		}
+		
+
+	};
+
+	function do_upload_csv_cleaning(){
+
+		//check if any ads data were created
+		if(ads_to_create.length == 0){//if no ads
+
+			//give alert
+			return alert("You have not filled all reqired details to create advertisement(s).");
+		}
+
+
+		//give confirm box
+		var create_confirm = confirm("You are about to create [ "+ads_to_create.length +" ] ads, this is irreversable.\r\rContinue?")
+
+		//if confirm cancel button click
+		if(!create_confirm){
+			return;//end function
+		}
+
+
+		// console.log(ads_to_create);
+		dom_hide_show('show','busy_animate');
+
+
+		var user_id = "";//logged in user
+		var user_tye = "";//logged in user type
+
+
+
+		//get loggeg in user data
+		if(seller_login.logged_in){
+
+			user_id = seller_login.seller_id ;
+			user_tye = seller_login.usertype ;
+
+		}
+
+		if(distributor_login.logged_in){
+			
+			user_id = distributor_login.seller_id ;
+			user_tye = distributor_login.usertype ;
+		}
+
+		if(admin_login.logged_in){
+
+			user_id = admin_login.seller_id ;
+			user_tye = admin_login.usertype ;
+
+		}
+		
+
+
+
+		//do post to back end
+		$.post('/do_advertisement',{
+			user_id : user_id,
+
+			user_type : user_tye,
+			db_hotspot_id : hospot_id,
+			db_hotspot_name : '',
+			action : 'create',
+			ads : ads_to_create,
+
+		} ,function(response, error){
+			// console.log(error,response)
+
+			if(error != 'success' || response.err){
+				dom_hide_show('hide','busy_animate');//hide animate
+				return alert('Server error when attempting login..');
+			}
+		
+
+		
+			//hide
+			dom_hide_show('hide','busy_animate');//hide animate
+
+
+			//if logged in
+			if(response && response.trim().length > 0){
+
+				//alert to give privew of live hotspot when ads created
+			
+			}
+
+
+
+		});
+	}
+
+	
 
 	
 
 
-	//give confirm box
-	var create_confirm = confirm("You are about to create [ 3 ] ads, this is irreversable.\r\rContinue?")
-
-	//if confirm cancel button click
-	if(!create_confirm){
-		return;//end function
-	}
 
 
-
-
-	//alert to give privew of live hotspot when ads created
 };
 
 function ads_edit_create_preview(){

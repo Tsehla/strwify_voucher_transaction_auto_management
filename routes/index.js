@@ -11,6 +11,9 @@ keystone.get('routes', function(app){
    
 
 
+
+
+
 	var corse = require('cors');
 	app.use(corse());
 
@@ -3675,8 +3678,24 @@ app.get('/api/hotspot_data', function(req, res){
 		
 		
 	});
+
+
+	
+	//================================
+	//			advertisement
+	//================================
 		
 
+	app.post('/do_advertisement', function(req, res) {
+
+
+		console.log(req.body);
+
+		res.send('done')
+
+
+	})
+	
 
 
 

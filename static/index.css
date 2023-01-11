@@ -6,5 +6,28 @@ body{
     white-space: normal;
 }
 button {
-    outline: none !important;
-  }
+  outline: none !important;
+}
+
+
+.loader {
+  border: 16px solid #fffbfb;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  position: fixed;
+  top: 38vh;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background-color: #3498dbe8;
+  animation-direction: alternate;
+  /* animation-fill-mode: unset; */
+  /* animation-timing-function: unset; */
+  text-align: center;
+  /* display: none; */
+  z-index: 10000;
+}
