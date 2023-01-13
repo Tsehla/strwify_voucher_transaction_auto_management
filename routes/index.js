@@ -3692,11 +3692,69 @@ app.get('/api/hotspot_data', function(req, res){
 	app.post('/do_advertisement',function(req, res) {
 
 
-		console.log(req.body, JSON.stringify(req.body,1,2));
+		// console.log(req.body, JSON.stringify(req.body,1,2));
+		// console.log(req.body.ads[0].ads_image_link_t_upload_file_data.image_base64_data)
+	
+
+
+		//check user profile
+
+		//check if you has enough credits for ads
+
+
+		//save images
+
+
+		
+		//save images
+
+		//unique filename
+		var date = new Date();			
+		var hour = date.getHours();
+		var minutes = date.getMinutes();
+		var seconds = date.getSeconds();
+		var day = date.getDay();
+		var month = date.getMonth();
+		var year = date.getFullYear();
+			
+		var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
+
+
+
+		//turn base64 data to buffer
+		let buff = Buffer.from(req.body.ads[0].ads_image_link_t_upload_file_data.image_base64_data, 'base64');
+
+		var image_file_name = upload_date_time + req.body.ads[0].ads_image_link_t_upload_file_data.image_file_name;//image final unique name//may add user db id for extra unique
+
+		//write image to folder
+		// fs.writeFileSync( "./static/images/uploads/ads/" + image_file_name, buff);
+
+		/// write file to uploads/ folder
+		fs.writeFile("./static/images/uploads/ads/" + image_file_name, buff, function (err) {
+
+		//res.sendFile(path.resolve("./static/images/uploads/ads/" + imageName));
+		// extends_upload(req, res,imageName);
+
+			console.log('image created')
+
+		});
+
+
+		//create the ads on hotspot
+
+		
+		//create ads creation log/history on user profile//ads can be recreated//links recopied
+
+
+		//give success or error response
+
+
+		
+
+
+
 
 		res.send('done')
-
-
 	})
 	
 
@@ -3733,6 +3791,7 @@ app.get('/api/hotspot_data', function(req, res){
 	
 			var imageName = upload_date_time + req.files.filetoupload.originalname;
 	
+			
 			
 			if(!imageName){//Error uploading
 	

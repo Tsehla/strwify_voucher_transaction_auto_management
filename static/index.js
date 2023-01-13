@@ -7523,7 +7523,7 @@ var base_64_ads_images_container =[
 	
 function imageUploaded(image_form_id) {
 
-	console.log(image_form_id, typeof image_form_id)
+	// console.log(image_form_id, typeof image_form_id)
 
 	let base64String = "";
 
@@ -7531,15 +7531,16 @@ function imageUploaded(image_form_id) {
 		'input[id="'+image_form_id+'"]'
 	)['files'][0];
 
-	console.log('----',file)
+	// console.log('----',file)
 	
 	var reader = new FileReader();
-	console.log("next");
+	// console.log("next");
 		
 	reader.onload = function () {
 		base64String = reader.result.replace("data:", "")
 			.replace(/^.+,/, "");
 	
+
 		imageBase64Stringsep = base64String;
 	
 		// alert(imageBase64Stringsep);
@@ -7667,13 +7668,13 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 		// on last loop
 		if(a == total_ads_slots_created){
 			console.log('hhhh',ads_to_create)
-			do_upload_csv_cleaning()
+			do_upload_ads_image()
 		}
 		
 
 	};
 
-	function do_upload_csv_cleaning(){
+	function do_upload_ads_image(){
 
 		//check if any ads data were created
 		if(ads_to_create.length == 0){//if no ads
