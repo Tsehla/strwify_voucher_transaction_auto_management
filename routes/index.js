@@ -3885,7 +3885,7 @@ app.get('/api/hotspot_data', function(req, res){
 			// console.log(req.body.ads && req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data)
 			if( req.body.ads && req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data){
 
-				console.log('in')
+				
 	
 					//unique filename
 					var date = new Date();			
@@ -3935,6 +3935,8 @@ app.get('/api/hotspot_data', function(req, res){
 						//get image url
 						ads_image_link = "/uploads/ads/" + image_file_name;
 
+						image_details_creater ();//call next
+
 					});
 
 			}
@@ -3942,41 +3944,50 @@ app.get('/api/hotspot_data', function(req, res){
 
 			//---save created ads data
 
-			// expiery date all ads are valid for 30 days
-			var today = new Date();
-			var futurerDate = new Date(new Date().setDate(today.getDate() + 31)); //date after 31 days from now
+			function image_details_creater (){ //to add delay for image to be saved to db, il bundle this//if not function completes before images are save
 
-			// console.log(futurerDate.getDate(), futurerDate.getMonth(), futurerDate.getFullYear())
+				// expiery date all ads are valid for 30 days
+				var today = new Date();
+				var futurerDate = new Date(new Date().setDate(today.getDate() + 31)); //date after 31 days from now
 
-			ads_data_to_save.push({
-				"image_link" :ads_image_link , 
-				"image_status_text" : ads_description, 
-				"image_status_link": ads_image_link_click_redirect, 
-				"ads_sponsored" : false, 
-				"hidden" : false, 
-				"expire" : false, 
-				"expire_day" : futurerDate.getDate(),
-				"expire_month": futurerDate.getMonth(),
-				"expire_year":futurerDate.getFullYear(),
-				"created_by_account_id": req.body.user_id
-			});
+				// console.log(futurerDate.getDate(), futurerDate.getMonth(), futurerDate.getFullYear())
 
-
-
-
-			// increment loop tracker
-			current_ads_creating_tracker = current_ads_creating_tracker + 1;
+				ads_data_to_save.push({
+					"image_link" :ads_image_link , 
+					"image_status_text" : ads_description, 
+					"image_status_link": ads_image_link_click_redirect, 
+					"ads_sponsored" : false, 
+					"hidden" : false, 
+					"expire" : false, 
+					"expire_day" : futurerDate.getDate(),
+					"expire_month": futurerDate.getMonth(),
+					"expire_year":futurerDate.getFullYear(),
+					"created_by_account_id": req.body.user_id
+				});
 
 
-			//check if all looped
-			if( req.body.ads.length == current_ads_creating_tracker){ //if so
 
-				return create_ads_on_hotspot(); //call next function
+
+				// increment loop tracker
+				current_ads_creating_tracker = current_ads_creating_tracker + 1;
+
+
+				//check if all looped
+				if( req.body.ads.length == current_ads_creating_tracker){ //if so
+
+					return create_ads_on_hotspot(); //call next function
+				}
+
+
+				//re call function
+				images_save();
+
 			}
 
-
-			//re call function
-			images_save();
+			//if no image is to be saved to db
+			if(!req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data){
+				image_details_creater ();//call
+			}
 
 		};
 
