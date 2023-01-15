@@ -3696,54 +3696,327 @@ app.get('/api/hotspot_data', function(req, res){
 		// console.log(req.body.ads[0].ads_image_link_t_upload_file_data.image_base64_data)
 	
 
+		//check if there are any ads to add or edit
+		if(!req.body || !req.body.ads || req.body.ads.length == 0){//if falsy . hahahaha
 
-		//check user profile
+			//set reply
+			give_reply = 'No ads to creative or edit provided';
 
-		//check if you has enough credits for ads
+			return send_response(); //call
+		}
 
+		//save error success reply
+		var give_reply = 'done';
 
-		//save images
+		//-----check user profile
+		//save retrived user account data
+		var user_account_data = {
+			credits : 0,//default user credits
+		};//get user credits
 
+		function user_account_check(){
 
+			var userType = req.body.user_type.replace('%20', ' ');
+			var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
+			var user_id = req.body.user_id;
+						
+			//if sucess login
+			keystone.list('seller distributor').model.findOne({idnumber:user_id, usertype : user_type })
+			.exec( function (error, response){
+	
+				if(error){ //if error
 		
-		//save images
+					//set reply
+					give_reply = 'User Not found'
 
-		//unique filename
-		var date = new Date();			
-		var hour = date.getHours();
-		var minutes = date.getMinutes();
-		var seconds = date.getSeconds();
-		var day = date.getDay();
-		var month = date.getMonth();
-		var year = date.getFullYear();
+					return send_response(); //call
+						
+				}   
+
+				if(response == null){ //if no user found
+
+					//set reply
+					give_reply = 'User Not found'
+
+					return send_response(); //call
+				}
+
+
+				else{
+				//  res.jsonp(response); 
+				// 	console.log(response.credits);
+
+					//save user details
+					user_account_data = response;
+
+					//check
+					get_hotspot();
+				}   	
+					
+			});
 			
-		var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
+		}
+
+		user_account_check();//start
+
+		//----get hotspots ads charge
+		var new_ads_cost = 0; //new ads creation costs
+		var ads_edit_cost = 0; //ads edit costs
+		var hotspots_ads_allowed = false; //is ads allowed on hotspot
+
+		function get_hotspot(){
+
+			keystone.list('Router hotspot page').model
+			.findById(req.body.db_hotspot_id)
+			.exec(function(err, hotspot_data){
+		
+				if(err){
+					console.log('error : when finding hotspot with db _id : Id = '+ req.body.db_hotspot_id);
+					
+					//set reply
+					give_reply = 'Hotspot Not found'
+
+					return send_response(); //call
+				}
+				
+				if(hotspot_data == null ){//user not found//add user
+
+					console.log('error : when finding hotspot with db _id : Id = '+ req.body.db_hotspot_id);
+					
+					//set reply
+					give_reply = 'Hotspot Not found'
+
+					return send_response(); //call
+				}
+		
+				// console.log(JSON.parse(hotspot_data. ads_create_edit_costs));
+		
+				//do
+				new_ads_cost = JSON.parse(hotspot_data. ads_create_edit_costs).ads_create_costs; //new ads creation costs
+				ads_edit_cost = JSON.parse(hotspot_data. ads_create_edit_costs).ads_edit_cost; //ads edit costs
+				hotspots_ads_allowed = hotspot_data.hotspot_allow_user_ads;
+		
+				//do call
+				credits_check();
+		
+			});
+
+
+		}
+
+
+		//----check if you has enough credits for ads
+		var total_ads_cost = 0; //cost of ads
+
+		function credits_check(){
+
+
+			// console.log(new_ads_cost,ads_edit_cost,hotspots_ads_allowed);
+
+			//check if ads allowed on hotspot
+			if(!hotspots_ads_allowed){ //if not allowed
+
+				//set reply
+				give_reply = 'Hotspot ads not allowed';
+
+				return send_response(); //call
+			}
+
+
+			//check if user has any credits
+			if(user_account_data.credits == 0){ //if not
+
+				//set reply
+				give_reply = 'ads creation, not enough credits';
+
+				return send_response(); //call
+
+			}
 
 
 
-		//turn base64 data to buffer
-		let buff = Buffer.from(req.body.ads[0].ads_image_link_t_upload_file_data.image_base64_data, 'base64');
+			//check if user can afford new ads or edited ads
+			if( user_account_data.credits >= (new_ads_cost * req.body.ads.length) && req.body.action == 'create'){
 
-		var image_file_name = upload_date_time + req.body.ads[0].ads_image_link_t_upload_file_data.image_file_name;//image final unique name//may add user db id for extra unique
+				//set ads cost
+				total_ads_cost = (new_ads_cost * req.body.ads.length);
 
-		//write image to folder
-		// fs.writeFileSync( "./static/images/uploads/ads/" + image_file_name, buff);
+				//do 
+				return images_save();
 
-		/// write file to uploads/ folder
-		fs.writeFile("./static/images/uploads/ads/" + image_file_name, buff, function (err) {
+			}
 
-		//res.sendFile(path.resolve("./static/images/uploads/ads/" + imageName));
-		// extends_upload(req, res,imageName);
+			if( user_account_data.credits >= (ads_edit_cost * req.body.ads.length) && req.body.action == 'edit'){
 
-			console.log('image created')
 
-		});
+				//set ads cost
+				total_ads_cost = (new_ads_cost * req.body.ads.length);
+
+				//do 
+				return images_save();
+
+			}
+
+
+			//---else
+			//set reply
+			give_reply = 'ads creation, not enough credits';
+
+			return send_response(); //call
+
+		}
+
+
+		//----save images
+		var ads_data_to_save = [];//ads data //{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false, "expire" : false, "expire_day" : 1,"expire_month": 1,"expire_year":2033,"created_by_account_id": "8905135800000"}
+
+		var current_ads_creating_tracker = 0;//tracks current ads being processed
+
+		function images_save(){
+
+
+			var ads_image_link = req.body.ads[current_ads_creating_tracker]. ads_image_link ;
+			var ads_image_link_click_redirect = req.body.ads[current_ads_creating_tracker].ads_image_link_click_redirect;
+			var ads_description = req.body.ads[current_ads_creating_tracker].ads_description;
+
+
+			//check if its uploaded image exist
+
+			// console.log(req.body.ads && req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data)
+			if( req.body.ads && req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data){
+
+				console.log('in')
+	
+					//unique filename
+					var date = new Date();			
+					var hour = date.getHours();
+					var minutes = date.getMinutes();
+					var seconds = date.getSeconds();
+					var day = date.getDay();
+					var month = date.getMonth();
+					var year = date.getFullYear();
+						
+					var upload_date_time = hour+'-'+minutes+'-'+seconds+(hour>12?daytime='PM':daytime='AM')+', '+day+'-'+month+'-'+ year + ' '; //add date to file name
+
+
+
+					//turn base64 data to buffer
+					let buff = Buffer.from(req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data.image_base64_data, 'base64');
+
+					var image_file_name = upload_date_time + req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data.image_file_name;//image final unique name//may add user db id for extra unique
+
+					//write image to folder
+					// fs.writeFileSync( "./static/images/uploads/ads/" + image_file_name, buff);
+
+					/// write file to uploads/ folder
+					fs.writeFile("./static/images/uploads/ads/" + image_file_name, buff, function (err) {
+
+						if(err){
+
+							// image_save_error_tracker = true;
+
+							//set reply
+							give_reply = 'ads creation error, one or more ads could not be saved to disk';
+
+							return send_response(); //call
+
+						}
+
+						console.log('image created');
+
+						//check if redirect link is same as given ads image link
+						if(ads_image_link && ads_image_link_click_redirect && ads_image_link.trim() == ads_image_link_click_redirect.trim() ){ //if so update link to new saved image link
+
+							//update link
+							ads_image_link_click_redirect = "/uploads/ads/" + image_file_name;
+							
+						}
+
+						//get image url
+						ads_image_link = "/uploads/ads/" + image_file_name;
+
+					});
+
+			}
+
+
+			//---save created ads data
+
+			// expiery date all ads are valid for 30 days
+			var today = new Date();
+			var futurerDate = new Date(new Date().setDate(today.getDate() + 31)); //date after 31 days from now
+
+			// console.log(futurerDate.getDate(), futurerDate.getMonth(), futurerDate.getFullYear())
+
+			ads_data_to_save.push({
+				"image_link" :ads_image_link , 
+				"image_status_text" : ads_description, 
+				"image_status_link": ads_image_link_click_redirect, 
+				"ads_sponsored" : false, 
+				"hidden" : false, 
+				"expire" : false, 
+				"expire_day" : futurerDate.getDate(),
+				"expire_month": futurerDate.getMonth(),
+				"expire_year":futurerDate.getFullYear(),
+				"created_by_account_id": req.body.user_id
+			});
+
+
+
+
+			// increment loop tracker
+			current_ads_creating_tracker = current_ads_creating_tracker + 1;
+
+
+			//check if all looped
+			if( req.body.ads.length == current_ads_creating_tracker){ //if so
+
+				return create_ads_on_hotspot(); //call next function
+			}
+
+
+			//re call function
+			images_save();
+
+		};
+
+
+
+
+
+
+
+
+
+
+	
+
 
 
 		//create the ads on hotspot
 
+		function create_ads_on_hotspot(){
+
+			console.log(JSON.stringify(ads_data_to_save, 1,2));
+
+
+			//get hotspot
+
+
+				//ads new ads to already there if any
+
+				//save hotspot
+
+
+			
+		}
+
+
 		
 		//create ads creation log/history on user profile//ads can be recreated//links recopied
+
+
+		//charge user account
 
 
 		//give success or error response
@@ -3753,8 +4026,13 @@ app.get('/api/hotspot_data', function(req, res){
 
 
 
+		//give user response
+		function send_response(){
 
-		res.send('done')
+			res.send(give_reply)
+		}
+
+		
 	})
 	
 

@@ -7739,7 +7739,7 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 		} ,function(response, error){
 			// console.log(error,response)
 
-			if(error != 'success' || response.err){
+			if(error != 'success' ){
 				dom_hide_show('hide','busy_animate');//hide animate
 				return alert('Server error when attempting login..');
 			}
@@ -7751,11 +7751,40 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 
 
 			//if logged in
-			if(response && response.trim().length > 0){
+			// if(response && response.trim().length > 0){
 
-				//alert to give privew of live hotspot when ads created
+			// 	//alert to give privew of live hotspot when ads created
 			
+			// }
+
+
+
+			if(response && response == 'User Not found'){
+
 			}
+			if(response && response == 'Hotspot Not found'){
+
+			}
+			if(response && response == 'Hotspot ads not allowed'){
+
+			}
+			if(response && response == 'ads creation, not enough credits'){
+
+			}
+			if(response && response == 'No ads to creative or edit provided'){
+
+			}
+			if(response && response == 'ads creation error, one or more ads could not be saved to disk'){ //give advice to try again but create ads one at a time 
+
+			}
+			if(response && response == ''){
+
+			}
+			if(response && response == ''){
+
+			}
+
+
 
 
 
