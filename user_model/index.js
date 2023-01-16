@@ -64,7 +64,7 @@ seller_distributor_model.add({
 	allow_account_hotspots_ads : {type :types.Boolean, default:true, label :'Allow account to show ads on hotspots' },
 	max_ads_slots_per_hotspots_allowed : {type : Number, default:3, label :'Total ads slots per hotspot for account allowed'},
 	hotspots_managed : {type : types.TextArray, label :'Hotspots assigned', default : []},//{hotspot_name : '',hotspot_db_id : '', limited_ads_spots: true,total_ads_spots : 1, data_added_by_user_id : '',data_added_by_user_name : '',ads_dont_randomize :false},hotspots managed
-	ads_slots_hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored ": true, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : "",ads_dont_randomize :true ,this_ads_unsuitable_report_count : 0}'], label :'Wallpaper data' },//[ ads_dont_randomize :true ], if link should be given position randomly if hotspot is set to random give ads position, if not, the link will display of be pushed first of the line. [,this_ads_unsuitable_report_count : 0 ] if ads has been tagged 100  or 50 times as unsuitable, the ads will nolonger be shown, 
+	ads_slots_hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored ": true, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : "",ads_dont_randomize :true ,this_ads_unsuitable_report_count : 0}'], label :'Wallpaper history data' },//[ ads_dont_randomize :true ], if link should be given position randomly if hotspot is set to random give ads position, if not, the link will display of be pushed first of the line. [,this_ads_unsuitable_report_count : 0 ] if ads has been tagged 100  or 50 times as unsuitable, the ads will nolonger be shown, 
 
 
 });
@@ -331,7 +331,23 @@ voucher_track_model.add(
 
 voucher_track_model.register();
 
+//---------------------------------------------------------
+    
+// important system/code errors catchers
+//----------------------------------------------------------
+var error_catcher = 'system error catcher';
+var error_catcher_model = new keystone.List(error_catcher);
 
+error_catcher_model.add(
+    
+    {
+		error_details : {type: String, default:'', label :'Error data'}, //error data
+		time_stamp : { type: String, default:'', label :'Error data capture time' }
+	}
+
+);
+
+error_catcher_model.register();
 
 
 

@@ -7131,9 +7131,24 @@ function hotspot_edit(hot_spot_data){
 
 var router_ads_owned = [];//ads owned
 
+//get image and convert to base 64 for upload	
+var base_64_ads_images_container =[
+	// {
+	// 	image_form_id : {
+	// 		image_base64_data : '',
+	// 		image_file_name : '',
+	// 		image_file_size : '',//forbid over 300kb 
+	// 	}
+	// }
+];
+
+
 function get_hotspots_editable_for_user(){
 
 
+
+	//clear of old contents
+	base_64_ads_images_container = [];
 
 	//shot htospot menu
 	dom_hide_show('show', 'hotspot_manage')
@@ -7250,7 +7265,7 @@ function get_hotspots_editable_for_user(){
                 <div id="hotspot_container_${index}" style="width: 100%;height: auto;min-height: 80px;margin: 10px 0px;border: 2px solid #ff4b0054;background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro">
 
                   <div style="width: auto;height:20px;margin:10px 0px">
-                    Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase().replace(/^A-Za-z0-9/gi,' ')}</span>
+                    Hotspot Name/Location : <span style="font-weight:bolder"> ${hotspots.hotspot_location.toUpperCase().replaceAll(/[^A-Za-z0-9]/gi,' ')}</span>
                   </div>
 
 				  <div style="width: auto;height:20px;margin:10px 0px">
@@ -7309,7 +7324,9 @@ function ads_edit(hotspot_index){
 
 	
 
-	console.log('edit', hotspot_index, router_ads_owned[hotspot_index])
+	// console.log('edit', hotspot_index, router_ads_owned[hotspot_index]);
+
+	alert('feature still in creation');
 
 	
 
@@ -7322,7 +7339,7 @@ function ads_edit(hotspot_index){
 
 function ads_create(hotspot_index){
 
-	console.log('create', hotspot_index, router_ads_owned[hotspot_index])
+	// console.log('create', hotspot_index, router_ads_owned[hotspot_index])
 
 	//get ads to edit details
 	var ads_to_edit_details = router_ads_owned[hotspot_index];
@@ -7496,8 +7513,9 @@ function ads_create(hotspot_index){
 
 
 	//create div
-	dom_innerHtml('hotspot_edit_create', hotspot_div);
-	
+	dom_innerHtml('hotspot_edit_create', hotspot_div);//hotspot edit data
+	dom_innerHtml('hotspot_manage_edit_or_create_name', ads_to_edit_details.hotspot_location.toUpperCase().replaceAll(/[^A-Za-z0-9]/gi,' '));//hotspot being edited name
+
 
 	//show hotspot
 	dom_hide_show('show','hotspot_manage_edit_or_create');
@@ -7509,17 +7527,17 @@ function ads_create(hotspot_index){
 
 }
 
-//get image and convert to base 64 for upload	
-var base_64_ads_images_container =[
+// //get image and convert to base 64 for upload	
+// var base_64_ads_images_container =[
 
-	// {
-	// 	image_form_id : {
-	// 		image_base64_data : '',
-	// 		image_file_name : '',
-	// 		image_file_size : '',//forbid over 300kb 
-	// 	}
-	// }
-];
+// 	// {
+// 	// 	image_form_id : {
+// 	// 		image_base64_data : '',
+// 	// 		image_file_name : '',
+// 	// 		image_file_size : '',//forbid over 300kb 
+// 	// 	}
+// 	// }
+// ];
 	
 function imageUploaded(image_form_id) {
 
@@ -7631,8 +7649,6 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 
 				}
 
-	
-
 			}
 		
 
@@ -7667,12 +7683,13 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 
 		// on last loop
 		if(a == total_ads_slots_created){
-			console.log('hhhh',ads_to_create)
+			// console.log('hhhh',ads_to_create)
 			do_upload_ads_image()
 		}
 		
 
 	};
+
 
 	function do_upload_ads_image(){
 
@@ -7724,8 +7741,6 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 		}
 		
 
-
-
 		//do post to back end
 		$.post('/do_advertisement',{
 			user_id : user_id,
@@ -7744,65 +7759,69 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 				return alert('Server error when attempting login..');
 			}
 		
-
 		
 			//hide
 			dom_hide_show('hide','busy_animate');//hide animate
 
 
-			//if logged in
-			// if(response && response.trim().length > 0){
-
-			// 	//alert to give privew of live hotspot when ads created
-			
-			// }
-
-
-
+			//capture error
 			if(response && response == 'User Not found'){
-
+				//give alert
+				alert( 'User account not found. \n\nPlease try again later or contact Administrator.');
 			}
 			if(response && response == 'Hotspot Not found'){
-
+				//give alert
+				alert('Hotspot chosen to create advertisement on is not found. \n\nPlease try again later or contact Administrator.');
 			}
 			if(response && response == 'Hotspot ads not allowed'){
-
+				//give alert
+				alert('This hotspot does not allow ads creation.\n\nPlease try again later or contact Administrator.');
 			}
 			if(response && response == 'ads creation, not enough credits'){
-
+				//give alert
+				alert( 'You do not have enough credits to create the advertisement. \r\rPlease recharge your account, or try creating fewer ads at once.');
 			}
 			if(response && response == 'No ads to creative or edit provided'){
+				//give alert
+				alert('No advertisements provided to create or details missing. \r\rPlease try again or contact Administrator.');
+			}
+			if(response && response == 'ads creation error, one or more ads could not be saved to disk'){ 
+				//give alert
+				alert('The was an error creating one of the advertisement in chosen hotspot. \r\rYou can try creating advertisements one at a time or contact Adminisrator.');
+			}
+			if(response && response == 'Hotspot ads save error'){
+				//give alert
+				alert('The was a problem creating your advertisement on hotspot. \r\rPlease try again later or contact Administrator.');
+			}
+
+			if(response && response == 'All ads slots used'){
+				//give alert
+				alert('You have used all you advertisement slots on this hotspot. \r\rPlease try another hotspot or check back later again. \r\rYou can contact Administrator to ask for more advertisements slots.');
+			}
+
+			//if success
+			if(response && response == 'success'){
+
+				//give alert
+				alert('Success, hotspot advertisements added. page will be reloaded.');
+
+				//call
+				get_hotspots_editable_for_user();
+
+				//close
+				dom_hide_show('hide','hotspot_manage_edit_or_create');
 
 			}
-			if(response && response == 'ads creation error, one or more ads could not be saved to disk'){ //give advice to try again but create ads one at a time 
-
-			}
-			if(response && response == ''){
-
-			}
-			if(response && response == ''){
-
-			}
-
-
-
 
 
 		});
 	}
 
-	
-
-	
-
-
-
-
 };
 
 function ads_edit_create_preview(){
 
-
+	alert('feature still in creation');
 
 }
 

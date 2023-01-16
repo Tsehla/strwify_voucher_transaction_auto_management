@@ -111,7 +111,9 @@ var schedule = require('node-schedule');
 var j = schedule.scheduleJob('15 * * * *', function(){//router status checking timer
  // console.log('Starting routing Router checkins');
   //console.log('The answer to life, the universe, and everything!');
-	checkin_checking_routing ();
+
+	checkin_checking_routing ();//router alive/online tracker
+	ads_cleaning();//router expired ads cleaner
 });
 
 
@@ -268,6 +270,28 @@ function checkin_checking_routing (){
 
 
 
+//hotspot ads cleaning
+function ads_cleaning(){//clean expired ads
 
+	//do this at 11pm or after daily
+	var date = new Date();
+	var router_last_contact_hour = date.getHours();//get current hour
+	
+	
+	//exist funtion btween 11pm and 3am
+	if(!router_last_contact_hour == 23 || !router_last_contact_hour == 24 || !router_last_contact_hour == 0 || !router_last_contact_hour == 1 || !router_last_contact_hour == 2 || !router_last_contact_hour == 3 ){return;}
+	
+	
+
+
+
+
+
+
+
+
+}
+
+ads_cleaning()
 
 

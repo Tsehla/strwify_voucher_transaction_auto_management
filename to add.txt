@@ -1,0 +1,58 @@
+
+nvm install 12.22.9noe
+----
+for hotspots managed slots,
+
+have home page be able to filter,and check expired hotspot ads, i.e 1) check if expiry year is not greater than current year, 2) if current month is not creater than set expiery month,3) if current day is not creater than set expiery day, if any fails, dont show the ads on hotspot, maybe you may have the ads set as disabled or removed from hotspots. or just leave it. and have system gabage cleaner than run once a day to do the cleaning of expired data
+
+when creating new ads link list to display on hotspot login, add ability to disregard links position randomization if [ ads_dont_randomize :false ] is false for the ad link, just push the link to the front.
+
+also implement ads display link randomization  feature in hotspots [ ads_position_randomization  : {type : String, label :'allow ads randomization', default :'{ads_randomization : false, not_to_randomize_ads_give_position : front}'}]
+
+
+===
+ALLOW any one to advetise in hotspots, so long thy have credit, advertisement can last a month, ads spots are maxed at two per hotspot, if advertisenent users can change links of advertisement at anytime, each change can be charged a certain amount,
+
+HOTspot that have owners assigned will not allow anyone to advertise on them, except accounts shown on them as owners, 
+all accounts will have ability to advertise, this can be enabled during account creation by distributor, if not enabled can later be enabled or disabled. 
+or all accounts will be able to advertise, but if their ads are reported unsuitable, 100 times per ads, the ad will not be shown by the system. [ ads_dont_randomize :true ], if link should be given position randomly if hotspot is set to random give ads position, if not,  the link will display of be pushed first of the line. [,this_ads_unsuitable_report_count : 0 ] if ads has been tagged 100  or 50 times as unsuitable, the ads will nolonger be shown, if account is flagged many times, remove ability to show ads [ 	allow_account_hotspots_ads : {type :types.Boolean, default:true, label :'Allow account to show ads on hotspots' },]
+
+
+----   
+
+
+
+do have gabage cleaner, that will deal with thngs to reset or remove running once a day at certain time **********
+ to clean 
+ -- expired ads links from hotspots, or move them to history for future analysing
+ --
+ --
+ --
+ --
+
+
+------
+
+
+implement max advertisement slots on hotspot, this will stop users from adverstising on the website when slot are filled or give , alet telling them how many slots left if slots are lower than their available advertiment slots
+
+-------
+file resizing of uploaded files
+	
+    image_file_size : file.size,//forbid over 300kb 
+
+-------
+
+show buttons for barely used pth on admin side bar, [upload/sitemap/etc]
+----------
+
+user ads history view button
+
+------------
+admin system error capture
+var error_catcher = 'system error catcher';
+
+------------
+
+
+

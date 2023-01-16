@@ -1522,26 +1522,25 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 					response.credits =  Number(response.credits) + Number(recharge_amount);
 					
 					response.save(function(err, response){ //save calculation to admin profile
-					if(err){
-						console.log('Connection/server error, please try gain later admin:account Recharge save()');
-						res.jsonp('Server or Conection error');
-						return;
-					};
-					if(response == '' || response == undefined || response == null){
-						console.log('Error user not found : admin Account Recharge');
-						res.jsonp('Server or Conection error');
-						return;
-					}
-					
-					
-					//send response back to user
+						if(err){
+							console.log('Connection/server error, please try gain later admin:account Recharge save()');
+							res.jsonp('Server or Conection error');
+							return;
+						};
+						if(response == '' || response == undefined || response == null){
+							console.log('Error user not found : admin Account Recharge');
+							res.jsonp('Server or Conection error');
+							return;
+						}
+						
+						
+						//send response back to user
 
-					//res.jsonp({name : seller_name, lastname  : seller_last_name, id : seller_id, amount : recharge_amount});
-					res.jsonp({amount : recharge_amount});
-				});
-
-
-			});
+						//res.jsonp({name : seller_name, lastname  : seller_last_name, id : seller_id, amount : recharge_amount});
+						res.jsonp({amount : recharge_amount});
+					});
+				}
+			);
 
 			return true;
 		}
@@ -2331,7 +2330,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 		 
 		var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  '+transaction_name+' R'+transaction_cost+'; New balance : R'+response.credits;
 
-var hour = date.getHours();
+		var hour = date.getHours();
 		var new_transactions_array = response.transactionhistory;
 
 			new_transactions_array.unshift(new_transaction_record);
@@ -3712,7 +3711,10 @@ app.get('/api/hotspot_data', function(req, res){
 		//save retrived user account data
 		var user_account_data = {
 			credits : 0,//default user credits
+			max_ads_slots_per_hotspots_allowed : 0,//allowed user ads slots per hotspot
 		};//get user credits
+
+	
 
 		function user_account_check(){
 
@@ -3763,6 +3765,7 @@ app.get('/api/hotspot_data', function(req, res){
 		var new_ads_cost = 0; //new ads creation costs
 		var ads_edit_cost = 0; //ads edit costs
 		var hotspots_ads_allowed = false; //is ads allowed on hotspot
+		var user_hotspot_used_slots = 0;//hotspot slots used by user on this hotspot
 
 		function get_hotspot(){
 
@@ -3792,9 +3795,22 @@ app.get('/api/hotspot_data', function(req, res){
 				// console.log(JSON.parse(hotspot_data. ads_create_edit_costs));
 		
 				//do
-				new_ads_cost = JSON.parse(hotspot_data. ads_create_edit_costs).ads_create_costs; //new ads creation costs
-				ads_edit_cost = JSON.parse(hotspot_data. ads_create_edit_costs).ads_edit_cost; //ads edit costs
+				new_ads_cost = JSON.parse(hotspot_data.ads_create_edit_costs).ads_create_costs; //new ads creation costs
+				ads_edit_cost = JSON.parse(hotspot_data.ads_create_edit_costs).ads_edit_cost; //ads edit costs
 				hotspots_ads_allowed = hotspot_data.hotspot_allow_user_ads;
+
+
+				//loop through ads
+				hotspot_data.hotspot_wallpaper.forEach(function(data){
+
+
+					//check if advertisement is already created by user on this hotspot
+					if(JSON.parse(data).created_by_account_id == req.body.user_id.toString()){
+
+						user_hotspot_used_slots = user_hotspot_used_slots + 1;//increment
+					}
+
+				});
 		
 				//do call
 				credits_check();
@@ -3822,6 +3838,15 @@ app.get('/api/hotspot_data', function(req, res){
 				return send_response(); //call
 			}
 
+			//check if there are ads slot available for this user
+			if(user_hotspot_used_slots == user_account_data.max_ads_slots_per_hotspots_allowed){
+		
+				//set reply
+				give_reply = 'All ads slots used';
+
+				return send_response(); //call
+
+			}
 
 			//check if user has any credits
 			if(user_account_data.credits == 0){ //if not
@@ -3905,6 +3930,9 @@ app.get('/api/hotspot_data', function(req, res){
 
 					var image_file_name = upload_date_time + req.body.ads[current_ads_creating_tracker].ads_image_link_t_upload_file_data.image_file_name;//image final unique name//may add user db id for extra unique
 
+					//clean file name
+					image_file_name = image_file_name.replaceAll(/[^A-Za-z0-9\s.]/gi,'-');
+
 					//write image to folder
 					// fs.writeFileSync( "./static/images/uploads/ads/" + image_file_name, buff);
 
@@ -3914,6 +3942,7 @@ app.get('/api/hotspot_data', function(req, res){
 						if(err){
 
 							// image_save_error_tracker = true;
+							error_capture('advertisement image save error. error message = '+ err)
 
 							//set reply
 							give_reply = 'ads creation error, one or more ads could not be saved to disk';
@@ -3922,18 +3951,18 @@ app.get('/api/hotspot_data', function(req, res){
 
 						}
 
-						console.log('image created');
+						// console.log('image created');
 
 						//check if redirect link is same as given ads image link
 						if(ads_image_link && ads_image_link_click_redirect && ads_image_link.trim() == ads_image_link_click_redirect.trim() ){ //if so update link to new saved image link
 
 							//update link
-							ads_image_link_click_redirect = "/images/uploads/ads/" + image_file_name;
-							
+							ads_image_link_click_redirect = "/images/uploads/ads/" +  image_file_name; //replace space
+						
 						}
 
 						//get image url
-						ads_image_link = "/images/uploads/ads/" + image_file_name;
+						ads_image_link = "/images/uploads/ads/" + image_file_name; //replace space
 
 						image_details_creater ();//call next
 
@@ -3950,20 +3979,26 @@ app.get('/api/hotspot_data', function(req, res){
 				var today = new Date();
 				var futurerDate = new Date(new Date().setDate(today.getDate() + 31)); //date after 31 days from now
 
+				// console.log(today.getDate(), today.getMonth(), today.getFullYear())
 				// console.log(futurerDate.getDate(), futurerDate.getMonth(), futurerDate.getFullYear())
 
-				ads_data_to_save.push({
-					"image_link" :ads_image_link , 
-					"image_status_text" : ads_description, 
-					"image_status_link": ads_image_link_click_redirect, 
-					"ads_sponsored" : false, 
-					"hidden" : false, 
-					"expire" : false, 
-					"expire_day" : futurerDate.getDate(),
-					"expire_month": futurerDate.getMonth(),
-					"expire_year":futurerDate.getFullYear(),
-					"created_by_account_id": req.body.user_id
-				});
+				
+
+				ads_data_to_save.push(
+					JSON.stringify(
+					{
+						"image_link" :ads_image_link , 
+						"image_status_text" : ads_description, 
+						"image_status_link": ads_image_link_click_redirect, 
+						"ads_sponsored" : false, 
+						"hidden" : false, 
+						"expire" : false, 
+						"expire_day" : futurerDate.getDate(),
+						"expire_month": futurerDate.getMonth() + 1,//increment month, it start at index 0
+						"expire_year":futurerDate.getFullYear(),
+						"created_by_account_id": req.body.user_id
+					}
+				));
 
 
 
@@ -3994,36 +4029,236 @@ app.get('/api/hotspot_data', function(req, res){
 
 
 		//create the ads on hotspot
+		var hotspot_name = '';//save name of hotspot being edited
 		function create_ads_on_hotspot(){
 
-			console.log(JSON.stringify(ads_data_to_save, 1,2));
+			// console.log(JSON.stringify(ads_data_to_save, 1,2));
 
 
 			//get hotspot
+			keystone.list('Router hotspot page').model
+			.findById(req.body.db_hotspot_id)
+			.exec(function(err, hotspot_data){
+		
+				if(err){
+					console.log('hotspot ads save error : when finding hotspot with db _id : Id = '+ req.body.db_hotspot_id + + 'error message = ' + err);
+					
+					//capture error for admin notification
+					error_capture('hotspot ads save error : when finding hotspot with db _id : Id = '+ req.body.db_hotspot_id);
+						
+					//set reply
+					give_reply = 'Hotspot Not found'
 
+					return send_response(); //call
+				}
+				
+				if(hotspot_data == null ){//user not found//add user
+
+					console.log('hotspot ads save error : when finding hotspot with db _id : Id = '+ req.body.db_hotspot_id);
+					//capture error for admin notification
+					error_capture('hotspot ads save error : when finding hotspot with db _id : Id = '+ req.body.db_hotspot_id);
+
+					//set reply
+					give_reply = 'Hotspot Not found'
+
+					return send_response(); //call
+				}
+				
 
 				//ads new ads to already there if any
+				// console.log(JSON.stringify(hotspot_data, 1 ,2))
+				
+				//create new ads array
+				var new_ads = hotspot_data.hotspot_wallpaper.concat(ads_data_to_save);
+				// console.log(new_ads)
 
-				//save hotspot
+				//edit hotspot data with new ads array
+				hotspot_data.hotspot_wallpaper = new_ads;
 
+				//hotspot name 
+				hotspot_name = hotspot_data.router_location;
 
+				//save hotspot				
+				hotspot_data.save(function(err, response){ //save calculation to admin profile
+					
+					if(err){
+						console.log('Ads create on hotspot error, hotspot db id = ' + req.body.db_hotspot_id + + 'error message = ' + err );
+
+						//capture error for admin notification
+						error_capture('Ads create on hotspot error, hotspot db id = ' + req.body.db_hotspot_id );
+
+						//set reply
+						give_reply = 'Hotspot ads save error'
+
+						return send_response(); //call
+					};
+
+					if(response == '' || response == undefined || response == null){
+						console.log('Ads create on hotspot error, hotspot db id = ' + req.body.db_hotspot_id );
+
+						//capture error for admin notification
+						error_capture('Ads create on hotspot error, hotspot db id = ' + req.body.db_hotspot_id );
+
+						//set reply
+						give_reply = 'Hotspot ads save error'
+
+						return send_response(); //call
+					}
+				
+					//call
+					user_profile_ads_history();
+
+				});
+	
+			});
 			
 		}
 
 
 		
 		//create ads creation log/history on user profile//ads can be recreated//links recopied
+		function user_profile_ads_history(){
 
 
-		//charge user account
+			// console.log('user ads history',total_ads_cost)
+
+			
+			var userType = req.body.user_type.replace('%20', ' ');
+			var user_type = userType.replace(userType[0], userType[0].toUpperCase());//turn user type to upper db is case sensitive
+			var user_id = req.body.user_id;
 
 
-		//give success or error response
+			keystone.list('seller distributor').model.findOne({idnumber:user_id, usertype : user_type })
+			.exec( function (error, response){
+	
+				if(error){ //if error
+
+					//capture error for admin notification
+					error_capture('Ads create error, problem with inding user, user id = ' + user_id + 'error message = ' + error );
+
+					//set reply
+					give_reply = 'User Not found'
+
+					return send_response(); //call
+						
+				}   
+
+				if(response == null){ //if no user found
+
+					//capture error for admin notification
+					error_capture('Ads create error, problem with inding user, user id = ' + user_id + 'error message = user not found' );
+
+					//set reply
+					give_reply = 'User Not found'
+
+					return send_response(); //call
+				}
 
 
-		
+
+				// console.log(JSON.stringify(response,1,1))
+				// response = JSON.parse(JSON.stringify(response)); //clean response of db metadata
+
+				
+
+				//charge user account
+
+				// console.log(
+				// 	response.credits,
+				// 	response.transactionhistory,
+				// 	response.ads_slots_hotspot_wallpaper
+				// );
 
 
+				//save ads history
+
+				//get history on profile
+				var previus_ads_history = response.ads_slots_hotspot_wallpaper;
+
+				//check if saved ads data is not over 1000
+				if(previus_ads_history.length > 1000){//if so
+
+					// delete last item
+					previus_ads_history.pop()
+
+				}
+
+
+				//add new ads to old ads history
+				previus_ads_history = ads_data_to_save.concat(previus_ads_history);
+
+
+				//account charging
+				var new_balance = response.credits - total_ads_cost;
+
+
+				//account charge history
+						
+				//add transaction
+				var date = new Date();
+
+				var hour = date.getHours();
+				var minutes = date.getMinutes();
+				var day = date.getDay();
+				var month = date.getMonth();
+				var year = date.getFullYear();
+			
+				var new_transaction_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year+';  [ '+ ads_data_to_save.length +' ] advertisement spot baught on hotspot [ '+hotspot_name+' ] for R'+total_ads_cost+' total +; New balance : R'+new_balance;
+
+
+				var new_transactions_array = response.transactionhistory;
+
+					new_transactions_array.unshift(new_transaction_record);
+
+				if( new_transactions_array.length > 1000){new_transactions_array.pop()}//if lenght is over that//remove first element
+
+			
+
+				//save elemts
+				response.ads_slots_hotspot_wallpaper = previus_ads_history;//account created ads history
+
+				response.credits = new_balance;//account new credit after ads charge
+
+				response.transactionhistory = new_transactions_array;//transaction history
+
+
+				//save to db			
+				response.save(function(err, results){//save changes
+					// console.log(results)
+					// console.log(err)
+					if(err){
+						console.log('error:when attempting to save ads credit charge money on user account, with document _id : '+ response._id +', user id number : '+req.body.user_id + 'error message = ' + err);
+						
+						//capture error for admin notification
+						error_capture('error:when attempting to save ads credit charge money on user account, with document _id : '+ response._id +', user id number : '+req.body.user_id+ 'error message = ' + err);
+						
+					
+					}
+
+					if(results == null || results == undefined || results == ''){//user not found//add user
+						console.log('error:when attempting to save ads credit charge money on user account, with document _id : '+ response._id +', user id number : '+req.body.user_id);
+							
+						//capture error for admin notification
+						error_capture('error:when attempting to save ads credit charge money on user account, with document _id : '+ response._id +', user id number : '+req.body.user_id);
+					
+					}
+
+
+					//give success or error response
+
+					//set reply
+					give_reply = 'success';
+
+					send_response(); //call
+
+				});	
+
+			});
+
+		}
+
+
+		error_capture('error:when attempting to save ads credit charge money on user account, with document _id : '+ 'response._id' +', user id number : '+req.body.user_id)
 
 		//give user response
 		function send_response(){
@@ -4388,7 +4623,47 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 
 
 
+/*=======================================
+ system/code/function important error capture
+=======================================*/ 
 
+function error_capture(error_data =''){
+
+	console.warn('Error captured. details = '+error_data );//show
+
+	var date = new Date();
+
+	var hour = date.getHours();
+	var minutes = date.getMinutes();
+	var day = date.getDay();
+	var month = date.getMonth();
+	var year = date.getFullYear();
+
+	var new_error_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year;
+
+
+	keystone.createItems({//add items to db//user details
+				
+		'system error catcher' : [
+			{
+				
+				error_details : error_data,
+				time_stamp : new_error_record
+
+		 	}
+			
+		]
+		
+		
+	}, function(err, results){
+		if(err){
+			console.log('Problem capturing error to db, error = '+ error_data + ' _date captured = '+ new_error_record);
+		}
+		
+	});
+
+
+}
 
 
 
