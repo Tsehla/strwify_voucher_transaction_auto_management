@@ -3928,12 +3928,12 @@ app.get('/api/hotspot_data', function(req, res){
 						if(ads_image_link && ads_image_link_click_redirect && ads_image_link.trim() == ads_image_link_click_redirect.trim() ){ //if so update link to new saved image link
 
 							//update link
-							ads_image_link_click_redirect = "/uploads/ads/" + image_file_name;
+							ads_image_link_click_redirect = "/images/uploads/ads/" + image_file_name;
 							
 						}
 
 						//get image url
-						ads_image_link = "/uploads/ads/" + image_file_name;
+						ads_image_link = "/images/uploads/ads/" + image_file_name;
 
 						image_details_creater ();//call next
 
@@ -3993,19 +3993,7 @@ app.get('/api/hotspot_data', function(req, res){
 
 
 
-
-
-
-
-
-
-
-	
-
-
-
 		//create the ads on hotspot
-
 		function create_ads_on_hotspot(){
 
 			console.log(JSON.stringify(ads_data_to_save, 1,2));
