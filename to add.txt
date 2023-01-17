@@ -54,5 +54,65 @@ var error_catcher = 'system error catcher';
 
 ------------
 
+ads edit/create allow auto renew when expired, scheduler will do auto renew if ads is about expire provided user has enough credits
+
+++
+can also allow advertiser to extend ads date is about to expire, they can do it through edit, but instead of edit they can do repost/renew this is same as posting new adverstiement
+
+-------------
+
+for the radius app; maybe you can use this logic as inspiration to create time based voucher in there plus also user account auto account usage reset 
+
+
+						//today date
+						var date = new Date();
+
+						var day = date.getDate();
+						var month = date .getMonth();
+						var year = date.getFullYear();
+
+						//expiry date  
+						var expire_day = JSON.parse(hotspot_wallpaper[0]).expire_day;
+						var expire_month = JSON.parse(hotspot_wallpaper[0]).expire_month;
+						var expire_year = JSON.parse(hotspot_wallpaper[0]).expire_year;
+
+						//check if expiry is this year
+						if( (expire_year - year) == 0){ //its this year
+
+
+							//check if expiry is this month
+							if((expire_month - month) == 0){
+
+								//check if expire day has not passed
+								if((expire_day - day) < 0 ){ //i so then it has expired//current day of month is begger than day set of expire
+
+									//delete 
+								}		
+							}
+
+							//check if expiry previus months
+							if((expire_month - month) < 0){
+								
+								//just delete
+							}
+						}
+
+						//check if expiery is next year
+						if((expire_year - year) < 0){ //for those expired previus years
+
+							//just delete them
+						}
+
+----------------------
+
+
+add email viewing on super admin ** important
+
+----------
+
+ads auto renew when expired, will auto charge user account;//or you can just allow admin to create ads that dont expire, meaning they wont have expiery details, or can choose expiry details that are more than thirty days
+
+------------
+
 
 

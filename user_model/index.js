@@ -214,6 +214,7 @@ router_hotspot_page_model .add({
 	
 	//ads wallpapers and advertisements
 	hotspot_wallpaper : {type : types.TextArray, default:['{"image_link" :"/default_slide_images/1.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/1.jpg", "ads_sponsored" : true, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/2.jpg" , "image_status_text" : "Click here to see Picture", "image_status_link": "/default_slide_images/2.jpg", "ads_sponsored ": true, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/3.jpg" , "image_status_text" : "Image 3", "image_status_link": "/default_slide_images/3.jpg", "ads_sponsored" : false, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/4.jpg" , "image_status_text" : "Image 4", "image_status_link": "/default_slide_images/4.jpg", "ads_sponsored" : false, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/5.jpg" , "image_status_text" : "Image 5", "image_status_link": "/default_slide_images/5.jpg", "ads_sponsored" : false, "hidden" : false, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/6.jpg" , "image_status_text" : "Image 6", "image_status_link": "/default_slide_images/6.jpg", "ads_sponsored" : false, "hidden" : true, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/7.jpg" , "image_status_text" : "Image 7", "image_status_link": "/default_slide_images/7.jpg", "ads_sponsored" : false, "hidden" : true,expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/8.jpg" , "image_status_text" : "Image 8", "image_status_link": "/default_slide_images/8.jpg", "ads_sponsored" : false, "hidden" : true, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/9.jpg" , "image_status_text" : "Image 9", "image_status_link": "/default_slide_images/9.jpg", "ads_sponsored" : false, "hidden" : true, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}','{"image_link" :"/default_slide_images/10.jpg" , "image_status_text" : "Image 10", "image_status_link": "/default_slide_images/10.jpg", "ads_sponsored" : true, "hidden" : true, expire : false, expire_day : 1,expire_month : 1,expire_year : 2020,created_by_account_id : ""}'], label :'Wallpaper data' },
+	hotspots_max_ads_spots  : {type : Number, label :'Hotspot max advertisements slots', default: 20,},//total adverments slots allowed on hotspot//new ads wont be allowed if this filled
 	allow_forced_advertisement_scrolling : {type :types.Boolean, default:false, label :'Force advertisement scrolling' },
 	forced_advertisement_scrolling_exit_number  : {type : String, label :'Advertisement show skip on scroll number', default: 6,},
 	forced_advertisement_skip_to_login : {type :types.Boolean, default:true, label :'Forced advertisement skip to login menu button' },
@@ -271,6 +272,27 @@ router_hotspot_page_model .add({
 });
 
 router_hotspot_page_model.register();
+
+
+//---------------------------------------------------------
+    
+// expired ads removed history
+//----------------------------------------------------------
+var ads_removed = 'expired ads history';
+var ads_removed_model = new keystone.List(ads_removed);
+
+ads_removed_model.add(
+    
+    {
+		hotspot_location : {type: String, default:'', label :'hotspot location'}, //hotspot location
+		hotspot_location_id : {type: String, default:'', label :'hotspot location ID'}, //hotspot location db id
+		removed_ads : { type: types.TextArray, label :'Removed Advertisments' }, //removed ads array
+		time_stamp : { type: String, default:'', label :'Advertisment removal time' }//time ads removed
+	}
+
+);
+
+ads_removed_model.register();
 
 
 //---------------------------------------------------------
@@ -348,6 +370,31 @@ error_catcher_model.add(
 );
 
 error_catcher_model.register();
+
+
+//---------------------------------------------------------
+    
+// email sent storage
+//----------------------------------------------------------
+var email_catcher = 'system email catcher';
+var email_catcher_model = new keystone.List(email_catcher);
+
+email_catcher_model.add(
+    
+    {
+		email_type : {type :types.Select, options :'Generic,System', default :'Generic', label :'Message notifier' },
+		email_details : {type: String, default:'', label :'Email message'}, //error data
+		time_stamp : { type: String, default:'', label :'Message capture time' }
+	}
+
+);
+
+email_catcher_model.register();
+
+
+
+
+
 
 
 

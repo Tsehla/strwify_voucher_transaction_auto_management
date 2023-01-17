@@ -4806,6 +4806,26 @@ function extra_menu(transaction_type){ //extra menu initiator
 		}
 		return;
 	}
+
+
+
+
+	if(transaction_type == 'emails_history'){
+
+		alert('menu to be implemented')
+
+		return
+	}
+
+	if(transaction_type == 'system_error'){
+		
+		alert('menu to be implemented')
+
+
+		return
+	}
+
+
 	
 }
 
