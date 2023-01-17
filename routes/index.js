@@ -3537,6 +3537,8 @@ app.get('/api/hotspot_data', function(req, res){
 
 								//save data
 								final_hotspots_data_array.push(
+
+
 									{
 										hotspot_location : data.router_location,//location of hotspot or name
 										hotspot_ads_currently_live : hotspot_ads_currently_live, //ads of this user currently on hotspot
@@ -3545,8 +3547,16 @@ app.get('/api/hotspot_data', function(req, res){
 										// hotspots_ads_disabled : false,//for admin//disabled hotspot wont show to users irrespective if they have ads on them or not
 										ads_edit_create_costs : JSON.parse(data.ads_create_edit_costs), //costs to create new ads or edit already active ads
 										max_ads_slots_per_hotspots_allowed : max_ads_slots_per_hotspots_allowed,
+
+										hotspot_ads_slots_available : data.hotspots_max_ads_spots - data.hotspot_wallpaper.length
+
+										
 									}
+
+									
 								)
+
+							
 							}
 
 						}
@@ -3811,6 +3821,17 @@ app.get('/api/hotspot_data', function(req, res){
 					}
 
 				});
+
+					
+				//check if hotspots ads limit are not all used up
+				if(hotspot_data.hotspot_wallpaper.length > hotspot_data.hotspots_max_ads_spots){
+
+					//set reply
+					give_reply = 'All hotspot ads slots used';
+
+					return send_response(); //call
+
+				}
 		
 				//do call
 				credits_check();
@@ -3839,7 +3860,7 @@ app.get('/api/hotspot_data', function(req, res){
 			}
 
 			//check if there are ads slot available for this user
-			if(user_hotspot_used_slots == user_account_data.max_ads_slots_per_hotspots_allowed){
+			if(user_hotspot_used_slots >= user_account_data.max_ads_slots_per_hotspots_allowed){
 		
 				//set reply
 				give_reply = 'All ads slots used';
@@ -3847,6 +3868,7 @@ app.get('/api/hotspot_data', function(req, res){
 				return send_response(); //call
 
 			}
+
 
 			//check if user has any credits
 			if(user_account_data.credits == 0){ //if not

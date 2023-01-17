@@ -7118,7 +7118,7 @@ function show_hotspot(){
 //------------ edit hotspot details -------------------
 function hotspot_edit(hot_spot_data){
 
-	console.log(hot_spot_data_array[hot_spot_data]);
+	// console.log(hot_spot_data_array[hot_spot_data]);
 
 	//clean hotspot manage div
 	dom_innerHtml('hotspot_edit_content', '');
@@ -7261,12 +7261,14 @@ function get_hotspots_editable_for_user(){
 				var button_create = '';//crete button
 			
 
-				if(hotspots.hotspot_ads_currently_live.length == 0 || hotspots.hotspot_ads_currently_live.length < hotspots.max_ads_slots_per_hotspots_allowed ){//if their are no hotspots ads links or data for the user//then it means they will have to create ads in this hotspot as nothing to edit//ADD HOTSPOT MAX ADS CHECK HERE, IF NO SPOTS DONT SHOW EDIT, EN ON SERVER YOU MAY NOT GIVE THE HOTSPOT WITHOUT SPOTS TO USERS, EXCEPT IF THEY ALREADY HAVE POSTS OR ADS ON IT, BUT CREATE BUTTON WONT SHOW
+				if(hotspots.hotspot_ads_currently_live.length == 0 || hotspots.hotspot_ads_currently_live.length < hotspots.max_ads_slots_per_hotspots_allowed && hotspots.hotspot_ads_slots_available
+					> 0){//if their are no hotspots ads links or data for the user//then it means they will have to create ads in this hotspot as nothing to edit//ADD HOTSPOT MAX ADS CHECK HERE, IF NO SPOTS DONT SHOW EDIT, EN ON SERVER YOU MAY NOT GIVE THE HOTSPOT WITHOUT SPOTS TO USERS, EXCEPT IF THEY ALREADY HAVE POSTS OR ADS ON IT, BUT CREATE BUTTON WONT SHOW//also only show if hotspots still has ads lots on it
 
 					//change
 					button_create = `
 					<div style="width: 100%;margin:10px 0px;font-size: 10px;">
-						To create new Advertisment on this hotspots will cost :<br> <span style="font-weight:bolder">R${hotspots.ads_edit_create_costs.ads_create_costs}</span>
+						This hotspot report to have [ ${hotspots.hotspot_ads_slots_available} ] advertisement spot left on it, when this menu was loaded. When this slots are used by any other people you wont be able to advertise until new slots free-up.<br>
+						To create new Advertisment on this hotspots will cost per advertisement :<br> <span style="font-weight:bolder">R${hotspots.ads_edit_create_costs.ads_create_costs}</span>
 					</div>
 					<button class="btn btn-primary" style="margin: 10px auto;" onclick="ads_create(${index})">Create new Advertisment</button>`;
 
@@ -7817,6 +7819,12 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 			if(response && response == 'All ads slots used'){
 				//give alert
 				alert('You have used all you advertisement slots on this hotspot. \r\rPlease try another hotspot or check back later again. \r\rYou can contact Administrator to ask for more advertisements slots.');
+			}
+
+			if(response && response == 'All hotspot ads slots used'){
+				//give alert
+				alert('Error, hotspot report that all its advetisements slots have just been all taken. \r\rPlease try another hotspot or check back later again. \r\rYou can contact Administrator for further details.');
+
 			}
 
 			//if success
