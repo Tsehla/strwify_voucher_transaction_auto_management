@@ -7597,16 +7597,44 @@ function imageUploaded(image_form_id) {
 		// base_64_ads_images_container[image_form_id].image_file_size = file.size;//forbid over 300kb 
 
 
+		//check if image has not yet been uploaded fro same form id
 
-		base_64_ads_images_container.push(
+		var is_new_image_not_re_upload = true;
 
-			{	image_form_id : image_form_id,
-				image_base64_data : base64String,
-				image_file_name : file.name,
-				image_file_size : file.size,//forbid over 300kb 
-			
+		// console.log(base_64_ads_images_container)
+
+		base_64_ads_images_container.forEach(function (image_data,index){
+
+			//check for existing upload
+			if(image_data.image_form_id == image_form_id){ //if found
+
+				//overide old image contents data
+				base_64_ads_images_container[index].image_base64_data = base64String;
+				base_64_ads_images_container[index].image_file_name = file.name;
+				base_64_ads_images_container[index].image_file_size = file.size;
+
+				//set as false
+				is_new_image_not_re_upload = false
+
+				// console.log(base_64_ads_images_container)
 			}
-		);
+
+		})
+
+
+		//if its not a re-uplod
+		if(is_new_image_not_re_upload){
+
+			base_64_ads_images_container.push(
+
+				{	image_form_id : image_form_id,
+					image_base64_data : base64String,
+					image_file_name : file.name,
+					image_file_size : file.size,//forbid over 300kb 
+				
+				}
+			);
+		}
 
 	}
 
@@ -7849,7 +7877,11 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 
 function ads_edit_create_preview(){
 
-	alert('feature still in creation');
+	// alert('feature still in creation');
+
+	
+
+	dom_hide_show('show','adview_overlay');
 
 }
 

@@ -9,6 +9,11 @@
         StrWifiy Transact
       </title>
       <meta name='viewport' content="width=device-width, initial-scale=1">
+
+      <link href="images/RubikDistressed-Regular.ttf" as="font" crossorigin="anonymous" />
+      <link href="/images/OpenSans-LightItalic.ttf" as="font" crossorigin="anonymous" />
+      <link href="images/NerkoOne-Regular.ttf" as="font" crossorigin="anonymous" />
+      <link href="images/RubikGlitch-Regular.ttf" as="font" crossorigin="anonymous" />
       
       <!-- allow http links to be made https --
       <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
@@ -79,6 +84,41 @@
                #manual_screen_content{
                display : none;/* hide */
                }
+
+               @font-face {
+                    font-family: 'Rubik Distressed';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Rubik Distressed'),url('/images/RubikDistressed-Regular.ttf') format('truetype');
+                
+                }
+
+                @font-face {
+                    font-family: 'Open Sans';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('/images/OpenSans-LightItalic.ttf') format('truetype');
+                
+                }
+                @font-face {
+                    font-family: 'NerkoOne';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('images/NerkoOne-Regular.ttf') format('truetype');
+                }
+                
+                
+                @font-face {
+                    font-family: 'RubikGlitch';
+                    /* font-style: normal;
+                    font-weight: normal; */
+                    /* src: url('path/to/OpenSans.eot'); */
+                    src: local('Open Sans'),url('images/RubikGlitch-Regular.ttf') format('truetype');	
+                }
+
                
       </style>
       
@@ -1361,10 +1401,82 @@
   
     
 
+    <!-- ads preview -->
 
-    <!-- iframe container used to load hotspot login/status page to retrieve hotspot location name periodically used to confirm and check if seller is still connected to the hotspot, only if they are set as the owner of the hotspot -->
-    <div id="iframe_container" style="width: auto;height: auto; display: none; "></div>
-	   
+    <div id="adview_overlay" style="width:100%;height:100%;position: fixed;top: 0px;left: 0px;display: block; z-index: 4;">
+    
+    
+      <div id="" style="width:100%;height:auto;min-height:100vh;">
+		
+		
+			
+
+        <div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh;font-family: 'Open Sans', sans-serif;">
+  
+          <div id='dark_neumorph_skin_inner_container' style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
+  
+  
+            
+            <!-- top -->
+            <div id="desktop_ads_viewwer" style="width: 100%;height:85%">
+              <div id="top_text_div" style="width:100%;height:10%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" onclick="image_text_link()">
+  
+                
+                <div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;">
+                  ${router_location}
+                </div>
+  
+  
+              </div>
+            </div>
+  
+  
+            <!-- bottom -->
+  
+            <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
+          
+              <div style="height:100%;width:32%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+  
+                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;float:right;display:block" onclick="prev_wallpaper_ads()">
+  
+              </div>
+              <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
+              
+              
+                <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+              
+  
+              </div>
+              <div id="help_navi" style="height:100%;width:10%;min-width:51px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("adview_overlay").style.display="none"'>
+            
+              
+                <img src="/images/query_stats_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
+                <div style="width: 100%;height: 22px;">Close</div>
+  
+              </div>
+      
+              <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+              
+              
+                <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick="image_text_link()"> 
+            
+  
+              </div>
+              <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
+      
+                <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;display:block" onclick="next_wallpaper_ads()"> 
+          
+              </div>
+          
+            </div>
+  
+          </div>
+  
+        </div>
+    
+    </div>
+
+
 	   
 	   <!-- custom alert box -->
     <div class="w3-container w3-center w3-table" id="custome_alert_box_container" style="width: 100vw; height: 100vh;background-color: rgba(0, 0, 0, 0.545);position: absolute;top:0px; left:0px; display: none;"> <!-- main container-->
