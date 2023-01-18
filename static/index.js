@@ -7238,11 +7238,11 @@ function get_hotspots_editable_for_user(){
 								Expiery date : <span style="font-weight:bolder"> ${ads_links.expire_day }/${ads_links.expire_month}/${ads_links.expire_year}</span>
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
-								Advertisment poster link :  <br><a href="${ads_links.image_link}" style="display: block;" target="bank"><span style="font-weight:bolder">${ads_links.image_link}</span></a>
+								Advertisment poster link :  <br><a href="${ads_links.image_link}" style="display: block;" target="bank"><span style="font-weight:bolder">${ads_links.image_link.replaceAll('%20',' ')}</span></a>
 								<img src="${ads_links.image_link}" alt="${ads_links.image_status_text }" style="height:200px;margin : 5px auto" onclick="window.open('${ads_links.image_link}','_blank')">
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
-								Advertisment status click link :  <br> <a href="${ads_links.image_status_link}" target="bank"><span style="font-weight:bolder">${ads_links.image_status_link }</span></a>
+								Advertisment status click link :  <br> <a href="${ads_links.image_status_link}" target="bank"><span style="font-weight:bolder">${ads_links.image_status_link.replaceAll('%20',' ') }</span></a>
 							</span>
 							<span style="width: 100%;height:auto;margin:2px;display: block;">
 								Advertisment status text : <br><span style="font-weight:bolder">${ads_links.image_status_text }</span>
@@ -7468,7 +7468,7 @@ function ads_create(hotspot_index){
 							1) 
 						</div>
 						Paste picture/image link of your Advertisment here.<br>
-						Example link to picture/image : <a href="/default_slide_images/5.jpg">http://www.website.com/ads/birthday_event.jpg</a><br>
+						Example link to picture/image : <a href="/default_slide_images/5.jpg" target="blank" >http://www.website.com/ads/birthday_event.jpg</a> Or <a href="/default_slide_images/11.jpg" target="blank" >http://www.website.com/how to cook with our recipe picture.jpg</a><br>
 						Recommended image/picture size is : width = 802px , height = 1285px.
 						Recommended picture size for best user experience and quick display = 100Kb and less.
 
