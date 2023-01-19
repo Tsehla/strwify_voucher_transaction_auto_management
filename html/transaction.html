@@ -1403,54 +1403,54 @@
 
     <!-- ads preview -->
 
-    <div id="adview_overlay" style="width:100%;height:100%;position: fixed;top: 0px;left: 0px;display: block; z-index: 4;">
+    <div id="adview_overlay" style="width:100%;height:100%;position: fixed;top: 0px;left: 0px;display: none; z-index: 4;background-color: white;">
     
     
-      <div id="" style="width:100%;height:auto;min-height:100vh;">
+      <div id="" style="width:100%;height:auto;min-height:100vh;background-color: rgba(12, 12, 13, 0.85);">
 		
-		
-			
-
-        <div id='dark_neumorph_skin' style="width:100%;background-color: #0c0c0dd9;min-height: 484px;height:100vh;font-family: 'Open Sans', sans-serif;">
+        <div id='dark_neumorph_skin' style="width:100%;min-height: 484px;height:100vh;font-family: 'Open Sans', sans-serif;">
   
-          <div id='dark_neumorph_skin_inner_container' style="width:100%;height:100%; max-height:100vh;color: white;max-width: 511px;margin: auto;">
+          <div id='dark_neumorph_skin_inner_container' style="width:100%;height:100%; max-height:100vh;color: white;margin: auto;">
   
   
             
             <!-- top -->
-            <div id="desktop_ads_viewwer" style="width: 100%;height:85%">
-              <div id="top_text_div" style="width:100%;height:10%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" onclick="image_text_link()">
+            <div style="width: 100%;height:14%">
+              <div id="top_text_div" style="width:100%;height:100%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" >
   
-                
+<!--                 
                 <div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;">
                   ${router_location}
-                </div>
+                </div> -->
   
   
               </div>
             </div>
-  
+
+            <!-- center -->
+            <div id="desktop_ads_viewwer" style="width: 100%;height:73%"></div>
+          
   
             <!-- bottom -->
   
-            <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%);">
+            <div style="width:100%;height: 13%;min-height:30px;background-color: none;box-shadow: inset 8px -9px 76px rgb(0 0 0 / 53%), inset 0px 0px 0px rgb(0 0 0 / 0%)">
           
               <div style="height:100%;width:32%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
   
-                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;float:right;display:block" onclick="prev_wallpaper_ads()">
+                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 10% auto 0px auto;float:right;display:block" onclick="prev_wallpaper_ads()">
   
               </div>
               <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
               
               
-                <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;">
+                <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;">
               
   
               </div>
               <div id="help_navi" style="height:100%;width:10%;min-width:51px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick='document.getElementById("adview_overlay").style.display="none"'>
             
               
-                <img src="/images/query_stats_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" >
+                <img src="/images/close_white_24dp.svg" style="height: 27px;margin: 23% auto 0px auto;" >
                 <div style="width: 100%;height: 22px;">Close</div>
   
               </div>
@@ -1458,13 +1458,13 @@
               <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
               
               
-                <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;" onclick="image_text_link()"> 
+                <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;" onclick="image_text_link()"> 
             
   
               </div>
               <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
       
-                <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 5px auto 0px auto;display:block" onclick="next_wallpaper_ads()"> 
+                <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;display:block" onclick="next_wallpaper_ads()"> 
           
               </div>
           

@@ -3978,12 +3978,13 @@ app.get('/api/hotspot_data', function(req, res){
 						// console.log('image created');
 
 						//check if redirect link is same as given ads image link
-						if(ads_image_link && ads_image_link_click_redirect && ads_image_link.trim() == ads_image_link_click_redirect.trim() ){ //if so update link to new saved image link
+						// if(ads_image_link && ads_image_link_click_redirect && ads_image_link.trim() == ads_image_link_click_redirect.trim() ){ //if so update link to new saved image link
+						// if( ads_image_link_click_redirect.trim().length == 0){ //if redirect link was never given
 
-							//update link
-							ads_image_link_click_redirect = "/images/uploads/ads/" +  image_file_name; //replace space
+						// 	//update link
+						// 	ads_image_link_click_redirect = "/images/uploads/ads/" +  image_file_name; //replace space
 						
-						}
+						// }
 
 						//get image url
 						ads_image_link = "/images/uploads/ads/" + image_file_name; //replace space
@@ -4007,7 +4008,15 @@ app.get('/api/hotspot_data', function(req, res){
 				// console.log(futurerDate.getDate(), futurerDate.getMonth(), futurerDate.getFullYear())
 
 				
+				//check if redirect link was given
+				if( ads_image_link_click_redirect.trim().length == 0){ //if redirect link was never given
 
+					//update link
+					ads_image_link_click_redirect = ads_image_link; //replace space
+				
+				}
+
+				
 				ads_data_to_save.push(
 					JSON.stringify(
 					{

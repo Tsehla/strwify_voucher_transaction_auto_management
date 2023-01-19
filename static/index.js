@@ -7579,7 +7579,6 @@ function imageUploaded(image_form_id) {
 	reader.onload = function () {
 		base64String = reader.result.replace("data:", "")
 			.replace(/^.+,/, "");
-	
 
 		imageBase64Stringsep = base64String;
 	
@@ -7703,18 +7702,18 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 		
 
 			//check for click redirect link
-			if(ads_image_link_click_redirect){
+			// if(ads_image_link_click_redirect){
 				created_ads_data.ads_image_link_click_redirect = ads_image_link_click_redirect;
 
-			}
+			// }
 
 			//if no redirect link given
-			if(!ads_image_link_click_redirect){
+			// if(!ads_image_link_click_redirect){
 
-				//given image link
-				created_ads_data.ads_image_link_click_redirect = created_ads_data.ads_image_link;
+			// 	//given image link
+			// 	created_ads_data.ads_image_link_click_redirect = created_ads_data.ads_image_link;
 
-			}
+			// }
 
 			//check ads description
 			if(ads_description){
@@ -7875,15 +7874,213 @@ async function ads_create_save(hospot_id, total_ads_slots_created){
 
 };
 
-function ads_edit_create_preview(){
 
-	// alert('feature still in creation');
+//ads preview
+var ads_change_tracker = 0;//tracks ads changes
+var ads_preview_container = [];//ads to be previwed
+
+
+function ads_edit_create_preview(hospot_id,total_ads_slots_created){
+
+	//clear of old data
+	ads_change_tracker = 0;//tracks ads changes
+	ads_preview_container = [];//ads to be previwed
+
+
+	//get ads to be previwd
+
+
+	//loop through created ads sloot
+	for(var a = 1; a <= total_ads_slots_created; a++ ){
+
+		//check if values where added
+		var ads_image_link = document.getElementById(hospot_id + '_' + a +'_1').value;//type/paste advertisement link here
+		var ads_image_link_uploaded = document.getElementById(hospot_id + '_' + a +'_1.2').value;
+		var ads_image_link_click_redirect = document.getElementById(hospot_id + '_' + a +'_2').value;//link to send user to when clicking on the advertisement image
+		var ads_description = document.getElementById(hospot_id + '_' + a +'_3').value;//Advertisment short description or introduction
+
+		var created_ads_data = {};//contains created ads data
+
+		//check if image link is provided //this is important
+		if(ads_image_link || ads_image_link_uploaded){
+
+			//check image link provided
+			if(ads_image_link){
+				created_ads_data.ads_image_link = ads_image_link;
+			}
+			
+			//check if upload provided
+			if(ads_image_link_uploaded){
+
+				created_ads_data.ads_image_link = ads_image_link_uploaded;
+
+			
+				//crrent processing upload input form id
+				// console.log('match uload', upload_file_input_id )
+				var upload_file_input_id = hospot_id + '_' + a +'_1.2';
+
+				//loop through images to upload
+				for(counter in base_64_ads_images_container){
+
+					//find matching input id
+					if(base_64_ads_images_container[counter].image_form_id == upload_file_input_id ){
+
+						// console.log('match found')
+						//save upload file data
+						created_ads_data.ads_image_link_t_upload_file_data = base_64_ads_images_container[counter];
+
+						//end loop
+						// break;
+					}
+
+					// console.log('match no match',base_64_ads_images_container[counter].image_form_id , upload_file_input_id )
+
+				}
+
+			}
+		
+
+			//check for click redirect link
+			// if(ads_image_link_click_redirect){
+				created_ads_data.ads_image_link_click_redirect = ads_image_link_click_redirect;
+
+			// }
+
+			// //if no redirect link given
+			// if(!ads_image_link_click_redirect){
+
+			// 	//given image link
+			// 	created_ads_data.ads_image_link_click_redirect = created_ads_data.ads_image_link;
+
+			// }
+
+			//check ads description
+			if(ads_description){
+				created_ads_data.ads_description = ads_description;
+			}
+
+			//if no ads description
+			if(!ads_description){
+				created_ads_data.ads_description = "Click here to see picture";
+			}
+
+			//save ads data
+			ads_preview_container.push(created_ads_data);
+
+		}
+
+		// on last loop
+		if(a == total_ads_slots_created){
+			// console.log('hhhh',ads_to_create)
+			//call
+			preview_ads_changer('next');
+		}
+		
+
+	}
 
 	
-
 	dom_hide_show('show','adview_overlay');
 
 }
+
+async function preview_ads_changer(navigate = 'next'){
+
+	// console.log(JSON.stringify(ads_preview_container,1,2))
+
+
+	if(navigate == 'next'){
+
+		//check if ads tracker is not out of range
+		if(ads_preview_container.length == ads_change_tracker ){
+
+			//reste loptracker
+			ads_change_tracker = 0;
+		}
+
+
+		//image url pr image data
+		var image_link = '';
+		var image_click_redirect ='';
+
+		if(ads_preview_container[ads_change_tracker].ads_image_link_click_redirect ){
+
+			image_click_redirect = ads_preview_container[ads_change_tracker].ads_image_link_click_redirect;//image redirect link
+		}
+
+		//if image url is provided and base64 image empty
+		if(ads_preview_container[ads_change_tracker].ads_image_link && !ads_preview_container[ads_change_tracker].ads_image_link_t_upload_file_data){
+
+			image_link = ads_preview_container[ads_change_tracker].ads_image_link;//set image url
+			
+			// //check if redirect link was given
+			if(image_click_redirect.trim().length == 0){ //if not
+
+				image_click_redirect = image_link;//set base 64 image data as url for click redirect
+			}
+
+		}
+
+		//if image base 64 data provided
+		if(ads_preview_container[ads_change_tracker].ads_image_link_t_upload_file_data ){
+
+			//get image base64 data
+
+			// data:image/jpeg;base64,/
+			image_link = 'data:image/png;base64,' + ads_preview_container[ads_change_tracker].ads_image_link_t_upload_file_data.image_base64_data; //create base 64 
+		
+			// check if redirect link was given
+			if(image_click_redirect.trim().length == 0){ //if not
+
+				//do fetc
+					await fetch('data:image/png;base64,' + ads_preview_container[ads_change_tracker].ads_image_link_t_upload_file_data.image_base64_data)
+					.then(res => res.blob()) //get blob data
+					.then(blob => {
+					// console.log(blob);
+					var url = window.URL.createObjectURL(blob); //create blob url
+					//   window.open(url, '_blank')
+
+					image_click_redirect = url; //save as click link
+
+					// document.getElementById('top_text_div').innerHTML =`   
+					// 	<div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;" onclick='window.open("${url}","_blank")'>
+					// 		${ads_preview_container[ads_change_tracker].ads_description}
+					// 	</div>`
+
+					});
+			}
+
+		}
+		
+		//apply ads
+		document.getElementById('desktop_ads_viewwer').style.backgroundSize ='auto 100%';
+		document.getElementById('desktop_ads_viewwer').style.backgroundRepeat ='no-repeat';
+		document.getElementById('desktop_ads_viewwer').style.backgroundPosition ='center';
+		document.getElementById('desktop_ads_viewwer').style.backgroundImage = 'url("'+image_link+'")';//set image bakcground
+
+		//image click
+
+		//image text //
+		document.getElementById('top_text_div').innerHTML =`   
+			<div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;" onclick='window.open("${image_click_redirect}","_blank")'>
+			${ads_preview_container[ads_change_tracker].ads_description}
+			</div>
+			`
+		;
+		
+
+
+		//increments ads tracker
+		ads_change_tracker = ads_change_tracker + 1;
+
+		return;//end function
+	}
+
+
+
+}
+
+
 
 //opens ads to view on current hotspots
 function selected_hotspot_ads_view(hotspot_location='default_'){
