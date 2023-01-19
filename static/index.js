@@ -216,24 +216,7 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
   =====================================================================================================================================================*/
   /*seller & ||  user login details collcetor */
   var seller_login = { logged_in : false, seller_id : '', usertype : '', credit:'', name:'', customer_partners_contact_list:'', resturent_hotel_cafe_login:false, manages_hotspot :false, hotspot_printable_vouchers :false,hotspot_printable_vouchers_template :'Primary',managed_hotspot : [],nocharge_voucher_sell : false };
-
-  seller_login= {
-		"logged_in": true,
-		"seller_id": "8905135800000",
-		"usertype": "Seller",
-		"credit": 500,
-		"name": "Tsehla Seller",
-		"customer_partners_contact_list": [],
-		"resturent_hotel_cafe_login": false,
-		"manages_hotspot": false,
-		"hotspot_printable_vouchers": true,
-		"hotspot_printable_vouchers_template": "Primary",
-		"managed_hotspot": [],
-		"nocharge_voucher_sell": true
-	}
-
-  console.log('======delete this [seller_login ]===== ',seller_login)
-  
+ 
   
   
   /* auto generated code from the user */
@@ -7214,7 +7197,7 @@ function get_hotspots_editable_for_user(){
 				return alert("loggin details contain error, please re-login or contact system administrator for help");//give error 
 			}
 	 
-		 	console.log(response) 
+		 	// console.log(response) 
 
 			router_ads_owned = response;//save ads
 
@@ -7333,7 +7316,7 @@ function get_hotspots_editable_for_user(){
 
 
 }
-get_hotspots_editable_for_user();
+// get_hotspots_editable_for_user();
 
 function ads_edit(hotspot_index){
 
@@ -7349,11 +7332,6 @@ function ads_edit(hotspot_index){
 	// console.log('edit', hotspot_index, router_ads_owned[hotspot_index]);
 
 	alert('feature still in creation');
-
-	
-
-
-
 
 
 }
@@ -7546,6 +7524,10 @@ function ads_create(hotspot_index){
 	if(added_slots < slots_available ){//if slots added are less than slots available
 		alert("Alert!, Your account credit is not enough to afford all advertisements [ "+slots_available+" ] slots available. \rOnly [ "+added_slots+" ] could be added.\rIf you were intending to use all advertisements slots, you will have to recharge your account and come back to add the advertisments.");
 	}
+
+
+	//give alrt
+	alert('Select your adsvertisement poster images or provide link to an image you want shown.\r\rPress [Preview Advertisement] button to see how your advertisements will look, before saving so to avoid mistakes..\r\rEnsure pictures you upload are less than 200kb as bigger pictures will not work perfectly on some phones of people viewing your advertisement #Tip : Search on google for "free online picture size compressor"')
 
 }
 
@@ -7984,23 +7966,27 @@ function ads_edit_create_preview(hospot_id,total_ads_slots_created){
 
 }
 
-async function preview_ads_changer(navigate = 'next'){
-
-	// console.log(JSON.stringify(ads_preview_container,1,2))
+async function preview_ads_changer(navigate = 'back'){
 
 
-	if(navigate == 'next'){
+		//check if ads tracker is not out of range  //forward movement
+		if(ads_preview_container.length == ads_change_tracker || ads_change_tracker < 0 && navigate != 'back'  ){
 
-		//check if ads tracker is not out of range
-		if(ads_preview_container.length == ads_change_tracker ){
-
-			//reste loptracker
-			ads_change_tracker = 0;
+			//reset loptracker
+			ads_change_tracker = 0;//set as 0
 		}
 
+	
+		//check if ads tracker is not out of range  //backward movemonet
+		if( ads_change_tracker < 0 && navigate === 'back'){
+
+			ads_change_tracker = ads_preview_container.length -1;//set as array leth
+
+		}
 
 		//image url pr image data
 		var image_link = '';
+
 		var image_click_redirect ='';
 
 		if(ads_preview_container[ads_change_tracker].ads_image_link_click_redirect ){
@@ -8036,16 +8022,16 @@ async function preview_ads_changer(navigate = 'next'){
 					await fetch('data:image/png;base64,' + ads_preview_container[ads_change_tracker].ads_image_link_t_upload_file_data.image_base64_data)
 					.then(res => res.blob()) //get blob data
 					.then(blob => {
-					// console.log(blob);
-					var url = window.URL.createObjectURL(blob); //create blob url
-					//   window.open(url, '_blank')
+						// console.log(blob);
+						var url = window.URL.createObjectURL(blob); //create blob url
+						//   window.open(url, '_blank')
 
-					image_click_redirect = url; //save as click link
+						image_click_redirect = url; //save as click link
 
-					// document.getElementById('top_text_div').innerHTML =`   
-					// 	<div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;" onclick='window.open("${url}","_blank")'>
-					// 		${ads_preview_container[ads_change_tracker].ads_description}
-					// 	</div>`
+						// document.getElementById('top_text_div').innerHTML =`   
+						// 	<div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;" onclick='window.open("${url}","_blank")'>
+						// 		${ads_preview_container[ads_change_tracker].ads_description}
+						// 	</div>`
 
 					});
 			}
@@ -8068,13 +8054,39 @@ async function preview_ads_changer(navigate = 'next'){
 			`
 		;
 		
+	
 
 
-		//increments ads tracker
-		ads_change_tracker = ads_change_tracker + 1;
+		//if forward movement
+		if(navigate != 'back' ){
 
-		return;//end function
-	}
+			//increments ads tracker
+			ads_change_tracker = ads_change_tracker + 1;
+		}
+		
+		
+		//if backward movemonet
+		if(navigate == 'back'){
+
+			ads_change_tracker = ads_change_tracker - 1;//subtract one
+
+		}
+	
+
+	// 	return;//end function
+	// }
+
+
+	// //else call previus
+
+
+
+
+
+
+
+
+	
 
 
 

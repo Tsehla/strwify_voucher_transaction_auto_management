@@ -1344,7 +1344,7 @@
    	   
     <!-- hotspot manage -->
     
-    <div id="hotspot_manage" style="width:98vw; height: auto;position: absolute;top: 0px;left: 0px;display: block">
+    <div id="hotspot_manage" style="width:98vw; height: auto;position: absolute;top: 0px;left: 0px;display: none">
         <div id="hotspot_manage_menu_wrapper" style='background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro'>
             <div id="hotspot_manage_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:auto; min-height: 500px; max-height: none; text-align: center;" class="">
               <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
@@ -1437,10 +1437,10 @@
           
               <div style="height:100%;width:32%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
   
-                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 10% auto 0px auto;float:right;display:block" onclick="prev_wallpaper_ads()">
+                <img id="forced_ads_previous" src="/images/skip_previous_white_24dp.svg" style="height: 27px;margin: 10% auto 0px auto;float:right;display:block" onclick="preview_ads_changer()">
   
               </div>
-              <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" onclick="wallpaer_image_download()">
+              <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
               
               
                 <img src="/images/share_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;">
@@ -1458,13 +1458,13 @@
               <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
               
               
-                <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;" onclick="image_text_link()"> 
+                <img  src="/images/zoom_in_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;"> 
             
   
               </div>
               <div style="height:100%;width:10%;min-width:30px;display: inline-block;vertical-align:top;font-size: 16px;text-align: center;font-family: 'Rubik Distressed', cursive;" >
       
-                <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;display:block" onclick="next_wallpaper_ads()"> 
+                <img id="forced_ads_next" src="/images/skip_next_white_24dp.svg" style="height: 27px;margin: 33% auto 0px auto;display:block" onclick="preview_ads_changer('next')"> 
           
               </div>
           
