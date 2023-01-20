@@ -1503,7 +1503,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 
 					var hour = date.getHours();
 					var minutes = date.getMinutes();
-					var day = date.getDay();
+					var day = date.getDate();
 					var month = date.getMonth();
 					var year = date.getFullYear();
 					
@@ -1606,7 +1606,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 				
 									var hour = date.getHours();
 									var minutes = date.getMinutes();
-									var day = date.getDay();
+									var day = date.getDate();
 									var month = date.getMonth();
 									var year = date.getFullYear();
 									
@@ -1647,7 +1647,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 						var date = new Date();
 						var hour = date.getHours();
 						var minutes = date.getMinutes();
-						var day = date.getDay();
+						var day = date.getDate();
 						var month = date.getMonth();
 						var year = date.getFullYear();
 						
@@ -2324,7 +2324,7 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 		var date = new Date();			
 		var hour = date.getHours();
 		var minutes = date.getMinutes();
-		var day = date.getDay();
+		var day = date.getDate();
 		var month = date.getMonth();
 		var year = date.getFullYear();
 		 
@@ -2665,7 +2665,7 @@ if(req.query.type == 'to_reddem_voucher'){	//find voucher to reedem
 							var date = new Date();			
 							var hour = date.getHours();
 							var minutes = date.getMinutes();
-							var day = date.getDay();
+							var day = date.getDate();
 							var month = date.getMonth();
 							var year = date.getFullYear();
 									
@@ -3147,7 +3147,7 @@ app.get('/api/redeem_voucher', function(req, res){
 				var date = new Date();			
 				var hour = date.getHours();
 				var minutes = date.getMinutes();
-				var day = date.getDay();
+				var day = date.getDate();
 				var month = date.getMonth();
 				var year = date.getFullYear();
 				
@@ -3941,7 +3941,7 @@ app.get('/api/hotspot_data', function(req, res){
 					var hour = date.getHours();
 					var minutes = date.getMinutes();
 					var seconds = date.getSeconds();
-					var day = date.getDay();
+					var day = date.getDate();
 					var month = date.getMonth();
 					var year = date.getFullYear();
 						
@@ -4232,7 +4232,7 @@ app.get('/api/hotspot_data', function(req, res){
 
 				var hour = date.getHours();
 				var minutes = date.getMinutes();
-				var day = date.getDay();
+				var day = date.getDate();
 				var month = date.getMonth();
 				var year = date.getFullYear();
 			
@@ -4319,7 +4319,7 @@ app.get('/api/hotspot_data', function(req, res){
 		var hour = date.getHours();
 		var minutes = date.getMinutes();
 		var seconds = date.getSeconds();
-		var day = date.getDay();
+		var day = date.getDate();
 		var month = date.getMonth();
 		var year = date.getFullYear();
 			
@@ -4366,7 +4366,7 @@ app.get('/api/hotspot_data', function(req, res){
 		var hour = date.getHours();
 		var minutes = date.getMinutes();
 		var seconds = date.getSeconds();
-		var day = date.getDay();
+		var day = date.getDate();
 		var month = date.getMonth();
 		var year = date.getFullYear();
 			
@@ -4539,23 +4539,127 @@ app.get('/api/get_hotspot', function(req, res){
 		res.jsonp(user_data)
 
 
+	});
+
+
+})
 
 
 
 
+/*=======================================
+    system errors
+=======================================*/  
+    
+app.get('/api/system_errors', function(req, res){
+	  
+
+	keystone.list('system error catcher').model.find()
+	.exec(function(err, err_data){
+
+		if(err){
+			console.log('error : when finding [ system errors ] data. error : ' + err);
+			error_capture('error : when finding [ system errors ] data. error : ' + err);
+			res.jsonp('Server or Conection error');
+			return;
+		}
 		
+		if(err_data == null || err_data == undefined || err_data == ''){//user not found//add user
+
+			console.log('error : when finding [ system errors ] data. error : no errors found or stored on db');
+			error_capture('error : when finding [ system errors ] data. error : no errors found or stored on db');
+			res.jsonp('No data found');
+			return;
+		}
+
+
+		//console.log(user_data);
+		res.jsonp(err_data)
+
 
 	});
 
 
+})
 
 
 
+/*=======================================
+    get meial messages 
+=======================================*/  
+    
+app.get('/api/system_messages', function(req, res){
+	  
+	keystone.list('system email catcher').model.find()
+	.exec(function(err,messages_data){
+
+		if(err){
+			console.log('error : when finding [ system email ] messages. error : ' + err);
+			error_capture('error : when finding [ system email ] messages. error : ' + err);
+			res.jsonp('Server or Conection error');
+			return;
+		}
+		
+		if(messages_data == null || messages_data == undefined || messages_data == ''){//user not found//add user
+
+			console.log('error : when finding [ system email ] messages. error : no errors found or stored on db');
+			error_capture('error : when finding [ system email ] messages. error : no errors found or stored on db');
+			res.jsonp('No data found');
+			return;
+		}
+
+		//console.log(user_data);
+		res.jsonp(messages_data)
 
 
+	});
 
 
 })
+
+
+
+/*=======================================
+    system emil messages and errors delete
+=======================================*/  
+    
+app.get('/api/system_or_errors_data_delete', function(req, res){
+
+	var keystone_list = {
+		errors : 'system error catcher',
+		messages : 'system email catcher'
+	}
+	  
+	keystone.list(keystone_list[req.query.caller]).model.remove({_id : req.query.id}, function(err,response){
+
+		if(err){
+
+			console.log('error : when deleting [ system email/errors messages ] messages. error : ' + err);
+			error_capture('error : when deleting [ system email/errors messages ] messages. error : ' + err);
+
+			res.jsonp('Server or Conection error');
+			return;
+		}
+		
+		if(response == null || response == undefined || response == ''){//user not found//add user
+
+			console.log('error : when deleting [ system email/errors messages ] messages. error : no reply from server');
+			error_capture('error : when deleting [ system email/errors messages ] messages. error : no reply from server');
+
+			res.jsonp('No data found');
+			return;
+		}
+
+		console.log({response});
+		res.jsonp(response)
+
+
+	});
+
+
+})
+
+
 
 
 
@@ -4590,7 +4694,7 @@ app.post('/trial_login_data_usage_trcker', function(req, res) {
 	//check if any trial data was recived
 	if(trial_ursage_report[0].length > 0){  //if so do saving en etc
 
-		console.log(trial_ursage_report, '----- ',JSON.parse(trial_ursage_report[0]));
+		// console.log(trial_ursage_report, '----- ',JSON.parse(trial_ursage_report[0]));
 
 		console.log('-- trial data was recieved in this post request')
 
@@ -4668,8 +4772,8 @@ function error_capture(error_data =''){
 
 	var hour = date.getHours();
 	var minutes = date.getMinutes();
-	var day = date.getDay();
-	var month = date.getMonth();
+	var day = date.getDate();
+	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
 
 	var new_error_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year;
@@ -4699,39 +4803,15 @@ function error_capture(error_data =''){
 }
 
 
+	/*=======================================
+		handle all others request with incorrect routes
+	=======================================*/  
 
 
+	app.get('/*', function(req, res){
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*=======================================
-    handle all others request with incorrect routes
-=======================================*/  
-
-
-app.get('/*', function(req, res){
-
-	res.jsonp('Icorrect link, Please try going to homepage')
-});
+		res.jsonp('Icorrect link, Please try going to homepage')
+	});
 
 
 

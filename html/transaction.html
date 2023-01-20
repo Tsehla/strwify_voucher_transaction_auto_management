@@ -295,6 +295,8 @@
 
    <!-- landing choose action --->
 
+   <button  id="seller_distributor_option_account_create" class="btn " style="font-family: 'Rubik Distressed';font-size:27px;width:100%;margin:18px 0px" onclick="new_user_account_self_creation()">Create new account</button>
+
         <!-- Distrubutor login button  -->
         <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_distributor_login()'>
         <img src="images/distributor.svg" style="width: auto; height: 18vh; margin: 2vh ;">
@@ -1418,7 +1420,7 @@
             <div style="width: 100%;height:14%">
               <div id="top_text_div" style="width:100%;height:100%;min-height:30px;text-align: center;font-family: 'Open Sans', sans-serif;" >
   
-<!--                 
+      <!--                 
                 <div id="walp_links_2" style="width: 100%;height: 100%;margin:auto;padding:10px;overflow-y: auto;font-size: 10px;font-weight: 600;color: white;background-color: #1f1f209c;">
                   ${router_location}
                 </div> -->
@@ -1475,6 +1477,7 @@
         </div>
     
     </div>
+    </div>
 
 
 	   
@@ -1510,7 +1513,59 @@
 
 
     </div>
+
+    <!-- errors & messages view -->
+
+    
+    <div id="errors_messages_view" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;display: none;background-color: rgb(51 51 51 / 78%);">
+
+      <div style="background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;width:80%;height: 88vh;min-height: 300px;margin: 2% auto;">
+          
+          <p style="text-transform: capitalize;text-align:center;width:100%;min-height: 46px;line-height: 42px;vertical-align:middle;font-size:16px;border-bottom:1px solid gainsboro">
+            <b style="width: 70%;display: inline-block;height: 100%;" >
+              Viewing : <span id="errors_messages_view_header"></span>
+            </b>
+            <button class="btn btn-primary" style="width: 20%;display: inline-block" onclick="dom_hide_show('hide','errors_messages_view')"> CLOSE</button>
+          </p>
+
+          <!-- hotspot edit content -->
+          <div id="errors_messages_view_container" style="height: 80%; width: 100%;overflow-y: auto;overflow-x: hidden;">
+
+            
+          </div>
+          
+          <!-- help button
+          <button id='hotspot_help_button' style="width:100%; height:30px; padding:0px;" class="btn btn-warning" onclick="alert('1\) Type link to your advertsiement image url or upload the picture to use as advertismet poster.\r\r2\) Give link or website you want user to be sent when clicking the image or image description, or just leave empty.\r\r3) Give short description of your advertisement to user, Example : Party with us this weekend\r\r4) TIP# Leave advertisement slots empty if not using')">Help</button>   -->
+
+      </div>
+
+    </div>
+
+    <!-- user account creation -->
 	   
+    <div id="new_user_account_creation" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;display: none;background-color: rgb(51 51 51 / 78%);">
+
+      <div style="background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;width:80%;height: 88vh;min-height: 300px;margin: 2% auto;">
+          
+          <p style="text-transform: capitalize;text-align:center;width:100%;min-height: 46px;line-height: 42px;vertical-align:middle;font-size:16px;border-bottom:1px solid gainsboro">
+            <b style="width: 70%;display: inline-block;height: 100%;" >
+              New Account : <span id="new_user_account_creation_header"></span>
+            </b>
+            <button class="btn btn-primary" style="width: 20%;display: inline-block" onclick="dom_hide_show('hide','new_user_account_creation')"> CLOSE</button>
+          </p>
+
+          <!-- hotspot edit content -->
+          <div id="new_user_account_creation_container" style="height: 80%; width: 100%;overflow-y: auto;overflow-x: hidden;">
+
+            
+          </div>
+          
+          <!-- help button
+          <button id='hotspot_help_button' style="width:100%; height:30px; padding:0px;" class="btn btn-warning" onclick="alert('1\) Type link to your advertsiement image url or upload the picture to use as advertismet poster.\r\r2\) Give link or website you want user to be sent when clicking the image or image description, or just leave empty.\r\r3) Give short description of your advertisement to user, Example : Party with us this weekend\r\r4) TIP# Leave advertisement slots empty if not using')">Help</button>   -->
+
+      </div>
+
+    </div>
 	   
     <!-- busy loader -->
     <div id="busy_animate" class="loader" style="display: none;" >

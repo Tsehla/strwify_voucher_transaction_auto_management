@@ -159,10 +159,17 @@ function animate_four_direction (div_id, direction = 'left', start_at = '8', end
 						document.getElementById(div_id).style.borderColor =  color_pallette[ color_pallette_current_color_index ]; //apply color
 					}
 
-					if(apply_to != "border"){//other apply on background
-						document.getElementById(div_id).style.backgroundColor =  color_pallette[ color_pallette_current_color_index ]; //apply color
+					else if(apply_to == "box-shadow"){//other apply on background
+						document.getElementById(div_id).style.boxShadow =  color_pallette[ color_pallette_current_color_index ]; //apply color
 					}
                    
+
+					// if(apply_to != "border"){//other apply on background
+					else {//other apply on background
+						document.getElementById(div_id).style.backgroundColor =  color_pallette[ color_pallette_current_color_index ]; //apply color
+					}
+
+			
               
                     color_pallette_current_color_index = color_pallette_current_color_index  + 1;//increment
 
@@ -626,6 +633,7 @@ if(current_url == '/sell_voucher'){
 
    clearInterval(animate_interval);//clear animate
    border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "seller_distributor_option_2");//button animation
+   border_breath_animation(["1px 1px 7px #ffeb3bf5, -1px -1px 7px #ffeb3bd6","none", "1px 1px 7px green, -1px -1px 7px green", "none"] , "seller_distributor_option_account_create", "box-shadow");//button animation
 
  }
 if(current_url == '/seller_login'){
@@ -3511,6 +3519,16 @@ function admin_distributor_new_account_creation(){
     
 }
 
+
+//------------------ account self creation ---------------=
+function new_user_account_self_creation (){
+
+
+
+	dom_hide_show('show','new_user_account_creation');
+}
+
+
 /*=====================================================================================================================================================
 
   upload vouchers
@@ -4795,14 +4813,14 @@ function extra_menu(transaction_type){ //extra menu initiator
 
 	if(transaction_type == 'emails_history'){
 
-		alert('menu to be implemented')
+		system_error_view();
 
 		return
 	}
 
 	if(transaction_type == 'system_error'){
 		
-		alert('menu to be implemented')
+		system_messages_view();
 
 
 		return
@@ -8054,8 +8072,6 @@ async function preview_ads_changer(navigate = 'back'){
 			`
 		;
 		
-	
-
 
 		//if forward movement
 		if(navigate != 'back' ){
@@ -8078,17 +8094,6 @@ async function preview_ads_changer(navigate = 'back'){
 
 
 	// //else call previus
-
-
-
-
-
-
-
-
-	
-
-
 
 }
 
@@ -8117,5 +8122,313 @@ function selected_hotspot_ads_view(hotspot_location='default_'){
 	//else open selected hotspot
 	window.open("/hotspot?location="+hotspot_location, "_blank")
 
+
+}
+
+
+
+//admin error views
+function system_error_view(){
+
+
+	//show
+	dom_hide_show('show','errors_messages_view');
+
+	//show
+	dom_hide_show('show','busy_animate');
+
+	//do request
+	$.get('/api/system_messages', function(response, status){//check/get seller account current credit
+           
+            
+		if(status == 'success'){
+
+			//if error was encountered
+			if(response == 'Server or Conection error'){
+
+				dom_hide_show('hide','busy_animate');
+
+				//show error
+				dosument.getElementById('errors_messages_view_container').innerHTML = 'Sever report error encountered when perfoming this request, please check server system logs';
+				return
+			}
+
+
+			//if nothing was found
+			if(response == 'No data found'){
+
+				dom_hide_show('hide','busy_animate');
+
+				//show error
+				dosument.getElementById('errors_messages_view_container').innerHTML = 'No system msessages found';
+				return
+			}
+
+
+
+			//loop retuned data
+			var div_data_system = '';//system processes created messages
+			var div_data_system_counter = 0;//system processes created messages counter
+
+			var div_data_general = '';//other messages created by etc 
+			var div_data_general_counter = 0;//other messages created by etc counter
+			
+			response.forEach(data=>{
+
+				//check if messages is system tagged
+				if(data.email_type == "System"){ 
+
+					//create div in reverse, old ones last, data is recived in old one first sorting
+					div_data_system =  `
+
+		
+					<div id='${data._id}' style="width:100%;min-height:30px;margin: 29px 15px;background-color: aliceblue;">
+						Message log date : ${data.time_stamp}<br><br>
+						${data.email_details}
+
+						<div style="text-align: center;width:100%;min-height: 20px;margin: 23px auto;border-bottom: 1px solid black;">
+							<button class='btn btn-danger' onclick="errors_messages_dele('${data._id}','messages')">Delete this entry</button>
+						</div>
+					</div>
+
+					` + div_data_system ;
+
+					//counter
+					div_data_system_counter = div_data_system_counter + 1;
+				}
+
+				
+				//check if messages is not system tagged
+				if(data.email_type != "System"){
+
+					//create div in reverse, old ones last, data is recived in old one first sorting
+					div_data_general = `
+
+
+						<div id='${data._id}' style="width:100%;min-height:30px;margin: 29px 15px;background-color: aliceblue;">
+						
+							Message log date : ${data.time_stamp}<br><br>
+							${data.email_details}
+
+							<div style="text-align: center;width:100%;min-height: 20px;margin: 23px auto;border-bottom: 1px solid black;">
+								<button class='btn btn-danger' onclick="errors_messages_dele('${data._id}','messages')">Delete this entry</button>
+							</div>
+						</div>
+
+					` + div_data_general ;
+
+					//counter
+					div_data_general_counter = div_data_general_counter + 1;
+				}
+
+
+			});
+
+
+			
+			//buld div contents
+			dom_innerHtml('errors_messages_view_container',`
+
+				<div style='width:100%;min-height: 30px;margin: 10px auto;text-align: center;'>
+
+					<button class='btn btn-primary' style='display:inline-block;margin:auto' onclick="dom_hide_show('hide','general_messages'),dom_hide_show('show','system_messages');">System messages (${div_data_system_counter})</button> 
+					<button class='btn btn-primary' style='display:inline-block;margin:auto' onclick="dom_hide_show('hide','system_messages'),dom_hide_show('show','general_messages');">General messages (${div_data_general_counter})</button> 
+
+				</div>
+				
+			
+				<div id='system_messages' style='width:100%;min-height: 30px;margin: 14px 13px;'>
+				<div style='width:100%;min-height: 30px;margin: 10px auto;text-align: center;background-color: #faebd78c;font-family:Rubik Distressed;font-size:18px'>Showing : System messages</div>
+				${div_data_system}</div>
+				<div id='general_messages' style='width:100%;min-height: 30px;margin: 14px 13px;display:none'>
+				<div style='width:100%;min-height: 30px;margin: 10px auto;text-align: center;background-color: #faebd78c;font-family:Rubik Distressed;font-size:18px'>Showing : General messages</div>
+				${div_data_general}</div>
+			`);
+
+			// console.log(response);
+
+			//hide
+			dom_hide_show('hide','busy_animate');
+
+			return
+
+		}
+
+		//hide
+		dom_hide_show('hide','busy_animate');
+
+		//give eror notifiction
+		alert("Error when attempting to do this request, please try again later or check sever system logs");
+
+
+	})
+}
+// system_error_view()
+
+
+
+
+// admin sytem messages view
+function system_messages_view(){
+	
+
+
+
+	//show
+	dom_hide_show('show','errors_messages_view');
+
+	//show
+	dom_hide_show('show','busy_animate');
+
+	//do request
+	$.get('/api/system_errors', function(response, status){//check/get seller account current credit
+           
+            
+		if(status == 'success'){
+
+			//if error was encountered
+			if(response == 'Server or Conection error'){
+
+				//show error
+				dom_hide_show('hide','busy_animate');
+				dosument.getElementById('errors_messages_view_container').innerHTML = 'Sever report error encountered when perfoming this request, please check server system logs';
+				return
+			}
+
+
+			//if nothing was found
+			if(response == 'No data found'){
+
+				//show error
+				dom_hide_show('hide','busy_animate');
+				dosument.getElementById('errors_messages_view_container').innerHTML = 'No Errors msessages found';
+				return
+			}
+
+
+
+
+			//loop retuned data
+			var div_data_system = '';//error messages
+
+			
+			response.forEach(data=>{
+
+
+
+					//create div in reverse, old ones last, data is recived in old one first sorting
+					div_data_system =  `
+
+		
+					<div id='${data._id}' style="width:100%;min-height:30px;margin: 29px 15px;background-color: aliceblue;">
+						Error log date : ${data.time_stamp}<br><br>
+						${data.error_details}
+
+						<div style="text-align: center;width:100%;min-height: 20px;margin: 23px auto;border-bottom: 1px solid black;">
+							<button class='btn btn-danger' onclick="errors_messages_dele('${data._id}','errors')">Delete this entry</button>
+						</div>
+					</div>
+
+					` + div_data_system ;
+				
+
+				
+			});
+
+
+			
+			//buld div contents
+			dom_innerHtml('errors_messages_view_container',`
+
+				<div id='system_messages' style='width:100%;min-height: 30px;margin: 14px 13px;'>
+				<div style='width:100%;min-height: 30px;margin: 10px auto;text-align: center;background-color: #faebd78c;font-family:Rubik Distressed;font-size:18px'>Showing total of (${response.length}) error messages</div>
+				${div_data_system}</div>
+		
+			`);
+
+
+
+
+
+			// console.log(response);
+
+			//hide
+			dom_hide_show('hide','busy_animate');
+
+			return
+
+		}
+
+		//hide
+		dom_hide_show('hide','busy_animate');
+
+		//give eror notifiction
+		alert("Error when attempting to do this request, please try again later or check sever system logs");
+
+
+	})
+
+
+}
+// system_messages_view();
+
+
+
+//delete
+function errors_messages_dele(id,caller){
+
+
+	//do delete confirm
+	var confirm_ = confirm("You requested to delete this enrty.\r\rContinue?");
+
+	//if cancel pressed
+	if(!confirm_){
+		return//end function
+	}
+
+
+	// do request
+
+	//show
+	dom_hide_show('show','busy_animate');
+
+	//do request
+	$.get('/api/system_or_errors_data_delete?id='+id+'&caller='+caller, function(response, status){//check/get seller account current credit
+           
+            
+		if(status == 'success'){
+
+			//if error was encountered
+			if(response == 'Server or Conection error' || response == ''){
+
+				//show error
+				alert('Sever report error encountered when perfoming this request, please check server system logs');
+
+				dom_hide_show('hide','busy_animate');
+				return
+			}
+
+
+			//delete div entry
+			$('#'+id).remove()
+
+			// console.log(response);
+
+			alert("item succesfully delete. Some Interfaces may need you to reload the menu to reflect new changes."); 
+			//hide
+			dom_hide_show('hide','busy_animate');
+
+			return
+
+		}
+
+		//hide
+		dom_hide_show('hide','busy_animate');
+
+		//give eror notifiction
+		alert("Error when attempting to do this request, please try again later or check sever system logs");
+
+
+	})
 
 }

@@ -114,5 +114,13 @@ ads auto renew when expired, will auto charge user account;//or you can just all
 
 ------------
 
+add limit to system errors or messages or just ability to delete messages en errors manually
+
+-----------
+
+contact on whatsapp button, or show contact form. like registered users can see whatsapp contct en every other can see users can see input form, similar to one already existing to send message
+
+-----------
+
 
 

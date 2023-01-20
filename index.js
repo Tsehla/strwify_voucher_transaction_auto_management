@@ -131,7 +131,7 @@ function checkin_checking_routing (){
 	var router_last_contact_hour = date.getHours();//get current hour
 	
 	
-	//exist funtion btween 11pm and 2am
+	//exit funtion btween 11pm and 2am //no idea how to handle date change then, lol 
 	
 	if(router_last_contact_hour == 23 || router_last_contact_hour == 24 || router_last_contact_hour == 0 || router_last_contact_hour == 1 || router_last_contact_hour == 2 ){return;}
 	
@@ -286,7 +286,7 @@ function ads_cleaning(){//clean expired ads
 	
 	
 	//exist funtion btween 11pm and 3am
-	// if(!router_last_contact_hour == 23 || !router_last_contact_hour == 24 || !router_last_contact_hour == 0 || !router_last_contact_hour == 1 || !router_last_contact_hour == 2 || !router_last_contact_hour == 3 ){return;}
+	if(!router_last_contact_hour == 23 || !router_last_contact_hour == 24 || !router_last_contact_hour == 0 || !router_last_contact_hour == 1 || !router_last_contact_hour == 2 || !router_last_contact_hour == 3 ){return;}
 	
 	// console.log('ads cleaning started');
 
@@ -628,7 +628,7 @@ function ads_cleaning(){//clean expired ads
 			}
 }
 
-ads_cleaning();
+// ads_cleaning();
 
 
 
@@ -744,8 +744,8 @@ function error_capture(error_data =''){
 
 	var hour = date.getHours();
 	var minutes = date.getMinutes();
-	var day = date.getDay();
-	var month = date.getMonth();
+	var day = date.getDate();
+	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
 
 	var new_error_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year;
@@ -788,8 +788,8 @@ function email_sent_save(email_data =''){
 
 	var hour = date.getHours();
 	var minutes = date.getMinutes();
-	var day = date.getDay();
-	var month = date.getMonth();
+	var day = date.getDate();
+	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
 
 	var new_error_record = ' '+hour+':'+minutes+(hour>12?daytime='PM':daytime='AM')+', '+day+'/'+month+'/'+year;
