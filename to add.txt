@@ -122,5 +122,10 @@ contact on whatsapp button, or show contact form. like registered users can see 
 
 -----------
 
+ability to show or not seller auto registration for hotspot, meaning admin can decide if or not to show seller account auto registration for specific hotspot. just a checkbox on hotspot model
 
+-----------
 
+have a general model in it have things like, whatsapp contact number, new user pasword, en whatver,
+
+----------

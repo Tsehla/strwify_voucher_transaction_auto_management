@@ -140,26 +140,34 @@
 	<!--- voucher print test
 	   <button onclick="voucher_print({vouchercode:'earnestsofa',voucherprofile:'50mb',voucherexpiry:'3.00 Days',voucheramount:5})">print</button>
 	 -->
-   
-<!-- extra side menu --->
-<div id='outer_menu_open_overlay' onclick='document.getElementById("side_menu_container").style.right="140px"' style='height: 100vh; width: 8vw; position: fixed;right:0px;'>
- <div id='side_menu_container' style="height: auto;min-height:100vh;width: 100px;position: relative;right: 12px;background: auto;" onfocusout='document.getElementById("side_menu_container").style.right="12px"'>
 
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:10px 10px 10px 10px" onclick="extra_menu('past_transactions'), document.getElementById('side_menu_container').style.right='12px'">Transactions</button>
-	 <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('to_reddem_voucher'), document.getElementById('side_menu_container').style.right='12px'">Vouchers</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='(auto_user_creater_wifi_radius_link.u_link.length > 6? window.open(auto_user_creater_wifi_radius_link.u_link, "_blank"): alert("Wifi radius server link, not provided for this hotspot location."))'>Wifi Radius</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' id="admin_self_recharge" style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='system_super_admin_account_rechatge(this.id)'>Self Recharge</button>
-   <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('messages')">Messages</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('upload')">Advertisment</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="dom_hide_show('show', 'transactions_and_voucher_viewer_options_menu')">Voucher Types</button>
-   <!-- <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='show_hotspot()' >HotSpot Manage</button> -->
-   <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='get_hotspots_editable_for_user()' >HotSpot Manage</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button seller_show' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='alert("Feature in development")' >Printable Vouchers</button>
-	 
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('emails_history')">Email History</button>
-   <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick="extra_menu('system_error')">System Errors history</button>
+<!-- extra side menu --->     
+<div id="outer_menu_open_overlay" style="position: fixed;top: 0px;right: 0px;margin: 10px;font-size: 40px;" class="btn btn-primary la la-bars" onclick="dom_hide_show('show', 'outer_menu_open_overlay_contents')" ></div>
 
-</div>  
+<div id='outer_menu_open_overlay_contents' style='width: 98vw;height: 100vh;position: fixed;top: 0px;left: 0px;z-index: 5;display: block;background-color: rgb(51 51 51 / 90%);text-align: center;overflow-y: auto;display: none;'>
+  <div style="width: 100%;height:30px;"><!-- modal close -->
+    <button style="float: right;text-align: center;margin: 20px;" class="btn btn-danger" onclick="dom_hide_show('hide', 'outer_menu_open_overlay_contents')">X</button>
+  </div>
+  <div id='side_menu_container' style="height: auto;min-height:200px;max-width: 253px;margin: 1% auto;text-align: center;">
+
+    <div style="margin: 12px;font-family:Rubik Distressed;font-size: 22px;color: #ddf709;overflow-y: auto;">Select Menu to view</div>
+
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('past_transactions'), document.getElementById('side_menu_container').style.right='12px'">Transactions</button>
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('to_reddem_voucher'), document.getElementById('side_menu_container').style.right='12px'">Vouchers</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='(auto_user_creater_wifi_radius_link.u_link.length > 6? window.open(auto_user_creater_wifi_radius_link.u_link, "_blank"): alert("Wifi radius server link, not provided for this hotspot location."))'>Wifi Radius</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' id="admin_self_recharge" style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='system_super_admin_account_rechatge(this.id)'>Self Recharge</button>
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('messages')">Messages</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('upload')">Advertisment</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="dom_hide_show('show', 'transactions_and_voucher_viewer_options_menu')">Voucher Types</button>
+    <!-- <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 150px;height: 50px;margin:0px 10px 10px 10px" onclick='show_hotspot()' >HotSpot Manage</button> -->
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='get_hotspots_editable_for_user(),dom_hide_show("hide", "outer_menu_open_overlay_contents")' >Hotspot Advertisments</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='get_hotspots_editable_for_user(),dom_hide_show("hide", "outer_menu_open_overlay_contents")' >HotSpot Manage</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button seller_show' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='alert("Feature in development")' >Printable Vouchers</button>
+    
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('emails_history')">Email History</button>
+    <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('system_error')">System Errors history</button>
+
+  </div>  
 
 </div>
 	   
@@ -867,6 +875,7 @@
   <div id="eigth_page" style="width:99vw; height: auto"><!-- first page Start -->
  <div id="buyer_menu_wrapper">
  <div id="seller_distributor_option_5" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+
  <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
 	 <b style='width: 70%; display: inline-block' id="eight_page_distributor_menu_header">
 		 register new seller
@@ -1545,25 +1554,52 @@
 	   
     <div id="new_user_account_creation" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;display: none;background-color: rgb(51 51 51 / 78%);">
 
-      <div style="background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro;width:80%;height: 88vh;min-height: 300px;margin: 2% auto;">
+
+      <div id="buyer_menu_wrapper">
+        <div  style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:90vh; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+       
+        <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
+          <b style='width: 70%; display: inline-block'>
+            New seller account registration
+          </b>
+          <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="dom_hide_show('hide','new_user_account_creation');"> CLOSE</button>
+        </p>
+       
           
-          <p style="text-transform: capitalize;text-align:center;width:100%;min-height: 46px;line-height: 42px;vertical-align:middle;font-size:16px;border-bottom:1px solid gainsboro">
-            <b style="width: 70%;display: inline-block;height: 100%;" >
-              New Account : <span id="new_user_account_creation_header"></span>
-            </b>
-            <button class="btn btn-primary" style="width: 20%;display: inline-block" onclick="dom_hide_show('hide','new_user_account_creation')"> CLOSE</button>
-          </p>
-
-          <!-- hotspot edit content -->
-          <div id="new_user_account_creation_container" style="height: 80%; width: 100%;overflow-y: auto;overflow-x: hidden;">
-
-            
+         <input type="number" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Your ID number' class="form-control" id='auto_distributor_seller_add_id_input'>
+        <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Your Name' class="form-control" id='auto_distributor_seller_add_name_input'>
+        <input type="text" style="width:100%; height:6vh; margin:13px 0px 13px 0px; display:block" placeholder='enter Your Surname' class="form-control" id='auto_distributor_seller_add_surname_input'>
+          
+          
+          
+          
+        <div  style="width:100%; height:12vh; margin:13px 0px 13px 0px; display:block; "  class="form-control">
+           <p style='width:100%; height: 3vh; margin: 0px 0px 0px 0px; padding:0px; text-align:center'>
+                 Temporary password for your New Seller :
+            </p>
+             <p style='width:93vw; height: 5vh; margin: 1vh 1vw 1vh 1vw; padding:0px; text-align:center; font-weight: bold; border:3px dotted lightgreen; line-height:4vh; vertical-align: middle; font-size:20px' id='auto_seller_new_account_default_password'>
+                    street wifiy
+            </p>
+       
+       
+       </div>
+          
+       
+          
+        
+        <button style="width:100%; height:10vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-danger" onclick="distributor_seller_new_account_creation('auto_')">Create Account</button>
+        <br />
+        <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter your ID number\n2) Enter your Name\n3) Enter your Surname\n\n4) Login to your new Seller account using Temporary password : street wifiy\n\n5) for safety always change this temporary password after first login.\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button>
+        
+        
+        
+        
+        </div>
+       <p  style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+        StreetWiFiy
+        </p>
           </div>
-          
-          <!-- help button
-          <button id='hotspot_help_button' style="width:100%; height:30px; padding:0px;" class="btn btn-warning" onclick="alert('1\) Type link to your advertsiement image url or upload the picture to use as advertismet poster.\r\r2\) Give link or website you want user to be sent when clicking the image or image description, or just leave empty.\r\r3) Give short description of your advertisement to user, Example : Party with us this weekend\r\r4) TIP# Leave advertisement slots empty if not using')">Help</button>   -->
 
-      </div>
 
     </div>
 	   

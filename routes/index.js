@@ -1741,56 +1741,117 @@ app.get('/api/auto_voucher_types_delete', function(req, res){
 	 var user_type = userType.replace(userType[0], userType[0].toUpperCase());//capitalize first letter
 	 
 	// console.log(req.query.name,req.query.surname,req.query.id,req.query.password.trim().replace(/%20/g, ' '),user_type);
-	
-	keystone.list('seller distributor').model.findOne()
-	.where({idnumber : req.query.id, usertype : user_type})
-	.exec(function(err, response){
-		
-		if(err){
-			console.log('error adding user : '+user_type);
-			res.jsonp('Server or Conection error');
-			return;
-		}
-		
-		if(response == null || response == undefined || response == ''){//user not found//add user
-			var user_added_by = {'name':req.query.added_by_name,'type_of_user':req.query.added_by_usertype,'id_no':req.query.added_by_id};//add user creating account as contact to this new user account
+
+
+
+		//if adding user provided
+
+	function auto_adding_adder_assigning(){
+
+		keystone.list('seller distributor').model.findOne()
+		.where({usertype : "Server Admin"})
+		.exec(function(err, response){
 			
-			keystone.createItems({//add items to db//user details
+			if(err){
+				console.log('error adding user : '+user_type);
+				error_capture('error finding user : '+user_type);
+			}
+			
+			if(response == null || response == undefined || response == ''){//user not found//add user
+
+				error_capture('error finding user : '+user_type);
+				// var user_added_by = {'name':req.query.added_by_name,'type_of_user':req.query.added_by_usertype,'id_no':req.query.added_by_id};//add user creating account as contact to this new user account
+			}
+			
+			//set user id
+			req.query.added_by_id = response.idnumber;
+
+			//set user type
+			// req.query.added_by_usertype = response.usertype;
+			req.query.added_by_usertype = 'Distributor';
+
+			//adder name 
+			req.query.added_by_name = response.name + " " + response.surname;
+
+			do_user_add();
+			
+		});
+		
+	}
+
+	//	//if adding user details not provided
+	if(!req.query.added_by_id || !req.query.added_by_usertype){ //call finder function
+		
+		//call
+		auto_adding_adder_assigning();
+	}
+
+
+	function do_user_add(){
+
+		// return console.log(JSON.stringify(req.query,1,2))
+		
+		keystone.list('seller distributor').model.findOne()
+		.where({idnumber : req.query.id, usertype : user_type})
+		.exec(function(err, response){
+			
+			if(err){
+				console.log('error adding user : '+user_type);
+				res.jsonp('Server or Conection error');
+				return;
+			}
+			
+			if(response == null || response == undefined || response == ''){//user not found//add user
+				var user_added_by = {'name':req.query.added_by_name,'type_of_user':req.query.added_by_usertype,'id_no':req.query.added_by_id};//add user creating account as contact to this new user account
 				
-				'seller distributor' : [
-					{name: req.query.name.toLowerCase() ,surname : req.query.surname.toLowerCase() ,idnumber : req.query.id ,password : req.query.password.trim().replace(/%20/g, ' ').toLowerCase() ,usertype : user_type, added_customers_partners:[JSON.stringify(user_added_by)], }
+				keystone.createItems({//add items to db//user details
+					
+					'seller distributor' : [
+						{name: req.query.name.toLowerCase() ,surname : req.query.surname.toLowerCase() ,idnumber : req.query.id ,password : req.query.password.trim().replace(/%20/g, ' ').toLowerCase() ,usertype : user_type, added_customers_partners:[JSON.stringify(user_added_by)], }
+						
+						
+					]
 					
 					
-				]
+				}, function(err, results){
+					if(err){
+						console.log('Error creating user to db : '+user_type);
+						res.jsonp('Server or Conection error');
+						return;
+					}
+					add_as_contact();//add new account user as contact
+					add_new_user_message()//add new user welcome mesage
+					res.jsonp('Account succesfully created');
+				});
 				
+				return;
 				
-			}, function(err, results){
-				if(err){
-					console.log('Error creating user to db : '+user_type);
-					res.jsonp('Server or Conection error');
-					return;
-				}
-				add_as_contact();//add new account user as contact
-				add_new_user_message()//add new user welcome mesage
-				res.jsonp('Account succesfully created');
-			});
+			}
 			
+			res.jsonp('Error seller registered');//seller already exists
 			return;
 			
-		}
+		});
 		
-		res.jsonp('Error seller registered');//seller already exists
-		return;
-		
-	});
+	}
+
+	//if adding user details provided
+	if(req.query.added_by_id && req.query.added_by_usertype){ //call finder function
 	
+		//call
+		do_user_add();
+	}
+
 	 
 	//fuction add this user as a contact to the user creating this account 
 	
 		function add_as_contact(){
 			
 			var added_by_userType = req.query.added_by_usertype;
-	 		var added_by_user_type = added_by_userType.replace(added_by_userType[0], added_by_userType[0].toUpperCase());//capitalize first letter
+
+			if(added_by_userType){//if provided
+	 			added_by_user_type = added_by_userType.replace(added_by_userType[0], added_by_userType[0].toUpperCase());//capitalize first letter
+			}
 			
 			keystone.list('seller distributor').model.findOne()
 			.where({idnumber : req.query.added_by_id, usertype :added_by_user_type})

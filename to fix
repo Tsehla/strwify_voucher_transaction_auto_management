@@ -35,6 +35,8 @@ upload image base64, handle when user want to change base 64 uploaded image, jus
 
 -----
 
+if(req.query.user_type != 'Server Admin' ){ ,, check if works
 
+----
 
 

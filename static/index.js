@@ -916,12 +916,13 @@ function seller_sell_menu(){
 
 			clearInterval(animate_interval);//clear 
 			border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "seller_ticket_amount");//start animate
+			border_breath_animation(["#ffffff", "#bcd8bf", "#8db792", "#619a68", "#37773f", "#114217", "#031505"], "outer_menu_open_overlay");//start animate
 		
 		
 		}
 
 		//do side menu animation
-		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
+		// animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
 
 		if(seller_login.nocharge_voucher_sell && seller_login.manages_hotspot ){//if seller owns hotspot and no-charge voucher selling is allowed for them on their hotspot
 			
@@ -943,7 +944,7 @@ function distributor_works_menu(){
 		process_destroyer();
 
 		//do side menu animation
-		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
+		// animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
 }
 
 function distributor_works_menu_add_user(){
@@ -958,7 +959,7 @@ function admin_fourth_page_menu(){
 		process_destroyer();
 		
 		//do side menu animation
-		animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
+		// animate_four_direction ('side_menu_container', direction = 'right', start_at = '140', end_at = '12');
     
 }
 
@@ -3315,7 +3316,7 @@ function system_super_admin_account_rechatge(button_id, self_recharge_amount){
 					dom_innerHtml('super_admin_amount', admin_login.credit);//set new value for view
 					dom_innerHtml('super_admin_distributor_recharge_status','<b>Success : System has recharged, Admin ID no:' + admin_login.admin_id.trim() + ', account by R'+response.amount+'</b>');//reacherge sucess status
 					document.getElementById(button_id).disabled=false;//enable send recharge button
-					document.getElementById("side_menu_container").style.right="12px";//restore menu position
+					// document.getElementById("side_menu_container").style.right="12px";//restore menu position
 					return null;
 				
 			}
@@ -3346,50 +3347,62 @@ function system_super_admin_account_rechatge(button_id, self_recharge_amount){
 //++++++++++++++++++++++++++++++++++++++++++++++++++++ seller account add by distributor
 
 
-function distributor_seller_new_account_creation(){
+function distributor_seller_new_account_creation(add_method = ''){
+
+
     
     //add seller id
-    var distributor_seller_add_id_input = document.getElementById('distributor_seller_add_id_input');
+    var distributor_seller_add_id_input = document.getElementById(add_method + 'distributor_seller_add_id_input');
 	
 	//seller add name
-    var distributor_seller_add_name_input = document.getElementById('distributor_seller_add_name_input');
+    var distributor_seller_add_name_input = document.getElementById(add_method +'distributor_seller_add_name_input');
 	
 	//seller add surname
-    var distributor_seller_add_surname_input = document.getElementById('distributor_seller_add_surname_input');
+    var distributor_seller_add_surname_input = document.getElementById(add_method +'distributor_seller_add_surname_input');
 	 
     //seller account creation default password
-    var seller_new_account_default_password = document.getElementById('seller_new_account_default_password');
+    var seller_new_account_default_password = document.getElementById(add_method +'seller_new_account_default_password');
       
+
+	// console.log(seller_new_account_default_password.innerHTML)
 	
 
 	//check Seller ID
     if(distributor_seller_add_id_input.value.length < 13 || distributor_seller_add_id_input.value.length > 13){
 	distributor_seller_add_id_input.style.borderColor ='red';
+    alert('Please re-check "ID number"'); 
     return dom_innerHtml('eight_page_distributor_menu_header', 'Please re-check "Seller ID number"'); 
     }
     
 	//check seller Name
     if(distributor_seller_add_name_input.value == '' || distributor_seller_add_name_input.value == null || distributor_seller_add_name_input.value == 'undefined'){
 	distributor_seller_add_name_input.style.borderColor ='red';
+    alert('Please re-check "Name"'); 
     return dom_innerHtml('eight_page_distributor_menu_header', 'Please re-check "Seller Name"'); 
     }
 	//check Seller surname
     if(distributor_seller_add_surname_input.value == '' || distributor_seller_add_surname_input.value == null || distributor_seller_add_surname_input.value == 'undefined'){
 	distributor_seller_add_surname_input.style.borderColor ='red';
+    alert('Please re-check "Surname"'); 
     return dom_innerHtml('eight_page_distributor_menu_header', 'Please re-check "Seller Surname"'); 
     }
 	
 	//check Seller password
     if(seller_new_account_default_password.textContent == '' || seller_new_account_default_password.textContent == null || seller_new_account_default_password.textContent == 'undefined'){
 	seller_new_account_default_password.style.borderColor ='red';
+    alert('Please re-check "Password"'); 
     return dom_innerHtml('eight_page_distributor_menu_header', 'Please re-check "Seller password"'); 
     }
 
-	        
-     var url= http_https + current_domain + '/api/add_user?user_type=seller&name='+distributor_seller_add_name_input.value.trim()+'&surname='+distributor_seller_add_surname_input.value.trim()+'&password='+seller_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+distributor_seller_add_id_input.value.trim()+'&added_by_name='+distributor_login.name+'&added_by_id='+distributor_login.distributor_id+'&added_by_usertype='+distributor_login.usertype;
+
+		//confirm
+		var confirm_=confirm('You are about to create a new SELLER account using details \r\rname : ' +distributor_seller_add_name_input.value+ " \rsurname : " +distributor_seller_add_surname_input.value+" \rID number : "+distributor_seller_add_id_input.value+" \r\rAre this details correct?");
+	  
+		//check if cancelled pressed
+		if(!confirm_){return;}
 	
-	
-    //console.log(url);
+		var url= http_https + current_domain + '/api/add_user?user_type=seller&name='+distributor_seller_add_name_input.value.trim()+'&surname='+distributor_seller_add_surname_input.value.trim()+'&password='+seller_new_account_default_password.textContent.trim().replace(/ /g, '%20')+'&id='+distributor_seller_add_id_input.value.trim()+'&added_by_name='+distributor_login.name+'&added_by_id='+distributor_login.distributor_id+'&added_by_usertype='+distributor_login.usertype;
+
 		
 	
     
@@ -3404,6 +3417,9 @@ function distributor_seller_new_account_creation(){
                    
                 
                 dom_innerHtml('eight_page_distributor_menu_header', 'Server or Conection error, Please try again later'); 
+                alert('Server or Conection error, Please try again later'); 
+
+
 				   return;
                    
                }              
@@ -3412,17 +3428,34 @@ function distributor_seller_new_account_creation(){
                    
                 
                 dom_innerHtml('eight_page_distributor_menu_header', 'Error, This ID number is already registred'); 
+                alert('Error, This ID number is already registred'); 
 				   return;
                    
                }
-               
+   
+
+				//if added by auto function
+				if(add_method == 'auto_'){
+					
+
+					// var message_alet = 'Account Succesfully created.\r\rPlease login to your SELLER account below using details you used to register and temporary password : '+ seller_new_account_default_password.textContent.trim().replaceAll(/ /g, '%20');
+					var message_alet = "Account Succesfully created.\r\rPlease login to your SELLER account below using this details. \r\rID number : "+distributor_seller_add_id_input.value+" \rsentence Password : "+ seller_new_account_default_password.textContent.trim().replaceAll(/[\s]/gi, ' ') + '\r\rFor security change this password to your prefered on your second login.';
+
+					alert(message_alet);//secess message
+
+					return;
+				}
+
+				            
                 dom_innerHtml('eight_page_distributor_menu_header', 'Account Succesfully created.');//secess message
+                alert('Account Succesfully created.');//secess message
 
              
            }
            
            else{
-             return dom_innerHtml('eight_page_distributor_menu_header', 'System/Connection error, please try again later.'); 
+             dom_innerHtml('eight_page_distributor_menu_header', 'System/Connection error, please try again later.'); 
+             return alert('System/Connection error, please try again later.'); 
            }
        });  
           
@@ -3526,6 +3559,8 @@ function new_user_account_self_creation (){
 
 
 	dom_hide_show('show','new_user_account_creation');
+
+	
 }
 
 
@@ -4153,6 +4188,8 @@ function menu_button_sever(typeOfUser){//type of user allows custom css .class m
 function extra_menu(transaction_type){ //extra menu initiator
 	
 	//show menu window
+
+	dom_hide_show('hide', 'outer_menu_open_overlay_contents');//hide menu
 		
 	document.getElementById('transactions_and_voucher_page').style.display='block';	
 		
@@ -4813,14 +4850,17 @@ function extra_menu(transaction_type){ //extra menu initiator
 
 	if(transaction_type == 'emails_history'){
 
-		system_error_view();
+		
+		document.getElementById('transactions_and_voucher_page').style.display='none';	//hide
+		system_error_view();//hide
 
 		return
 	}
 
 	if(transaction_type == 'system_error'){
 		
-		system_messages_view();
+		document.getElementById('transactions_and_voucher_page').style.display='none';	//hide
+		system_messages_view();//call
 
 
 		return
