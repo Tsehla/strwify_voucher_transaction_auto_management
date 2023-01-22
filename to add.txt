@@ -126,6 +126,15 @@ ability to show or not seller auto registration for hotspot, meaning admin can d
 
 -----------
 
-have a general model in it have things like, whatsapp contact number, new user pasword, en whatver,
+have a general model in it have things like, whatsapp contact number, new user pasword, en whatver,  --- ADDED
 
 ----------
+
+complete integrating customization brought by    $.get('/api/get_general_data', function(response, status){ --- some done
+
+	//------------------ stuff to apply --------------------\\
+
+
+		//new user password		new_user_temporary_password = 'street wifiy', -- still to add
+	
+---------

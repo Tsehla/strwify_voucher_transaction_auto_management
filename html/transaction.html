@@ -144,6 +144,9 @@
 <!-- extra side menu --->     
 <div id="outer_menu_open_overlay" style="position: fixed;top: 0px;right: 0px;margin: 10px;font-size: 40px;" class="btn btn-primary la la-bars" onclick="dom_hide_show('show', 'outer_menu_open_overlay_contents')" ></div>
 
+<div  style="position: fixed;bottom: 0px;right: 0px;margin: 10px;font-size: 40px;background-color: #5cb85ce6;" class="btn btn-success la la-whatsapp" onclick="dom_hide_show('show', 'contact_data')" ></div>
+
+
 <div id='outer_menu_open_overlay_contents' style='width: 98vw;height: 100vh;position: fixed;top: 0px;left: 0px;z-index: 5;display: block;background-color: rgb(51 51 51 / 90%);text-align: center;overflow-y: auto;display: none;'>
   <div style="width: 100%;height:30px;"><!-- modal close -->
     <button style="float: right;text-align: center;margin: 20px;" class="btn btn-danger" onclick="dom_hide_show('hide', 'outer_menu_open_overlay_contents')">X</button>
@@ -152,8 +155,10 @@
 
     <div style="margin: 12px;font-family:Rubik Distressed;font-size: 22px;color: #ddf709;overflow-y: auto;">Select Menu to view</div>
 
-    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('past_transactions'), document.getElementById('side_menu_container').style.right='12px'">Transactions</button>
-    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('to_reddem_voucher'), document.getElementById('side_menu_container').style.right='12px'">Vouchers</button>
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('buy_points')">Buy points</button>
+
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('past_transactions')">Transactions</button>
+    <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('to_reddem_voucher')">Vouchers</button>
     <button class='btn btn-primary side_menu_button admin_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='(auto_user_creater_wifi_radius_link.u_link.length > 6? window.open(auto_user_creater_wifi_radius_link.u_link, "_blank"): alert("Wifi radius server link, not provided for this hotspot location."))'>Wifi Radius</button>
     <button class='btn btn-primary side_menu_button admin_user_side_menu_button' id="admin_self_recharge" style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick='system_super_admin_account_rechatge(this.id)'>Self Recharge</button>
     <button class='btn btn-primary side_menu_button all_user_side_menu_button' style="width: 100%;height: 50px;margin: 10px 0px;display: block;" onclick="extra_menu('messages')">Messages</button>
@@ -303,7 +308,7 @@
 
    <!-- landing choose action --->
 
-   <button  id="seller_distributor_option_account_create" class="btn " style="font-family: 'Rubik Distressed';font-size:27px;width:100%;margin:18px 0px" onclick="new_user_account_self_creation()">Create new account</button>
+        <button  id="seller_distributor_option_account_create" class="btn " style="font-family: 'Rubik Distressed';font-size:27px;width:100%;margin:18px 0px;display: none;" onclick="new_user_account_self_creation()">Create new account</button>
 
         <!-- Distrubutor login button  -->
         <div id="user_buy_option" style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; height:28vh; background-color:white; box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn" onclick='third_page_distributor_login()'>
@@ -416,7 +421,7 @@
 </div><!--login wrapper end -->  
      
 <!-- login wrapper Start -->
-<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+<div id="login_wrapper" style="margin:26px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id="fourth_page_seller_change_password_header">
      change password
@@ -432,14 +437,14 @@
 
 
 <!-- login wrapper Start -->
-<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
+<div id="login_wrapper" style="margin:26px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:16px;border-bottom:1px solid gainsboro">
   <b> 
    forgot password
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /><button class="btn btn-success" onclick="dom_hide_show('show', 'contact_data')" style="margin: 5px auto;">Send Message</button>
 </p>
 
   
@@ -721,7 +726,7 @@
 </div><!--login wrapper end -->  
      
 <!-- login wrapper Start -->
-<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+<div id="login_wrapper" style="margin:26px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id="sixth_page_seller_change_password_header">
      change password
@@ -737,14 +742,16 @@
 
 
 <!-- login wrapper Start -->
-<div id="login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
+<div id="login_wrapper" style="margin:26px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:16px;border-bottom:1px solid gainsboro">
   <b> 
    forgot password
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID<br /> and contact number<br />
+   <!-- <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a> -->
+   <button class="btn btn-success" onclick="dom_hide_show('show', 'contact_data')" style="margin: 5px auto;">Send Message</button>
 </p>
 
   
@@ -960,7 +967,7 @@
 
 
 <!-- login wrapper Start -->
-<div id="admin_login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
+<div id="admin_login_wrapper" style="margin:26px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:38vh;background-color:white;box-shadow:3px 3px 2px darkred, -1px -1px 2px darkred">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px">
   <b id="admin_change_password_header">
      change password
@@ -976,14 +983,16 @@
 
 
 <!-- login wrapper Start -->
-<div id="admin_login_wrapper" style="margin:0px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
+<div id="admin_login_wrapper" style="margin:26px 0px 13px 0px; padding:0px; display:block; width : 95vw; height:32vh;background-color:white;box-shadow:3px 3px 2px gold, -1px -1px 2px gold">
   <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:auto; line-height:5vh; vertical-align:middle; font-size:16px;border-bottom:1px solid gainsboro">
   <b> 
    forgot password
   </b>
 </p>
 <p style="width:95vw; height:auto; margin:0px; padding:0px;">
-   Please send : <br />A newly certified copy of your ID<br /> and contact number<br /> To <br /> <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a>
+   Please send : <br />A newly certified copy of your ID<br /> and contact number<br />  
+   <!-- <a href='https://web.facebook.com/Creativexminds-512440145609479/'><i class='la la-facebook' style='font-size:16px'></i> CreativeXmindS</a> -->
+   <button class="btn btn-success" onclick="dom_hide_show('show', 'contact_data')" style="margin: 5px auto;">Send Message</button>
 </p>
 
   
@@ -1595,13 +1604,87 @@
         
         
         </div>
-       <p  style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
-        StreetWiFiy
-        </p>
-          </div>
+          <p  style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+            StreetWiFiy
+          </p>
+        </div>
 
 
     </div>
+
+
+
+
+      <!-- account recharge -->
+    
+      <div id="buy_points_menu" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;display: none;background-color: rgb(51 51 51 / 78%);display: none;">
+
+
+        <div>
+          <div  style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+          
+            <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
+              <b style='width: 70%; display: inline-block'>
+                Account recharging
+              </b>
+              <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="dom_hide_show('hide','buy_points_menu');"> CLOSE</button>
+            </p>
+            <div  id = "buyer_menu_wrapper_contents"; style="width:100%;min-height: 20px;margin:13px 0px 13px 0px;display:block;overflow: auto;height: 70vh;">
+
+            </div>
+            <br />
+            <span id="buy_points_help"></span>
+            
+          </div>
+            <p  style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+              StreetWiFiy
+            </p>
+          </div>
+  
+  
+      </div>
+
+
+
+
+
+     <!-- contact data -->  
+
+    
+      <div id="contact_data" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;background-color: rgb(51 51 51 / 78%); display:none">
+
+
+        <div>
+          <div  style="margin:1vh 2vw 1vh 2vw; padding:0px;width:95vw; background-color:white;box-shadow:3px 3px 2px gainsboro, -1px -1px 2px gainsboro" class="btn">
+          
+            <p style="margin:13px 0px 13px 0px; padding :0px; text-transform: capitalize;text-align:center; width:100%; height:5vh; line-height:5vh; vertical-align:middle; font-size:16px; border-bottom:1px solid gainsboro">
+              <b style='width: 70%; display: inline-block'>
+                Contact information
+              </b>
+              <button class='btn btn-primary' style="width: 20%; height: 4vh;line-height: 1vh; display: inline-block" onclick="dom_hide_show('hide','contact_data');"> CLOSE</button>
+            </p>
+            <div  id = "contact_data_wrapper_contents"; style="width:100%;min-height: 20px;margin:13px 0px 13px 0px;display:block;overflow: auto;height: 70vh;">
+    
+            
+            </div>
+            <br />
+            <!-- <button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick='alert(`1) Enter your ID number\n2) Enter your Name\n3) Enter your Surname\n\n4) Login to your new Seller account using Temporary password : street wifiy\n\n5) for safety always change this temporary password after first login.\n\nNB\nTemporary password will expire after three Successful Login on the same Account`)'>Help</button> -->
+            
+          </div>
+            <p  style="width:99vw; height:7vh; margin:1vh 0px 0px 0px; padding:0px;text-align:center; line-height:7vh; vertical-align: middle;">
+              StreetWiFiy
+            </p>
+          </div>
+  
+  
+      </div>
+
+
+
+
+
+
+
 	   
     <!-- busy loader -->
     <div id="busy_animate" class="loader" style="display: none;" >

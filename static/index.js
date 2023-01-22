@@ -430,7 +430,7 @@ var auto_user_creater_wifi_radius_link = {
 	
 };
 
-
+//get hotspot
  $.get('/api/hotspot_data?location='+ (url_parms_object()['hotspot_location']?url_parms_object()['hotspot_location']:''), function(response, status){
 	
 	   if(status == 'success'){//if success
@@ -462,7 +462,6 @@ var auto_user_creater_wifi_radius_link = {
 		   //get data expiery mikrotik [ trial ] user login
 		   auto_user_creater_wifi_radius_link.mikrotik_trial_user_data_expiery = response.mikrotik_trial_user_data_expiery
 
-
 	   }
 
 	   else{
@@ -474,7 +473,439 @@ var auto_user_creater_wifi_radius_link = {
 		hotspot_voucher_template_selector();
    });
 
+   
    //console.log(auto_user_creater_wifi_radius_link);
+
+   //------ get genral data
+	var phone_call_numbers =  ['N/a'],
+	//whatsapp number
+	whatsapp_numbers = ['N/a'],
+	//facebook
+	facebook_links = ['N/a'],
+	//twitter
+	twitter_links = ['N/a'],
+	//instagram
+	instagram_links = ['N/a'],
+	//email
+	contacts_emails = ['N/a'],
+
+	//adress
+	address_details = ['01 sibeko street, Stretford Orange Farm, 1841'],
+
+	//banking
+	banking_details = ['{bank_name:"Capitec",branch_name:"Orange Farm",account_type:"Savings",account_number:"N/a",refrence_prefix:"wifi_",payment_link:"",payment_qr_code:"",show_payment:true}'],
+	
+	banking_refrence_prefix = 'wifi-',
+
+	//new user password
+	new_user_temporary_password = 'street wifiy',
+
+	//allow new user auto registration
+	new_user_self_auto_regitrations = true,
+	
+	//branding/website name
+	website_name_branding = 'StreetWiFiy';
+
+
+	
+   $.get('/api/get_general_data', function(response, status){
+	
+		if(status == 'success'){//if success
+
+
+			if(response && response != 'Server or Conection error'){//if response data
+
+				//apply response
+				phone_call_numbers = response.phone_call_numbers;
+
+				//whatsapp number
+				whatsapp_numbers = response.whatsapp_numbers;
+
+				//facebook
+				facebook_links = response.facebook_links;
+
+				//twitter
+				twitter_links = response.twitter_links;
+
+				//instagram
+				instagram_links = response.instagram_links;
+				//email
+				contacts_emails = response.contacts_emails;
+
+				//adress
+				address_details = response.address_details;
+
+				//banking
+				banking_details = response.banking_details;
+
+				banking_refrence_prefix = response.banking_refrence_prefix;
+				
+				//new user password
+				new_user_temporary_password = response.new_user_temporary_password;
+
+				//allow new user auto registration
+				new_user_self_auto_regitrations = response.new_user_self_auto_regitrations;
+
+				website_name_branding = response.website_name_branding
+
+				// console.log(response)
+				
+				contact_data_create();//calll
+			}
+
+		}
+
+		else{
+
+			console.log('Error retrieving system data from db.') ;
+			contact_data_create();//calll
+		}      
+		
+	});
+
+
+
+	//contact div
+	function contact_data_create(){
+
+	
+		var div_stuff = '<b>Use any of the contact methods below to contact us<br> during normal working hours, week days.</b><br><hr><br>';//contains div stuff
+
+
+		// phone numbers //	var phone_call_numbers =  ['N/a'],
+		if(phone_call_numbers.length > 0){
+
+			//loop
+			phone_call_numbers.forEach((data)=>{
+
+				// console.log(data)
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+						
+						<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+							<div style="font-size:12px;">
+			
+								<a href="tel:${data}" target="blank">
+					
+							
+								<div class="la la-phone" style="display:inline-block;margin:10px;font-size: 25px;color: black;"></div>
+
+								<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+									${data}
+								</span>
+								
+								</a>
+			
+							</div>
+			
+						</div>
+						
+					`;
+
+				}
+
+			})
+
+
+		}
+
+		//whatsapp number		whatsapp_numbers = ['N/a'],
+		if(whatsapp_numbers.length > 0){
+
+			
+			//loop
+			whatsapp_numbers.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="tel:${data}" target="blank">
+				
+							<svg width="20px" height="20px" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<path d="M10,0C4.5,0,0,4.5,0,10c0,1.9,0.5,3.6,1.4,5.1L0.1,20l5-1.3C6.5,19.5,8.2,20,10,20c5.5,0,10-4.5,10-10S15.5,0,10,0zM6.6,5.3c0.2,0,0.3,0,0.5,0c0.2,0,0.4,0,0.6,0.4c0.2,0.5,0.7,1.7,0.8,1.8c0.1,0.1,0.1,0.3,0,0.4C8.3,8.2,8.3,8.3,8.1,8.5C8,8.6,7.9,8.8,7.8,8.9C7.7,9,7.5,9.1,7.7,9.4c0.1,0.2,0.6,1.1,1.4,1.7c0.9,0.8,1.7,1.1,2,1.2c0.2,0.1,0.4,0.1,0.5-0.1c0.1-0.2,0.6-0.7,0.8-1c0.2-0.2,0.3-0.2,0.6-0.1c0.2,0.1,1.4,0.7,1.7,0.8s0.4,0.2,0.5,0.3c0.1,0.1,0.1,0.6-0.1,1.2c-0.2,0.6-1.2,1.1-1.7,1.2c-0.5,0-0.9,0.2-3-0.6c-2.5-1-4.1-3.6-4.2-3.7c-0.1-0.2-1-1.3-1-2.6c0-1.2,0.6-1.8,0.9-2.1C6.1,5.4,6.4,5.3,6.6,5.3z"></path>
+							</svg>
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+		}
+
+		//facebook		facebook_links = ['N/a'],
+		if(facebook_links.length > 0){
+
+			
+			//loop
+			facebook_links.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="${data}" target="blank">
+				
+							<svg width="20px" height="20px" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<path d="M20,10.1c0-5.5-4.5-10-10-10S0,4.5,0,10.1c0,5,3.7,9.1,8.4,9.9v-7H5.9v-2.9h2.5V7.9C8.4,5.4,9.9,4,12.2,4c1.1,0,2.2,0.2,2.2,0.2v2.5h-1.3c-1.2,0-1.6,0.8-1.6,1.6v1.9h2.8L13.9,13h-2.3v7C16.3,19.2,20,15.1,20,10.1z"></path>
+							</svg>
+								<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+		}
+
+		//	//twitter			twitter_links = ['N/a'],
+		if(twitter_links.length > 0){
+
+			
+			//loop
+			twitter_links.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="${data}" target="blank">
+				
+							<svg width="20px" height="20px" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<path d="M20,3.8c-0.7,0.3-1.5,0.5-2.4,0.6c0.8-0.5,1.5-1.3,1.8-2.3c-0.8,0.5-1.7,0.8-2.6,1c-0.7-0.8-1.8-1.3-3-1.3c-2.3,0-4.1,1.8-4.1,4.1c0,0.3,0,0.6,0.1,0.9C6.4,6.7,3.4,5.1,1.4,2.6C1,3.2,0.8,3.9,0.8,4.7c0,1.4,0.7,2.7,1.8,3.4C2,8.1,1.4,7.9,0.8,7.6c0,0,0,0,0,0.1c0,2,1.4,3.6,3.3,4c-0.3,0.1-0.7,0.1-1.1,0.1c-0.3,0-0.5,0-0.8-0.1c0.5,1.6,2,2.8,3.8,2.8c-1.4,1.1-3.2,1.8-5.1,1.8c-0.3,0-0.7,0-1-0.1c1.8,1.2,4,1.8,6.3,1.8c7.5,0,11.7-6.3,11.7-11.7c0-0.2,0-0.4,0-0.5C18.8,5.3,19.4,4.6,20,3.8z"></path>
+							</svg>
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+		}
+
+		//		//instagram			instagram_links = ['N/a'],
+		if(instagram_links.length > 0){
+			
+			//loop
+			instagram_links.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="${data}" target="blank">
+				
+							<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<circle cx="10" cy="10" r="3.3"></circle>
+								<path d="M14.2,0H5.8C2.6,0,0,2.6,0,5.8v8.3C0,17.4,2.6,20,5.8,20h8.3c3.2,0,5.8-2.6,5.8-5.8V5.8C20,2.6,17.4,0,14.2,0zM10,15c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S12.8,15,10,15z M15.8,5C15.4,5,15,4.6,15,4.2s0.4-0.8,0.8-0.8s0.8,0.4,0.8,0.8S16.3,5,15.8,5z"></path>
+							</svg>
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+
+		}
+
+		//email			contacts_emails = ['N/a'],
+		if(contacts_emails.length > 0){
+
+			
+			//loop
+			contacts_emails.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="mailto:${data}" target="blank">
+				
+							<div class="la la-envelope-o" style="display:inline-block;margin:10px;font-size: 25px;color: black;">
+
+							</div>
+
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+
+		}
+
+		//	//adress			address_details = ['01 sibeko street, Stretford Orange Farm, 1841'],
+		if(address_details.length > 0){
+
+			
+			//loop
+			address_details.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+				
+				
+							<div class="la la-home" style="display:inline-block;margin:10px;font-size: 25px;color: black;"></div>
+
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+
+		}
+		
+	
+
+		//------------------ stuff to apply --------------------\\
+
+
+		//new user password		new_user_temporary_password = 'street wifiy',
+		if(new_user_temporary_password.length > 0){
+
+			
+		 	//apply div
+
+	
+		}
+
+		//allow new user auto registration		new_user_self_auto_regitrations = true,
+		if(new_user_self_auto_regitrations.length > 0){
+
+			//set to show or hide
+
+
+		}
+
+		//branding/website name		website_name_branding = 'StreetWiFiy';
+		if(website_name_branding.length > 0){
+
+
+			//apply div
+
+		}
+
+
+
+		//show div contents
+
+	
+		document.getElementById('contact_data_wrapper_contents').innerHTML = div_stuff;
+
+
+
+		//if new account automatic create show
+		if(new_user_self_auto_regitrations){
+
+			//show
+			document.getElementById('seller_distributor_option_account_create').style.display='block';
+		}
+
+	
+
+	}
+
+
 
    // ++++++++++++++++++++++++++++++++++++ custom alerts ++++++++++++++++++++++++++++++++++++++++++++++++
    
@@ -4847,6 +5278,7 @@ function extra_menu(transaction_type){ //extra menu initiator
 
 
 
+	//message history
 
 	if(transaction_type == 'emails_history'){
 
@@ -4857,6 +5289,7 @@ function extra_menu(transaction_type){ //extra menu initiator
 		return
 	}
 
+	//system error
 	if(transaction_type == 'system_error'){
 		
 		document.getElementById('transactions_and_voucher_page').style.display='none';	//hide
@@ -4867,8 +5300,434 @@ function extra_menu(transaction_type){ //extra menu initiator
 	}
 
 
+	//buy points
+	if(transaction_type == 'buy_points'){
+
+		//get logged in user
+		var user_id = '';//id of user
+
+		if(admin_login.admin_id){//is admin logged in
+			user_id = admin_login.admin_id;//set
+		}
+						   
+		if(distributor_login.distributor_id){ //is didtributor logged in
+			user_id = distributor_login.distributor_id;//set
+		}
+						   
+		if(seller_login.seller_id){// is seller logged in
+			user_id = seller_login.seller_id;//set
+		}
+		
+
+
+		document.getElementById('transactions_and_voucher_page').style.display='none';	//hide
+
+
+
+
+		var div_stuff = '<b>You can use any of the banking methods below<br> to recharge you account. <br><br>Use any of the contact information below banking details<br> to contact us and sent proof of payment.</b><br><hr><br>';//contains div stuff
+
+		
+		//banking			banking_details = ['{bank_name:"Capitec",branch_name:"Orange Farm",account_type:"Savings",account_number:"N/a",refrence_prefix:"wifi_",payment_link:"",payment_qr_code:"",show_payment:true}'],
+
+		if(banking_details.length > 0){
+		
+			//loop
+			banking_details.forEach((data)=>{
+
+				// console.log(JSON.parse(data));
+
+				var data = JSON.parse(data);
+
+				//check if content provided
+			
+					//create div
+
+					if(data && data.show_payment){
+
+						var payment_link_ ='';//if payment link
+
+						if(data.payment_link || data.payment_qr_code){
+
+							payment_link_ = '<br>You can use other payment methods below :<br>'
+
+							if(data.payment_link){
+								payment_link_ = payment_link_ + `Payment link :
+								<b><a href='${data.payment_link}'>${data.payment_link}</a> </b>
+								`;
+							}
+							if(data.payment_qr_code){
+								payment_link_ = payment_link_ + `<br>Payment Qr Code
+								<b><a href='${data.payment_link}'>${data.payment_link}</a></b>
+								`;
+							}
+
+						}
+
+						div_stuff = div_stuff + `
+					
+						<div style="width:100%;min-height:20px">
+							BANK NAME : <b>${data.bank_name} </b><br>
+							BANK ACCOUNT TYPE : <b> ${data.account_type} </b><br>
+							BRANCH NAME:  <b>${data.branch_name} </b><br>
+							ACCOUNT NUMBER:  <b>${data.account_number} </b><br>
+							REFERANCE:  <b>${banking_refrence_prefix + user_id} </b><br>
+
+							${payment_link_}
+
+						
+						</div>
+						<hr>
+					`;
+
+					}
+
+			})
+
+		}
+
+
+
+
+
+
+
+		// phone numbers //	var phone_call_numbers =  ['N/a'],
+		if(phone_call_numbers.length > 0){
+
+			//loop
+			phone_call_numbers.forEach((data)=>{
+
+				// console.log(data)
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+						
+						<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+							<div style="font-size:12px;">
+			
+								<a href="tel:${data}" target="blank">
+					
+							
+								<div class="la la-phone" style="display:inline-block;margin:10px;font-size: 25px;color: black;"></div>
+
+								<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+									${data}
+								</span>
+								
+								</a>
+			
+							</div>
+			
+						</div>
+						
+					`;
+
+				}
+
+			})
+
+
+		}
+
+		//whatsapp number		whatsapp_numbers = ['N/a'],
+		if(whatsapp_numbers.length > 0){
+
+			
+			//loop
+			whatsapp_numbers.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="tel:${data}" target="blank">
+				
+							<svg width="20px" height="20px" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<path d="M10,0C4.5,0,0,4.5,0,10c0,1.9,0.5,3.6,1.4,5.1L0.1,20l5-1.3C6.5,19.5,8.2,20,10,20c5.5,0,10-4.5,10-10S15.5,0,10,0zM6.6,5.3c0.2,0,0.3,0,0.5,0c0.2,0,0.4,0,0.6,0.4c0.2,0.5,0.7,1.7,0.8,1.8c0.1,0.1,0.1,0.3,0,0.4C8.3,8.2,8.3,8.3,8.1,8.5C8,8.6,7.9,8.8,7.8,8.9C7.7,9,7.5,9.1,7.7,9.4c0.1,0.2,0.6,1.1,1.4,1.7c0.9,0.8,1.7,1.1,2,1.2c0.2,0.1,0.4,0.1,0.5-0.1c0.1-0.2,0.6-0.7,0.8-1c0.2-0.2,0.3-0.2,0.6-0.1c0.2,0.1,1.4,0.7,1.7,0.8s0.4,0.2,0.5,0.3c0.1,0.1,0.1,0.6-0.1,1.2c-0.2,0.6-1.2,1.1-1.7,1.2c-0.5,0-0.9,0.2-3-0.6c-2.5-1-4.1-3.6-4.2-3.7c-0.1-0.2-1-1.3-1-2.6c0-1.2,0.6-1.8,0.9-2.1C6.1,5.4,6.4,5.3,6.6,5.3z"></path>
+							</svg>
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+		}
+
+		//facebook		facebook_links = ['N/a'],
+		if(facebook_links.length > 0){
+
+			
+			//loop
+			facebook_links.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="${data}" target="blank">
+				
+							<svg width="20px" height="20px" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<path d="M20,10.1c0-5.5-4.5-10-10-10S0,4.5,0,10.1c0,5,3.7,9.1,8.4,9.9v-7H5.9v-2.9h2.5V7.9C8.4,5.4,9.9,4,12.2,4c1.1,0,2.2,0.2,2.2,0.2v2.5h-1.3c-1.2,0-1.6,0.8-1.6,1.6v1.9h2.8L13.9,13h-2.3v7C16.3,19.2,20,15.1,20,10.1z"></path>
+							</svg>
+								<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+		}
+
+		//	//twitter			twitter_links = ['N/a'],
+		if(twitter_links.length > 0){
+
+			
+			//loop
+			twitter_links.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="${data}" target="blank">
+				
+							<svg width="20px" height="20px" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<path d="M20,3.8c-0.7,0.3-1.5,0.5-2.4,0.6c0.8-0.5,1.5-1.3,1.8-2.3c-0.8,0.5-1.7,0.8-2.6,1c-0.7-0.8-1.8-1.3-3-1.3c-2.3,0-4.1,1.8-4.1,4.1c0,0.3,0,0.6,0.1,0.9C6.4,6.7,3.4,5.1,1.4,2.6C1,3.2,0.8,3.9,0.8,4.7c0,1.4,0.7,2.7,1.8,3.4C2,8.1,1.4,7.9,0.8,7.6c0,0,0,0,0,0.1c0,2,1.4,3.6,3.3,4c-0.3,0.1-0.7,0.1-1.1,0.1c-0.3,0-0.5,0-0.8-0.1c0.5,1.6,2,2.8,3.8,2.8c-1.4,1.1-3.2,1.8-5.1,1.8c-0.3,0-0.7,0-1-0.1c1.8,1.2,4,1.8,6.3,1.8c7.5,0,11.7-6.3,11.7-11.7c0-0.2,0-0.4,0-0.5C18.8,5.3,19.4,4.6,20,3.8z"></path>
+							</svg>
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+		}
+
+		//		//instagram			instagram_links = ['N/a'],
+		if(instagram_links.length > 0){
+			
+			//loop
+			instagram_links.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="${data}" target="blank">
+				
+							<svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true" style="display:inline-block;margin:10px">
+								<circle cx="10" cy="10" r="3.3"></circle>
+								<path d="M14.2,0H5.8C2.6,0,0,2.6,0,5.8v8.3C0,17.4,2.6,20,5.8,20h8.3c3.2,0,5.8-2.6,5.8-5.8V5.8C20,2.6,17.4,0,14.2,0zM10,15c-2.8,0-5-2.2-5-5s2.2-5,5-5s5,2.2,5,5S12.8,15,10,15z M15.8,5C15.4,5,15,4.6,15,4.2s0.4-0.8,0.8-0.8s0.8,0.4,0.8,0.8S16.3,5,15.8,5z"></path>
+							</svg>
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+
+		}
+
+		//email			contacts_emails = ['N/a'],
+		if(contacts_emails.length > 0){
+
+			
+			//loop
+			contacts_emails.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+							<a href="mailto:${data}" target="blank">
+				
+							<div class="la la-envelope-o" style="display:inline-block;margin:10px;font-size: 25px;color: black;">
+
+							</div>
+
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							</a>
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+
+		}
+
+		//	//adress			address_details = ['01 sibeko street, Stretford Orange Farm, 1841'],
+		if(address_details.length > 0){
+
+			
+			//loop
+			address_details.forEach((data)=>{
+
+				//check if content provided
+				if(data && data.toLowerCase() != 'n/a'){
+
+					//create div
+					div_stuff = div_stuff + `
+		
+					<div style="width:100%;min-height:15px;margin:5px 0px;font-family: 'Times New Roman', Times, serif;border:1px solid #ccc;border-radius:4px;">
+
+						<div style="font-size:12px;">
+		
+				
+				
+							<div class="la la-home" style="display:inline-block;margin:10px;font-size: 25px;color: black;"></div>
+
+							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
+								${data}
+							</span>
+							
+							
+		
+						</div>
+		
+					</div>
+					
+				`;
+
+				}
+
+			})
+
+
+		}
+		
+	
+
+		//new user password		new_user_temporary_password = 'street wifiy',
+		if(new_user_temporary_password.length > 0){
+
+			
+		 	//apply div
+
+	
+		}
+
+		//allow new user auto registration		new_user_self_auto_regitrations = true,
+		if(new_user_self_auto_regitrations.length > 0){
+
+			//set to show or hide
+
+
+		}
+
+		//branding/website name		website_name_branding = 'StreetWiFiy';
+		if(website_name_branding.length > 0){
+
+
+			//apply div
+
+		}
+
+
+		
+
+
+
+		//show div contents
+
+		document.getElementById('buyer_menu_wrapper_contents').innerHTML = div_stuff;
+
+		//help data
+		document.getElementById('buy_points_help').innerHTML = `<button style="width:100%; height:7vh; margin : 10px 0px 10px 0px; padding:0px; display: block" class="btn btn-warning" onclick="alert('1) Use one of the any payment methods to send money into. \\r\\r2) Use referance number ( ${banking_refrence_prefix + user_id} ) shown on the banking details for any payment method you use. \\r\\r3) Send us proof of payment using any of the shown contact details to speed up your account crediting process.')">Help</button>`;
+
+
+		document.getElementById('buy_points_menu').style.display = 'block'//show
+
+
+
+
+		
+
+	}
 	
 }
+
+
+
 
 //+++++++++++++
 //auto voucher types

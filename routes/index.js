@@ -3633,11 +3633,6 @@ app.get('/api/hotspot_data', function(req, res){
 						final_hotspots_data_array.push(data)
 					}
 
-
-
-
-
-
 					//on last loop
 					if(index == response.length - 1){
 
@@ -3646,34 +3641,13 @@ app.get('/api/hotspot_data', function(req, res){
 						send_router_hotspot_data (final_hotspots_data_array)
 					}
 
-
-
 				})
-
-	
-
-
 
 	
 			});
 
-		
-
-
-
-
-
-
-
 
 		};
-
-
-
-
-
-
-
 
 
 			
@@ -4607,6 +4581,129 @@ app.get('/api/get_hotspot', function(req, res){
 
 
 
+/*=======================================
+    system general data
+=======================================*/  
+
+app.get('/api/get_general_data', function(req, res){
+	
+
+	var loop_avoider = 0;//preevent un-ending loop
+
+	function get_general_data(){
+
+		keystone.list('system general data').model.findOne()
+		.exec(function(err, user_data){
+
+			if(err){
+
+				console.log('error : when requesting system general data. error = '+ err);
+
+				//capture error
+				error_capture('error : when requesting system general data. error = '+ err);
+
+				res.jsonp('Server or Conection error');
+				return;
+			}
+			
+			if(user_data == null || user_data == undefined || user_data == ''){//user not found//add user
+
+
+				if(loop_avoider == 0){//check if not retried before
+
+					//inrement 
+					loop_avoider = loop_avoider +1;
+
+					
+					return create_general_data()//call create
+
+				}
+
+				//capture error
+				error_capture('error : when requesting system general data. error = no data recived. new general data attempt create retry number = '+loop_avoider+' ,of total allowed retries = 1 ');
+				
+				res.jsonp('Server or Conection error');//give error
+
+				return ;
+			}
+
+			//console.log(user_data);
+			res.jsonp(user_data)
+
+		});
+	}
+
+	//auto start
+	get_general_data();
+
+
+	//create new stuff
+	function create_general_data(){
+
+		keystone.createItems({//add items to db//user details
+					
+			'system general data' : [
+			    {
+
+					//contacts data
+					//---call number
+					phone_call_numbers :  ['N/a'],
+					//whatsapp number
+					whatsapp_numbers : ['N/a'],
+					//facebook
+					facebook_links : ['N/a'],
+					//twitter
+					twitter_links : ['N/a'],
+					//instagram
+					instagram_links : ['N/a'],
+					//email
+					contacts_emails : ['N/a'],
+			
+					//adress
+					address_details : ['01 sibeko street, Stretford Orange Farm, 1841'],
+			
+					//banking
+					banking_details : ['{"bank_name":"Capitec","branch_name":"Orange Farm","account_type":"Savings","account_number":"N/a","refrence_prefix":"wifi-","payment_link":"","payment_qr_code":"","show_payment":true}'],
+
+					//banking referenace prefix
+					banking_refrence_prefix: 'wifi-',//this is to help autoamated account recharge checker program, i.e if message recived fro bank has a refereance with specif prefix meant to refer to certain program if many program checks same inbox for eft messages
+
+					//new user password
+					new_user_temporary_password : 'street wifiy',
+			
+					//allow new user auto registration
+					new_user_self_auto_regitrations : true,
+
+					//branding/website name
+					website_name_branding: 'StreetWiFiy',
+				}
+				
+			]
+						
+		}, function(err, results){
+			
+			if(err){
+
+				console.log('Problem when creating new general data to db. error = '+err);
+
+				//capture error
+				error_capture('Problem when creating new general data to db. error = '+err);
+					
+				return	res.jsonp('Server or Conection error');//give error
+
+			}
+
+			get_general_data();
+			
+		});
+
+
+	}
+
+
+})
+
+
 
 /*=======================================
     system errors
@@ -4646,7 +4743,7 @@ app.get('/api/system_errors', function(req, res){
 
 
 /*=======================================
-    get meial messages 
+    get email messages 
 =======================================*/  
     
 app.get('/api/system_messages', function(req, res){

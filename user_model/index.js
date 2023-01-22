@@ -393,6 +393,53 @@ email_catcher_model.register();
 
 
 
+//---------------------------------------------------------
+    
+// general app details
+//----------------------------------------------------------
+var general_system_data = 'system general data';
+var general_system_data_model = new keystone.List(general_system_data);
+
+general_system_data_model.add(
+    
+    {
+
+		//contacts data
+		//---call number
+		phone_call_numbers : {type : types.TextArray, label :'', default : ['N/a']},
+		//whatsapp number
+		whatsapp_numbers : {type : types.TextArray, label :'', default : ['N/a']},
+		//facebook
+		facebook_links : {type : types.TextArray, label :'', default : ['N/a']},
+		//twitter
+		twitter_links : {type : types.TextArray, label :'', default : ['N/a']},
+		//instagram
+		instagram_links : {type : types.TextArray, label :'', default : ['N/a']},
+		//email
+		contacts_emails : {type : types.TextArray, label :'', default : ['N/a']},
+
+		//adress
+		address_details : { type: types.TextArray, default:['01 sibeko street, Stretford Orange Farm, 1841'], label :'Address details' },
+
+		//banking
+		banking_details : { type: types.TextArray, default:['{bank_name:"Capitec",branch_name:"Orange Farm",account_type:"Savings",account_number:"N/a",payment_link:"",payment_qr_code:"",show_payment:true}'], label :'Banking details' },
+		
+		//banking referenace prefix
+		banking_refrence_prefix: { type: String, default:'wifi-', label :'Banking referance prefix'},//this is to help autoamated account recharge checker program, i.e if message recived fro bank has a refereance with specif prefix meant to refer to certain program if many program checks same inbox for eft messages
+
+		//new user password
+		new_user_temporary_password : { type: String, default:'street wifiy', label :'New user temporary password' },
+
+		//allow new user auto registration
+		new_user_self_auto_regitrations : {type :types.Boolean, default:true, label :'New users accounts self registration' },
+
+		//branding/website name
+		website_name_branding: { type: String, default:'StreetWiFiy', label :'Site name/branding' },
+	}
+
+);
+
+general_system_data_model.register();
 
 
 
