@@ -902,6 +902,7 @@ var auto_user_creater_wifi_radius_link = {
 		}
 
 	
+		//	IM ATTEMPTED TO ADD ABILITY TO CONTROL IF MESSAGE FLOATING BUTTON SHOULD SHOW OR NOT, but im torn as contact button is useful by default, worse care system admin may not show contacts details in contact menu -- so i wont add it, until if i do
 
 	}
 
