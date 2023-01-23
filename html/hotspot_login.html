@@ -1052,8 +1052,8 @@
 
    <!-- contact data -->  
 
-      <!-- user account creation -->
-      <div  style="position: fixed;bottom: 0px;right: 0px;margin: 10px;font-size: 40px;background-color: #5cb85ce6;" class="btn btn-success la la-whatsapp" onclick="dom_hide_show('show', 'contact_data')" ></div>
+      <!-- user account creation --> 
+      <div id="contact_details_button" style="position: fixed;bottom: 46px;right: 0px;margin: 10px;font-size: 40px;background-color: #5cb85ce6;display: none;" class="btn btn-success la la-whatsapp" onclick="dom_hide_show('show', 'contact_data')" ></div>
     
       <div id="contact_data" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;background-color: rgb(51 51 51 / 78%); display:none">
 
@@ -1377,6 +1377,8 @@
 
 
 
+        //show contact button
+        var contact_data_button = false;
 
 
 
@@ -1415,7 +1417,16 @@
 			
 			//override provided data by using data from db; not necessary but fine
 			if(data_from_db){
-				//console.log(data_from_db);
+				// console.log(data_from_db);
+
+                //show contact buttons
+                if(data_from_db.contact_details_button){
+            
+                    contact_data_button = true;
+
+                    document.getElementById('contact_details_button').style.display = 'block';
+
+                }
 				
 				if(data_from_db.hotspot_logo){
 					logo_image_url = data_from_db.hotspot_logo;
@@ -1824,11 +1835,17 @@
 
                     document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
                     document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
+
                 }
 
              
 
                 forced_ads_skip_to_login_menu = data_from_db.forced_advertisement_skip_to_login; //set skip [ menu buttonly only user interface ] to true or false
+
+
+                //hide  contacts buttons
+                document.getElementById('contact_details_button').style.display = 'none';
+            
                 
             }
 
@@ -1912,6 +1929,16 @@
 
         //show login menu contents  
         function ads_provided_menu_content_show(action = 'show', do_forced_ads = false){
+
+
+
+            //if to show menu button 
+            if(contact_data_button && !do_forced_ads){
+                
+                //hide  contacts buttons
+                document.getElementById('contact_details_button').style.display = 'block';
+            
+            }
 
             // console.log(action,menu_layout_type)
             if(action == 'show'){ //show login menu contents
@@ -3305,6 +3332,8 @@
 	website_name_branding = 'StreetWiFiy';
 
 
+
+
 	
    $.get('/api/get_general_data', function(response, status){
 	
@@ -3344,7 +3373,8 @@
 
 				website_name_branding = response.website_name_branding
 
-				console.log(response)
+
+				// console.log(response)
 				
 				contact_data_create();//calll
 			}
@@ -3628,8 +3658,6 @@
 
 						<div style="font-size:12px;">
 		
-				
-				
 							<div class="la la-home" style="display:inline-block;margin:10px;font-size: 25px;color: black;"></div>
 
 							<span style="display: inline-block;vertical-align: top;line-height: 42px;">
@@ -3637,7 +3665,6 @@
 							</span>
 							
 							
-		
 						</div>
 		
 					</div>
@@ -3688,7 +3715,9 @@
 	
 		document.getElementById('contact_data_wrapper_contents').innerHTML = div_stuff;
 
-	
+         
+
+
 
 	}
 
@@ -3705,7 +3734,7 @@
 
       
 
-		</script>
+	</script>
 	
 	</body>
 

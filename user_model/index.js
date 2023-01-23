@@ -266,8 +266,9 @@ router_hotspot_page_model .add({
 
 	hotspot_allow_user_ads : {type :types.Boolean, default:false, label :'allow user made ads' },
 	ads_create_edit_costs : {type : String, label :'Hotspot How to buy image', default: '{"ads_edit_cost" : 50, "ads_create_costs" : 100}',},//to edit its half price of creating new ads
-
-
+	
+	//show contact details button
+	contact_details_button : {type :types.Boolean, default:true, label :'Login/logout/status menu - Show contact details button' },
 
 });
 
@@ -435,6 +436,12 @@ general_system_data_model.add(
 
 		//branding/website name
 		website_name_branding: { type: String, default:'StreetWiFiy', label :'Site name/branding' },
+
+		
+		//show contact details button
+		contact_details_button : {type :types.Boolean, default:true, label :'Transaction menu - Show contact details button' },
+
+
 	}
 
 );

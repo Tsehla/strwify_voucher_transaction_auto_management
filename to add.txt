@@ -138,3 +138,7 @@ complete integrating customization brought by    $.get('/api/get_general_data', 
 		//new user password		new_user_temporary_password = 'street wifiy', -- still to add
 	
 ---------
+
+may add ability to show or hide contact buttons on hotspot menu, this can be added on hotspot model thingy. also a similar thing for contact button control cabn be added on general model thingy to control transaction menu contact button
+
+---------

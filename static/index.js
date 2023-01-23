@@ -504,7 +504,10 @@ var auto_user_creater_wifi_radius_link = {
 	new_user_self_auto_regitrations = true,
 	
 	//branding/website name
-	website_name_branding = 'StreetWiFiy';
+	website_name_branding = 'StreetWiFiy',
+
+	//show contact details button
+	contact_details_button = false;
 
 
 	
@@ -546,7 +549,11 @@ var auto_user_creater_wifi_radius_link = {
 				//allow new user auto registration
 				new_user_self_auto_regitrations = response.new_user_self_auto_regitrations;
 
-				website_name_branding = response.website_name_branding
+				//
+				website_name_branding = response.website_name_branding;
+
+				//
+				contact_details_button = response.contact_details_button;
 
 				// console.log(response)
 				
@@ -901,6 +908,15 @@ var auto_user_creater_wifi_radius_link = {
 			document.getElementById('seller_distributor_option_account_create').style.display='block';
 		}
 
+
+		//show contact button
+		if(contact_details_button){
+
+			//show
+			document.getElementById('contact_data_buton').style.display='block';
+		}
+
+		
 	
 		//	IM ATTEMPTED TO ADD ABILITY TO CONTROL IF MESSAGE FLOATING BUTTON SHOULD SHOW OR NOT, but im torn as contact button is useful by default, worse care system admin may not show contacts details in contact menu -- so i wont add it, until if i do
 

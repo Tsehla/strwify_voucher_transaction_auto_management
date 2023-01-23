@@ -232,7 +232,7 @@
    <!-- contact data -->  
 
       <!-- user account creation -->
-      <div  style="position: fixed;bottom: 0px;right: 0px;margin: 10px;font-size: 40px;background-color: #5cb85ce6;" class="btn btn-success la la-whatsapp" onclick="dom_hide_show('show', 'contact_data')" ></div>
+      <div id="contact_details_button" style="position: fixed;bottom: 57px;right: 0px;margin: 10px;font-size: 40px;background-color: #5cb85ce6;display:none" class="btn btn-success la la-whatsapp" onclick="dom_hide_show('show', 'contact_data')" ></div>
     
       <div id="contact_data" style="width:98vw; min-height: 100vh;position: fixed;top: 0px;left: 0px;z-index:5;background-color: rgb(51 51 51 / 78%); display:none">
 
@@ -356,6 +356,8 @@
 
 
 
+			//show contact button
+			var contact_data_button = false;
 
 
 		
@@ -394,7 +396,10 @@
 
 					//save data
 					hotspot_descriptive_data = JSON.stringify(response);
-					
+
+			
+
+									
 					if(hotspot_descriptive_data && JSON.parse(hotspot_descriptive_data)){//if exist
 
 						//turn to object
@@ -402,7 +407,18 @@
 
 
 
+
 						//apply db data
+													
+						//show contact buttons
+						if(hotspot_descriptive_data.contact_details_button){
+        
+							contact_data_button = true;
+							
+							document.getElementById('contact_details_button').style.display = 'block';
+
+						}
+
 
 						//router location
 						if(hotspot_descriptive_data){	 
@@ -422,9 +438,7 @@
 							manu_layout_ads_wallpaper.login_menu_wallpaper_text = hotspot_descriptive_data.menu_fallback_wallpaper_text;
 
 						}
-
-
-						               
+													
 						// if(Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) ){ //if menu layout type advertisement wallpaper is provided and is a number
 
 						// 	if(Number(hotspot_descriptive_data.ads_ui_layout_wallpaper) > 0 && Number(hotspot_descriptive_data.ads_ui_layout_wallpaper)  <= wall_link_description.length ){//if provided ads wallpaper number is biger than zero and not bigger than total number of provided advertisement wallpapers
@@ -846,7 +860,7 @@
 
 				website_name_branding = response.website_name_branding
 
-				console.log(response)
+				// console.log(response)
 				
 				contact_data_create();//calll
 			}
