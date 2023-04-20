@@ -10,6 +10,19 @@ This is backend system, meant to allow seamless voucher selling and buying proce
 
 # Running
 
+
+-------
+
+	as a result of keystonejs [-v] being code incompartible to next major keystone version, app dependancies could not be updated, this has resulted in mongodb connection driver failing after current mongo atlas update
+	
+	- app should be run on nodejs [ 18.13.0 ]
+	- mongodb [ version v3.6.8 ]
+	- app may be rewritten in future with no major framework usage that time, and this app will be finaly fused with [ https://github.com/Tsehla/nodejs_radius_server ] if rewriting do happen as it was intended to as a major upgrade  
+
+
+
+------
+
 https required when running on server other than localhost/else change [ var http_https = "https://"; ] to [ var http_https = "http://";] on [ /static/index.js] and on [/html/] contents. doing this will cause some features not to work like Qr scanner option.
 
 Make sure you have a working local mongo db installaton.
