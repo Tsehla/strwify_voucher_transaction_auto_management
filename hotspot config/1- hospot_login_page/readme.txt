@@ -16,7 +16,7 @@ for [ login.html ]
 	add [ %20 ] to represent space within word, if what you added has space
 		from [ location=orange farm ] to [ location=orange%20farm ]	
 		from [ router_installation_address=71 extension 4] to [ router_installation_address=71%20extension%204]
-		from [ owner_identification=89051358 ] to [ owner_identification=89051358 ]
+		from [ owner_identification=89051358520 ] to [ owner_identification=89051358520 ] //exclude last two numbers of south african id, for security reason
 
 	resulting link will be like [ window.open('http://myAppLocation.com/hotspot?login=true&error=$(error)&link-login-only=$(link-login-only)&link-orig=$(link-orig)&chap-id=$(chap-id)&chap-challenge=$(chap-challenge)&link-orig-esc=$(link-orig-esc)&mac-esc=$(mac-esc)&username=$(username)&location=orange%20farm&router_installation_address=71%20extension%204&owner_identification=89051358', '_self'); } ]
 	
