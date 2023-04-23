@@ -1,0 +1,33 @@
+
+
+proper documentation should be produced, when i do get time, but codes and some readme.txt in folders contains some guidance
+
+
+----
+for radius link dont include "/" after url in keystone admin menu hotspot pages menu i.e http://127.0.0.1 not http://127.0.0.1/
+
+----
+
+for free voucher, 
+
+  -> option 1 : you can enable trial user login on mikrotik and enable mikrotik trial login in keystone admin menu hotspot menu
+  
+  -> option 2 : you can create free voucher that are verified on mikrotik router, you will have to create that users on mikrotik
+  
+  -> option 3 : you can create free vouchers that will be verified on radius server, if radius server link is provided in keystone admin menu hotspot pages menue
+  
+  
+  for option 2--
+  -> you have to define or create a voucher in keystone admin menu [ voucher codes ] menu, the voucher should have value of 0, to be considered as free
+  -> if multiple voucher have value of free, first voucher will be used,
+  -> ensure that voucher username and passwords are included that matches voucher username and password you defined in mikrotik user account
+  -> select type of free login method in keyston hotspot pages
+  
+  for option 3
+   -> you have to define or create a voucher in keystone admin menu [ voucher codes ] menu, the voucher should have value of 0, to be considered as free
+  -> if multiple voucher have value of free, first voucher will be used,
+  -> ensure that voucher username and passwords are included that matches voucher username and password you defined in radus app [ vouchers menu ]
+  -> when creating the new voucher, pay attention to a little button about reset usage when creating the voucher
+  -> tip:: if creating using create voucher instead of create username and password, the voucher produced will have password same as username or voucher code defined
+  -> select type of free login method in keyston hotspot pages
+  
