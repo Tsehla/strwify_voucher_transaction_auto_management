@@ -31,3 +31,5 @@ for free voucher,
   -> tip:: if creating using create voucher instead of create username and password, the voucher produced will have password same as username or voucher code defined
   -> select type of free login method in keyston hotspot pages
   
+  Tip :: if you are using radius authentication, disable any mikrotik users, as you ay have a situation where for example a users was meant to be authenticated on radius but mikrotik is authenticating them on itself as there is an account with similar username defined, this may cause authentication failure if passwords are not same, this is especially so for free vouchers, as option 1 and 2, shares the same vouchers in keystone [ vouchers codes menu ]
+  
