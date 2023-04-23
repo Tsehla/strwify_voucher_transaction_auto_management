@@ -255,7 +255,7 @@ router_hotspot_page_model .add({
 
 	//auto voucher creation wifi radius //works with only ::: https://github.com/Tsehla/nodejs_radius_server
 	use_external_radius_user_creation: {type :types.Boolean, default:false, label :'Enable Wifi-Radius auto user creation?' },
-	external_radius_user_creation_link: {type : String, label :'Link to Wifi-radius server.', default: 'Works only with wifi-radius see (https://github.com/Tsehla/nodejs_radius_server)'},
+	external_radius_user_creation_link: {type : String, label :'Link to Wifi-radius server.', default: 'Works only with wifi-radius see (https://github.com/Tsehla/nodejs_radius_server) example : http://127.0.0.1:8080'},
 
 	//system maintenance alerts to user
 	system_maintenace : {type : types.Select, options: "functional, maintenance, repair, upgrade", default:'functional', label :'System state'},
