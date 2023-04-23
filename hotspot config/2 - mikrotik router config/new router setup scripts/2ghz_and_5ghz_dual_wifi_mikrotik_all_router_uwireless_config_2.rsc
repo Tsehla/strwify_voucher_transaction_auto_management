@@ -1,7 +1,8 @@
 #Streetwifiy router configuration
 # --- General router configuration script ---
 #Reset router and have it running correctly then run this script using command below:
-# import mikrotik_all_router_streetwifiy_config.rsc
+# import 2ghz_and_5ghz_dual_wifi_mikrotik_all_router_uwireless_config_2.rsc
+# if file dont exist proble do : [ file print detail ] and find and confirm the import script name is same as the on you are importing. alternatively make script name short as possible before uploading to mikrotik
 # on mikrotik console
 #Commands need to be in order as some depends on the previous ones to run and create services or script will fail
 #Tip: if issue, copy all script contents and paste on terminal
@@ -194,7 +195,7 @@ add address=6.0.0.0/24 comment="hotspot no-3 network" gateway=6.0.0.1
 
 # Create wifi hotspot
 /ip hotspot profile
-add dns-name=uwireless.za hotspot-address=$ipAddress html-directory=streetwifiy_login login-by=cookie,http-pap,trial name=hsprof1 trial-uptime-limit=2h30m trial-user-profile=FreeLoginUsersProfile use-radius=yes
+add dns-name=streetwifiy.za hotspot-address=$ipAddress html-directory=streetwifiy_login login-by=cookie,http-pap,trial name=hsprof1 trial-uptime-limit=2h30m trial-user-profile=FreeLoginUsersProfile use-radius=yes
 add dns-name=areanet.za hotspot-address=3.0.0.1 html-directory=hospot_login_page-1 login-by=cookie,https,http-pap name=hsprof2  use-radius=yes
 add dns-name=netarea.za hotspot-address=6.0.0.1 html-directory=hospot_login_page-2 login-by=cookie,http-pap name=hsprof3  use-radius=yes
   
@@ -282,7 +283,7 @@ set discover-interface-list=LAN
 #NOTE IMPORTANT CHANGE FREQUENCY MODE TO [ frequency-mode=regulatory-domain ] USE [ frequency-mode=SUPERCHANNEL ] FOR TESTING ONLY !!THIS IS IMPORTANT, AND RESPONSIBILITY LIES WITH YOU THE INSTALLER NOT THE COMPANY OR ORGANISATION EMPLOYED OR REFERED TO.. 
 # 2.5ghz turbo frequency [ frequency=2437 ]
 /interface wireless
-set [ find default-name=wlan1 ] disabled=no frequency=auto mode=ap-bridge distance=dynamic installation=outdoor ssid="uWireless.za" wireless-protocol=802.11 station-roaming=disabled wmm-support=enabled multicast-buffering=disabled multicast-helper=disabled wps-mode=disabled arp=enabled keepalive-frames=disabled bridge-mode=disabled country="south africa" frequency-mode=superchannel tx-power-mode=default 
+set [ find default-name=wlan1 ] disabled=no frequency=auto mode=ap-bridge distance=dynamic installation=outdoor ssid="streetWifiy.za" wireless-protocol=802.11 station-roaming=disabled wmm-support=enabled multicast-buffering=disabled multicast-helper=disabled wps-mode=disabled arp=enabled keepalive-frames=disabled bridge-mode=disabled country="south africa" frequency-mode=superchannel tx-power-mode=default 
 
 add disabled=no keepalive-frames=disabled master-interface=wlan1 multicast-buffering=disabled name=wlan5 ssid="AreaNet.za" wds-cost-range=0 wds-default-cost=0 wps-mode=disabled
 
