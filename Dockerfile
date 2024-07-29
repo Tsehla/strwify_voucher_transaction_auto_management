@@ -1,5 +1,6 @@
 # Use an official Node.js runtime as a parent image
-FROM node:18.13.0
+#FROM node:18.13.0
+FROM node:18.13.0-alpine
 
 # Install MongoDB
 RUN apt-get update && \
