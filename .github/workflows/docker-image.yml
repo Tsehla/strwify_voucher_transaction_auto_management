@@ -1,4 +1,4 @@
-name: Docker Image Creator and Push to Docker Hub
+name: Docker Image Build and Push
 
 on:
   push:
@@ -8,28 +8,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  push_to_registry:
-    name: Push Docker Image to Docker Hub
+  build_and_push:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v3
-      
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build Docker image using Docker Compose
+        run: docker-compose build
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v4
-        with:
-          images: my-docker-hub-namespace/my-docker-hub-repository
-      
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: tsehla/streetwifiy:latest
+
+      - name: Push Docker image to Docker Hub
+        run: docker push <image_name>:<tag>
+        env:
+          DOCKER_BUILDKIT: 1
+
+      # Additional steps for testing or deployment if needed
