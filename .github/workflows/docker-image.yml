@@ -26,7 +26,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image to Docker Hub
-        run: docker push wifiytransact:latest
+        run: docker push wifitransact:latest
         env:
           DOCKER_BUILDKIT: 1
 
