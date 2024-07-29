@@ -3,8 +3,8 @@ FROM node:18.13.0
 
 # Install MongoDB
 RUN apt-get update && \
-    apt-get install -y gnupg && \
-    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 9DA31620334BD75D9DCB49F368818C72E52529D4 && \
+    apt-get install -y wget gnupg && \
+    wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | apt-key add - && \
     echo "deb [ arch=amd64,arm64 ] http://repo.mongodb.org/apt/debian stretch/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list && \
     apt-get update && \
     apt-get install -y mongodb-org=3.6.8 mongodb-org-server=3.6.8 mongodb-org-shell=3.6.8 mongodb-org-mongos=3.6.8 mongodb-org-tools=3.6.8 && \
@@ -24,7 +24,7 @@ COPY . .
 RUN npm install
 
 # Expose the port that MongoDB and your app will run on
-EXPOSE 27017 3100
+EXPOSE 27017 8084
 
 # Start MongoDB and your Node.js app
-CMD mongod --fork --logpath /var/log/mongodb.log && node index.js
+CMD mongod --fork --logpath /var/log/mongodb.log && node your-app.js
