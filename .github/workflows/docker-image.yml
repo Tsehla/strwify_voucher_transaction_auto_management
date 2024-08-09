@@ -1,3 +1,57 @@
+# name: Docker Image Build and Push
+
+# on:
+#   push:
+#     branches: [ "main" ]
+#   pull_request:
+#     branches: [ "main" ]
+#   workflow_dispatch:
+
+# jobs:
+#   build_and_push:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v2
+
+#       - name: Install Docker Compose
+#         run: |
+#           sudo apt-get update
+#           sudo apt-get install -y docker-compose
+
+#       - name: Build Docker image using Docker Compose
+#         run: docker-compose build
+
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v2
+#         with:
+#           username: ${{ secrets.DOCKER_USERNAME }}
+#           password: ${{ secrets.DOCKER_PASSWORD }}
+
+
+#       - name: Extract metadata (tags, labels) for Docker
+#         id: meta
+#         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+#         with:
+#           images: my-docker-hub-namespace/my-docker-hub-repository
+      
+#       - name: Build and push Docker image
+#         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+#         with:
+#           context: .
+#           push: true
+#           tags: tsehla/wifitransact:latest
+#           DOCKER_BUILDKIT: 1
+
+#       # Additional steps for testing or deployment if needed
+
+
+
+
+
+
 name: Docker Image Build and Push
 
 on:
@@ -11,7 +65,8 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -30,19 +85,26 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@v3
         with:
           images: my-docker-hub-namespace/my-docker-hub-repository
-      
-      - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v3
         with:
           context: .
           push: true
-          tags: tsehla/wifitransact:latest
-          DOCKER_BUILDKIT: 1
+          tags: |
+            my-docker-hub-namespace/my-docker-hub-repository:latest
+          build-args: |
+            DOCKER_BUILDKIT=1
 
-      # Additional steps for testing or deployment if needed
+      # Optional: Additional steps for testing or deployment
+      - name: Run tests
+        run: |
+          docker-compose up -d
+          sleep 10 # Wait for services to start
+          # Add your test commands here
+          docker-compose down
