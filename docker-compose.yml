@@ -39,6 +39,40 @@
 
 # koyeb.com specific
 
+# version: '3.8'
+
+# services:
+#   app:
+#     build: .
+#     ports:
+#       - "8084:8084"
+#     depends_on:
+#       - mongo
+#     environment:
+#       MONGO_URL: mongodb://mongo:27017/mydatabase
+#     deploy:
+#       replicas: 1
+#       restart_policy:
+#         condition: on-failure
+
+#   mongo:
+#     image: mongo:3.6.8
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo-data:/data/db
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: exampleuser
+#       MONGO_INITDB_ROOT_PASSWORD: examplepass
+#     deploy:
+#       replicas: 1
+#       restart_policy:
+#         condition: on-failure
+
+# volumes:
+#   mongo-data:
+
+
 version: '3.8'
 
 services:
@@ -47,7 +81,8 @@ services:
     ports:
       - "8084:8084"
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     environment:
       MONGO_URL: mongodb://mongo:27017/mydatabase
     deploy:
@@ -64,6 +99,12 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: exampleuser
       MONGO_INITDB_ROOT_PASSWORD: examplepass
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.runCommand({ connectionStatus: 1 })"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
     deploy:
       replicas: 1
       restart_policy:
@@ -71,4 +112,3 @@ services:
 
 volumes:
   mongo-data:
-
