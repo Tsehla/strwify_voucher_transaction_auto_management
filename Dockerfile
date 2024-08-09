@@ -23,7 +23,6 @@
 # Use a Bitnami Node.js image that includes MongoDB
 # FROM bitnami/node:18.13.0-debian-11-r0
 
-
 FROM registry.gitlab.com/tozd/docker/dinit:ubuntu-bionic
 
 # Expose MongoDB port
@@ -38,11 +37,10 @@ RUN apt-get update -q -q && \
   apt-get install --yes --force-yes mongodb && \
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
 
-# Copy MongoDB configuration and service files
-# Ensure these paths are correct relative to the Dockerfile
-COPY ./etc/service/mongod /etc/service/mongod
-COPY ./log-3.0 /etc/service/mongod/log
-COPY ./etc/mongodb.conf /etc/mongodb.conf
+# Remove error-causing COPY commands
+# COPY ./etc/service/mongod /etc/service/mongod
+# COPY ./log-3.0 /etc/service/mongod/log
+# COPY ./etc/mongodb.conf /etc/mongodb.conf
 
 # Install Node.js
 RUN apt-get update && \
