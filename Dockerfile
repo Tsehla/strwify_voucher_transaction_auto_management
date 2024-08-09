@@ -24,9 +24,23 @@
 # Use a Node.js base image with the desired version
 FROM node:18.13.0-alpine
 
-# Install MongoDB v3.6
-RUN apk update && \
-    apk add --no-cache mongodb=3.6.23-r0
+# Install necessary dependencies
+RUN apk add --no-cache \
+    curl \
+    tar \
+    tzdata \
+    ca-certificates \
+    && update-ca-certificates
+
+# Download and install MongoDB v3.6
+RUN curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.23.tgz \
+    && tar -zxvf mongodb-linux-x86_64-3.6.23.tgz \
+    && mv mongodb-linux-x86_64-3.6.23 /usr/local/mongodb \
+    && rm mongodb-linux-x86_64-3.6.23.tgz \
+    && ln -s /usr/local/mongodb/bin/* /usr/local/bin/
+
+# Create MongoDB data directory
+RUN mkdir -p /data/db
 
 # Create app directory
 WORKDIR /usr/src/app
