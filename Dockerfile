@@ -20,26 +20,17 @@
 # CMD [ "node", "index.js" ]
 # -------------------------------------------------------------
 
-# Use a Node.js base image with the desired version
-FROM node:18.13.0-alpine
+# Use an Ubuntu-based Node.js image
+FROM node:18.13.0-bullseye-slim
 
-# Install necessary dependencies
-RUN apk add --no-cache \
-    curl \
-    tar \
-    tzdata \
-    ca-certificates \
-    && update-ca-certificates
-
-# Download and install MongoDB v3.6
-RUN curl -O https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-3.6.23.tgz \
-    && tar -zxvf mongodb-linux-x86_64-3.6.23.tgz \
-    && mv mongodb-linux-x86_64-3.6.23 /usr/local/mongodb \
-    && rm mongodb-linux-x86_64-3.6.23.tgz \
-    && ln -s /usr/local/mongodb/bin/* /usr/local/bin/
-
-# Verify that MongoDB is correctly installed
-RUN mongod --version
+# Install MongoDB
+RUN apt-get update && \
+    apt-get install -y gnupg wget && \
+    wget -qO - https://www.mongodb.org/static/pgp/server-3.6.asc | apt-key add - && \
+    echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/debian buster/mongodb-org/3.6 main" | tee /etc/apt/sources.list.d/mongodb-org-3.6.list && \
+    apt-get update && \
+    apt-get install -y mongodb-org=3.6.23 mongodb-org-server=3.6.23 mongodb-org-shell=3.6.23 mongodb-org-mongos=3.6.23 mongodb-org-tools=3.6.23 && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create MongoDB data directory
 RUN mkdir -p /data/db
@@ -56,7 +47,7 @@ RUN npm install
 # Copy app source code
 COPY . .
 
-# Expose the port for your Node.js app (replace with your actual port)
+# Expose the port for your Node.js app
 EXPOSE 8084
 
 # Start the MongoDB service and the Node.js app
