@@ -20,10 +20,9 @@
 # CMD [ "node", "index.js" ]
 # -------------------------------------------------------------
 
-# Use a Bitnami Node.js image that includes MongoDB
-# FROM bitnami/node:18.13.0-debian-11-r0
 
-FROM registry.gitlab.com/tozd/docker/dinit:ubuntu-bionic
+
+FROM node:18.13.0-buster
 
 # Expose MongoDB port
 EXPOSE 27017/tcp
@@ -32,26 +31,13 @@ EXPOSE 27017/tcp
 VOLUME /var/lib/mongodb
 VOLUME /var/log/mongod
 
-# Install MongoDB
+# Install MongoDB and supervisord
 RUN apt-get update -q -q && \
-  apt-get install --yes --force-yes mongodb && \
+  apt-get install --yes mongodb supervisor && \
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
 
-# Remove error-causing COPY commands
-# COPY ./etc/service/mongod /etc/service/mongod
-# COPY ./log-3.0 /etc/service/mongod/log
-# COPY ./etc/mongodb.conf /etc/mongodb.conf
-
-# Install Node.js
-RUN apt-get update && \
-    apt-get install -y curl gnupg && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-
-# Verify Node.js and npm installation
-RUN node -v && npm -v
+# Copy supervisord configuration file
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Create app directory
 WORKDIR /app
@@ -68,5 +54,5 @@ COPY . .
 # Expose the port for your Node.js app
 EXPOSE 8084
 
-# Start Node.js app (MongoDB is managed separately)
-CMD ["node", "index.js"]
+# Start supervisord
+CMD ["/usr/bin/supervisord"]
