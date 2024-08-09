@@ -12,3 +12,26 @@ services:
     image: mongo:3.6.8
     ports:
       - "27017:27017"
+
+
+# version: '3.8'
+
+# services:
+#   app:
+#     build: .
+#     ports:
+#       - "8084:8084"
+#     depends_on:
+#       - mongo
+#     environment:
+#       MONGO_URL: mongodb://mongo:27017/mydatabase
+
+#   mongo:
+#     image: mongo:4.0
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo-data:/data/db
+
+# volumes:
+#   mongo-data:
