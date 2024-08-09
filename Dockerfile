@@ -21,7 +21,35 @@
 # -------------------------------------------------------------
 
 # Use a Bitnami Node.js image that includes MongoDB
-FROM bitnami/node:18.13.0-debian-11-r0
+# FROM bitnami/node:18.13.0-debian-11-r0
+
+FROM registry.gitlab.com/tozd/docker/dinit:ubuntu-bionic
+
+EXPOSE 27017/tcp
+
+VOLUME /var/lib/mongodb
+VOLUME /var/log/mongod
+
+RUN apt-get update -q -q && \
+  apt-get install --yes --force-yes mongodb && \
+  apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
+
+COPY ./etc/service/mongod /etc/service/mongod
+COPY ./log-3.0 /etc/service/mongod/log
+COPY ./etc/mongodb.conf /etc/mongodb.conf
+
+
+# Install necessary dependencies
+RUN apt-get update && \
+    apt-get install -y curl gnupg && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Verify Node.js and npm installation
+RUN node -v && npm -v
+
 
 # Create app directory
 WORKDIR /app
@@ -39,4 +67,4 @@ COPY . .
 EXPOSE 8084
 
 # Start MongoDB and the Node.js app
-CMD ["bash", "-c", "mongod --fork --logpath /var/log/mongodb.log --dbpath /data/db && node index.js"]
+CMD ["node index.js"]
