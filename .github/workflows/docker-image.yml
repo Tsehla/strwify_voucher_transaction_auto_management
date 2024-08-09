@@ -97,7 +97,7 @@ jobs:
           context: .
           push: true
           tags: |
-            my-docker-hub-namespace/my-docker-hub-repository:latest
+            tsehla/wifitransact:latest
           build-args: |
             DOCKER_BUILDKIT=1
 
