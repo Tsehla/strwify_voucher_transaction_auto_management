@@ -102,9 +102,9 @@ jobs:
             DOCKER_BUILDKIT=1
 
       # Optional: Additional steps for testing or deployment
-      - name: Run tests
-        run: |
-          docker-compose up -d
-          sleep 10 # Wait for services to start
-          # Add your test commands here
-          docker-compose down
+      # - name: Run tests
+      #   run: |
+      #     docker-compose up -d
+      #     sleep 10 # Wait for services to start
+      #     # Add your test commands here
+      #     docker-compose down
