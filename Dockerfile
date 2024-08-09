@@ -23,23 +23,28 @@
 # Use a Bitnami Node.js image that includes MongoDB
 # FROM bitnami/node:18.13.0-debian-11-r0
 
+
 FROM registry.gitlab.com/tozd/docker/dinit:ubuntu-bionic
 
+# Expose MongoDB port
 EXPOSE 27017/tcp
 
+# Create volumes for MongoDB data and logs
 VOLUME /var/lib/mongodb
 VOLUME /var/log/mongod
 
+# Install MongoDB
 RUN apt-get update -q -q && \
   apt-get install --yes --force-yes mongodb && \
   apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* ~/.cache ~/.npm
 
+# Copy MongoDB configuration and service files
+# Ensure these paths are correct relative to the Dockerfile
 COPY ./etc/service/mongod /etc/service/mongod
 COPY ./log-3.0 /etc/service/mongod/log
 COPY ./etc/mongodb.conf /etc/mongodb.conf
 
-
-# Install necessary dependencies
+# Install Node.js
 RUN apt-get update && \
     apt-get install -y curl gnupg && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
@@ -50,21 +55,20 @@ RUN apt-get update && \
 # Verify Node.js and npm installation
 RUN node -v && npm -v
 
-
 # Create app directory
 WORKDIR /app
 
 # Copy package.json and package-lock.json (if present)
 COPY package*.json ./
 
-# Install dependencies
+# Install app dependencies
 RUN npm install
 
 # Copy app source code
 COPY . .
 
-# Expose the port for your Node.js app (replace with your actual port)
+# Expose the port for your Node.js app
 EXPOSE 8084
 
-# Start MongoDB and the Node.js app
-CMD ["node index.js"]
+# Start Node.js app (MongoDB is managed separately)
+CMD ["node", "index.js"]
