@@ -14,9 +14,6 @@
     "patch-package": "^6.5.1",
     "raw-body": "^2.5.1"
   },
-  "engines": {
-    "node": "18.13.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx patch-package && node index.js",

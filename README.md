@@ -110,8 +110,8 @@ Staging login :
 
 ---------
 
-
-
+TIP.
+on windows do yarn install, not npm install
 
 
 

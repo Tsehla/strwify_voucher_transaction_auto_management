@@ -1,0 +1,25 @@
+{
+  "name": "Streetwifiy_transact",
+  "version": "1.0.0",
+  "description": "backend to streetwifiy, to allow secure automated transaction and access cards production ",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "keystone": "^4.2.1",
+    "node-schedule": "^2.1.0",
+    "nodemailer": "^6.8.0",
+    "nunjucks": "^3.2.3",
+    "patch-package": "^6.5.1",
+    "raw-body": "^2.5.1"
+  },
+  "engines": {
+    "node": "18.13.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx patch-package && node index.js",
+    "dev": ""
+  }
+}
