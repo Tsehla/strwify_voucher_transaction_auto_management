@@ -1643,6 +1643,8 @@
                 if(data_from_db.free_data_allow || router_variables_array.trial == 'yes'){
                 */
 
+                router_variables_array.trial = 'yes'; //there is a problem rom router or something that is making hotspost trial identifier be unpredictable, cause unknown, control it from keystone now on
+
                 if(data_from_db.free_data_allow || data_from_db.mikrotik_allow_trial_login && router_variables_array.trial == 'yes'){  //now mikrotik [ trial users ] will be activated on transaction app, but the trial option needs to be active on mikrotik too, to allow this feature
 
                     // login link example with mikrotik [ trial ] user activated : http://127.0.0.1:3100/hotspot?login=true&error=&link-login-only=http://StreetWifiy.co.za/login&link-orig=&chap-id=&chap-challenge=&link-orig-esc=&mac-esc=90%3A2E%3A1C%3A69%3AB3%3ABA&username=&trial=yes&location=default
