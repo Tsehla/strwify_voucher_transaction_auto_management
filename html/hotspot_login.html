@@ -1502,8 +1502,16 @@
 				if(data_from_db.hotspot_how_to_sell){	 
 					 help_picture_video_sell = data_from_db.hotspot_how_to_sell;
 			
-					 }
+				}
 				
+
+
+                if(!data_from_db.hotspot_wallpaper){ //if no wallper add one
+
+                    wall_link_description.push(
+                        ' {image_link :"images/HD-wallpaper-wifi-technology.jpg" , image_status_text : "Facebook @CreativeXmindS", image_status_link: "images/HD-wallpaper-wifi-technology.jpg", ads_sponsored : true, hidden:false}'
+                    );
+                };
 				
 				if(data_from_db.hotspot_wallpaper){	//if wallpaper data from db
 					
@@ -2131,16 +2139,6 @@
         var forced_ads_auto_exit = false; //will auto close forced ads when all wallpapers have been scrolled
         
         function walp_changer(){//slideshow
-
-
-            //if no wallper
-            if(!wall_link_description && wall_link_description.length == 0){
-                forced_ads_hide ();//auto exit forced ads mode
-                //clear 
-                clearInterval(walp_interval);
-
-                return;
-            }
 			
 			//increment when function call
 			current_image_content_tracker = current_image_content_tracker +1;
