@@ -7,6 +7,18 @@ var path = require ('path');//to solve sendFile forbidden error
 
 var fs = require('fs'); //file read
 
+
+
+
+//inititates
+if(!fs.existsSync('./static/images/uploads/ads/')){ //ads upload folder
+	fs.mkdirSync('./static/images/uploads/ads/', {recursive: true});//create
+}
+
+
+
+
+
 keystone.get('routes', function(app){
    // app.use(express.static('.//'));
    
@@ -4451,6 +4463,7 @@ app.get('/api/hotspot_data', function(req, res){
 		extends_upload(req, res);
 
 	})
+	
 	
 	function extends_upload(req, res, uploadImageLink=null){//uploads and show uploaded contents
 
