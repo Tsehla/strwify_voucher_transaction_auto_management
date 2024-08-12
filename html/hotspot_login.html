@@ -2128,6 +2128,16 @@
         var forced_ads_auto_exit = false; //will auto close forced ads when all wallpapers have been scrolled
         
         function walp_changer(){//slideshow
+
+
+            //if no wallper
+            if(!wall_link_description && wall_link_description.length == 0){
+                forced_ads_hide ();//auto exit forced ads mode
+                //clear 
+                clearInterval(walp_interval);
+
+                return;
+            }
 			
 			//increment when function call
 			current_image_content_tracker = current_image_content_tracker +1;
