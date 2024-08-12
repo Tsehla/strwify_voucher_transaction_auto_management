@@ -1835,7 +1835,9 @@
                 //for legacy skins
                 if(menu_layout_type.trim() == 'appearance_1' || menu_layout_type.trim() == 'appearance_2'){
 
-                    document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+                    if(document.getElementById('page_body_menu_contents')){
+                        document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+                    }
                     document.getElementById('forced_advertisement_navigation_three_button').style.display = 'block';//show forced ads navigation
 
                 }
@@ -1867,8 +1869,9 @@
                         
             if(menu_layout_type.trim() != 'appearance_1' && menu_layout_type.trim() != 'appearance_2' && !forced_ads_skip_to_login_menu){
 
-                
-                document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+                if(document.getElementById('page_body_menu_contents')){
+                    document.getElementById('page_body_menu_contents').style.display = 'none';//hide login menu
+                }
 
             }
 
