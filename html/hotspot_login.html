@@ -1506,7 +1506,7 @@
 				
 
 
-                if(!data_from_db.hotspot_wallpaper){ //if no wallper add one
+                if(!data_from_db.hotspot_wallpaper && data_from_db.hotspot_wallpaper.length ==0){ //if no wallper add one
 
                     wall_link_description.push(
                         ' {image_link :"images/HD-wallpaper-wifi-technology.jpg" , image_status_text : "Facebook @CreativeXmindS", image_status_link: "images/HD-wallpaper-wifi-technology.jpg", ads_sponsored : true, hidden:false}'
@@ -1532,6 +1532,15 @@
 						
 					
                     });
+
+                    //check if something where added if not add some
+                    if(wall_link_description.length ==0){ //if no wallper add one
+
+                        wall_link_description.push(
+                            ' {image_link :"images/HD-wallpaper-wifi-technology.jpg" , image_status_text : "Facebook @CreativeXmindS", image_status_link: "images/HD-wallpaper-wifi-technology.jpg", ads_sponsored : true, hidden:false}'
+                        );
+                    };
+
                     
                     //if router is under maintenance, put maintenance type notice at front
                     var maintenance_types = {
