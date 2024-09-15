@@ -1,0 +1,3 @@
+
+
+1) you have to enable option [ Enable Wifi-Radius auto user creation? ] in the specific location hotspot menu if you dont have the voucher created manually or voucher created automatically wont show, provided you have radius link provided
