@@ -1,3 +1,16 @@
+___
+downloads que not working as required
+___
+for simless login when user login with code save code to webstorage locally then check on next login if code is stored if so ask to login them or do auto login without asking have control of this set in keystone en auto login as default.
+
+if user logges out ask them to choose of keep or clear stored login code.
+
+of error login mostly because login expired or depleted give error alert  then clear stored code.
+
+if new code is used to login override stored code 
+
+____
+
 
 nvm install 12.22.9noe
 ----
