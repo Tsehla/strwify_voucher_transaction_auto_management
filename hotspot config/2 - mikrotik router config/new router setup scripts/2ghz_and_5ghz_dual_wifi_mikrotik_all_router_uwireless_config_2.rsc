@@ -1,11 +1,10 @@
 #Streetwifiy router configuration
 # --- General router configuration script ---
 #Reset router and have it running correctly then run this script using command below:
-# import 2ghz_and_5ghz_dual_wifi_mikrotik_all_router_uwireless_config_2.rsc
-# if file dont exist proble do : [ file print detail ] and find and confirm the import script name is same as the on you are importing. alternatively make script name short as possible before uploading to mikrotik
+# import mikrotik_all_router_streetwifiy_config.rsc
 # on mikrotik console
 #Commands need to be in order as some depends on the previous ones to run and create services or script will fail
-#Tip: if issue, copy all script contents and paste on terminal
+#Tip: if issue, copy all script contents and paste on terminal. if issue copy one by one en paste in terminal in order
 #Set [ radius ] [ip] address and [ ports ] and [radius ] password/string to correct ones after running the script
 
 # src-address #run command below on terminal then $put addr # to see result
@@ -23,7 +22,7 @@
 
 # Create radius
 /radius
-add accounting-port=80 address=34.122.7.174 authentication-port=80 secret=testing123 service=hotspot timeout=30s
+add accounting-port=80 address=129.151.160.170 authentication-port=80 secret=testing123 service=hotspot timeout=30s
 
 #allow router accept commands from radius server
 /radius incoming
@@ -180,6 +179,11 @@ add dst-host=use.fontawesome.com*
 add dst-host=*.cloudfront.net*
 add dst-host=ajax.googleapis.com*
 
+#walled garden ip
+/ip hotspot walled-garden ip
+add action=accept disabled=no dst-address=129.151.160.170 !dst-address-list \
+    !dst-port !protocol !src-address !src-address-list
+
 # add extra hotspsot dcp adress range pool
 /ip pool
 add name=hs-pool-8 ranges=3.0.0.2-3.0.0.254
@@ -195,7 +199,7 @@ add address=6.0.0.0/24 comment="hotspot no-3 network" gateway=6.0.0.1
 
 # Create wifi hotspot
 /ip hotspot profile
-add dns-name=streetwifiy.za hotspot-address=$ipAddress html-directory=streetwifiy_login login-by=cookie,http-pap,trial name=hsprof1 trial-uptime-limit=2h30m trial-user-profile=FreeLoginUsersProfile use-radius=yes
+add dns-name=streetWifiy.co.za hotspot-address=$ipAddress html-directory=streetwifiy_login login-by=cookie,http-pap,trial name=hsprof1 trial-uptime-limit=2h30m trial-user-profile=FreeLoginUsersProfile use-radius=yes
 add dns-name=areanet.za hotspot-address=3.0.0.1 html-directory=hospot_login_page-1 login-by=cookie,https,http-pap name=hsprof2  use-radius=yes
 add dns-name=netarea.za hotspot-address=6.0.0.1 html-directory=hospot_login_page-2 login-by=cookie,http-pap name=hsprof3  use-radius=yes
   
@@ -219,8 +223,8 @@ set winbox disabled=yes
 #set system scheduler used to contact server and provide current router ip address used for remote login
 #start time will be current hour plus one hour
 # --- fill values ---
-    # a) Give_router_name -- router name should match [ location='' ] in \hotspot config\1- hospot_login_page\login.html file
-    # b) GIVE_ROUTER_LOCATION  -- location can include useful contact personnel details to be used if router is offline
+    # a) Give_router_name
+    # b) GIVE_ROUTER_LOCATION
     # c) IF%20ISSUE%20CONTACT%20OWNER%20on%200719000000,%20INSTALLED%20AT%20MAIN%20CORNER%20STREET%20EXTENSION%204
         # -- above is same as : IF ISSUE CONTACT OWNER on 0719000000, INSTALLED AT MAIN CORNER STREET EXTENSION 4
         # -- spaces should be replaced with [ %20 ] { percent twenty }
@@ -233,7 +237,7 @@ set winbox disabled=yes
 #update ntp time server for router, does what this [ /system ntp client ] above those, but it will convert domain name to ip adress automatically
 /system scheduler
 
-add interval=1h name="Streetwifiy online report" on-event="/tool fetch url=(\"http://streetwifiy.herokuapp.com/api/router_checkin\\\?router_name=Give_router_name&router_location=GIVE_ROUTER_LOCATION&router_details=IF%20ISSUE%20CONTACT%20OWNER%20on%200719000000,%20INSTALLED%20AT%20MAIN%20CORNER%20STREET%20EXTENSION%204\");" start-time=(($currenthour + 1).":00:00")
+add interval=1h name="Streetwifiy online report" on-event="/tool fetch url=(\"http://129.151.160.170:8084/api/router_checkin\\\?router_name=Give_router_name&router_location=GIVE_ROUTER_LOCATION&router_details=IF%20ISSUE%20CONTACT%20OWNER%20on%200719000000,%20INSTALLED%20AT%20MAIN%20CORNER%20STREET%20EXTENSION%204\");" start-time=(($currenthour + 1).":00:00")
 
 add name="Reboot Router Daily 4am" on-event="/system reboot" start-time=04:10:00 interval=23h comment="" disabled=no
 
@@ -241,9 +245,9 @@ add name="Reboot Router Daily 4am" on-event="/system reboot" start-time=04:10:00
 
 
 
-# Change router identity name -- router identity should match [ location='' ] in \hotspot config\1- hospot_login_page\login.html file
+# Change router identity name
 /system identity
-set name=uwireless
+set name=streetwifiy
 
 #allow router perfomance grapgh view on login
 /tool graphing interface
@@ -283,7 +287,7 @@ set discover-interface-list=LAN
 #NOTE IMPORTANT CHANGE FREQUENCY MODE TO [ frequency-mode=regulatory-domain ] USE [ frequency-mode=SUPERCHANNEL ] FOR TESTING ONLY !!THIS IS IMPORTANT, AND RESPONSIBILITY LIES WITH YOU THE INSTALLER NOT THE COMPANY OR ORGANISATION EMPLOYED OR REFERED TO.. 
 # 2.5ghz turbo frequency [ frequency=2437 ]
 /interface wireless
-set [ find default-name=wlan1 ] disabled=no frequency=auto mode=ap-bridge distance=dynamic installation=outdoor ssid="streetWifiy.za" wireless-protocol=802.11 station-roaming=disabled wmm-support=enabled multicast-buffering=disabled multicast-helper=disabled wps-mode=disabled arp=enabled keepalive-frames=disabled bridge-mode=disabled country="south africa" frequency-mode=superchannel tx-power-mode=default 
+set [ find default-name=wlan1 ] disabled=no frequency=auto mode=ap-bridge distance=dynamic installation=outdoor ssid="streetWifiy.co.za" wireless-protocol=802.11 station-roaming=disabled wmm-support=enabled multicast-buffering=disabled multicast-helper=disabled wps-mode=disabled arp=enabled keepalive-frames=disabled bridge-mode=disabled country="south africa" frequency-mode=superchannel tx-power-mode=default 
 
 add disabled=no keepalive-frames=disabled master-interface=wlan1 multicast-buffering=disabled name=wlan5 ssid="AreaNet.za" wds-cost-range=0 wds-default-cost=0 wps-mode=disabled
 
