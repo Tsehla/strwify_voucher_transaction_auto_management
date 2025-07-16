@@ -37,8 +37,9 @@ For login use any details shown on https://github.com/Tsehla/strwify_voucher_tra
 
 # links
 
-Front end http://127.0.0.1:3100
-backend (keystone) http://127.0.0.1:3100/keystone
+Front end http://127.0.0.1:3100  
+backend (keystone) http://127.0.0.1:3100/keystone  
+backend-default login details in [ ./updates ] folder
 
 # hotspot page acess : test links without router 
 ## hotspot page acess : landing page 
